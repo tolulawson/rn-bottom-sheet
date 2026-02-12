@@ -66,6 +66,8 @@
   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
 - Residual Risks:
   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
@@ -99,3 +101,11 @@
 - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
 - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in `tasks/todo.md` Review section
+
+## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
+
+- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
+- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
+- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture results in the Review section

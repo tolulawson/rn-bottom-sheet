@@ -48,7 +48,7 @@
 
 ### Tests for User Story 1
 
-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
 - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
 
 ### Implementation for User Story 1

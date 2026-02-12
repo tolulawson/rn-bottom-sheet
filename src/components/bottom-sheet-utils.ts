@@ -89,6 +89,40 @@ export function resolveSelectedDetentIndex(
   return selectedDetent;
 }
 
+type BottomSheetLifecycleCallbacks = Pick<
+  BottomSheetProps,
+  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
+>;
+
+export interface BottomSheetLifecycleHandlers {
+  onNativeWillPresent: () => void;
+  onNativeDidPresent: () => void;
+  onNativeWillDismiss: () => void;
+  onNativeDidDismiss: () => void;
+}
+
+export function createLifecycleHandlers(
+  callbacks: BottomSheetLifecycleCallbacks
+): BottomSheetLifecycleHandlers {
+  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
+    callbacks;
+
+  return {
+    onNativeWillPresent() {
+      onWillPresent?.();
+    },
+    onNativeDidPresent() {
+      onDidPresent?.();
+    },
+    onNativeWillDismiss() {
+      onWillDismiss?.();
+    },
+    onNativeDidDismiss() {
+      onDidDismiss?.();
+    },
+  };
+}
+
 function assertDetentIndex(
   index: number,
   detentCount: number,

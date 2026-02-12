@@ -24,6 +24,7 @@ import type {
   BottomSheetProps,
 } from '../types/bottom-sheet';
 import {
+  createLifecycleHandlers,
   isControlledProps,
   resolveInitialDetentIndex,
   resolveSelectedDetentIndex,
@@ -104,18 +105,16 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
       },
       [onDetentChange]
     );
-    const handleNativeWillPresent = useCallback(() => {
-      onWillPresent?.();
-    }, [onWillPresent]);
-    const handleNativeDidPresent = useCallback(() => {
-      onDidPresent?.();
-    }, [onDidPresent]);
-    const handleNativeWillDismiss = useCallback(() => {
-      onWillDismiss?.();
-    }, [onWillDismiss]);
-    const handleNativeDidDismiss = useCallback(() => {
-      onDidDismiss?.();
-    }, [onDidDismiss]);
+    const lifecycleHandlers = useMemo(
+      () =>
+        createLifecycleHandlers({
+          onWillPresent,
+          onDidPresent,
+          onWillDismiss,
+          onDidDismiss,
+        }),
+      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
+    );
 
     useEffect(() => {
       if (!supported) {
@@ -200,10 +199,10 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
         onOpenChange={callback(handleNativeOpenChange)}
         onDetentChange={callback(handleNativeDetentChange)}
-        onWillPresent={callback(handleNativeWillPresent)}
-        onDidPresent={callback(handleNativeDidPresent)}
-        onWillDismiss={callback(handleNativeWillDismiss)}
-        onDidDismiss={callback(handleNativeDidDismiss)}
+        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
+        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
+        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
+        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
       >
         {children}
       </RnBottomSheetView>
