@@ -5,6 +5,7 @@
  */
 
 import { BottomSheet } from './components/BottomSheet';
+import { BottomSheetNativeView } from './components/BottomSheetNativeView';
 import { RnBottomSheetView } from './native/RnBottomSheetView';
 
 // =============================================================================
@@ -22,9 +23,14 @@ export { BottomSheet };
 export { RnBottomSheetView };
 
 /**
+ * Documented native host surface for animated wrapper compatibility.
+ */
+export { BottomSheetNativeView };
+
+/**
  * Alias for native component export.
  */
-export const BottomSheetView = RnBottomSheetView;
+export const BottomSheetView = BottomSheetNativeView;
 
 // =============================================================================
 // Public Types

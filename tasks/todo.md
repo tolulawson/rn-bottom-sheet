@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T029`: added `src/components/BottomSheetNativeView.tsx` as the documented Reanimated host compatibility surface (explicit supported animated prop pathways and non-goal boundary), and routed `BottomSheetView` through that component in `src/index.tsx`.
+  - Marked `T029` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Maestro MCP gate remains non-blocking for this loop because `E2E Gate State` is still `deferred` in `specs/001-native-ios-sheet-bindings/spec.md`.
   - Ralph iteration `T027`: added `src/navigation/bottom-sheet-adapter.ts` with optional navigation sync helpers (`createBottomSheetNavigationAdapter` and `useBottomSheetNavigation`) that map route state to controlled sheet props and avoid circular open/close dispatch when state is already aligned.
   - Added `src/__tests__/bottom-sheet-adapter.test.ts` to verify route-state mapping, open/close callback propagation, and loop-prevention behavior for matching states.
   - Marked `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
@@ -211,5 +215,14 @@
 - [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
 - [x] Export optional navigation adapter entry points from `src/index.tsx`
 - [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Animated Wrapper Surface T029)
+
+- [x] Confirm `T029` is the highest-priority truly incomplete item and verify `src/components/BottomSheetNativeView.tsx` is not already implemented
+- [x] Implement documented animated wrapper compatibility surface in `src/components/BottomSheetNativeView.tsx`
+- [x] Update package exports/usages to use the new compatibility surface
+- [x] Mark `T029` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
