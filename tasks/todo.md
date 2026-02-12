@@ -553,3 +553,35 @@
   - `yarn test` passed (`13/13` suites, `44` passed, `19` todo).
 - Maestro gate outcome:
   - `E2E Gate State` remains `deferred` in `specs/001-native-ios-sheet-bindings/spec.md`; Maestro MCP stays explicitly non-blocking for this loop iteration.
+
+## Ralph Iteration 2026-02-12 (Ralph Build Mode Re-Verification Pass 2)
+
+- [x] Confirm no incomplete work remains in `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub Issues, or configured external trackers
+- [x] Randomly select one completed spec and lock target for strict acceptance re-verification
+- [x] Re-verify all user-story acceptance scenarios against current implementation/tests and check edge-case coverage
+- [x] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Evaluate conditional Maestro gate from spec marker and record deferred/required disposition
+- [x] Update `tasks/todo.md` with objective verification evidence and completion outcome
+
+## Review Addendum (2026-02-12, Ralph Build Mode Re-Verification Pass 2)
+
+- Discovery verification:
+  - `specs/001-native-ios-sheet-bindings/spec.md` remains `## Status: COMPLETE`.
+  - `rg -n "\- \[ \]" specs IMPLEMENTATION_PLAN.md` returned no unchecked work items.
+  - `gh issue list --state open --limit 100` returned no open GitHub issues.
+  - `list_mcp_resources` returned no configured external tracker resources; focused doc scan across `AGENTS.md`, `README.md`, `docs/`, `.github/`, `.specify/`, `tasks/`, and `specs/` found no active Jira/Linear/other tracker configuration.
+- Random spec selection:
+  - Only completed candidate available in `specs/`: `specs/001-native-ios-sheet-bindings/spec.md`; selected as verification target.
+- Acceptance and edge-case re-verification:
+  - US1 present/dismiss lifecycle + in-sheet interaction behavior remains covered by `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - US2 detent validation, normalization, selected-detent control, imperative snapping, and callback behavior remain covered by `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - US3 navigation synchronization, in-sheet route behavior, and Reanimated compatibility remain covered by `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`, and `src/__tests__/bottom-sheet.reanimated.test.ts`.
+  - Non-iOS deterministic fallback behavior remains covered by `src/__tests__/bottom-sheet.fallback.test.ts`.
+- Validation gates:
+  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
+  - `yarn docs:check` passed (`Knowledge base check passed`).
+  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
+- Maestro gate outcome:
+  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`; Maestro MCP remains explicitly non-blocking for this loop iteration.
