@@ -136,8 +136,27 @@ jest.mock(
     );
     BottomSheet.displayName = 'BottomSheetMock';
 
+    const useBottomSheetNavigation = (options: any) => ({
+      isOpen: options.routeIsOpen,
+      onOpenChange(nextOpen: boolean, reason: string) {
+        options.onOpenChange?.(nextOpen, reason);
+
+        if (nextOpen === options.routeIsOpen) {
+          return;
+        }
+
+        if (nextOpen) {
+          options.onRouteOpen?.(reason);
+          return;
+        }
+
+        options.onRouteClose?.(reason);
+      },
+    });
+
     return {
       BottomSheet,
+      useBottomSheetNavigation,
     };
   },
   { virtual: true }
@@ -182,7 +201,19 @@ describe('example iOS open/dismiss integration flow', () => {
       return button;
     };
 
+    const getAllTextContent = () =>
+      renderer.root
+        .findAllByType(Text)
+        .map((node: any) => flattenTextContent(node.props.children));
+
     expect(getStatusText()).toContain('Sheet: Closed');
+    expect(getAllTextContent()).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining(
+          'In-sheet route: Summary | Animation wrapper: Fallback'
+        ),
+      ])
+    );
 
     TestRenderer.act(() => {
       getButtonByTitle('Open Sheet').props.onPress();
@@ -190,6 +221,27 @@ describe('example iOS open/dismiss integration flow', () => {
 
     expect(getStatusText()).toContain('Sheet: Open');
     expect(getStatusText()).toContain('Detent: 0');
+
+    TestRenderer.act(() => {
+      getButtonByTitle('Go to Details').props.onPress();
+    });
+
+    expect(getAllTextContent()).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('In-sheet route: Details'),
+        expect.stringContaining('In-Sheet Route: Details'),
+      ])
+    );
+
+    TestRenderer.act(() => {
+      getButtonByTitle('Back to Summary').props.onPress();
+    });
+
+    expect(getAllTextContent()).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('In-sheet route: Summary'),
+      ])
+    );
 
     TestRenderer.act(() => {
       getButtonByTitle('Toggle Grabber').props.onPress();

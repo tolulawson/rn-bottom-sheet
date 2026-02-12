@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T031`: updated `example/src/App.tsx` with navigation-driven open/close state via `useBottomSheetNavigation`, added in-sheet route transitions (`Summary`/`Details`), and added an optional Reanimated wrapper scenario with deterministic fallback when `react-native-reanimated` is not installed.
+  - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate navigation-route transitions and animation-wrapper status in the example flow.
+  - Marked `T031` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized related integration progress in `IMPLEMENTATION_PLAN.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T030`: confirmed explicit non-iOS fallback behavior already existed in `src/platform/fallback.ts` and JS guard usage in `src/components/BottomSheet.tsx`; added `src/__tests__/bottom-sheet.fallback.test.ts` to verify support detection, deterministic fallback state, guard behavior, and warning behavior.
   - Marked `T030` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized fallback progress in `IMPLEMENTATION_PLAN.md`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -235,5 +239,15 @@
 - [x] Confirm `T030` is the highest-priority truly incomplete item and verify current non-iOS fallback behavior/warnings state
 - [x] Add focused fallback tests in `src/__tests__/bottom-sheet.fallback.test.ts`
 - [x] Mark `T030` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Example Navigation + Animation Scenarios T031)
+
+- [x] Confirm `T031` is the highest-priority truly incomplete item and verify current example app gaps
+- [x] Implement navigation-driven sheet scenario and in-sheet route flow in `example/src/App.tsx`
+- [x] Implement optional animated wrapper scenario with deterministic fallback in `example/src/App.tsx`
+- [x] Update example integration assertions for navigation + animation scenario coverage in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
+- [x] Mark `T031` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section

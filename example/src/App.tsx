@@ -1,25 +1,59 @@
 import { View, StyleSheet, Text, Button } from 'react-native';
-import { useRef, useState, useCallback } from 'react';
-import { BottomSheet } from 'rn-bottom-sheet';
+import { useRef, useState, useCallback, useMemo } from 'react';
+import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
 import type {
   BottomSheetChangeReason,
   BottomSheetMethods,
   BackgroundInteractionMode,
 } from 'rn-bottom-sheet';
 
+type InSheetRoute = 'summary' | 'details';
+
+function resolveAnimatedBottomSheet(): {
+  Component: typeof BottomSheet;
+  isReanimatedWrapperActive: boolean;
+} {
+  try {
+    const reanimated = require('react-native-reanimated') as {
+      createAnimatedComponent?: (
+        component: typeof BottomSheet
+      ) => typeof BottomSheet;
+    };
+
+    if (typeof reanimated.createAnimatedComponent === 'function') {
+      return {
+        Component: reanimated.createAnimatedComponent(
+          BottomSheet
+        ) as typeof BottomSheet,
+        isReanimatedWrapperActive: true,
+      };
+    }
+  } catch {
+    // Optional dependency: fallback to the standard BottomSheet component.
+  }
+
+  return {
+    Component: BottomSheet,
+    isReanimatedWrapperActive: false,
+  };
+}
+
 /**
  * Example app demonstrating controlled BottomSheet usage.
  */
 export default function App() {
   const sheetRef = useRef<BottomSheetMethods>(null);
-  const [isOpen, setIsOpen] = useState(false);
+  const [routeSheetOpen, setRouteSheetOpen] = useState(false);
   const [currentDetent, setCurrentDetent] = useState(0);
   const [selectedDetent, setSelectedDetent] = useState(1);
+  const [inSheetRoute, setInSheetRoute] = useState<InSheetRoute>('summary');
   const [grabberVisible, setGrabberVisible] = useState(true);
   const [allowSwipeToDismiss, setAllowSwipeToDismiss] = useState(true);
   const [expandsWhenScrolledToEdge, setExpandsWhenScrolledToEdge] =
     useState(true);
   const [backgroundModeIndex, setBackgroundModeIndex] = useState(0);
+  const { Component: AnimatedSheetComponent, isReanimatedWrapperActive } =
+    useMemo(resolveAnimatedBottomSheet, []);
 
   const backgroundModes: BackgroundInteractionMode[] = [
     'modal',
@@ -31,7 +65,6 @@ export default function App() {
   const handleOpenChange = useCallback(
     (open: boolean, reason: BottomSheetChangeReason) => {
       console.log(`Sheet open changed: ${open}, reason: ${reason}`);
-      setIsOpen(open);
     },
     []
   );
@@ -53,6 +86,20 @@ export default function App() {
     sheetRef.current?.snapToDetent(index);
   }, []);
 
+  const navigationSheet = useBottomSheetNavigation({
+    routeIsOpen: routeSheetOpen,
+    onRouteOpen(reason) {
+      console.log(`Route requested open, reason: ${reason}`);
+      setRouteSheetOpen(true);
+    },
+    onRouteClose(reason) {
+      console.log(`Route requested close, reason: ${reason}`);
+      setRouteSheetOpen(false);
+      setInSheetRoute('summary');
+    },
+    onOpenChange: handleOpenChange,
+  });
+
   const cycleBackgroundInteraction = useCallback(() => {
     setBackgroundModeIndex((current) => (current + 1) % backgroundModes.length);
   }, [backgroundModes.length]);
@@ -70,8 +117,8 @@ export default function App() {
     <View style={styles.container}>
       <Text style={styles.title}>rn-bottom-sheet Example</Text>
       <Text style={styles.status}>
-        Sheet: {isOpen ? 'Open' : 'Closed'} | Detent: {currentDetent} (
-        {detentLabels[currentDetent] ?? 'Unknown'})
+        Sheet: {navigationSheet.isOpen ? 'Open' : 'Closed'} | Detent:{' '}
+        {currentDetent} ({detentLabels[currentDetent] ?? 'Unknown'})
       </Text>
       <Text style={styles.status}>
         Grabber: {grabberVisible ? 'On' : 'Off'} | Swipe dismiss:{' '}
@@ -81,9 +128,14 @@ export default function App() {
         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
         Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
       </Text>
-      <Button title="Open Sheet" onPress={() => setIsOpen(true)} />
+      <Text style={styles.status}>
+        In-sheet route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'} |
+        Animation wrapper:{' '}
+        {isReanimatedWrapperActive ? 'Reanimated' : 'Fallback'}
+      </Text>
+      <Button title="Open Sheet" onPress={() => setRouteSheetOpen(true)} />
       <View style={styles.buttonSpacer} />
-      <Button title="Close Sheet" onPress={() => setIsOpen(false)} />
+      <Button title="Close Sheet" onPress={() => setRouteSheetOpen(false)} />
       <View style={styles.buttonSpacer} />
       <Button title="Snap to Fit" onPress={() => handleSnapToDetent(0)} />
       <View style={styles.buttonSpacer} />
@@ -111,9 +163,9 @@ export default function App() {
         onPress={cycleBackgroundInteraction}
       />
 
-      <BottomSheet
+      <AnimatedSheetComponent
         ref={sheetRef}
-        isOpen={isOpen}
+        isOpen={navigationSheet.isOpen}
         detents={[...detents]}
         initialDetent={1}
         selectedDetent={selectedDetent}
@@ -122,7 +174,7 @@ export default function App() {
         backgroundInteraction={backgroundInteraction}
         cornerRadius={-1}
         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
-        onOpenChange={handleOpenChange}
+        onOpenChange={navigationSheet.onOpenChange}
         onDetentChange={handleDetentChange}
         onWillPresent={() => console.log('Will present')}
         onDidPresent={() => console.log('Did present')}
@@ -131,9 +183,24 @@ export default function App() {
       >
         <View style={styles.sheetContent}>
           <Text style={styles.sheetTitle}>Sheet Content</Text>
-          <Button title="Close" onPress={() => setIsOpen(false)} />
+          <Text style={styles.sheetSubtitle}>
+            In-Sheet Route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'}
+          </Text>
+          {inSheetRoute === 'summary' ? (
+            <Button
+              title="Go to Details"
+              onPress={() => setInSheetRoute('details')}
+            />
+          ) : (
+            <Button
+              title="Back to Summary"
+              onPress={() => setInSheetRoute('summary')}
+            />
+          )}
+          <View style={styles.buttonSpacer} />
+          <Button title="Close" onPress={() => setRouteSheetOpen(false)} />
         </View>
-      </BottomSheet>
+      </AnimatedSheetComponent>
     </View>
   );
 }
@@ -167,5 +234,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 16,
+  },
+  sheetSubtitle: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 12,
   },
 });

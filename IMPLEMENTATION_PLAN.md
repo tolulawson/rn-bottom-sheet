@@ -46,8 +46,8 @@
 
 ### Phase 4: Integrations
 
-- [ ] [MEDIUM] Create navigation subpath structure (rn-bottom-sheet/navigation) - from ADR-0003
-- [ ] [MEDIUM] Implement useBottomSheetNavigation hook for nested navigators - from react-navigation-form-sheet.md
+- [x] [MEDIUM] Create navigation subpath structure (rn-bottom-sheet/navigation) - from ADR-0003
+- [x] [MEDIUM] Implement useBottomSheetNavigation hook for nested navigators - from react-navigation-form-sheet.md
 - [x] [MEDIUM] Add Reanimated createAnimatedComponent compatibility - from reanimated-interop.md
 - [ ] [MEDIUM] Document supported animated prop pathways - from reanimated-interop.md
 - [ ] [LOW] Document unsupported full-transition control expectations - from reanimated-interop.md
