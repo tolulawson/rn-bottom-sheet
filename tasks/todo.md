@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 5 HIGH iOS Detent Integration Test Sync`: added `src/__tests__/bottom-sheet.detent.integration.test.tsx` to validate detent presenter prop wiring (native detent config + initial/selected indices), controlled `selectedDetent` updates, and detent event/method bridging (`onDetentChange`, `snapToDetent`, `getCurrentDetentIndex`) through the real `BottomSheet` wrapper.
+  - Updated `IMPLEMENTATION_PLAN.md` to mark "Add iOS integration tests for detent behavior" complete.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Maestro MCP gate remains non-blocking for this loop because `specs/001-native-ios-sheet-bindings/spec.md` still sets `E2E Gate State: deferred`.
   - Ralph iteration `Phase 5 HIGH iOS Presenter Lifecycle Integration Tests`: added `src/__tests__/bottom-sheet.presenter.integration.test.tsx` to validate presenter lifecycle callback ordering through the real `BottomSheet` wrapper, native-driven open-state synchronization in uncontrolled mode, and controlled-mode callback-only open/close behavior.
   - Updated `IMPLEMENTATION_PLAN.md` to mark "Add iOS integration tests for presenter lifecycle" complete.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test` (including the new presenter integration suite).
@@ -260,6 +264,16 @@
 - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Phase 5 HIGH iOS Detent Integration Test Sync)
+
+- [x] Confirm the highest-priority incomplete item is `IMPLEMENTATION_PLAN.md` Phase 5: "Add iOS integration tests for detent behavior"
+- [x] Verify whether existing integration tests already cover detent open/snap/change behavior
+- [x] Add/adjust integration assertions only if a real coverage gap exists
+- [x] Update `IMPLEMENTATION_PLAN.md` and this Review log to reflect verified completion state
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Evaluate conditional Maestro gate state from `specs/001-native-ios-sheet-bindings/spec.md` and record deferred/required outcome
+- [ ] Commit and push changes with a descriptive message
 
 ## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
 
