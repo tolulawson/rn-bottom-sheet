@@ -17,16 +17,18 @@ import type {
 // Constants
 // =============================================================================
 
-const SEMANTIC_DETENTS: readonly SemanticDetent[] = ['medium', 'large'];
+const SEMANTIC_DETENTS: readonly SemanticDetent[] = ['fit', 'medium', 'large'];
 
 /**
- * Approximate height values for semantic detents (used for sorting).
- * These are relative values, not actual pixel values.
+ * Approximate relative height values for semantic detents (used for sorting).
  */
 const SEMANTIC_HEIGHT_VALUES: Record<SemanticDetent, number> = {
+  fit: 0.25,
   medium: 0.5,
   large: 1.0,
 };
+
+const POINTS_REFERENCE_HEIGHT = 1000;
 
 // =============================================================================
 // Type Guards
@@ -67,35 +69,58 @@ export function isPointsDetent(
 // Validation
 // =============================================================================
 
+function validateCustomId(id: unknown): string | null {
+  if (id === undefined) {
+    return null;
+  }
+  if (typeof id !== 'string') {
+    return `Detent id must be a string when provided, got ${typeof id}`;
+  }
+  if (id.trim().length === 0) {
+    return 'Detent id must not be empty';
+  }
+  return null;
+}
+
 /**
  * Validate a single detent value.
  */
 export function validateDetent(detent: BottomSheetDetent): string | null {
   if (isSemanticDetent(detent)) {
-    return null; // Valid
+    return null;
   }
 
   if (isFractionDetent(detent)) {
-    if (typeof detent.value !== 'number') {
-      return `Fraction detent value must be a number, got ${typeof detent.value}`;
+    if (typeof detent.value !== 'number' || !Number.isFinite(detent.value)) {
+      return `Fraction detent value must be a finite number, got ${String(
+        detent.value
+      )}`;
     }
     if (detent.value < 0 || detent.value > 1) {
       return `Fraction detent value must be between 0 and 1, got ${detent.value}`;
     }
-    return null;
+    return validateCustomId(detent.id);
   }
 
   if (isPointsDetent(detent)) {
-    if (typeof detent.value !== 'number') {
-      return `Points detent value must be a number, got ${typeof detent.value}`;
+    if (typeof detent.value !== 'number' || !Number.isFinite(detent.value)) {
+      return `Points detent value must be a finite number, got ${String(
+        detent.value
+      )}`;
     }
     if (detent.value <= 0) {
       return `Points detent value must be positive, got ${detent.value}`;
     }
-    return null;
+    return validateCustomId(detent.id);
   }
 
   return `Invalid detent type: ${JSON.stringify(detent)}`;
+}
+
+function getCustomDetentId(
+  detent: FractionDetent | PointsDetent
+): string | null {
+  return typeof detent.id === 'string' && detent.id.trim() ? detent.id : null;
 }
 
 /**
@@ -118,6 +143,8 @@ export function validateDetents(
     };
   }
 
+  const customIds = new Set<string>();
+
   for (let i = 0; i < detents.length; i++) {
     const detent = detents[i]!;
     const error = validateDetent(detent);
@@ -127,13 +154,24 @@ export function validateDetents(
         error: `Invalid detent at index ${i}: ${error}`,
       };
     }
-  }
 
-  const normalized = normalizeDetents(detents);
+    if (isFractionDetent(detent) || isPointsDetent(detent)) {
+      const customId = getCustomDetentId(detent);
+      if (customId) {
+        if (customIds.has(customId)) {
+          return {
+            valid: false,
+            error: `Duplicate detent id '${customId}' is not allowed`,
+          };
+        }
+        customIds.add(customId);
+      }
+    }
+  }
 
   return {
     valid: true,
-    normalizedDetents: normalized,
+    normalizedDetents: normalizeDetents(detents),
   };
 }
 
@@ -142,9 +180,7 @@ export function validateDetents(
 // =============================================================================
 
 /**
- * Get a comparable height value for a detent (used for sorting).
- * For semantic and fraction detents, returns a 0..1 value.
- * For points detents, returns a large value to sort them based on points.
+ * Get a comparable height value for a detent (used for low-to-high sorting).
  */
 export function getDetentSortValue(detent: BottomSheetDetent): number {
   if (isSemanticDetent(detent)) {
@@ -156,18 +192,13 @@ export function getDetentSortValue(detent: BottomSheetDetent): number {
   }
 
   if (isPointsDetent(detent)) {
-    // For points, we assume a reference height of 1000 for sorting purposes
-    // This allows points to be compared relatively with fractions
-    return detent.value / 1000;
+    return detent.value / POINTS_REFERENCE_HEIGHT;
   }
 
   return 0;
 }
 
-/**
- * Generate a unique identifier for a detent (used for deduplication).
- */
-export function getDetentIdentifier(detent: BottomSheetDetent): string {
+function getResolvedDetentKey(detent: BottomSheetDetent): string {
   if (isSemanticDetent(detent)) {
     return `semantic:${detent}`;
   }
@@ -184,65 +215,110 @@ export function getDetentIdentifier(detent: BottomSheetDetent): string {
 }
 
 /**
- * Normalize detents: sort low-to-high and deduplicate.
+ * Generate a deterministic identifier for a detent.
+ */
+export function getDetentIdentifier(detent: BottomSheetDetent): string {
+  if (isFractionDetent(detent) || isPointsDetent(detent)) {
+    const customId = getCustomDetentId(detent);
+    if (customId) {
+      return `${detent.type}:${customId}`;
+    }
+  }
+  return getResolvedDetentKey(detent);
+}
+
+/**
+ * Normalize detents by deduplicating resolved values and sorting low-to-high.
  */
 export function normalizeDetents(
   detents: BottomSheetDetent[]
 ): BottomSheetDetent[] {
-  // Deduplicate by identifier
   const seen = new Set<string>();
   const unique: BottomSheetDetent[] = [];
 
   for (const detent of detents) {
-    const id = getDetentIdentifier(detent);
-    if (!seen.has(id)) {
-      seen.add(id);
+    const key = getResolvedDetentKey(detent);
+    if (!seen.has(key)) {
+      seen.add(key);
       unique.push(detent);
     }
   }
 
-  // Sort by height value (low to high)
-  return unique.sort((a, b) => getDetentSortValue(a) - getDetentSortValue(b));
+  return unique.sort((a, b) => {
+    const valueDiff = getDetentSortValue(a) - getDetentSortValue(b);
+    if (valueDiff !== 0) {
+      return valueDiff;
+    }
+    return getDetentIdentifier(a).localeCompare(getDetentIdentifier(b));
+  });
 }
 
 // =============================================================================
 // Native Identifier Mapping
 // =============================================================================
 
+function sanitizeIdentifier(value: string): string {
+  return value.replace(/[^a-zA-Z0-9_-]/g, '_');
+}
+
 /**
  * Convert a detent to its native iOS identifier.
- * Used for bridging to UISheetPresentationController.
  */
 export function detentToNativeIdentifier(
   detent: BottomSheetDetent,
   index: number
 ): string {
   if (isSemanticDetent(detent)) {
-    return detent; // 'medium' or 'large' map directly
+    return detent;
   }
 
-  if (isFractionDetent(detent)) {
-    return `fraction_${detent.value}_${index}`;
-  }
-
-  if (isPointsDetent(detent)) {
-    return `points_${detent.value}_${index}`;
+  if (isFractionDetent(detent) || isPointsDetent(detent)) {
+    const customId = getCustomDetentId(detent);
+    if (customId) {
+      return sanitizeIdentifier(customId);
+    }
+    return `${detent.type}_${detent.value}_${index}`;
   }
 
   return `custom_${index}`;
 }
 
 /**
- * Convert an array of detents to native identifier mapping.
+ * Convert detents to native bridge config objects.
  */
-export function detentsToNativeConfig(
-  detents: BottomSheetDetent[]
-): Array<{ identifier: string; detent: BottomSheetDetent }> {
+export function detentsToNativeConfig(detents: BottomSheetDetent[]): Array<{
+  type: 'semantic' | 'fraction' | 'points';
+  value: string | number;
+  identifier: string;
+  detent: BottomSheetDetent;
+}> {
   const normalized = normalizeDetents(detents);
-  return normalized.map((detent, index) => ({
-    identifier: detentToNativeIdentifier(detent, index),
-    detent,
-  }));
+  return normalized.map((detent, index) => {
+    if (isSemanticDetent(detent)) {
+      return {
+        type: 'semantic',
+        value: detent,
+        identifier: detentToNativeIdentifier(detent, index),
+        detent,
+      };
+    }
+
+    if (isFractionDetent(detent)) {
+      return {
+        type: 'fraction',
+        value: detent.value,
+        identifier: detentToNativeIdentifier(detent, index),
+        detent,
+      };
+    }
+
+    return {
+      type: 'points',
+      value: detent.value,
+      identifier: detentToNativeIdentifier(detent, index),
+      detent,
+    };
+  });
 }
 
 // =============================================================================

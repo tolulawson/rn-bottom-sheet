@@ -18,9 +18,9 @@
 ### Phase 2: iOS Sheet Engine
 
 - [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
-- [ ] [HIGH] Implement detent normalization (fit/medium/large/fraction/points to native identifiers) - from ios-sheet-apis.md
-- [ ] [HIGH] Implement detent validation (order low-to-high, unique identifiers) - from ios-sheet-apis.md
-- [ ] [HIGH] Map selectedDetentIdentifier bidirectionally - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Implement detent normalization (fit/medium/large/fraction/points to native identifiers) - from ios-sheet-apis.md
+- [x] [HIGH] Implement detent validation (order low-to-high, unique identifiers) - from ios-sheet-apis.md
+- [x] [HIGH] Map selectedDetentIdentifier bidirectionally - from IMPLEMENTATION_PLAN API Design
 - [ ] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
 - [ ] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
 - [ ] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
@@ -56,7 +56,7 @@
 
 ### Phase 5: Verification and Release Readiness
 
-- [ ] [HIGH] Add unit tests for detent normalization logic - from IMPLEMENTATION_PLAN Verification
+- [x] [HIGH] Add unit tests for detent normalization logic - from IMPLEMENTATION_PLAN Verification
 - [ ] [HIGH] Add unit tests for API prop validation - from IMPLEMENTATION_PLAN Verification
 - [ ] [HIGH] Add iOS integration tests for presenter lifecycle - from IMPLEMENTATION_PLAN Verification
 - [ ] [HIGH] Add iOS integration tests for detent behavior - from IMPLEMENTATION_PLAN Verification

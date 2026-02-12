@@ -12,7 +12,7 @@
 /**
  * Semantic detent identifiers that map to iOS system detents.
  */
-export type SemanticDetent = 'medium' | 'large';
+export type SemanticDetent = 'fit' | 'medium' | 'large';
 
 /**
  * Fraction-based detent (0..1 range representing percentage of screen height).
@@ -21,6 +21,7 @@ export type SemanticDetent = 'medium' | 'large';
 export interface FractionDetent {
   type: 'fraction';
   value: number; // 0..1
+  id?: string;
 }
 
 /**
@@ -30,10 +31,12 @@ export interface FractionDetent {
 export interface PointsDetent {
   type: 'points';
   value: number; // > 0
+  id?: string;
 }
 
 /**
  * All supported detent types.
+ * - 'fit': Content-fitting custom detent
  * - 'medium': ~50% of screen height (iOS system detent)
  * - 'large': Full available height (iOS system detent)
  * - FractionDetent: Custom fraction of container height

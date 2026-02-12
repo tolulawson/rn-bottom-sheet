@@ -26,7 +26,7 @@ export type NativeDetentType = 'semantic' | 'fraction' | 'points';
 export interface NativeDetentConfig {
   /** Detent type: 'semantic', 'fraction', or 'points' */
   type: NativeDetentType;
-  /** For semantic: 'medium' or 'large'. For fraction/points: numeric value */
+  /** For semantic: 'fit', 'medium', or 'large'. For fraction/points: numeric value */
   value: string | number;
   /** Unique identifier for this detent */
   identifier: string;

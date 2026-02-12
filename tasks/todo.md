@@ -62,10 +62,14 @@
   - `yarn nitrogen` initially failed due Nitro parser limitations in `src/RnBottomSheet.nitro.ts` (inline union type and mixed string-literal/number union). Resolved by extracting `NativeDetentType` and widening `NativeBackgroundInteraction` bridge type to `string | number`.
   - `yarn typecheck` initially failed in `example/src/App.tsx` because Nitro view callbacks were passed as plain functions. Resolved by wrapping callback props with `callback(...)` from `react-native-nitro-modules`.
   - `yarn lint`, `yarn typecheck`, and `yarn test` now pass.
+  - Added `fit` detent support to public type model and deterministic JS/native detent normalization rules (sorted low-to-high, deduped resolved values, unique custom ids).
+  - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
 - Residual Risks:
   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+  - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
 - Follow-ups:
   - Add explicit JS-level validation around `backgroundInteraction` before sending values to native layer.
+  - Add JS wrapper-level API validation so invalid detent config fails before reaching native.
 
 ## Ralph Iteration 2026-02-12 (Phase 1 Verification Blocker)
 
@@ -74,3 +78,12 @@
 - [x] Fix callback wiring/type mismatches in `example/src/App.tsx` so `yarn typecheck` passes
 - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Record verification outcomes in Review section and update completed checkboxes
+
+## Ralph Iteration 2026-02-12 (Phase 2 High-Priority Detent Gap)
+
+- [x] Confirm highest-priority incomplete item and verify current code does not already satisfy it
+- [x] Implement complete detent normalization coverage (`fit`, `medium`, `large`, `fraction`, `points`) in JS/native bridge types and helpers
+- [x] Implement strict detent validation rules (ordering, uniqueness, range) and deterministic error messages
+- [x] Add/extend unit tests for normalization + validation edge cases
+- [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Update `IMPLEMENTATION_PLAN.md` progress and capture results in Review section
