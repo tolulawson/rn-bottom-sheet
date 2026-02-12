@@ -16,14 +16,19 @@ runs:
         path: |
           **/node_modules
           .yarn/install-state.gz
-        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/package.json', '!node_modules/**') }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock', '**/package.json', '.yarnrc.yml') }}
         restore-keys: |
-          ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           ${{ runner.os }}-yarn-
 
     - name: Install dependencies
       if: steps.yarn-cache.outputs.cache-hit != 'true'
-      run: yarn install --immutable
+      run: |
+        if [ -f yarn.lock ]; then
+          yarn install --immutable
+        else
+          echo "yarn.lock not found; running non-immutable install for CI bootstrap"
+          yarn install
+        fi
       shell: bash
 
     - name: Cache dependencies
