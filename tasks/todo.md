@@ -59,6 +59,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+  - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T002`: `docs/knowledge-index.md` now includes a direct feature contract pointer to `specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml`, and task state is synchronized by checking `T002` in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Re-verified with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T001` verification: `docs/changelog-notes/README.md` already contains the feature README entry and scope note; task state was stale and has been synchronized by checking `T001` in `specs/001-native-ios-sheet-bindings/tasks.md`.
@@ -126,5 +130,13 @@
 - [x] Confirm `T002` is the highest-priority truly incomplete task and verify `docs/knowledge-index.md` lacks a direct feature contract pointer
 - [x] Add direct feature contract pointer in `docs/knowledge-index.md`
 - [x] Mark `T002` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture results in the Review section
+
+## Ralph Iteration 2026-02-12 (US1 iOS Integration Flow Assertions T011)
+
+- [x] Confirm `T011` is the highest-priority truly incomplete task and verify `T003` is already implemented (stale checkbox only)
+- [x] Add iOS integration flow assertions in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
+- [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture results in the Review section

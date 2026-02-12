@@ -19,7 +19,7 @@
 
 - [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
 - [x] T002 Add feature contract index pointer in docs/knowledge-index.md
-- [ ] T003 [P] Add test file scaffold in src/__tests__/bottom-sheet.contract.test.ts
+- [x] T003 [P] Add test file scaffold in src/__tests__/bottom-sheet.contract.test.ts
 
 ---
 
@@ -49,7 +49,7 @@
 ### Tests for User Story 1
 
 - [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
-- [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+- [x] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
 
 ### Implementation for User Story 1
 
