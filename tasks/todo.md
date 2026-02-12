@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T035`: executed consolidated validation gate (`yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`) and confirmed all commands pass with the current implementation/docs state.
+  - Marked `T035` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Captured explicit validation evidence in this Review section for release-readiness traceability.
   - Ralph iteration `T034`: added a concrete verification runbook to `docs/implementation-plan-v1.md` covering command gates, tracker update requirements, and targeted feature-surface verification steps for detents, navigation adapter behavior, animation compatibility, and non-iOS fallback behavior.
   - Marked `T034` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -283,4 +286,12 @@
 - [x] Add verification/runbook notes for feature workflows in `docs/implementation-plan-v1.md`
 - [x] Mark `T034` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Validation Capture T035)
+
+- [x] Confirm `T035` is the highest-priority truly incomplete item and verify missing explicit validation capture
+- [x] Execute verification commands and record outcomes in `tasks/todo.md`
+- [x] Mark `T035` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
 - [x] Capture verification outcomes in the Review section
