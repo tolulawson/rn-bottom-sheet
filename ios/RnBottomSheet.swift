@@ -18,7 +18,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     // MARK: - UIView (required by HybridViewSpec)
     // =========================================================================
 
-    var view: UIView = UIView()
+    let view: UIView = UIView()
 
     // =========================================================================
     // MARK: - Sheet State
@@ -33,12 +33,18 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     /// Sheet presenter view controller (lazy initialized)
     private var sheetViewController: SheetPresenterViewController?
 
+    /// Delegate proxy required because UISheetPresentationControllerDelegate is NSObject-based
+    private lazy var sheetPresentationDelegate = SheetPresentationDelegateProxy(owner: self)
+
+    /// Suppress one delegate callback after programmatic detent changes to avoid duplicate events
+    private var suppressNextDetentDelegateEvent: Bool = false
+
     // =========================================================================
     // MARK: - Props (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
 
     /// Detent configurations
-    var detents: [[String: Any]] = [] {
+    var detents: [NativeDetentConfig] = [] {
         didSet {
             updateDetentsIfPresented()
         }
@@ -78,7 +84,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     }
 
     /// Background interaction mode
-    var backgroundInteraction: Any = "modal" {
+    var backgroundInteraction: NativeBackgroundInteraction = .first("modal") {
         didSet {
             updateBackgroundInteraction()
         }
@@ -102,32 +108,32 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     // MARK: - Callbacks (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
 
-    var onOpenChange: ((Bool, String) -> Void)?
-    var onDetentChange: ((Double, String) -> Void)?
-    var onWillPresent: (() -> Void)?
-    var onDidPresent: (() -> Void)?
-    var onWillDismiss: (() -> Void)?
-    var onDidDismiss: (() -> Void)?
+    var onOpenChange: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void = { _, _ in }
+    var onDetentChange: (_ index: Double, _ reason: NativeChangeReason) -> Void = { _, _ in }
+    var onWillPresent: () -> Void = {}
+    var onDidPresent: () -> Void = {}
+    var onWillDismiss: () -> Void = {}
+    var onDidDismiss: () -> Void = {}
 
     // =========================================================================
     // MARK: - Methods (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
 
-    func present() {
+    func present() throws {
         guard !isCurrentlyPresented else { return }
         presentSheet()
     }
 
-    func dismiss() {
+    func dismiss() throws {
         guard isCurrentlyPresented else { return }
-        dismissSheet(reason: "programmatic")
+        dismissSheet(reason: .programmatic)
     }
 
-    func snapToDetent(index: Double) {
+    func snapToDetent(index: Double) throws {
         snapToDetentInternal(Int(index), animated: true)
     }
 
-    func getCurrentDetentIndex() -> Double {
+    func getCurrentDetentIndex() throws -> Double {
         return Double(currentDetentIndex)
     }
 
@@ -139,7 +145,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         if isOpen && !oldValue {
             presentSheet()
         } else if !isOpen && oldValue {
-            dismissSheet(reason: "programmatic")
+            dismissSheet(reason: .programmatic)
         }
     }
 
@@ -163,28 +169,21 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         sheetViewController?.delegate = self
 
         // Emit will present callback
-        onWillPresent?()
+        onWillPresent()
 
         // Present the sheet
         presentingVC.present(contentVC, animated: true) { [weak self] in
             self?.isCurrentlyPresented = true
             self?.currentDetentIndex = Int(self?.initialDetentIndex ?? 0)
-            self?.onDidPresent?()
-            self?.onOpenChange?(true, "programmatic")
+            self?.onDidPresent()
+            self?.onOpenChange(true, .programmatic)
         }
     }
 
-    private func dismissSheet(reason: String) {
+    private func dismissSheet(reason: NativeChangeReason) {
         guard let contentVC = sheetViewController?.contentViewController else { return }
-
-        onWillDismiss?()
-
-        contentVC.dismiss(animated: true) { [weak self] in
-            self?.isCurrentlyPresented = false
-            self?.sheetViewController = nil
-            self?.onDidDismiss?()
-            self?.onOpenChange?(false, reason)
-        }
+        contentVC.dismissalReasonOverride = reason
+        contentVC.dismiss(animated: true)
     }
 
     private func snapToDetentInternal(_ index: Int, animated: Bool) {
@@ -201,6 +200,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         }
 
         let targetIdentifier = detentIdentifiers[index]
+        suppressNextDetentDelegateEvent = true
 
         if animated {
             sheet.animateChanges {
@@ -211,7 +211,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         }
 
         currentDetentIndex = index
-        onDetentChange?(Double(index), "programmatic")
+        onDetentChange(Double(index), .programmatic)
     }
 
     // =========================================================================
@@ -244,7 +244,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         applyBackgroundInteraction(to: sheet)
 
         // Set delegate for detent changes
-        sheet.delegate = self
+        sheet.delegate = sheetPresentationDelegate
     }
 
     private func buildNativeDetents() -> [UISheetPresentationController.Detent] {
@@ -292,7 +292,8 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     }
 
     private func applyBackgroundInteraction(to sheet: UISheetPresentationController) {
-        if let mode = backgroundInteraction as? String {
+        switch backgroundInteraction {
+        case .first(let mode):
             switch mode {
             case "modal":
                 sheet.largestUndimmedDetentIdentifier = nil
@@ -301,7 +302,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
             default:
                 break
             }
-        } else if let index = backgroundInteraction as? Double {
+        case .second(let index):
             let nativeDetents = buildNativeDetentIdentifiers()
             let idx = Int(index)
             if idx >= 0 && idx < nativeDetents.count {
@@ -393,17 +394,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         var seenIdentifiers = Set<String>()
 
         for (index, config) in detents.enumerated() {
-            guard let type = config["type"] as? String else {
-                print("[RnBottomSheet] Invalid detent at index \(index): missing 'type'")
-                continue
-            }
-
-            let providedIdentifier = (config["identifier"] as? String)?
+            let providedIdentifier = config.identifier
                 .trimmingCharacters(in: .whitespacesAndNewlines)
 
-            switch type {
-            case "semantic":
-                guard let value = config["value"] as? String else {
+            switch config.type {
+            case .semantic:
+                guard let value = stringValue(from: config.value) else {
                     print("[RnBottomSheet] Invalid semantic detent at index \(index): missing string value")
                     continue
                 }
@@ -431,7 +427,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                 }
                 seenResolvedValues.insert(resolvedKey)
 
-                let identifierString = (providedIdentifier?.isEmpty == false ? providedIdentifier! : value)
+                let identifierString = providedIdentifier.isEmpty ? value : providedIdentifier
                 if seenIdentifiers.contains(identifierString) {
                     print("[RnBottomSheet] Duplicate detent identifier '\(identifierString)'")
                     continue
@@ -446,8 +442,8 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                     )
                 )
 
-            case "fraction":
-                guard let value = numericValue(from: config["value"]) else {
+            case .fraction:
+                guard let value = numericValue(from: config.value) else {
                     print("[RnBottomSheet] Invalid fraction detent at index \(index): value must be numeric")
                     continue
                 }
@@ -462,7 +458,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                 }
                 seenResolvedValues.insert(resolvedKey)
 
-                let identifierString = (providedIdentifier?.isEmpty == false ? providedIdentifier! : "fraction_\(value)")
+                let identifierString = providedIdentifier.isEmpty ? "fraction_\(value)" : providedIdentifier
                 if seenIdentifiers.contains(identifierString) {
                     print("[RnBottomSheet] Duplicate detent identifier '\(identifierString)'")
                     continue
@@ -477,8 +473,8 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                     )
                 )
 
-            case "points":
-                guard let value = numericValue(from: config["value"]) else {
+            case .points:
+                guard let value = numericValue(from: config.value) else {
                     print("[RnBottomSheet] Invalid points detent at index \(index): value must be numeric")
                     continue
                 }
@@ -493,7 +489,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                 }
                 seenResolvedValues.insert(resolvedKey)
 
-                let identifierString = (providedIdentifier?.isEmpty == false ? providedIdentifier! : "points_\(value)")
+                let identifierString = providedIdentifier.isEmpty ? "points_\(value)" : providedIdentifier
                 if seenIdentifiers.contains(identifierString) {
                     print("[RnBottomSheet] Duplicate detent identifier '\(identifierString)'")
                     continue
@@ -507,9 +503,6 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
                         kind: .points(value)
                     )
                 )
-
-            default:
-                print("[RnBottomSheet] Invalid detent at index \(index): unsupported type '\(type)'")
             }
         }
 
@@ -528,14 +521,22 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         }
     }
 
-    private func numericValue(from raw: Any?) -> Double? {
-        if let value = raw as? Double {
+    private func numericValue(from raw: Variant_String_Double) -> Double? {
+        switch raw {
+        case .first:
+            return nil
+        case .second(let value):
             return value
         }
-        if let value = raw as? NSNumber {
-            return value.doubleValue
+    }
+
+    private func stringValue(from raw: Variant_String_Double) -> String? {
+        switch raw {
+        case .first(let value):
+            return value
+        case .second:
+            return nil
         }
-        return nil
     }
 
     // =========================================================================
@@ -558,21 +559,19 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         }
         return nil
     }
-}
 
-// =============================================================================
-// MARK: - UISheetPresentationControllerDelegate
-// =============================================================================
-
-extension HybridRnBottomSheet: UISheetPresentationControllerDelegate {
-    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
-        // Find the index of the new detent
+    fileprivate func handleDetentIdentifierChange(_ sheetPresentationController: UISheetPresentationController) {
         guard let identifier = sheetPresentationController.selectedDetentIdentifier else { return }
+
+        if suppressNextDetentDelegateEvent {
+            suppressNextDetentDelegateEvent = false
+            return
+        }
 
         let nativeDetents = buildNativeDetentIdentifiers()
         if let index = nativeDetents.firstIndex(where: { $0 == identifier }) {
             currentDetentIndex = index
-            onDetentChange?(Double(index), "swipe")
+            onDetentChange(Double(index), .swipe)
         }
     }
 }
@@ -582,15 +581,15 @@ extension HybridRnBottomSheet: UISheetPresentationControllerDelegate {
 // =============================================================================
 
 extension HybridRnBottomSheet: SheetPresenterDelegate {
-    func sheetWillDismiss(reason: String) {
-        onWillDismiss?()
+    func sheetWillDismiss(reason: NativeChangeReason) {
+        onWillDismiss()
     }
 
-    func sheetDidDismiss(reason: String) {
+    func sheetDidDismiss(reason: NativeChangeReason) {
         isCurrentlyPresented = false
         sheetViewController = nil
-        onDidDismiss?()
-        onOpenChange?(false, reason)
+        onDidDismiss()
+        onOpenChange(false, reason)
     }
 }
 
@@ -614,8 +613,8 @@ private struct ValidatedNativeDetent {
 
 /// Protocol for sheet presenter delegate
 protocol SheetPresenterDelegate: AnyObject {
-    func sheetWillDismiss(reason: String)
-    func sheetDidDismiss(reason: String)
+    func sheetWillDismiss(reason: NativeChangeReason)
+    func sheetDidDismiss(reason: NativeChangeReason)
 }
 
 /// Wrapper to track sheet presenter state
@@ -630,18 +629,32 @@ class SheetPresenterViewController {
 }
 
 extension SheetPresenterViewController: SheetPresenterDelegate {
-    func sheetWillDismiss(reason: String) {
+    func sheetWillDismiss(reason: NativeChangeReason) {
         delegate?.sheetWillDismiss(reason: reason)
     }
 
-    func sheetDidDismiss(reason: String) {
+    func sheetDidDismiss(reason: NativeChangeReason) {
         delegate?.sheetDidDismiss(reason: reason)
+    }
+}
+
+/// NSObject-backed proxy used for UISheetPresentationController delegate callbacks.
+private final class SheetPresentationDelegateProxy: NSObject, UISheetPresentationControllerDelegate {
+    weak var owner: HybridRnBottomSheet?
+
+    init(owner: HybridRnBottomSheet) {
+        self.owner = owner
+    }
+
+    func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
+        owner?.handleDetentIdentifierChange(sheetPresentationController)
     }
 }
 
 /// View controller that hosts the React Native content inside the sheet
 class SheetContentViewController: UIViewController {
     weak var presenterDelegate: SheetPresenterDelegate?
+    var dismissalReasonOverride: NativeChangeReason?
     var contentView: UIView? {
         didSet {
             if isViewLoaded {
@@ -676,8 +689,7 @@ class SheetContentViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isBeingDismissed {
-            // Determine dismissal reason
-            let reason = isModalInPresentation ? "programmatic" : "swipe"
+            let reason = dismissalReasonOverride ?? .swipe
             presenterDelegate?.sheetWillDismiss(reason: reason)
         }
     }
@@ -685,8 +697,9 @@ class SheetContentViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if isBeingDismissed {
-            let reason = isModalInPresentation ? "programmatic" : "swipe"
+            let reason = dismissalReasonOverride ?? .swipe
             presenterDelegate?.sheetDidDismiss(reason: reason)
+            dismissalReasonOverride = nil
         }
     }
 }

@@ -17,13 +17,13 @@
 
 ### Phase 2: iOS Sheet Engine
 
-- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+- [x] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
 - [x] [HIGH] Implement detent normalization (fit/medium/large/fraction/points to native identifiers) - from ios-sheet-apis.md
 - [x] [HIGH] Implement detent validation (order low-to-high, unique identifiers) - from ios-sheet-apis.md
 - [x] [HIGH] Map selectedDetentIdentifier bidirectionally - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
 - [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
 - [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
 - [ ] [MEDIUM] Implement allowSwipeToDismiss behavior - from IMPLEMENTATION_PLAN API Design
@@ -65,7 +65,7 @@
 - [ ] [MEDIUM] Add Maestro E2E flow: dismiss sheet, verify closed - from IMPLEMENTATION_PLAN Verification
 - [x] [MEDIUM] Fix yarn lint to pass - from tasks/todo.md Verification Checklist
 - [x] [MEDIUM] Fix yarn typecheck to pass - from tasks/todo.md Verification Checklist
-- [ ] [MEDIUM] Verify iOS example app builds successfully - from IMPLEMENTATION_PLAN Verification
+- [x] [MEDIUM] Verify iOS example app builds successfully - from IMPLEMENTATION_PLAN Verification
 - [ ] [LOW] Update CI gates for new test coverage - from IMPLEMENTATION_PLAN Verification
 
 ## Completed
