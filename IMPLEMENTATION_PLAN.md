@@ -32,7 +32,7 @@
 - [x] [MEDIUM] Implement largestUndimmedDetent mapping - from IMPLEMENTATION_PLAN API Design
 - [x] [MEDIUM] Implement backgroundInteraction behavior - from IMPLEMENTATION_PLAN API Design
 - [x] [MEDIUM] Implement snapToDetent() with animateChanges batching - from ios-sheet-apis.md
-- [ ] [LOW] Implement single active sheet enforcement (manager-level ownership) - from IMPLEMENTATION_PLAN Architecture
+- [x] [LOW] Implement single active sheet enforcement (manager-level ownership) - from IMPLEMENTATION_PLAN Architecture
 
 ### Phase 3: Content Hosting
 

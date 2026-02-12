@@ -308,7 +308,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
     func present() throws {
         runOnMainSync {
-            guard !isCurrentlyPresented else { return }
+            guard !hasActivePresentationSession else { return }
             shouldPresentWhenHostAttaches = true
             presentSheet()
         }
@@ -317,7 +317,8 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     func dismiss() throws {
         runOnMainSync {
             shouldPresentWhenHostAttaches = false
-            guard isCurrentlyPresented else { return }
+            SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
+            guard hasActivePresentationSession else { return }
             dismissSheet(reason: .programmatic)
         }
     }
@@ -421,19 +422,54 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         return unwrappedResult
     }
 
+    fileprivate var hasActivePresentationSession: Bool {
+        isCurrentlyPresented || sheetViewController != nil
+    }
+
+    private func finishSessionOwnershipAndResumeNextIfNeeded() {
+        precondition(Thread.isMainThread, "Session ownership updates must run on main thread")
+        if let nextOwner = SingleActiveSheetSessionCoordinator.shared.finishSession(for: self) {
+            nextOwner.resumeDeferredPresentationIfNeeded()
+        }
+    }
+
+    fileprivate func resumeDeferredPresentationIfNeeded() {
+        runOnMainSync {
+            guard shouldPresentWhenHostAttaches || isOpenStorage else {
+                SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
+                return
+            }
+            presentSheet()
+        }
+    }
+
+    fileprivate func requestCoordinatorDrivenDismissal() {
+        runOnMainSync {
+            guard hasActivePresentationSession else {
+                finishSessionOwnershipAndResumeNextIfNeeded()
+                return
+            }
+            dismissSheet(reason: .programmatic)
+        }
+    }
+
     private func presentSheet() {
         guard isHostAttached else {
             shouldPresentWhenHostAttaches = true
             return
         }
 
-        guard !isCurrentlyPresented else {
+        guard !hasActivePresentationSession else {
             shouldPresentWhenHostAttaches = false
             return
         }
 
         guard let presentingVC = findPresentingViewController() else {
             print("[RnBottomSheet] Could not find presenting view controller")
+            return
+        }
+
+        guard SingleActiveSheetSessionCoordinator.shared.requestPresentation(for: self) else {
             return
         }
 
@@ -470,6 +506,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
     private func dismissSheet(reason: NativeChangeReason) {
         shouldPresentWhenHostAttaches = false
+        SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
         guard let contentVC = sheetViewController?.contentViewController else { return }
         contentVC.dismissalReasonOverride = reason
         if contentVC.presentingViewController != nil {
@@ -478,6 +515,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
             // If UIKit already detached the presenter, reset state immediately.
             isCurrentlyPresented = false
             sheetViewController = nil
+            finishSessionOwnershipAndResumeNextIfNeeded()
         }
     }
 
@@ -894,9 +932,10 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         runOnMainSync {
             isHostAttached = false
             shouldPresentWhenHostAttaches = false
+            SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
 
             // If the host leaves the hierarchy, force a clean teardown.
-            if isCurrentlyPresented {
+            if hasActivePresentationSession {
                 dismissSheet(reason: .system)
             }
         }
@@ -940,6 +979,8 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
             backgroundInteractionStorage = .first("modal")
             cornerRadiusStorage = -1
             expandsWhenScrolledToEdgeStorage = true
+            SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
+            finishSessionOwnershipAndResumeNextIfNeeded()
         }
     }
 }
@@ -961,6 +1002,7 @@ extension HybridRnBottomSheet: SheetPresenterDelegate {
             sheetViewController = nil
             onDidDismiss()
             onOpenChange(false, reason)
+            finishSessionOwnershipAndResumeNextIfNeeded()
         }
     }
 }
@@ -981,6 +1023,72 @@ private struct ValidatedNativeDetent {
     let identifier: UISheetPresentationController.Detent.Identifier
     let sortValue: Double
     let kind: Kind
+}
+
+/// Enforces the v1 one-active-sheet constraint and coordinates deterministic handoff
+/// when a newer sheet requests presentation while another session is active.
+private final class SingleActiveSheetSessionCoordinator {
+    static let shared = SingleActiveSheetSessionCoordinator()
+
+    private weak var activeOwner: HybridRnBottomSheet?
+    private weak var pendingOwner: HybridRnBottomSheet?
+    private var isCoordinatorDismissalInFlight: Bool = false
+
+    private init() {}
+
+    func requestPresentation(for owner: HybridRnBottomSheet) -> Bool {
+        precondition(Thread.isMainThread, "Session coordinator must be used on main thread")
+
+        if let currentOwner = activeOwner, currentOwner !== owner {
+            if !currentOwner.hasActivePresentationSession {
+                activeOwner = nil
+                isCoordinatorDismissalInFlight = false
+            } else {
+                pendingOwner = owner
+                if !isCoordinatorDismissalInFlight {
+                    isCoordinatorDismissalInFlight = true
+                    currentOwner.requestCoordinatorDrivenDismissal()
+                }
+                return false
+            }
+        }
+
+        activeOwner = owner
+        if pendingOwner === owner {
+            pendingOwner = nil
+        }
+        return true
+    }
+
+    func cancelPendingPresentation(for owner: HybridRnBottomSheet) {
+        precondition(Thread.isMainThread, "Session coordinator must be used on main thread")
+
+        if pendingOwner === owner {
+            pendingOwner = nil
+        }
+
+        if pendingOwner == nil {
+            isCoordinatorDismissalInFlight = false
+        }
+    }
+
+    func finishSession(for owner: HybridRnBottomSheet) -> HybridRnBottomSheet? {
+        precondition(Thread.isMainThread, "Session coordinator must be used on main thread")
+
+        if activeOwner === owner {
+            activeOwner = nil
+        }
+
+        guard activeOwner == nil else {
+            return nil
+        }
+
+        let nextOwner = pendingOwner
+        pendingOwner = nil
+        isCoordinatorDismissalInFlight = false
+        activeOwner = nextOwner
+        return nextOwner
+    }
 }
 
 /// Protocol for sheet presenter delegate

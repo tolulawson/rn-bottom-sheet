@@ -60,6 +60,12 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 2 Single Active Sheet Enforcement`: added a singleton native session coordinator in `ios/RnBottomSheet.swift` that enforces one active owner at a time, queues concurrent open requests, and deterministically hands off ownership to the newest requester after the active sheet dismisses.
+  - Updated `ios/RnBottomSheet.swift` presentation guards to treat in-flight presenter state as active (`hasActivePresentationSession`), preventing duplicate present attempts from the same instance during transition windows.
+  - Updated `IMPLEMENTATION_PLAN.md` to mark "Implement single active sheet enforcement (manager-level ownership)" complete.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful iOS simulator compile via `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+  - Maestro MCP gate remains non-blocking for this iteration because `specs/001-native-ios-sheet-bindings/spec.md` sets `E2E Gate State: deferred`.
+  - No dedicated iOS XCTest target exists yet for direct native coordinator assertions; verification for this slice relies on the existing JS automated suite plus native compile/build validation.
   - Ralph iteration `Phase 3 Thread-Safe Prop Updates`: refactored `ios/RnBottomSheet.swift` protocol-facing props/callbacks/methods to marshal reads/writes through a `runOnMainSync` gate, preventing cross-thread mutation of UIKit-bound state.
   - Added Nitro `beforeUpdate()` / `afterUpdate()` batching in `ios/RnBottomSheet.swift` with staged prop-update coalescing (`pendingPropUpdates`) so batched React prop commits apply deterministically once per transaction.
   - Updated `IMPLEMENTATION_PLAN.md` stale completion state for already-implemented Phase 2/4/5 medium items and marked the newly delivered Phase 3 thread-safety + batching tasks complete.
@@ -405,3 +411,11 @@
 - [x] Synchronize stale-complete entries in `IMPLEMENTATION_PLAN.md` based on verified implementation state
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
 - [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Phase 2 Single Active Sheet Enforcement)
+
+- [x] Confirm the highest-priority incomplete item is single active sheet enforcement and verify manager-level ownership is not already implemented
+- [x] Implement manager-level global ownership in `ios/RnBottomSheet.swift` so only one sheet session can be active at a time
+- [x] Define deterministic behavior for concurrent open requests (handoff to newest request) and enforce it in native presenter flow
+- [x] Verify single-active-session behavior via available automated gates (`yarn lint`, `yarn typecheck`, `yarn test`) and native compile gate (`xcodebuild ... RnBottomSheetExample ... build`) since no dedicated iOS XCTest target exists yet
+- [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with outcomes
