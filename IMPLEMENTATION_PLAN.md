@@ -66,7 +66,7 @@
 - [x] [MEDIUM] Fix yarn lint to pass - from tasks/todo.md Verification Checklist
 - [x] [MEDIUM] Fix yarn typecheck to pass - from tasks/todo.md Verification Checklist
 - [x] [MEDIUM] Verify iOS example app builds successfully - from IMPLEMENTATION_PLAN Verification
-- [ ] [LOW] Update CI gates for new test coverage - from IMPLEMENTATION_PLAN Verification
+- [x] [LOW] Update CI gates for new test coverage - from IMPLEMENTATION_PLAN Verification
 
 ## Completed
 
