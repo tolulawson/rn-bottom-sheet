@@ -105,10 +105,9 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
   3. Example app behavior is expected to be stable enough for deterministic E2E validation.
 - **Latest Gate Evaluation (2026-02-12)**:
   - Criteria 1 and 2 are satisfied.
-  - Criteria 3 remains unmet because the iOS example app currently fails native build
-    (`ios/RnBottomSheet.swift` conformance errors against generated Nitrogen protocol),
-    which prevents deterministic Maestro execution against an installed app binary.
-  - Gate state remains `deferred` until the iOS build blocker is resolved.
+  - The iOS example app native build now succeeds
+    (`xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`).
+  - Gate state remains `deferred` because deterministic Maestro MCP execution has not yet been established as a stable, repeatable hard gate in this loop.
 - **Blocking Rule**:
   - While `deferred`, Maestro MCP execution is informational and MUST NOT block loop completion.
   - When switched to `required`, Maestro MCP example-app flows become a hard acceptance gate.

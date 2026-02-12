@@ -430,3 +430,35 @@
 - [x] Apply the minimal CI workflow change needed so new coverage is enforced deterministically, or synchronize stale tracker state when CI already satisfies the gate
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test --coverage`, `yarn docs:check`
 - [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with outcomes
+
+## Ralph Iteration 2026-02-12 (Phase 1b Re-Verification: Spec 001)
+
+- [x] Confirm no higher-priority incomplete item exists across specs, implementation plan, GitHub issues, and configured trackers
+- [x] Randomly select a completed spec and lock target (`specs/001-native-ios-sheet-bindings/spec.md`)
+- [x] Re-verify every user-story acceptance scenario against automated tests and code paths
+- [x] Re-verify edge-case coverage claims and identify any behavioral regressions
+- [x] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Update `tasks/todo.md` Review section with objective verification evidence and gate-state outcome
+
+## Review Addendum (2026-02-12, Phase 1b Re-Verification)
+
+- Discovery verification:
+  - `specs/001-native-ios-sheet-bindings/spec.md` is marked `## Status: COMPLETE`.
+  - `IMPLEMENTATION_PLAN.md` contains no unchecked `- [ ]` items.
+  - `gh issue list --state open` returned no open GitHub issues.
+  - No external tracker resources were configured in MCP resource listings.
+- Acceptance criteria re-verification:
+  - US1 open/dismiss/interactive-content flow remains covered by `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` and `src/__tests__/bottom-sheet.presenter.integration.test.tsx`.
+  - US2 detent initialization, snapping, and error validation remain covered by `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - US3 navigation sync, in-sheet route flow, and animated-wrapper compatibility remain covered by `src/__tests__/bottom-sheet.navigation.test.ts`, `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`, and `src/__tests__/bottom-sheet.reanimated.test.ts`.
+- Edge-case and regression checks:
+  - Invalid/unsorted/duplicate detents and index bounds are validated in `src/__tests__/bottom-sheet.detents.test.ts` and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - Non-iOS deterministic fallback behavior remains covered by `src/__tests__/bottom-sheet.fallback.test.ts`.
+  - Route-close synchronization behavior (including already-synced route states) remains covered by `src/__tests__/bottom-sheet-adapter.test.ts`.
+- Validation gates:
+  - `yarn lint` passed with 0 errors (3 warnings from generated `coverage/lcov-report/*` files).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (13/13 suites; 44 passed, 19 todo).
+  - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+- Maestro gate outcome:
+  - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
