@@ -100,7 +100,7 @@
 
 ### Implementation for User Story 3
 
-- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+- [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
 - [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
 - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
 - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts

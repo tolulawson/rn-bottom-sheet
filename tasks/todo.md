@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T027`: added `src/navigation/bottom-sheet-adapter.ts` with optional navigation sync helpers (`createBottomSheetNavigationAdapter` and `useBottomSheetNavigation`) that map route state to controlled sheet props and avoid circular open/close dispatch when state is already aligned.
+  - Added `src/__tests__/bottom-sheet-adapter.test.ts` to verify route-state mapping, open/close callback propagation, and loop-prevention behavior for matching states.
+  - Marked `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T026`: added `src/__tests__/bottom-sheet.reanimated.test.ts` to lock the documented Reanimated compatibility contract for `createAnimatedComponent` wrapping of both `BottomSheet` and `BottomSheetView`, including ref-method continuity and animated prop pass-through behavior.
   - No production-code changes were required for `T026`; the existing wrapper/native export surface already satisfied the contract once coverage was added.
   - Marked `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
@@ -187,5 +191,14 @@
 - [x] Add reanimated compatibility contract tests in `src/__tests__/bottom-sheet.reanimated.test.ts`
 - [x] Implement minimal production changes only if test-driven gaps are found
 - [x] Mark `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Helper T027)
+
+- [x] Confirm `T027` is the highest-priority truly incomplete item and verify `src/navigation/bottom-sheet-adapter.ts` does not already exist
+- [x] Implement optional navigation adapter helpers in `src/navigation/bottom-sheet-adapter.ts`
+- [x] Add adapter helper unit tests in `src/__tests__/bottom-sheet-adapter.test.ts`
+- [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
