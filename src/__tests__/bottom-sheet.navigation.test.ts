@@ -109,6 +109,27 @@ describe('bottom-sheet navigation sync behavior', () => {
     expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
   });
 
+  it('forwards non-programmatic close reasons from native callbacks', () => {
+    const onOpenChange = jest.fn();
+
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(BottomSheet, {
+          isOpen: true,
+          onOpenChange,
+        })
+      );
+    });
+
+    TestRenderer.act(() => {
+      mockLatestProps?.onOpenChange(false, 'backdrop');
+      mockLatestProps?.onOpenChange(false, 'system');
+    });
+
+    expect(onOpenChange).toHaveBeenNthCalledWith(1, false, 'backdrop');
+    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'system');
+  });
+
   it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
     const onOpenChange = jest.fn();
     const ref = createRef<BottomSheetMethods>();

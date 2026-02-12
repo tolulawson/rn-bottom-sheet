@@ -158,6 +158,11 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         // Create sheet content view controller
         let contentVC = SheetContentViewController()
         contentVC.contentView = view
+        contentVC.isModalInPresentation = !allowSwipeToDismiss
+        contentVC.shouldTrackBackdropTapDismissal = { [weak self] in
+            guard let self else { return false }
+            return self.allowSwipeToDismiss
+        }
 
         // Configure sheet presentation
         if let sheet = contentVC.sheetPresentationController {
@@ -574,6 +579,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
             onDetentChange(Double(index), .swipe)
         }
     }
+
+    fileprivate func handlePresentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        guard let contentVC = sheetViewController?.contentViewController else { return }
+        let isInteractiveDismissal = presentationController.presentedViewController.transitionCoordinator?.isInteractive ?? false
+        contentVC.notePresentationWillDismiss(isInteractive: isInteractiveDismissal)
+    }
 }
 
 // =============================================================================
@@ -649,12 +660,22 @@ private final class SheetPresentationDelegateProxy: NSObject, UISheetPresentatio
     func sheetPresentationControllerDidChangeSelectedDetentIdentifier(_ sheetPresentationController: UISheetPresentationController) {
         owner?.handleDetentIdentifierChange(sheetPresentationController)
     }
+
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        owner?.handlePresentationControllerWillDismiss(presentationController)
+    }
 }
 
 /// View controller that hosts the React Native content inside the sheet
 class SheetContentViewController: UIViewController {
     weak var presenterDelegate: SheetPresenterDelegate?
     var dismissalReasonOverride: NativeChangeReason?
+    private var isSystemDismissalCandidate: Bool = false
+    private var wasInteractiveDismissal: Bool?
+    private var lastBackdropTapTimestamp: TimeInterval?
+    private var backdropTapGestureRecognizer: UITapGestureRecognizer?
+    private let backdropDismissalInferenceWindow: TimeInterval = 0.5
+    var shouldTrackBackdropTapDismissal: () -> Bool = { true }
     var contentView: UIView? {
         didSet {
             if isViewLoaded {
@@ -667,6 +688,11 @@ class SheetContentViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         setupContentView()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        installBackdropTapObserverIfNeeded()
     }
 
     private func setupContentView() {
@@ -686,10 +712,23 @@ class SheetContentViewController: UIViewController {
         }
     }
 
+    func notePresentationWillDismiss(isInteractive: Bool) {
+        guard dismissalReasonOverride == nil else { return }
+        wasInteractiveDismissal = isInteractive
+
+        if wasBackdropTapRecently() {
+            isSystemDismissalCandidate = false
+            return
+        }
+
+        // Non-interactive dismissals without a backdrop tap are treated as system-driven.
+        isSystemDismissalCandidate = !isInteractive
+    }
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if isBeingDismissed {
-            let reason = dismissalReasonOverride ?? .swipe
+            let reason = resolveDismissalReason()
             presenterDelegate?.sheetWillDismiss(reason: reason)
         }
     }
@@ -697,9 +736,82 @@ class SheetContentViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         if isBeingDismissed {
-            let reason = dismissalReasonOverride ?? .swipe
+            let reason = resolveDismissalReason()
             presenterDelegate?.sheetDidDismiss(reason: reason)
-            dismissalReasonOverride = nil
+            clearDismissalTracking()
         }
+    }
+
+    private func installBackdropTapObserverIfNeeded() {
+        guard backdropTapGestureRecognizer == nil,
+              let containerView = presentationController?.containerView else {
+            return
+        }
+
+        let recognizer = UITapGestureRecognizer(target: self, action: #selector(handleContainerTap(_:)))
+        recognizer.cancelsTouchesInView = false
+        recognizer.delegate = self
+        containerView.addGestureRecognizer(recognizer)
+        backdropTapGestureRecognizer = recognizer
+    }
+
+    @objc
+    private func handleContainerTap(_ recognizer: UITapGestureRecognizer) {
+        guard recognizer.state == .ended,
+              shouldTrackBackdropTapDismissal(),
+              let containerView = presentationController?.containerView,
+              let presentedView = presentationController?.presentedView else {
+            return
+        }
+
+        let location = recognizer.location(in: containerView)
+        if !presentedView.frame.contains(location) {
+            lastBackdropTapTimestamp = Date().timeIntervalSinceReferenceDate
+        }
+    }
+
+    private func resolveDismissalReason() -> NativeChangeReason {
+        if let override = dismissalReasonOverride {
+            return override
+        }
+
+        if wasInteractiveDismissal == true {
+            return .swipe
+        }
+
+        if wasBackdropTapRecently() {
+            return .backdrop
+        }
+
+        if isSystemDismissalCandidate {
+            return .system
+        }
+
+        return .swipe
+    }
+
+    private func wasBackdropTapRecently() -> Bool {
+        guard let tapTimestamp = lastBackdropTapTimestamp else {
+            return false
+        }
+
+        let now = Date().timeIntervalSinceReferenceDate
+        return (now - tapTimestamp) <= backdropDismissalInferenceWindow
+    }
+
+    private func clearDismissalTracking() {
+        dismissalReasonOverride = nil
+        isSystemDismissalCandidate = false
+        wasInteractiveDismissal = nil
+        lastBackdropTapTimestamp = nil
+    }
+}
+
+extension SheetContentViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(
+        _ gestureRecognizer: UIGestureRecognizer,
+        shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer
+    ) -> Bool {
+        return true
     }
 }

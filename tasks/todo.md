@@ -60,6 +60,8 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 2 Dismissal Reason Detection`: implemented native dismissal-reason classification in `ios/RnBottomSheet.swift` with deterministic mapping for `programmatic`, `backdrop`, `swipe`, and `system` (programmatic overrides, backdrop tap inference window, and non-interactive fallback to system), plus callback pass-through coverage for `backdrop`/`system` in `src/__tests__/bottom-sheet.navigation.test.ts`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful iOS simulator build via `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
   - Ralph iteration `P2 iOS native conformance blocker`: fixed `ios/RnBottomSheet.swift` to conform to generated `HybridRnBottomSheetSpec` types/signatures (typed detents/background interaction/callbacks + throwing methods), replaced direct `UISheetPresentationControllerDelegate` conformance with an `NSObject` proxy, and normalized dismissal/detent callback routing.
   - Re-verified iOS/native integration with a successful `yarn workspace rn-bottom-sheet-example ios` build/run and passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Updated `IMPLEMENTATION_PLAN.md` completion status for Phase 2 presenter/present/dismiss/lifecycle items and Phase 5 iOS example build verification.
@@ -342,3 +344,11 @@
 - [x] Replace direct `UISheetPresentationControllerDelegate` conformance with an `NSObject` delegate proxy
 - [x] Run and pass verification: `yarn workspace rn-bottom-sheet-example ios`, `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with results
+
+## Ralph Iteration 2026-02-12 (Phase 2 Dismissal Reason Detection)
+
+- [x] Confirm highest-priority unchecked item remains dismissal reason detection and verify current native mapping gaps
+- [x] Implement deterministic iOS dismissal reason classification for `programmatic`, `swipe`, `backdrop`, and `system`
+- [x] Add or extend automated tests to lock reason mapping behavior
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Update `IMPLEMENTATION_PLAN.md` progress and capture outcomes in `tasks/todo.md` Review

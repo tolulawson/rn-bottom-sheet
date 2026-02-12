@@ -24,7 +24,7 @@
 - [x] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
 - [x] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
 - [x] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
 - [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
 - [ ] [MEDIUM] Implement allowSwipeToDismiss behavior - from IMPLEMENTATION_PLAN API Design
 - [ ] [MEDIUM] Implement expandsWhenScrolledToEdge mapping - from IMPLEMENTATION_PLAN API Design
