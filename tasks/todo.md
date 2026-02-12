@@ -59,6 +59,8 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
@@ -140,3 +142,11 @@
 - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture results in the Review section
+
+## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
+
+- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
+- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
+- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section

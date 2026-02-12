@@ -73,7 +73,7 @@
 ### Tests for User Story 2
 
 - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
 
 ### Implementation for User Story 2
 
