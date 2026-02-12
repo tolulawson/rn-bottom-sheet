@@ -36,6 +36,7 @@
 - [x] Add unit tests for API normalization and behavior
 - [ ] Add iOS integration tests for presenter/detents/lifecycle
 - [ ] Add Maestro happy-path E2E flows in example app
+- [x] Add conditional Maestro MCP gate policy (deferred until stable, required at release gate)
 - [ ] Update CI gates as needed
 
 ## Verification Checklist
@@ -59,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+  - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+  - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
@@ -148,5 +153,15 @@
 - [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
 - [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
 - [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US2 Example Detent Controls T024)
+
+- [x] Confirm `T024` is the highest-priority truly incomplete item and verify `example/src/App.tsx` does not already provide detent controls + behavior toggles
+- [x] Implement example detent controls in `example/src/App.tsx` (open/close, snap to each detent, current detent status)
+- [x] Implement example behavior toggles in `example/src/App.tsx` (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, `backgroundInteraction`)
+- [x] Update/extend example integration test coverage in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` for new controls
+- [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section

@@ -81,7 +81,7 @@
 - [x] T021 [US2] Add configurable behavior props wiring (`grabber`, swipe dismiss, background mode) in src/components/BottomSheet.tsx
 - [x] T022 [US2] Implement detent mapping and selected-detent updates in ios/RnBottomSheet.swift
 - [x] T023 [US2] Implement imperative `snapToDetent` and `getCurrentDetentIndex` bridge in ios/RnBottomSheet.swift
-- [ ] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
+- [x] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
 
 **Checkpoint**: User Story 2 is independently testable with deterministic detent behavior.
 
@@ -118,6 +118,9 @@
 - [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
 - [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
 - [ ] T035 Execute validation commands and capture results in tasks/todo.md
+- [ ] T036 [P] Add Maestro example-app E2E flow definitions in example/.maestro/sheet-core-flows.yaml
+- [ ] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
+- [ ] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
 
 ---
 
@@ -129,6 +132,7 @@
 - **Phase 2 (Foundational)**: depends on Phase 1 and blocks story phases.
 - **Phases 3-5 (User Stories)**: depend on Phase 2; then can be worked in priority order (US1 -> US2 -> US3).
 - **Phase 6 (Polish)**: depends on completion of intended story scope.
+- **Maestro MCP Gate**: runs in Phase 6 as non-blocking while `E2E Gate State` is `deferred`, and becomes blocking only after it is switched to `required`.
 
 ### User Story Dependencies
 

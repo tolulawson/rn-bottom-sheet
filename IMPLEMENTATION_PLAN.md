@@ -80,6 +80,7 @@
 - [x] Create project constitution - Ralph Setup
 - [x] Create AGENTS.md, CLAUDE.md, PROMPT files - Ralph Setup
 - [x] yarn docs:check passes - Verification Checklist
+- [x] Add example app detent controls and behavior toggles - from specs/001-native-ios-sheet-bindings/tasks.md T024
 
 ## Implementation Order
 
