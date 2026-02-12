@@ -114,7 +114,7 @@
 
 **Purpose**: Align docs, verification scripts, and release readiness.
 
-- [ ] T032 [P] Update public usage documentation and API surface in README.md
+- [x] T032 [P] Update public usage documentation and API surface in README.md
 - [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
 - [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
 - [ ] T035 Execute validation commands and capture results in tasks/todo.md

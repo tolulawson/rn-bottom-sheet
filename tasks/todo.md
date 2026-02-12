@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T032`: rewrote `README.md` to reflect the implemented API surface (wrapper/native exports, detent model, lifecycle callbacks, imperative methods, navigation adapter usage, Reanimated compatibility contract, and non-iOS fallback behavior).
+  - Marked `T032` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T031`: updated `example/src/App.tsx` with navigation-driven open/close state via `useBottomSheetNavigation`, added in-sheet route transitions (`Summary`/`Details`), and added an optional Reanimated wrapper scenario with deterministic fallback when `react-native-reanimated` is not installed.
   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate navigation-route transitions and animation-wrapper status in the example flow.
   - Marked `T031` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized related integration progress in `IMPLEMENTATION_PLAN.md`.
@@ -249,5 +252,13 @@
 - [x] Implement optional animated wrapper scenario with deterministic fallback in `example/src/App.tsx`
 - [x] Update example integration assertions for navigation + animation scenario coverage in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
 - [x] Mark `T031` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Public API Docs T032)
+
+- [x] Confirm `T032` is the highest-priority truly incomplete item and verify `README.md` API drift
+- [x] Update installation, usage, API reference, and fallback/navigation/reanimated notes in `README.md`
+- [x] Mark `T032` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
