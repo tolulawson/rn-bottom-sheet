@@ -119,7 +119,7 @@
 - [x] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
 - [x] T035 Execute validation commands and capture results in tasks/todo.md
 - [x] T036 [P] Add Maestro example-app E2E flow definitions in example/.maestro/sheet-core-flows.yaml
-- [ ] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
+- [x] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
 - [ ] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
 
 ---

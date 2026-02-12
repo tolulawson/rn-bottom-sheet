@@ -151,6 +151,23 @@ Use this sequence for each implementation slice before changing task state:
   surfaces using `createAnimatedComponent` contract tests.
 - Validate non-iOS fallback remains no-crash and warning-based in development.
 
+### Maestro MCP Invocation Expectations
+
+- Source flow file: `example/.maestro/sheet-core-flows.yaml`
+- Core flow assertions:
+  - sheet opens from the example UI
+  - detent interaction works (`Snap to Large`)
+  - in-sheet navigation flow works (`Go to Details` -> `Back to Summary`)
+  - sheet dismisses cleanly
+- Gate behavior:
+  - if spec `E2E Gate State` is `deferred`, Maestro MCP execution is
+    informational and non-blocking for loop completion
+  - if spec `E2E Gate State` is `required`, Maestro MCP execution is blocking
+    and must pass before completion signal
+- Failure handling:
+  - on Maestro failure in `required` mode, capture failing step context and keep
+    the loop open until fixed and re-verified
+
 ## Acceptance Criteria
 
 1. Consumers can present native-feeling iOS sheets with RN children.
