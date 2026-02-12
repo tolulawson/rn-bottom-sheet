@@ -60,6 +60,11 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 3 Thread-Safe Prop Updates`: refactored `ios/RnBottomSheet.swift` protocol-facing props/callbacks/methods to marshal reads/writes through a `runOnMainSync` gate, preventing cross-thread mutation of UIKit-bound state.
+  - Added Nitro `beforeUpdate()` / `afterUpdate()` batching in `ios/RnBottomSheet.swift` with staged prop-update coalescing (`pendingPropUpdates`) so batched React prop commits apply deterministically once per transaction.
+  - Updated `IMPLEMENTATION_PLAN.md` stale completion state for already-implemented Phase 2/4/5 medium items and marked the newly delivered Phase 3 thread-safety + batching tasks complete.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful `yarn workspace rn-bottom-sheet-example ios` build/run.
+  - Maestro MCP gate remains non-blocking for this loop because `specs/001-native-ios-sheet-bindings/spec.md` still sets `E2E Gate State: deferred`.
   - Ralph iteration `Phase 5 HIGH iOS Detent Integration Test Sync`: added `src/__tests__/bottom-sheet.detent.integration.test.tsx` to validate detent presenter prop wiring (native detent config + initial/selected indices), controlled `selectedDetent` updates, and detent event/method bridging (`onDetentChange`, `snapToDetent`, `getCurrentDetentIndex`) through the real `BottomSheet` wrapper.
   - Updated `IMPLEMENTATION_PLAN.md` to mark "Add iOS integration tests for detent behavior" complete.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -391,3 +396,12 @@
 - [x] Implement `prepareForRecycle()` cleanup to reset presenter/session state safely for Nitro view reuse in `ios/RnBottomSheet.swift`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
 - [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with outcomes
+
+## Ralph Iteration 2026-02-12 (Phase 3 Thread-Safe Prop Updates)
+
+- [x] Confirm highest-priority truly incomplete item is cross-thread prop safety and verify current implementation lacks explicit thread marshaling
+- [x] Implement main-thread marshaling for Nitro prop setters/getters and imperative methods in `ios/RnBottomSheet.swift`
+- [x] Implement `beforeUpdate()` / `afterUpdate()` batching hooks for grouped prop application in `ios/RnBottomSheet.swift`
+- [x] Synchronize stale-complete entries in `IMPLEMENTATION_PLAN.md` based on verified implementation state
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
+- [x] Capture verification outcomes in the Review section

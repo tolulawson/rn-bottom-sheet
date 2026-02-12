@@ -14,6 +14,16 @@ import NitroModules
  * - Bridge interaction events back to JavaScript
  */
 class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
+    private enum PendingPropUpdate: Hashable {
+        case detents
+        case selectedDetent
+        case openState
+        case grabberVisible
+        case allowSwipeToDismiss
+        case backgroundInteraction
+        case cornerRadius
+        case expandsWhenScrolledToEdge
+    }
 
     // =========================================================================
     // MARK: - UIView (required by HybridViewSpec)
@@ -46,6 +56,11 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     /// Suppress one delegate callback after programmatic detent changes to avoid duplicate events
     private var suppressNextDetentDelegateEvent: Bool = false
 
+    /// Nitro prop updates are wrapped in before/after hooks; stage updates to apply once per batch.
+    private var isBatchUpdatingProps: Bool = false
+    private var pendingPropUpdates: Set<PendingPropUpdate> = []
+    private var appliedIsOpenState: Bool = false
+
     override init() {
         self.view = SheetHostContainerView()
         super.init()
@@ -57,63 +72,145 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     // =========================================================================
 
     /// Detent configurations
-    var detents: [NativeDetentConfig] = [] {
-        didSet {
-            updateDetentsIfPresented()
+    private var detentsStorage: [NativeDetentConfig] = []
+    var detents: [NativeDetentConfig] {
+        get {
+            runOnMainSync {
+                detentsStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                detentsStorage = newValue
+                queuePropUpdate(.detents)
+            }
         }
     }
 
     /// Initial detent index when sheet opens
-    var initialDetentIndex: Double = 0
+    private var initialDetentIndexStorage: Double = 0
+    var initialDetentIndex: Double {
+        get {
+            runOnMainSync {
+                initialDetentIndexStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                initialDetentIndexStorage = newValue
+            }
+        }
+    }
 
     /// Selected detent index (-1 for uncontrolled)
-    var selectedDetentIndex: Double = -1 {
-        didSet {
-            if selectedDetentIndex >= 0 {
-                snapToDetentInternal(Int(selectedDetentIndex), animated: true)
+    private var selectedDetentIndexStorage: Double = -1
+    var selectedDetentIndex: Double {
+        get {
+            runOnMainSync {
+                selectedDetentIndexStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                selectedDetentIndexStorage = newValue
+                queuePropUpdate(.selectedDetent)
             }
         }
     }
 
     /// Whether sheet should be open
-    var isOpen: Bool = false {
-        didSet {
-            handleOpenStateChange(oldValue: oldValue)
+    private var isOpenStorage: Bool = false
+    var isOpen: Bool {
+        get {
+            runOnMainSync {
+                isOpenStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                isOpenStorage = newValue
+                queuePropUpdate(.openState)
+            }
         }
     }
 
     /// Show grabber handle
-    var grabberVisible: Bool = true {
-        didSet {
-            updateGrabberVisibility()
+    private var grabberVisibleStorage: Bool = true
+    var grabberVisible: Bool {
+        get {
+            runOnMainSync {
+                grabberVisibleStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                grabberVisibleStorage = newValue
+                queuePropUpdate(.grabberVisible)
+            }
         }
     }
 
     /// Allow swipe to dismiss
-    var allowSwipeToDismiss: Bool = true {
-        didSet {
-            updateSwipeToDismiss()
+    private var allowSwipeToDismissStorage: Bool = true
+    var allowSwipeToDismiss: Bool {
+        get {
+            runOnMainSync {
+                allowSwipeToDismissStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                allowSwipeToDismissStorage = newValue
+                queuePropUpdate(.allowSwipeToDismiss)
+            }
         }
     }
 
     /// Background interaction mode
-    var backgroundInteraction: NativeBackgroundInteraction = .first("modal") {
-        didSet {
-            updateBackgroundInteraction()
+    private var backgroundInteractionStorage: NativeBackgroundInteraction = .first("modal")
+    var backgroundInteraction: NativeBackgroundInteraction {
+        get {
+            runOnMainSync {
+                backgroundInteractionStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                backgroundInteractionStorage = newValue
+                queuePropUpdate(.backgroundInteraction)
+            }
         }
     }
 
     /// Corner radius (-1 for system default)
-    var cornerRadius: Double = -1 {
-        didSet {
-            updateCornerRadius()
+    private var cornerRadiusStorage: Double = -1
+    var cornerRadius: Double {
+        get {
+            runOnMainSync {
+                cornerRadiusStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                cornerRadiusStorage = newValue
+                queuePropUpdate(.cornerRadius)
+            }
         }
     }
 
     /// Expand when scrolled to edge
-    var expandsWhenScrolledToEdge: Bool = true {
-        didSet {
-            updateExpandsWhenScrolledToEdge()
+    private var expandsWhenScrolledToEdgeStorage: Bool = true
+    var expandsWhenScrolledToEdge: Bool {
+        get {
+            runOnMainSync {
+                expandsWhenScrolledToEdgeStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                expandsWhenScrolledToEdgeStorage = newValue
+                queuePropUpdate(.expandsWhenScrolledToEdge)
+            }
         }
     }
 
@@ -121,35 +218,137 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     // MARK: - Callbacks (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
 
-    var onOpenChange: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void = { _, _ in }
-    var onDetentChange: (_ index: Double, _ reason: NativeChangeReason) -> Void = { _, _ in }
-    var onWillPresent: () -> Void = {}
-    var onDidPresent: () -> Void = {}
-    var onWillDismiss: () -> Void = {}
-    var onDidDismiss: () -> Void = {}
+    private var onOpenChangeStorage: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void = { _, _ in }
+    var onOpenChange: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void {
+        get {
+            runOnMainSync {
+                onOpenChangeStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onOpenChangeStorage = newValue
+            }
+        }
+    }
+
+    private var onDetentChangeStorage: (_ index: Double, _ reason: NativeChangeReason) -> Void = { _, _ in }
+    var onDetentChange: (_ index: Double, _ reason: NativeChangeReason) -> Void {
+        get {
+            runOnMainSync {
+                onDetentChangeStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onDetentChangeStorage = newValue
+            }
+        }
+    }
+
+    private var onWillPresentStorage: () -> Void = {}
+    var onWillPresent: () -> Void {
+        get {
+            runOnMainSync {
+                onWillPresentStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onWillPresentStorage = newValue
+            }
+        }
+    }
+
+    private var onDidPresentStorage: () -> Void = {}
+    var onDidPresent: () -> Void {
+        get {
+            runOnMainSync {
+                onDidPresentStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onDidPresentStorage = newValue
+            }
+        }
+    }
+
+    private var onWillDismissStorage: () -> Void = {}
+    var onWillDismiss: () -> Void {
+        get {
+            runOnMainSync {
+                onWillDismissStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onWillDismissStorage = newValue
+            }
+        }
+    }
+
+    private var onDidDismissStorage: () -> Void = {}
+    var onDidDismiss: () -> Void {
+        get {
+            runOnMainSync {
+                onDidDismissStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                onDidDismissStorage = newValue
+            }
+        }
+    }
 
     // =========================================================================
     // MARK: - Methods (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
 
     func present() throws {
-        guard !isCurrentlyPresented else { return }
-        shouldPresentWhenHostAttaches = true
-        presentSheet()
+        runOnMainSync {
+            guard !isCurrentlyPresented else { return }
+            shouldPresentWhenHostAttaches = true
+            presentSheet()
+        }
     }
 
     func dismiss() throws {
-        shouldPresentWhenHostAttaches = false
-        guard isCurrentlyPresented else { return }
-        dismissSheet(reason: .programmatic)
+        runOnMainSync {
+            shouldPresentWhenHostAttaches = false
+            guard isCurrentlyPresented else { return }
+            dismissSheet(reason: .programmatic)
+        }
     }
 
     func snapToDetent(index: Double) throws {
-        snapToDetentInternal(Int(index), animated: true)
+        runOnMainSync {
+            snapToDetentInternal(Int(index), animated: true)
+        }
     }
 
     func getCurrentDetentIndex() throws -> Double {
-        return Double(currentDetentIndex)
+        runOnMainSync {
+            Double(currentDetentIndex)
+        }
+    }
+
+    func beforeUpdate() {
+        runOnMainSync {
+            isBatchUpdatingProps = true
+        }
+    }
+
+    func afterUpdate() {
+        runOnMainSync {
+            guard isBatchUpdatingProps else { return }
+            isBatchUpdatingProps = false
+
+            let updates = pendingPropUpdates
+            pendingPropUpdates.removeAll()
+            applyQueuedPropUpdates(updates)
+        }
     }
 
     // =========================================================================
@@ -157,13 +356,69 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     // =========================================================================
 
     private func handleOpenStateChange(oldValue: Bool) {
-        if isOpen && !oldValue {
+        if isOpenStorage && !oldValue {
             shouldPresentWhenHostAttaches = true
             presentSheet()
-        } else if !isOpen && oldValue {
+        } else if !isOpenStorage && oldValue {
             shouldPresentWhenHostAttaches = false
             dismissSheet(reason: .programmatic)
         }
+    }
+
+    private func queuePropUpdate(_ update: PendingPropUpdate) {
+        precondition(Thread.isMainThread, "Prop updates must be queued on main thread")
+        if isBatchUpdatingProps {
+            pendingPropUpdates.insert(update)
+            return
+        }
+        applyQueuedPropUpdates([update])
+    }
+
+    private func applyQueuedPropUpdates(_ updates: Set<PendingPropUpdate>) {
+        precondition(Thread.isMainThread, "Queued prop updates must be applied on main thread")
+        guard !updates.isEmpty else { return }
+
+        if updates.contains(.detents) {
+            updateDetentsIfPresented()
+        }
+        if updates.contains(.grabberVisible) {
+            updateGrabberVisibility()
+        }
+        if updates.contains(.allowSwipeToDismiss) {
+            updateSwipeToDismiss()
+        }
+        if updates.contains(.backgroundInteraction) {
+            updateBackgroundInteraction()
+        }
+        if updates.contains(.cornerRadius) {
+            updateCornerRadius()
+        }
+        if updates.contains(.expandsWhenScrolledToEdge) {
+            updateExpandsWhenScrolledToEdge()
+        }
+        if updates.contains(.selectedDetent), selectedDetentIndexStorage >= 0 {
+            snapToDetentInternal(Int(selectedDetentIndexStorage), animated: true)
+        }
+        if updates.contains(.openState), isOpenStorage != appliedIsOpenState {
+            let previousOpenState = appliedIsOpenState
+            appliedIsOpenState = isOpenStorage
+            handleOpenStateChange(oldValue: previousOpenState)
+        }
+    }
+
+    private func runOnMainSync<T>(_ work: () -> T) -> T {
+        if Thread.isMainThread {
+            return work()
+        }
+
+        var result: T?
+        DispatchQueue.main.sync {
+            result = work()
+        }
+        guard let unwrappedResult = result else {
+            fatalError("runOnMainSync did not produce a result")
+        }
+        return unwrappedResult
     }
 
     private func presentSheet() {
@@ -207,7 +462,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         presentingVC.present(contentVC, animated: true) { [weak self] in
             self?.isCurrentlyPresented = true
             self?.shouldPresentWhenHostAttaches = false
-            self?.currentDetentIndex = Int(self?.initialDetentIndex ?? 0)
+            self?.currentDetentIndex = Int(self?.initialDetentIndexStorage ?? 0)
             self?.onDidPresent()
             self?.onOpenChange(true, .programmatic)
         }
@@ -601,78 +856,91 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     }
 
     fileprivate func handleDetentIdentifierChange(_ sheetPresentationController: UISheetPresentationController) {
-        guard let identifier = sheetPresentationController.selectedDetentIdentifier else { return }
+        runOnMainSync {
+            guard let identifier = sheetPresentationController.selectedDetentIdentifier else { return }
 
-        if suppressNextDetentDelegateEvent {
-            suppressNextDetentDelegateEvent = false
-            return
-        }
+            if suppressNextDetentDelegateEvent {
+                suppressNextDetentDelegateEvent = false
+                return
+            }
 
-        let nativeDetents = buildNativeDetentIdentifiers()
-        if let index = nativeDetents.firstIndex(where: { $0 == identifier }) {
-            currentDetentIndex = index
-            onDetentChange(Double(index), .swipe)
+            let nativeDetents = buildNativeDetentIdentifiers()
+            if let index = nativeDetents.firstIndex(where: { $0 == identifier }) {
+                currentDetentIndex = index
+                onDetentChange(Double(index), .swipe)
+            }
         }
     }
 
     fileprivate func handlePresentationControllerWillDismiss(_ presentationController: UIPresentationController) {
-        guard let contentVC = sheetViewController?.contentViewController else { return }
-        let isInteractiveDismissal = presentationController.presentedViewController.transitionCoordinator?.isInteractive ?? false
-        contentVC.notePresentationWillDismiss(isInteractive: isInteractiveDismissal)
+        runOnMainSync {
+            guard let contentVC = sheetViewController?.contentViewController else { return }
+            let isInteractiveDismissal = presentationController.presentedViewController.transitionCoordinator?.isInteractive ?? false
+            contentVC.notePresentationWillDismiss(isInteractive: isInteractiveDismissal)
+        }
     }
 
     fileprivate func hostViewDidAttach() {
-        isHostAttached = true
+        runOnMainSync {
+            isHostAttached = true
 
-        if shouldPresentWhenHostAttaches || isOpen {
-            presentSheet()
+            if shouldPresentWhenHostAttaches || isOpenStorage {
+                presentSheet()
+            }
         }
     }
 
     fileprivate func hostViewDidDetach() {
-        isHostAttached = false
-        shouldPresentWhenHostAttaches = false
+        runOnMainSync {
+            isHostAttached = false
+            shouldPresentWhenHostAttaches = false
 
-        // If the host leaves the hierarchy, force a clean teardown.
-        if isCurrentlyPresented {
-            dismissSheet(reason: .system)
+            // If the host leaves the hierarchy, force a clean teardown.
+            if isCurrentlyPresented {
+                dismissSheet(reason: .system)
+            }
         }
     }
 
     func prepareForRecycle() {
-        shouldPresentWhenHostAttaches = false
-        suppressNextDetentDelegateEvent = false
+        runOnMainSync {
+            shouldPresentWhenHostAttaches = false
+            suppressNextDetentDelegateEvent = false
+            isBatchUpdatingProps = false
+            pendingPropUpdates.removeAll()
+            appliedIsOpenState = false
 
-        // Recycled views should not emit callbacks from stale subscriptions.
-        onOpenChange = { _, _ in }
-        onDetentChange = { _, _ in }
-        onWillPresent = {}
-        onDidPresent = {}
-        onWillDismiss = {}
-        onDidDismiss = {}
+            // Recycled views should not emit callbacks from stale subscriptions.
+            onOpenChangeStorage = { _, _ in }
+            onDetentChangeStorage = { _, _ in }
+            onWillPresentStorage = {}
+            onDidPresentStorage = {}
+            onWillDismissStorage = {}
+            onDidDismissStorage = {}
 
-        if let contentVC = sheetViewController?.contentViewController {
-            contentVC.dismissalReasonOverride = .system
-            if contentVC.presentingViewController != nil {
-                contentVC.dismiss(animated: false)
+            if let contentVC = sheetViewController?.contentViewController {
+                contentVC.dismissalReasonOverride = .system
+                if contentVC.presentingViewController != nil {
+                    contentVC.dismiss(animated: false)
+                }
             }
+
+            isCurrentlyPresented = false
+            sheetViewController = nil
+            currentDetentIndex = 0
+            isHostAttached = view.window != nil
+
+            // Reset props directly so recycle does not trigger redundant update work.
+            detentsStorage = []
+            initialDetentIndexStorage = 0
+            selectedDetentIndexStorage = -1
+            isOpenStorage = false
+            grabberVisibleStorage = true
+            allowSwipeToDismissStorage = true
+            backgroundInteractionStorage = .first("modal")
+            cornerRadiusStorage = -1
+            expandsWhenScrolledToEdgeStorage = true
         }
-
-        isCurrentlyPresented = false
-        sheetViewController = nil
-        currentDetentIndex = 0
-        isHostAttached = view.window != nil
-
-        // Reset public properties to avoid stale configuration on reuse.
-        detents = []
-        initialDetentIndex = 0
-        selectedDetentIndex = -1
-        isOpen = false
-        grabberVisible = true
-        allowSwipeToDismiss = true
-        backgroundInteraction = .first("modal")
-        cornerRadius = -1
-        expandsWhenScrolledToEdge = true
     }
 }
 
@@ -682,14 +950,18 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
 extension HybridRnBottomSheet: SheetPresenterDelegate {
     func sheetWillDismiss(reason: NativeChangeReason) {
-        onWillDismiss()
+        runOnMainSync {
+            onWillDismiss()
+        }
     }
 
     func sheetDidDismiss(reason: NativeChangeReason) {
-        isCurrentlyPresented = false
-        sheetViewController = nil
-        onDidDismiss()
-        onOpenChange(false, reason)
+        runOnMainSync {
+            isCurrentlyPresented = false
+            sheetViewController = nil
+            onDidDismiss()
+            onOpenChange(false, reason)
+        }
     }
 }
 
