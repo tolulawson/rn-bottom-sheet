@@ -33,7 +33,7 @@
 
 ## Phase 5: Verification and Release Readiness
 
-- [ ] Add unit tests for API normalization and behavior
+- [x] Add unit tests for API normalization and behavior
 - [ ] Add iOS integration tests for presenter/detents/lifecycle
 - [ ] Add Maestro happy-path E2E flows in example app
 - [ ] Update CI gates as needed
@@ -64,12 +64,14 @@
   - `yarn lint`, `yarn typecheck`, and `yarn test` now pass.
   - Added `fit` detent support to public type model and deterministic JS/native detent normalization rules (sorted low-to-high, deduped resolved values, unique custom ids).
   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+  - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+  - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
 - Residual Risks:
   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
 - Follow-ups:
   - Add explicit JS-level validation around `backgroundInteraction` before sending values to native layer.
-  - Add JS wrapper-level API validation so invalid detent config fails before reaching native.
+  - Add iOS integration coverage for wrapper-driven lifecycle transitions and dismissal reasons.
 
 ## Ralph Iteration 2026-02-12 (Phase 1 Verification Blocker)
 
@@ -87,3 +89,13 @@
 - [x] Add/extend unit tests for normalization + validation edge cases
 - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Update `IMPLEMENTATION_PLAN.md` progress and capture results in Review section
+
+## Ralph Iteration 2026-02-12 (P1 Wrapper API Gap)
+
+- [x] Confirm highest-priority incomplete item and verify `BottomSheet` wrapper is not already implemented
+- [x] Implement public `BottomSheet` component supporting controlled/uncontrolled open state
+- [x] Implement imperative ref API (`present`, `dismiss`, `snapToDetent`, `getCurrentDetentIndex`)
+- [x] Wire lifecycle/open/detent callbacks through wrapper with deterministic behavior
+- [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+- [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in `tasks/todo.md` Review section

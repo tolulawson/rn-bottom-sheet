@@ -57,7 +57,7 @@
 ### Phase 5: Verification and Release Readiness
 
 - [x] [HIGH] Add unit tests for detent normalization logic - from IMPLEMENTATION_PLAN Verification
-- [ ] [HIGH] Add unit tests for API prop validation - from IMPLEMENTATION_PLAN Verification
+- [x] [HIGH] Add unit tests for API prop validation - from IMPLEMENTATION_PLAN Verification
 - [ ] [HIGH] Add iOS integration tests for presenter lifecycle - from IMPLEMENTATION_PLAN Verification
 - [ ] [HIGH] Add iOS integration tests for detent behavior - from IMPLEMENTATION_PLAN Verification
 - [ ] [MEDIUM] Add Maestro E2E flow: open sheet, verify visible - from IMPLEMENTATION_PLAN Verification

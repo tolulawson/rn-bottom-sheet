@@ -1,21 +1,17 @@
 import { View, StyleSheet, Text, Button } from 'react-native';
 import { useState, useCallback } from 'react';
-import { RnBottomSheetView } from 'rn-bottom-sheet';
-import type { NativeChangeReason } from 'rn-bottom-sheet';
-import { callback } from 'react-native-nitro-modules';
+import { BottomSheet } from 'rn-bottom-sheet';
+import type { BottomSheetChangeReason } from 'rn-bottom-sheet';
 
 /**
- * Example app demonstrating basic bottom sheet usage.
- *
- * Note: This is a minimal example. The full BottomSheet component wrapper
- * will provide a more ergonomic API with proper controlled/uncontrolled modes.
+ * Example app demonstrating controlled BottomSheet usage.
  */
 export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentDetent, setCurrentDetent] = useState(0);
 
   const handleOpenChange = useCallback(
-    (open: boolean, reason: NativeChangeReason) => {
+    (open: boolean, reason: BottomSheetChangeReason) => {
       console.log(`Sheet open changed: ${open}, reason: ${reason}`);
       setIsOpen(open);
     },
@@ -23,18 +19,14 @@ export default function App() {
   );
 
   const handleDetentChange = useCallback(
-    (index: number, reason: NativeChangeReason) => {
+    (index: number, reason: BottomSheetChangeReason) => {
       console.log(`Detent changed: ${index}, reason: ${reason}`);
       setCurrentDetent(index);
     },
     []
   );
 
-  // Default detent configurations
-  const detents = [
-    { type: 'semantic' as const, value: 'medium', identifier: 'medium' },
-    { type: 'semantic' as const, value: 'large', identifier: 'large' },
-  ];
+  const detents = ['fit', 'medium', 'large'] as const;
 
   return (
     <View style={styles.container}>
@@ -44,29 +36,27 @@ export default function App() {
       </Text>
       <Button title="Open Sheet" onPress={() => setIsOpen(true)} />
 
-      <RnBottomSheetView
-        style={styles.sheet}
+      <BottomSheet
         isOpen={isOpen}
-        detents={detents}
-        initialDetentIndex={0}
-        selectedDetentIndex={-1}
+        detents={[...detents]}
+        initialDetent={1}
         grabberVisible={true}
         allowSwipeToDismiss={true}
         backgroundInteraction="modal"
         cornerRadius={-1}
         expandsWhenScrolledToEdge={true}
-        onOpenChange={callback(handleOpenChange)}
-        onDetentChange={callback(handleDetentChange)}
-        onWillPresent={callback(() => console.log('Will present'))}
-        onDidPresent={callback(() => console.log('Did present'))}
-        onWillDismiss={callback(() => console.log('Will dismiss'))}
-        onDidDismiss={callback(() => console.log('Did dismiss'))}
+        onOpenChange={handleOpenChange}
+        onDetentChange={handleDetentChange}
+        onWillPresent={() => console.log('Will present')}
+        onDidPresent={() => console.log('Did present')}
+        onWillDismiss={() => console.log('Will dismiss')}
+        onDidDismiss={() => console.log('Did dismiss')}
       >
         <View style={styles.sheetContent}>
           <Text style={styles.sheetTitle}>Sheet Content</Text>
           <Button title="Close" onPress={() => setIsOpen(false)} />
         </View>
-      </RnBottomSheetView>
+      </BottomSheet>
     </View>
   );
 }
@@ -87,12 +77,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 20,
     color: '#666',
-  },
-  sheet: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
   },
   sheetContent: {
     padding: 20,

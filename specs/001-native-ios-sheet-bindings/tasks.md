@@ -29,12 +29,12 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T004 Expand public Nitro contract types and method signatures in src/RnBottomSheet.nitro.ts
-- [ ] T005 [P] Add shared TypeScript type definitions and validation utilities in src/types/bottom-sheet.ts
-- [ ] T006 [P] Add detent normalization and validation helpers in src/utils/detents.ts
-- [ ] T007 Add core wrapper export wiring in src/index.tsx
-- [ ] T008 Add baseline native state fields and callback bridge stubs in ios/RnBottomSheet.swift
-- [ ] T009 Add non-iOS fallback helper scaffold in src/platform/fallback.ts
+- [x] T004 Expand public Nitro contract types and method signatures in src/RnBottomSheet.nitro.ts
+- [x] T005 [P] Add shared TypeScript type definitions and validation utilities in src/types/bottom-sheet.ts
+- [x] T006 [P] Add detent normalization and validation helpers in src/utils/detents.ts
+- [x] T007 Add core wrapper export wiring in src/index.tsx
+- [x] T008 Add baseline native state fields and callback bridge stubs in ios/RnBottomSheet.swift
+- [x] T009 Add non-iOS fallback helper scaffold in src/platform/fallback.ts
 
 **Checkpoint**: Contract and validation foundation complete; user story slices can proceed.
 
@@ -53,12 +53,12 @@
 
 ### Implementation for User Story 1
 
-- [ ] T012 [US1] Implement controlled/uncontrolled open state orchestration in src/components/BottomSheet.tsx
-- [ ] T013 [US1] Implement imperative ref methods (`present`, `dismiss`) in src/components/BottomSheet.tsx
-- [ ] T014 [US1] Implement native presentation and dismissal flow in ios/RnBottomSheet.swift
-- [ ] T015 [US1] Implement child content host container and mount behavior in ios/RnBottomSheet.swift
-- [ ] T016 [US1] Wire lifecycle event callbacks to JS layer in src/components/BottomSheet.tsx
-- [ ] T017 [US1] Replace example basic usage with open/dismiss child-content scenario in example/src/App.tsx
+- [x] T012 [US1] Implement controlled/uncontrolled open state orchestration in src/components/BottomSheet.tsx
+- [x] T013 [US1] Implement imperative ref methods (`present`, `dismiss`) in src/components/BottomSheet.tsx
+- [x] T014 [US1] Implement native presentation and dismissal flow in ios/RnBottomSheet.swift
+- [x] T015 [US1] Implement child content host container and mount behavior in ios/RnBottomSheet.swift
+- [x] T016 [US1] Wire lifecycle event callbacks to JS layer in src/components/BottomSheet.tsx
+- [x] T017 [US1] Replace example basic usage with open/dismiss child-content scenario in example/src/App.tsx
 
 **Checkpoint**: User Story 1 is independently functional and demonstrable.
 
@@ -72,15 +72,15 @@
 
 ### Tests for User Story 2
 
-- [ ] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+- [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
 - [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
 
 ### Implementation for User Story 2
 
-- [ ] T020 [US2] Implement detent parsing and error surface in src/utils/detents.ts
-- [ ] T021 [US2] Add configurable behavior props wiring (`grabber`, swipe dismiss, background mode) in src/components/BottomSheet.tsx
-- [ ] T022 [US2] Implement detent mapping and selected-detent updates in ios/RnBottomSheet.swift
-- [ ] T023 [US2] Implement imperative `snapToDetent` and `getCurrentDetentIndex` bridge in ios/RnBottomSheet.swift
+- [x] T020 [US2] Implement detent parsing and error surface in src/utils/detents.ts
+- [x] T021 [US2] Add configurable behavior props wiring (`grabber`, swipe dismiss, background mode) in src/components/BottomSheet.tsx
+- [x] T022 [US2] Implement detent mapping and selected-detent updates in ios/RnBottomSheet.swift
+- [x] T023 [US2] Implement imperative `snapToDetent` and `getCurrentDetentIndex` bridge in ios/RnBottomSheet.swift
 - [ ] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
 
 **Checkpoint**: User Story 2 is independently testable with deterministic detent behavior.

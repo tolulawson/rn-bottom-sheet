@@ -4,25 +4,27 @@
  * Native iOS sheet bindings for React Native using Nitro Views.
  */
 
-import { getHostComponent } from 'react-native-nitro-modules';
-const RnBottomSheetConfig = require('../nitrogen/generated/shared/json/RnBottomSheetConfig.json');
-import type {
-  RnBottomSheetMethods,
-  RnBottomSheetProps,
-} from './RnBottomSheet.nitro';
+import { BottomSheet } from './components/BottomSheet';
+import { RnBottomSheetView } from './native/RnBottomSheetView';
 
 // =============================================================================
-// Native View (internal)
+// Public Components
 // =============================================================================
 
 /**
- * Internal native view component.
- * Use BottomSheet component for the public API.
+ * Public BottomSheet wrapper component.
  */
-export const RnBottomSheetView = getHostComponent<
-  RnBottomSheetProps,
-  RnBottomSheetMethods
->('RnBottomSheet', () => RnBottomSheetConfig);
+export { BottomSheet };
+
+/**
+ * Internal native view component export for advanced use-cases.
+ */
+export { RnBottomSheetView };
+
+/**
+ * Alias for native component export.
+ */
+export const BottomSheetView = RnBottomSheetView;
 
 // =============================================================================
 // Public Types
