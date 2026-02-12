@@ -51,8 +51,8 @@
 - [x] [MEDIUM] Add Reanimated createAnimatedComponent compatibility - from reanimated-interop.md
 - [ ] [MEDIUM] Document supported animated prop pathways - from reanimated-interop.md
 - [ ] [LOW] Document unsupported full-transition control expectations - from reanimated-interop.md
-- [ ] [LOW] Implement Android/Web safe fallback (no crash, explicit warning) - from IMPLEMENTATION_PLAN Platform Behavior
-- [ ] [LOW] Add platform check guards in JS layer - from IMPLEMENTATION_PLAN Platform Behavior
+- [x] [LOW] Implement Android/Web safe fallback (no crash, explicit warning) - from IMPLEMENTATION_PLAN Platform Behavior
+- [x] [LOW] Add platform check guards in JS layer - from IMPLEMENTATION_PLAN Platform Behavior
 
 ### Phase 5: Verification and Release Readiness
 
