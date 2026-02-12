@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T036`: created `example/.maestro/sheet-core-flows.yaml` with deterministic steps for open, detent interaction, in-sheet navigation, and dismiss flows; validated syntax with Maestro MCP (`valid: true`).
+  - Marked `T036` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T035`: executed consolidated validation gate (`yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`) and confirmed all commands pass with the current implementation/docs state.
   - Marked `T035` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Captured explicit validation evidence in this Review section for release-readiness traceability.
@@ -294,4 +297,13 @@
 - [x] Execute verification commands and record outcomes in `tasks/todo.md`
 - [x] Mark `T035` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Maestro Flow Definitions T036)
+
+- [x] Confirm `T036` is the highest-priority truly incomplete item and verify missing Maestro flow artifacts
+- [x] Add core example app Maestro flow definitions in `example/.maestro/sheet-core-flows.yaml`
+- [x] Validate Maestro flow YAML syntax
+- [x] Mark `T036` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section

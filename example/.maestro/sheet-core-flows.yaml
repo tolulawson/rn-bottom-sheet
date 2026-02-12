@@ -1,0 +1,22 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: "rn-bottom-sheet Example"
+
+# Open sheet from the example UI.
+- tapOn: "Open Sheet"
+- assertVisible: "Sheet: Open"
+
+# Detent interaction.
+- tapOn: "Snap to Large"
+- assertVisible: "Detent: 2 (Large)"
+
+# Primary in-sheet navigation flow.
+- tapOn: "Go to Details"
+- assertVisible: "In-Sheet Route: Details"
+- tapOn: "Back to Summary"
+- assertVisible: "In-Sheet Route: Summary"
+
+# Dismiss sheet cleanly.
+- tapOn: "Close Sheet"
+- assertVisible: "Sheet: Closed"
