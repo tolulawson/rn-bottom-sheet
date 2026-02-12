@@ -17,7 +17,7 @@
 
 **Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
 
-- [ ] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
 - [ ] T002 Add feature contract index pointer in docs/knowledge-index.md
 - [ ] T003 [P] Add test file scaffold in src/__tests__/bottom-sheet.contract.test.ts
 

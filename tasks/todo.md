@@ -59,6 +59,8 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T001` verification: `docs/changelog-notes/README.md` already contains the feature README entry and scope note; task state was stale and has been synchronized by checking `T001` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - `yarn nitrogen` initially failed due Nitro parser limitations in `src/RnBottomSheet.nitro.ts` (inline union type and mixed string-literal/number union). Resolved by extracting `NativeDetentType` and widening `NativeBackgroundInteraction` bridge type to `string | number`.
   - `yarn typecheck` initially failed in `example/src/App.tsx` because Nitro view callbacks were passed as plain functions. Resolved by wrapping callback props with `callback(...)` from `react-native-nitro-modules`.
   - `yarn lint`, `yarn typecheck`, and `yarn test` now pass.
@@ -107,5 +109,12 @@
 - [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
 - [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
 - [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture results in the Review section
+
+## Ralph Iteration 2026-02-12 (Phase 1 Task State Sync T001)
+
+- [x] Confirm `T001` is the highest-priority incomplete item and verify implementation state in code/docs
+- [x] Mark `T001` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture results in the Review section
