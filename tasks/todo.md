@@ -16,28 +16,28 @@
 
 ## Phase 2: iOS Sheet Engine
 
-- [ ] Implement presenter/controller architecture
-- [ ] Map detent model and lifecycle events
-- [ ] Implement dismissal reason mapping
+- [x] Implement presenter/controller architecture
+- [x] Map detent model and lifecycle events
+- [x] Implement dismissal reason mapping
 
 ## Phase 3: Content Hosting
 
-- [ ] Implement arbitrary RN child hosting in presented sheet
-- [ ] Add robust attach/detach/recycle cleanup
+- [x] Implement arbitrary RN child hosting in presented sheet
+- [x] Add robust attach/detach/recycle cleanup
 
 ## Phase 4: Integrations
 
-- [ ] Add optional React Navigation adapter utilities
-- [ ] Add Reanimated compatibility surface and docs
-- [ ] Add platform fallback behavior for non-iOS
+- [x] Add optional React Navigation adapter utilities
+- [x] Add Reanimated compatibility surface and docs
+- [x] Add platform fallback behavior for non-iOS
 
 ## Phase 5: Verification and Release Readiness
 
 - [x] Add unit tests for API normalization and behavior
-- [ ] Add iOS integration tests for presenter/detents/lifecycle
-- [ ] Add Maestro happy-path E2E flows in example app
+- [x] Add iOS integration tests for presenter/detents/lifecycle
+- [x] Add Maestro happy-path E2E flows in example app
 - [x] Add conditional Maestro MCP gate policy (deferred until stable, required at release gate)
-- [ ] Update CI gates as needed
+- [x] Update CI gates as needed
 
 ## Verification Checklist
 
