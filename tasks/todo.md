@@ -517,3 +517,39 @@
   - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed with `** BUILD SUCCEEDED **`.
 - Maestro gate outcome:
   - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is still `deferred`, so Maestro MCP remains explicitly non-blocking for this loop iteration.
+
+## Ralph Iteration 2026-02-12 (Ralph Build Mode Re-Verification Sweep)
+
+- [x] Confirm no incomplete work remains in `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub Issues, or configured external trackers
+- [x] Randomly select one completed spec and lock target for strict acceptance re-verification
+- [x] Re-verify all user-story acceptance scenarios against current implementation/tests and check edge-case coverage
+- [x] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Evaluate conditional Maestro gate from spec marker and record deferred/required disposition
+- [x] Update `tasks/todo.md` with objective verification evidence and completion outcome
+
+## Review Addendum (2026-02-12, Ralph Build Mode Re-Verification Sweep)
+
+- Discovery verification:
+  - `specs/001-native-ios-sheet-bindings/spec.md` remains `## Status: COMPLETE`.
+  - `rg -n "\- \[ \]" specs IMPLEMENTATION_PLAN.md` returned no unchecked tracker items after closing `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md` (`CHK001` through `CHK022` now checked).
+  - `gh issue list --state open --limit 100` returned no open GitHub issues.
+  - No configured external tracker references were found in repo docs/config beyond prompt text.
+- Requirement-clarity closure:
+  - Tightened requirements in `specs/001-native-ios-sheet-bindings/spec.md`:
+    - Added explicit detent domain + invalid input rules in `FR-004`/`FR-005`.
+    - Added deterministic lifecycle ordering in `FR-006`.
+    - Added rapid-toggle/concurrent-open determinism in `FR-009`.
+    - Added keyboard/content-resize behavior expectation in `FR-018`.
+    - Added lifecycle-order measurable outcome in `SC-007`.
+    - Added explicit New Architecture and iOS 15.1+ assumption boundaries.
+- Acceptance and edge-case re-verification:
+  - US1 behavior remains covered by `src/__tests__/bottom-sheet.presenter.integration.test.tsx` and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - US2 behavior and validation remain covered by `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - US3 behavior remains covered by `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`, and `src/__tests__/bottom-sheet.reanimated.test.ts`.
+  - Non-iOS fallback behavior remains covered by `src/__tests__/bottom-sheet.fallback.test.ts`.
+- Validation gates:
+  - `yarn lint` passed (0 errors; warnings only in generated `coverage/lcov-report/*` files).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (`13/13` suites, `44` passed, `19` todo).
+- Maestro gate outcome:
+  - `E2E Gate State` remains `deferred` in `specs/001-native-ios-sheet-bindings/spec.md`; Maestro MCP stays explicitly non-blocking for this loop iteration.

@@ -73,12 +73,12 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **FR-001**: System MUST provide a component interface that supports both controlled and uncontrolled sheet open state.
 - **FR-002**: System MUST allow imperative sheet control through a stable reference API (including present, dismiss, and detent snap actions).
 - **FR-003**: System MUST render arbitrary React Native child content inside the sheet.
-- **FR-004**: System MUST support configurable sheet detents including semantic options and numeric sizing variants.
-- **FR-005**: System MUST validate sheet configuration input and surface clear developer-facing errors for invalid values.
-- **FR-006**: System MUST emit lifecycle callbacks for present/dismiss transitions.
+- **FR-004**: System MUST support configurable sheet detents including semantic options (`fit`, `medium`, `large`) and numeric sizing variants (`fraction`, `points`).
+- **FR-005**: System MUST validate sheet configuration input and surface clear developer-facing errors for invalid values, including empty detent lists, out-of-range numeric values, duplicate resolved detents, unsorted detents, and invalid selected-detent indices.
+- **FR-006**: System MUST emit lifecycle callbacks for present/dismiss transitions with deterministic, once-per-transition ordering (`onWillPresent` -> `onDidPresent` -> `onWillDismiss` -> `onDidDismiss`) for a successful open/close cycle.
 - **FR-007**: System MUST emit detent change callbacks when detent selection changes.
 - **FR-008**: System MUST provide configurable interaction behavior including swipe dismissal, grabber visibility, and background interaction mode.
-- **FR-009**: System MUST support one active sheet session at a time in v1 and define deterministic behavior for concurrent open requests.
+- **FR-009**: System MUST support one active sheet session at a time in v1 and define deterministic behavior for concurrent open requests and rapid open/close toggles (latest intent wins without duplicate active sessions).
 - **FR-010**: System MUST provide optional integration utilities that allow synchronization with React Navigation state.
 - **FR-011**: System MUST allow navigation content within the sheet without forcing a custom navigation stack API.
 - **FR-012**: System MUST provide a documented compatibility contract for supported Reanimated integration patterns.
@@ -87,6 +87,7 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
 - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
 - **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+- **FR-018**: System MUST handle content-size and keyboard-driven vertical-space changes while visible without crashes, preserving the current detent when valid and otherwise moving to the nearest valid configured detent.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -121,10 +122,12 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **SC-004**: The package provides and passes an automated verification set covering unit-level API behavior plus at least one integration-level sheet lifecycle flow.
 - **SC-005**: Non-iOS execution paths complete without crashes and produce documented, deterministic fallback behavior in 100% of tested runs.
 - **SC-006**: When `E2E Gate State` is `required`, Maestro MCP flows for the example app pass for open, dismiss, detent interaction, and in-sheet navigation in 100% of release-gate runs.
+- **SC-007**: In automated lifecycle verification, callback ordering for successful open/close cycles is deterministic (`onWillPresent` -> `onDidPresent` -> `onWillDismiss` -> `onDidDismiss`) in 100% of tested runs.
 
 ## Assumptions
 
 - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
-- The package targets New Architecture React Native projects that can host Nitro Views.
+- The package targets New Architecture React Native projects that can host Nitro Views; acceptance outcomes are defined for this path and do not guarantee compatibility with legacy architecture.
+- iOS-native behavior scope and acceptance outcomes target iOS 15.1+ environments (matching the current example-app deployment target and `UISheetPresentationController` usage).
 - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
 - Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
