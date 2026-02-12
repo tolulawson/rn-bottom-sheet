@@ -94,6 +94,9 @@
   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
+  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
 - Residual Risks:
   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
@@ -200,5 +203,13 @@
 - [x] Implement optional navigation adapter helpers in `src/navigation/bottom-sheet-adapter.ts`
 - [x] Add adapter helper unit tests in `src/__tests__/bottom-sheet-adapter.test.ts`
 - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
+
+- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
+- [x] Export optional navigation adapter entry points from `src/index.tsx`
+- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section

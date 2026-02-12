@@ -80,6 +80,20 @@ export {
 } from './utils/detents';
 
 // =============================================================================
+// Optional Integration Utilities
+// =============================================================================
+
+export {
+  createBottomSheetNavigationAdapter,
+  useBottomSheetNavigation,
+} from './navigation/bottom-sheet-adapter';
+
+export type {
+  BottomSheetNavigationAdapter,
+  BottomSheetNavigationAdapterOptions,
+} from './navigation/bottom-sheet-adapter';
+
+// =============================================================================
 // Nitro Types (for advanced usage)
 // =============================================================================
 
