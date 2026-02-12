@@ -12,3 +12,9 @@ Generated from `docs/sources.yaml`.
 | react-navigation-nesting | React Navigation Nesting Navigators | v7 docs (retrieved 2026-02-12) | 2026-02-12 | Action bubbling behavior for in-sheet nested navigation. | `docs/references/react-navigation-form-sheet.md` | [link](https://reactnavigation.org/docs/nesting-navigators/) |
 | reanimated-create-animated-component | Reanimated createAnimatedComponent | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated wrapper contract for custom host components. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/createAnimatedComponent/) |
 | reanimated-use-animated-props | Reanimated useAnimatedProps | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated prop and adapter constraints for interop. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/useAnimatedProps/) |
+
+## Feature Contracts
+
+| Feature | Spec | Plan | Tasks | Status |
+| --- | --- | --- | --- | --- |
+| 001-native-ios-sheet-bindings | `specs/001-native-ios-sheet-bindings/spec.md` | `specs/001-native-ios-sheet-bindings/plan.md` | `specs/001-native-ios-sheet-bindings/tasks.md` | In Progress |

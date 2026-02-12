@@ -7,13 +7,13 @@
 
 ### Phase 1: API and Nitro Contract
 
-- [ ] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
-- [ ] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
-- [ ] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
-- [ ] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
 
 ### Phase 2: iOS Sheet Engine
 
@@ -63,8 +63,8 @@
 - [ ] [MEDIUM] Add Maestro E2E flow: open sheet, verify visible - from IMPLEMENTATION_PLAN Verification
 - [ ] [MEDIUM] Add Maestro E2E flow: change detents, verify positions - from IMPLEMENTATION_PLAN Verification
 - [ ] [MEDIUM] Add Maestro E2E flow: dismiss sheet, verify closed - from IMPLEMENTATION_PLAN Verification
-- [ ] [MEDIUM] Fix yarn lint to pass - from tasks/todo.md Verification Checklist
-- [ ] [MEDIUM] Fix yarn typecheck to pass - from tasks/todo.md Verification Checklist
+- [x] [MEDIUM] Fix yarn lint to pass - from tasks/todo.md Verification Checklist
+- [x] [MEDIUM] Fix yarn typecheck to pass - from tasks/todo.md Verification Checklist
 - [ ] [MEDIUM] Verify iOS example app builds successfully - from IMPLEMENTATION_PLAN Verification
 - [ ] [LOW] Update CI gates for new test coverage - from IMPLEMENTATION_PLAN Verification
 

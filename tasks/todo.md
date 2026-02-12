@@ -10,9 +10,9 @@
 
 ## Phase 1: API and Nitro Contract
 
-- [ ] Finalize public TypeScript API and Nitro view contract
-- [ ] Regenerate Nitrogen artifacts
-- [ ] Validate typings and exports
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
 
 ## Phase 2: iOS Sheet Engine
 
@@ -41,9 +41,9 @@
 ## Verification Checklist
 
 - [x] `yarn docs:check`
-- [ ] `yarn lint`
-- [ ] `yarn typecheck`
-- [ ] `yarn test`
+- [x] `yarn lint`
+- [x] `yarn typecheck`
+- [x] `yarn test`
 
 ## Ralph Setup
 
@@ -56,8 +56,21 @@
 
 ## Review
 
-- Date:
-- Reviewer:
+- Date: 2026-02-12
+- Reviewer: Codex (GPT-5)
 - Findings:
+  - `yarn nitrogen` initially failed due Nitro parser limitations in `src/RnBottomSheet.nitro.ts` (inline union type and mixed string-literal/number union). Resolved by extracting `NativeDetentType` and widening `NativeBackgroundInteraction` bridge type to `string | number`.
+  - `yarn typecheck` initially failed in `example/src/App.tsx` because Nitro view callbacks were passed as plain functions. Resolved by wrapping callback props with `callback(...)` from `react-native-nitro-modules`.
+  - `yarn lint`, `yarn typecheck`, and `yarn test` now pass.
 - Residual Risks:
+  - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
 - Follow-ups:
+  - Add explicit JS-level validation around `backgroundInteraction` before sending values to native layer.
+
+## Ralph Iteration 2026-02-12 (Phase 1 Verification Blocker)
+
+- [x] Confirm highest-priority unfinished Phase 1 item and verify it is not already complete
+- [x] Regenerate Nitro artifacts for current `src/RnBottomSheet.nitro.ts` contract
+- [x] Fix callback wiring/type mismatches in `example/src/App.tsx` so `yarn typecheck` passes
+- [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Record verification outcomes in Review section and update completed checkboxes
