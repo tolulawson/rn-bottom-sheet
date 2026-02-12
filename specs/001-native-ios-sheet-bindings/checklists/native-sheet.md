@@ -40,7 +40,7 @@
 
 - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
 - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
+- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
 
 ## Dependencies & Assumptions
 

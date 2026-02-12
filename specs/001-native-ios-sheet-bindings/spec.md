@@ -86,6 +86,7 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
 - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
 - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
+- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -126,3 +127,4 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
 - The package targets New Architecture React Native projects that can host Nitro Views.
 - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
+- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.

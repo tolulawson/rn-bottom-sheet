@@ -462,3 +462,30 @@
   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
 - Maestro gate outcome:
   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
+
+## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
+
+- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
+- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
+- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
+- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
+- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
+
+- Discovery verification:
+  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
+  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
+  - `gh issue list --state open` returned no open issues.
+  - No external tracker resources are configured via MCP.
+- Resolution delivered:
+  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
+  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
+  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
+- Verification gates:
+  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
+  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
+- Maestro gate outcome:
+  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
