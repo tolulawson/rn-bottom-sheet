@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
+  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
@@ -163,5 +166,13 @@
 - [x] Implement example behavior toggles in `example/src/App.tsx` (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, `backgroundInteraction`)
 - [x] Update/extend example integration test coverage in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` for new controls
 - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
+
+- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
+- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
+- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
