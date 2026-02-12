@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 3 Native Host Lifecycle + Recycle`: implemented a dedicated native sheet host container (`SheetHostContainerView`) with explicit attach/detach hooks, deferred presentation until attachment, and deterministic teardown on detach in `ios/RnBottomSheet.swift`.
+  - Added `prepareForRecycle()` conformance in `ios/RnBottomSheet.swift` to clear stale callbacks/session state and reset sheet props for Nitro view reuse safety.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful `yarn workspace rn-bottom-sheet-example ios` build/run.
+  - Maestro MCP gate check remains non-blocking because `specs/001-native-ios-sheet-bindings/spec.md` currently sets `E2E Gate State: deferred`.
   - Ralph iteration `Phase 2 Dismissal Reason Detection`: implemented native dismissal-reason classification in `ios/RnBottomSheet.swift` with deterministic mapping for `programmatic`, `backdrop`, `swipe`, and `system` (programmatic overrides, backdrop tap inference window, and non-interactive fallback to system), plus callback pass-through coverage for `backdrop`/`system` in `src/__tests__/bottom-sheet.navigation.test.ts`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful iOS simulator build via `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
   - Ralph iteration `P2 iOS native conformance blocker`: fixed `ios/RnBottomSheet.swift` to conform to generated `HybridRnBottomSheetSpec` types/signatures (typed detents/background interaction/callbacks + throwing methods), replaced direct `UISheetPresentationControllerDelegate` conformance with an `NSObject` proxy, and normalized dismissal/detent callback routing.
@@ -352,3 +356,11 @@
 - [x] Add or extend automated tests to lock reason mapping behavior
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Update `IMPLEMENTATION_PLAN.md` progress and capture outcomes in `tasks/todo.md` Review
+
+## Ralph Iteration 2026-02-12 (Phase 3 Native Host Lifecycle + Recycle)
+
+- [x] Confirm the highest-priority truly incomplete item is Phase 3 content hosting lifecycle/recycle handling and verify it is not already implemented
+- [x] Implement a native sheet host container view for RN children with explicit attach/detach lifecycle hooks in `ios/RnBottomSheet.swift`
+- [x] Implement `prepareForRecycle()` cleanup to reset presenter/session state safely for Nitro view reuse in `ios/RnBottomSheet.swift`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
+- [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with outcomes

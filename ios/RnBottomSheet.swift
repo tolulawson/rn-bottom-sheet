@@ -1,4 +1,5 @@
 import UIKit
+import NitroModules
 
 /**
  * HybridRnBottomSheet
@@ -12,13 +13,13 @@ import UIKit
  * - Handle lifecycle callbacks and state changes
  * - Bridge interaction events back to JavaScript
  */
-class HybridRnBottomSheet: HybridRnBottomSheetSpec {
+class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
     // =========================================================================
     // MARK: - UIView (required by HybridViewSpec)
     // =========================================================================
 
-    let view: UIView = UIView()
+    let view: SheetHostContainerView
 
     // =========================================================================
     // MARK: - Sheet State
@@ -26,6 +27,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
 
     /// Current presentation state
     private var isCurrentlyPresented: Bool = false
+
+    /// Whether the host view is currently attached to a window hierarchy.
+    private var isHostAttached: Bool = false
+
+    /// Tracks pending presentation requests while host view is detached.
+    private var shouldPresentWhenHostAttaches: Bool = false
 
     /// Current detent index
     private var currentDetentIndex: Int = 0
@@ -38,6 +45,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
 
     /// Suppress one delegate callback after programmatic detent changes to avoid duplicate events
     private var suppressNextDetentDelegateEvent: Bool = false
+
+    override init() {
+        self.view = SheetHostContainerView()
+        super.init()
+        self.view.lifecycleOwner = self
+    }
 
     // =========================================================================
     // MARK: - Props (conforming to HybridRnBottomSheetSpec)
@@ -121,10 +134,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
 
     func present() throws {
         guard !isCurrentlyPresented else { return }
+        shouldPresentWhenHostAttaches = true
         presentSheet()
     }
 
     func dismiss() throws {
+        shouldPresentWhenHostAttaches = false
         guard isCurrentlyPresented else { return }
         dismissSheet(reason: .programmatic)
     }
@@ -143,13 +158,25 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
 
     private func handleOpenStateChange(oldValue: Bool) {
         if isOpen && !oldValue {
+            shouldPresentWhenHostAttaches = true
             presentSheet()
         } else if !isOpen && oldValue {
+            shouldPresentWhenHostAttaches = false
             dismissSheet(reason: .programmatic)
         }
     }
 
     private func presentSheet() {
+        guard isHostAttached else {
+            shouldPresentWhenHostAttaches = true
+            return
+        }
+
+        guard !isCurrentlyPresented else {
+            shouldPresentWhenHostAttaches = false
+            return
+        }
+
         guard let presentingVC = findPresentingViewController() else {
             print("[RnBottomSheet] Could not find presenting view controller")
             return
@@ -179,6 +206,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         // Present the sheet
         presentingVC.present(contentVC, animated: true) { [weak self] in
             self?.isCurrentlyPresented = true
+            self?.shouldPresentWhenHostAttaches = false
             self?.currentDetentIndex = Int(self?.initialDetentIndex ?? 0)
             self?.onDidPresent()
             self?.onOpenChange(true, .programmatic)
@@ -186,9 +214,16 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
     }
 
     private func dismissSheet(reason: NativeChangeReason) {
+        shouldPresentWhenHostAttaches = false
         guard let contentVC = sheetViewController?.contentViewController else { return }
         contentVC.dismissalReasonOverride = reason
-        contentVC.dismiss(animated: true)
+        if contentVC.presentingViewController != nil {
+            contentVC.dismiss(animated: true)
+        } else {
+            // If UIKit already detached the presenter, reset state immediately.
+            isCurrentlyPresented = false
+            sheetViewController = nil
+        }
     }
 
     private func snapToDetentInternal(_ index: Int, animated: Bool) {
@@ -585,6 +620,60 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec {
         let isInteractiveDismissal = presentationController.presentedViewController.transitionCoordinator?.isInteractive ?? false
         contentVC.notePresentationWillDismiss(isInteractive: isInteractiveDismissal)
     }
+
+    fileprivate func hostViewDidAttach() {
+        isHostAttached = true
+
+        if shouldPresentWhenHostAttaches || isOpen {
+            presentSheet()
+        }
+    }
+
+    fileprivate func hostViewDidDetach() {
+        isHostAttached = false
+        shouldPresentWhenHostAttaches = false
+
+        // If the host leaves the hierarchy, force a clean teardown.
+        if isCurrentlyPresented {
+            dismissSheet(reason: .system)
+        }
+    }
+
+    func prepareForRecycle() {
+        shouldPresentWhenHostAttaches = false
+        suppressNextDetentDelegateEvent = false
+
+        // Recycled views should not emit callbacks from stale subscriptions.
+        onOpenChange = { _, _ in }
+        onDetentChange = { _, _ in }
+        onWillPresent = {}
+        onDidPresent = {}
+        onWillDismiss = {}
+        onDidDismiss = {}
+
+        if let contentVC = sheetViewController?.contentViewController {
+            contentVC.dismissalReasonOverride = .system
+            if contentVC.presentingViewController != nil {
+                contentVC.dismiss(animated: false)
+            }
+        }
+
+        isCurrentlyPresented = false
+        sheetViewController = nil
+        currentDetentIndex = 0
+        isHostAttached = view.window != nil
+
+        // Reset public properties to avoid stale configuration on reuse.
+        detents = []
+        initialDetentIndex = 0
+        selectedDetentIndex = -1
+        isOpen = false
+        grabberVisible = true
+        allowSwipeToDismiss = true
+        backgroundInteraction = .first("modal")
+        cornerRadius = -1
+        expandsWhenScrolledToEdge = true
+    }
 }
 
 // =============================================================================
@@ -663,6 +752,26 @@ private final class SheetPresentationDelegateProxy: NSObject, UISheetPresentatio
 
     func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
         owner?.handlePresentationControllerWillDismiss(presentationController)
+    }
+}
+
+/// Nitro host view used as the content root and attach/detach lifecycle source.
+final class SheetHostContainerView: UIView {
+    weak var lifecycleOwner: HybridRnBottomSheet?
+    private var isCurrentlyAttached: Bool = false
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+
+        let isAttached = window != nil
+        guard isAttached != isCurrentlyAttached else { return }
+        isCurrentlyAttached = isAttached
+
+        if isAttached {
+            lifecycleOwner?.hostViewDidAttach()
+        } else {
+            lifecycleOwner?.hostViewDidDetach()
+        }
     }
 }
 

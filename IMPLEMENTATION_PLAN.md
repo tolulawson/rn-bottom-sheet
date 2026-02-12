@@ -36,11 +36,11 @@
 
 ### Phase 3: Content Hosting
 
-- [ ] [HIGH] Create native container view for RN children inside sheet - from ADR-0002
-- [ ] [HIGH] Implement RN children mounting into native-hosted container - from ADR-0002
-- [ ] [HIGH] Implement attach lifecycle handling - from nitro-view-components.md
-- [ ] [HIGH] Implement detach lifecycle handling - from nitro-view-components.md
-- [ ] [HIGH] Implement prepareForRecycle() for recycled view cleanup - from nitro-view-components.md
+- [x] [HIGH] Create native container view for RN children inside sheet - from ADR-0002
+- [x] [HIGH] Implement RN children mounting into native-hosted container - from ADR-0002
+- [x] [HIGH] Implement attach lifecycle handling - from nitro-view-components.md
+- [x] [HIGH] Implement detach lifecycle handling - from nitro-view-components.md
+- [x] [HIGH] Implement prepareForRecycle() for recycled view cleanup - from nitro-view-components.md
 - [ ] [MEDIUM] Handle thread-safety for props arriving from different threads - from nitro-view-components.md
 - [ ] [MEDIUM] Implement beforeUpdate()/afterUpdate() for batched prop application - from nitro-view-components.md
 
