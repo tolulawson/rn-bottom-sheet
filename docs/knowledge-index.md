@@ -15,6 +15,6 @@ Generated from `docs/sources.yaml`.
 
 ## Feature Contracts
 
-| Feature | Spec | Plan | Tasks | Status |
-| --- | --- | --- | --- | --- |
-| 001-native-ios-sheet-bindings | `specs/001-native-ios-sheet-bindings/spec.md` | `specs/001-native-ios-sheet-bindings/plan.md` | `specs/001-native-ios-sheet-bindings/tasks.md` | In Progress |
+| Feature | Spec | Plan | Tasks | Contract | Status |
+| --- | --- | --- | --- | --- | --- |
+| 001-native-ios-sheet-bindings | `specs/001-native-ios-sheet-bindings/spec.md` | `specs/001-native-ios-sheet-bindings/plan.md` | `specs/001-native-ios-sheet-bindings/tasks.md` | `specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml` | In Progress |
