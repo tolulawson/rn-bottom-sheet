@@ -1,0 +1,17 @@
+{
+  "cxxNamespace": ["rnbottomsheet"],
+  "ios": {
+    "iosModuleName": "RnBottomSheet"
+  },
+  "android": {
+    "androidNamespace": ["rnbottomsheet"],
+    "androidCxxLibName": "rnbottomsheet"
+  },
+  "autolinking": {
+    "RnBottomSheet": {
+      "swift": "HybridRnBottomSheet",
+      "kotlin": "HybridRnBottomSheet"
+    }
+  },
+  "ignorePaths": ["node_modules"]
+}
