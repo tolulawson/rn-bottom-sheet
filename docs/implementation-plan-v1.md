@@ -111,6 +111,46 @@ Build an iOS-first React Native library that presents native iOS sheets using `U
 - Maestro happy-path scenarios
 - `yarn docs:check`
 
+## Verification Runbook
+
+Use this sequence for each implementation slice before changing task state:
+
+1. Scope check:
+   - Confirm the target task is still incomplete in
+     `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Verify the intended behavior is not already implemented.
+2. Implementation + unit/integration coverage:
+   - Add/adjust tests for behavior touched by the change.
+   - Keep non-goals explicit when behavior is intentionally unsupported.
+3. Baseline command gate:
+   - `yarn lint`
+   - `yarn typecheck`
+   - `yarn test`
+4. Documentation gate:
+   - Update `README.md`/ADRs/runbooks when public behavior changes.
+5. Tracking gate:
+   - Mark completed task checkboxes in spec/tasks docs.
+   - Capture outcomes in `tasks/todo.md` Review findings.
+
+## Feature Runbook Notes
+
+### Public Surface Verification
+
+- Validate `BottomSheet` controlled and imperative flows after any prop/method
+  changes.
+- Validate detent normalization/validation behavior for both semantic and custom
+  detents.
+- Validate callback reason mapping remains deterministic (`programmatic`,
+  `swipe`, `backdrop`, `system`).
+
+### Integration Verification
+
+- Validate navigation adapter behavior (`useBottomSheetNavigation` and
+  `createBottomSheetNavigationAdapter`) for route-driven open/close sync.
+- Validate animated wrapper compatibility for exported wrapper/native host
+  surfaces using `createAnimatedComponent` contract tests.
+- Validate non-iOS fallback remains no-crash and warning-based in development.
+
 ## Acceptance Criteria
 
 1. Consumers can present native-feeling iOS sheets with RN children.

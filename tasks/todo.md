@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T034`: added a concrete verification runbook to `docs/implementation-plan-v1.md` covering command gates, tracker update requirements, and targeted feature-surface verification steps for detents, navigation adapter behavior, animation compatibility, and non-iOS fallback behavior.
+  - Marked `T034` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T033`: expanded `docs/adr/ADR-0001-ios-sheet-engine.md` to capture current architectural constraints and boundaries, including Nitro bridge surface, deterministic reason contract, optional navigation adapters, Reanimated compatibility scope, and explicit non-iOS fallback policy.
   - Marked `T033` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -271,5 +274,13 @@
 - [x] Confirm `T033` is the highest-priority truly incomplete item and verify current ADR gaps
 - [x] Update `docs/adr/ADR-0001-ios-sheet-engine.md` with integration constraints and supported behavior boundaries
 - [x] Mark `T033` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Verification Runbook Notes T034)
+
+- [x] Confirm `T034` is the highest-priority truly incomplete item and verify current runbook gaps
+- [x] Add verification/runbook notes for feature workflows in `docs/implementation-plan-v1.md`
+- [x] Mark `T034` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
