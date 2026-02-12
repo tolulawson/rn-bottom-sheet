@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `Phase 5 HIGH iOS Presenter Lifecycle Integration Tests`: added `src/__tests__/bottom-sheet.presenter.integration.test.tsx` to validate presenter lifecycle callback ordering through the real `BottomSheet` wrapper, native-driven open-state synchronization in uncontrolled mode, and controlled-mode callback-only open/close behavior.
+  - Updated `IMPLEMENTATION_PLAN.md` to mark "Add iOS integration tests for presenter lifecycle" complete.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test` (including the new presenter integration suite).
+  - Maestro MCP gate remains non-blocking for this loop because `specs/001-native-ios-sheet-bindings/spec.md` still sets `E2E Gate State: deferred`.
   - Ralph iteration `Phase 3 Native Host Lifecycle + Recycle`: implemented a dedicated native sheet host container (`SheetHostContainerView`) with explicit attach/detach hooks, deferred presentation until attachment, and deterministic teardown on detach in `ios/RnBottomSheet.swift`.
   - Added `prepareForRecycle()` conformance in `ios/RnBottomSheet.swift` to clear stale callbacks/session state and reset sheet props for Nitro view reuse safety.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, `yarn test`, and successful `yarn workspace rn-bottom-sheet-example ios` build/run.
@@ -238,6 +242,15 @@
 - [x] Mark `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Phase 5 HIGH iOS Presenter Lifecycle Integration Tests)
+
+- [x] Confirm the highest-priority incomplete item is `IMPLEMENTATION_PLAN.md` Phase 5: "Add iOS integration tests for presenter lifecycle"
+- [x] Verify no existing integration test already covers native presenter lifecycle callback sequencing through the `BottomSheet` wrapper
+- [x] Add integration tests in `src/__tests__/bottom-sheet.presenter.integration.test.tsx` that validate native lifecycle callback forwarding and open-state synchronization behavior
+- [x] Update `IMPLEMENTATION_PLAN.md` to mark "Add iOS integration tests for presenter lifecycle" complete
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in this Review section
 
 ## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Helper T027)
 
