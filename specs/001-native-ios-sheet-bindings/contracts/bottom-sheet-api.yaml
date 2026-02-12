@@ -1,0 +1,55 @@
+contract: bottom-sheet-component
+version: 1
+
+component:
+  name: BottomSheet
+  props:
+    isOpen:
+      type: boolean
+      required: false
+    defaultOpen:
+      type: boolean
+      required: false
+    detents:
+      type: array
+      items: detent
+      required: false
+    initialDetent:
+      type: integer_or_last
+      required: false
+    selectedDetent:
+      type: integer
+      required: false
+    grabberVisible:
+      type: boolean
+      required: false
+    allowSwipeToDismiss:
+      type: boolean
+      required: false
+    backgroundInteraction:
+      type: modal_or_threshold
+      required: false
+  events:
+    - onOpenChange(open, reason)
+    - onDetentChange(index)
+    - onWillPresent()
+    - onDidPresent()
+    - onWillDismiss()
+    - onDidDismiss()
+
+methods:
+  - name: present
+    returns: promise_void
+  - name: dismiss
+    args: [reason?]
+    returns: promise_void
+  - name: snapToDetent
+    args: [index, animated?]
+    returns: promise_void
+  - name: getCurrentDetentIndex
+    returns: integer
+
+error_contract:
+  - invalid_detent_configuration
+  - invalid_detent_index
+  - unsupported_platform_warning

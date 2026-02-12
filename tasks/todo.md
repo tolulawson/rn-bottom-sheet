@@ -45,6 +45,15 @@
 - [ ] `yarn typecheck`
 - [ ] `yarn test`
 
+## Ralph Setup
+
+- [x] Create Ralph scaffolding directories (`.specify`, `specs`, `logs`, `history`, command folders)
+- [x] Install Ralph loop scripts for Claude and Codex
+- [x] Install optional RLM/helper scripts and `scripts/lib` utilities
+- [x] Create project constitution at `.specify/memory/constitution.md`
+- [x] Create `AGENTS.md`, `CLAUDE.md`, `PROMPT_build.md`, and `PROMPT_plan.md`
+- [x] Verify scripts execute with `--help`
+
 ## Review
 
 - Date:
