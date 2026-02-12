@@ -131,6 +131,9 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/example/src/__tests__/app-harness\\.ts$"
     ]
   },
   "commitlint": {

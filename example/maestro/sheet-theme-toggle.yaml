@@ -1,0 +1,32 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "main-title"
+    timeout: 30000
+- assertVisible:
+    text: "Theme: light"
+
+- tapOn:
+    id: "toggle-theme-button"
+- assertVisible:
+    text: "Theme: dark"
+
+- tapOn:
+    id: "open-sheet-button"
+- assertVisible:
+    text: "Sheet: Open"
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: "Route: Details"
+- tapOn:
+    id: "close-sheet-button"
+- assertVisible:
+    text: "Sheet: Closed"
+
+- tapOn:
+    id: "toggle-theme-button"
+- assertVisible:
+    text: "Theme: light"

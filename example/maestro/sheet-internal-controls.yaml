@@ -1,0 +1,44 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "main-title"
+    timeout: 30000
+
+- tapOn:
+    id: "open-sheet-button"
+- assertVisible:
+    text: "Sheet: Open"
+
+- tapOn:
+    id: "snap-large-button"
+- assertVisible:
+    text: "Detent: 2 (Large)"
+
+- tapOn:
+    id: "toggle-grabber-button"
+- tapOn:
+    id: "toggle-swipe-dismiss-button"
+- tapOn:
+    id: "toggle-expand-on-scroll-button"
+- tapOn:
+    id: "cycle-background-interaction-button"
+- assertVisible:
+    text: "Grabber: Off | Swipe dismiss: Off"
+- assertVisible:
+    text: "Expand on scroll: Off | Background: nonModal"
+
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: "Route: Details"
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: "Route: Summary"
+
+- tapOn:
+    id: "close-sheet-button"
+- assertVisible:
+    text: "Sheet: Closed"

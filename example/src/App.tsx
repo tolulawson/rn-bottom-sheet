@@ -1,13 +1,31 @@
-import { View, StyleSheet, Text, Button } from 'react-native';
-import { useRef, useState, useCallback, useMemo } from 'react';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
 import type {
+  BackgroundInteractionMode,
   BottomSheetChangeReason,
   BottomSheetMethods,
-  BackgroundInteractionMode,
 } from 'rn-bottom-sheet';
 
-type InSheetRoute = 'summary' | 'details';
+import { InSheetControls } from './components/InSheetControls';
+import {
+  getPhaseForCloseRequest,
+  getPhaseForOpenRequest,
+  getResetRouteOnClose,
+  isOpenRequestNoOp,
+  type InSheetRoute,
+  type SheetPhase,
+} from './example-state';
+import { TEST_IDS } from './testids';
+import { THEME_TOKENS, type ThemeMode } from './theme';
+
+const DETENTS = ['fit', 'medium', 'large'] as const;
+const DETENT_LABELS = ['Fit', 'Medium', 'Large'] as const;
+const BACKGROUND_MODES: BackgroundInteractionMode[] = [
+  'modal',
+  'nonModal',
+  { upThrough: 1 },
+];
 
 function resolveAnimatedBottomSheet(): {
   Component: typeof BottomSheet;
@@ -38,13 +56,24 @@ function resolveAnimatedBottomSheet(): {
   };
 }
 
+function renderBackgroundInteractionLabel(
+  mode: BackgroundInteractionMode
+): string {
+  if (typeof mode === 'string') {
+    return mode;
+  }
+
+  return `upThrough(${mode.upThrough})`;
+}
+
 /**
  * Example app demonstrating controlled BottomSheet usage.
  */
 export default function App() {
   const sheetRef = useRef<BottomSheetMethods>(null);
   const [routeSheetOpen, setRouteSheetOpen] = useState(false);
-  const [currentDetent, setCurrentDetent] = useState(0);
+  const [sheetPhase, setSheetPhase] = useState<SheetPhase>('closed');
+  const [currentDetent, setCurrentDetent] = useState(1);
   const [selectedDetent, setSelectedDetent] = useState(1);
   const [inSheetRoute, setInSheetRoute] = useState<InSheetRoute>('summary');
   const [grabberVisible, setGrabberVisible] = useState(true);
@@ -52,19 +81,23 @@ export default function App() {
   const [expandsWhenScrolledToEdge, setExpandsWhenScrolledToEdge] =
     useState(true);
   const [backgroundModeIndex, setBackgroundModeIndex] = useState(0);
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
   const { Component: AnimatedSheetComponent, isReanimatedWrapperActive } =
     useMemo(resolveAnimatedBottomSheet, []);
 
-  const backgroundModes: BackgroundInteractionMode[] = [
-    'modal',
-    'nonModal',
-    { upThrough: 1 },
-  ];
-  const backgroundInteraction = backgroundModes[backgroundModeIndex] ?? 'modal';
+  const theme = THEME_TOKENS[themeMode];
+  const backgroundInteraction =
+    BACKGROUND_MODES[backgroundModeIndex] ?? 'modal';
 
   const handleOpenChange = useCallback(
     (open: boolean, reason: BottomSheetChangeReason) => {
       console.log(`Sheet open changed: ${open}, reason: ${reason}`);
+
+      if (!open) {
+        setInSheetRoute((currentRoute) =>
+          getResetRouteOnClose(false, currentRoute)
+        );
+      }
     },
     []
   );
@@ -78,8 +111,32 @@ export default function App() {
     []
   );
 
-  const detents = ['fit', 'medium', 'large'] as const;
-  const detentLabels = ['Fit', 'Medium', 'Large'] as const;
+  const requestOpenSheet = useCallback(() => {
+    if (isOpenRequestNoOp(sheetPhase)) {
+      return;
+    }
+
+    setSheetPhase(getPhaseForOpenRequest(sheetPhase));
+    setRouteSheetOpen(true);
+  }, [sheetPhase]);
+
+  const requestCloseSheet = useCallback(() => {
+    setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
+    setRouteSheetOpen(false);
+    setInSheetRoute((currentRoute) =>
+      getResetRouteOnClose(false, currentRoute)
+    );
+  }, []);
+
+  const handleToggleTheme = useCallback(() => {
+    setThemeMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'));
+  }, []);
+
+  const handleToggleRoute = useCallback(() => {
+    setInSheetRoute((currentRoute) =>
+      currentRoute === 'summary' ? 'details' : 'summary'
+    );
+  }, []);
 
   const handleSnapToDetent = useCallback((index: number) => {
     setSelectedDetent(index);
@@ -91,115 +148,136 @@ export default function App() {
     onRouteOpen(reason) {
       console.log(`Route requested open, reason: ${reason}`);
       setRouteSheetOpen(true);
+      setSheetPhase((currentPhase) => getPhaseForOpenRequest(currentPhase));
     },
     onRouteClose(reason) {
       console.log(`Route requested close, reason: ${reason}`);
       setRouteSheetOpen(false);
-      setInSheetRoute('summary');
+      setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
+      setInSheetRoute((currentRoute) =>
+        getResetRouteOnClose(false, currentRoute)
+      );
     },
     onOpenChange: handleOpenChange,
   });
 
   const cycleBackgroundInteraction = useCallback(() => {
-    setBackgroundModeIndex((current) => (current + 1) % backgroundModes.length);
-  }, [backgroundModes.length]);
-
-  const renderBackgroundInteractionLabel = (
-    mode: BackgroundInteractionMode
-  ): string => {
-    if (typeof mode === 'string') {
-      return mode;
-    }
-    return `upThrough(${mode.upThrough})`;
-  };
+    setBackgroundModeIndex(
+      (currentIndex) => (currentIndex + 1) % BACKGROUND_MODES.length
+    );
+  }, []);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>rn-bottom-sheet Example</Text>
-      <Text style={styles.status}>
+    <View
+      accessibilityLabel={TEST_IDS.mainContainer}
+      style={[styles.container, { backgroundColor: theme.background }]}
+      testID={TEST_IDS.mainContainer}
+    >
+      <Text
+        accessibilityLabel={TEST_IDS.mainTitle}
+        style={[styles.title, { color: theme.text }]}
+        testID={TEST_IDS.mainTitle}
+      >
+        rn-bottom-sheet Example
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.mainSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainSummary}
+      >
         Sheet: {navigationSheet.isOpen ? 'Open' : 'Closed'} | Detent:{' '}
-        {currentDetent} ({detentLabels[currentDetent] ?? 'Unknown'})
+        {currentDetent} ({DETENT_LABELS[currentDetent] ?? 'Unknown'})
       </Text>
-      <Text style={styles.status}>
-        Grabber: {grabberVisible ? 'On' : 'Off'} | Swipe dismiss:{' '}
-        {allowSwipeToDismiss ? 'On' : 'Off'}
+      <Text
+        accessibilityLabel={TEST_IDS.mainSheetPhase}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainSheetPhase}
+      >
+        Phase: {sheetPhase}
       </Text>
-      <Text style={styles.status}>
-        Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+      <Text
+        accessibilityLabel={TEST_IDS.mainRouteSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainRouteSummary}
+      >
+        Route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'} |
         Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
       </Text>
-      <Text style={styles.status}>
-        In-sheet route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'} |
-        Animation wrapper:{' '}
+      <Text
+        accessibilityLabel={TEST_IDS.mainThemeSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainThemeSummary}
+      >
+        Theme: {themeMode} | Animation wrapper:{' '}
         {isReanimatedWrapperActive ? 'Reanimated' : 'Fallback'}
       </Text>
-      <Button title="Open Sheet" onPress={() => setRouteSheetOpen(true)} />
-      <View style={styles.buttonSpacer} />
-      <Button title="Close Sheet" onPress={() => setRouteSheetOpen(false)} />
-      <View style={styles.buttonSpacer} />
-      <Button title="Snap to Fit" onPress={() => handleSnapToDetent(0)} />
-      <View style={styles.buttonSpacer} />
-      <Button title="Snap to Medium" onPress={() => handleSnapToDetent(1)} />
-      <View style={styles.buttonSpacer} />
-      <Button title="Snap to Large" onPress={() => handleSnapToDetent(2)} />
-      <View style={styles.buttonSpacer} />
       <Button
-        title="Toggle Grabber"
-        onPress={() => setGrabberVisible((visible) => !visible)}
+        accessibilityLabel={TEST_IDS.openSheetButton}
+        onPress={requestOpenSheet}
+        testID={TEST_IDS.openSheetButton}
+        title="Open Sheet"
       />
       <View style={styles.buttonSpacer} />
       <Button
-        title="Toggle Swipe Dismiss"
-        onPress={() => setAllowSwipeToDismiss((allowed) => !allowed)}
-      />
-      <View style={styles.buttonSpacer} />
-      <Button
-        title="Toggle Expand On Scroll"
-        onPress={() => setExpandsWhenScrolledToEdge((expand) => !expand)}
-      />
-      <View style={styles.buttonSpacer} />
-      <Button
-        title="Cycle Background Interaction"
-        onPress={cycleBackgroundInteraction}
+        accessibilityLabel={TEST_IDS.toggleThemeButton}
+        onPress={handleToggleTheme}
+        testID={TEST_IDS.toggleThemeButton}
+        title={themeMode === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
       />
 
       <AnimatedSheetComponent
-        ref={sheetRef}
-        isOpen={navigationSheet.isOpen}
-        detents={[...detents]}
-        initialDetent={1}
-        selectedDetent={selectedDetent}
-        grabberVisible={grabberVisible}
         allowSwipeToDismiss={allowSwipeToDismiss}
         backgroundInteraction={backgroundInteraction}
         cornerRadius={-1}
+        detents={[...DETENTS]}
         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
-        onOpenChange={navigationSheet.onOpenChange}
+        grabberVisible={grabberVisible}
+        initialDetent={1}
+        isOpen={navigationSheet.isOpen}
         onDetentChange={handleDetentChange}
-        onWillPresent={() => console.log('Will present')}
-        onDidPresent={() => console.log('Did present')}
-        onWillDismiss={() => console.log('Will dismiss')}
-        onDidDismiss={() => console.log('Did dismiss')}
+        onDidDismiss={() => {
+          console.log('Did dismiss');
+          setSheetPhase('closed');
+          setInSheetRoute((currentRoute) =>
+            getResetRouteOnClose(false, currentRoute)
+          );
+        }}
+        onDidPresent={() => {
+          console.log('Did present');
+          setSheetPhase('open');
+        }}
+        onOpenChange={navigationSheet.onOpenChange}
+        onWillDismiss={() => {
+          console.log('Will dismiss');
+          setSheetPhase('dismissing');
+        }}
+        onWillPresent={() => {
+          console.log('Will present');
+          setSheetPhase('opening');
+        }}
+        ref={sheetRef}
+        selectedDetent={selectedDetent}
       >
-        <View style={styles.sheetContent}>
-          <Text style={styles.sheetTitle}>Sheet Content</Text>
-          <Text style={styles.sheetSubtitle}>
-            In-Sheet Route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'}
-          </Text>
-          {inSheetRoute === 'summary' ? (
-            <Button
-              title="Go to Details"
-              onPress={() => setInSheetRoute('details')}
-            />
-          ) : (
-            <Button
-              title="Back to Summary"
-              onPress={() => setInSheetRoute('summary')}
-            />
-          )}
-          <View style={styles.buttonSpacer} />
-          <Button title="Close" onPress={() => setRouteSheetOpen(false)} />
-        </View>
+        <InSheetControls
+          allowSwipeToDismiss={allowSwipeToDismiss}
+          backgroundInteraction={backgroundInteraction}
+          currentDetent={currentDetent}
+          expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+          grabberVisible={grabberVisible}
+          onClose={requestCloseSheet}
+          onCycleBackgroundInteraction={cycleBackgroundInteraction}
+          onSnapToDetent={handleSnapToDetent}
+          onToggleExpandOnScroll={() =>
+            setExpandsWhenScrolledToEdge((expand) => !expand)
+          }
+          onToggleGrabber={() => setGrabberVisible((visible) => !visible)}
+          onToggleRoute={handleToggleRoute}
+          onToggleSwipeDismiss={() =>
+            setAllowSwipeToDismiss((allowed) => !allowed)
+          }
+          route={inSheetRoute}
+          theme={theme}
+        />
       </AnimatedSheetComponent>
     </View>
   );
@@ -207,8 +285,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
     padding: 20,
   },
@@ -220,24 +298,9 @@ const styles = StyleSheet.create({
   status: {
     fontSize: 16,
     marginBottom: 12,
-    color: '#666',
     textAlign: 'center',
   },
   buttonSpacer: {
     height: 8,
-  },
-  sheetContent: {
-    padding: 20,
-    alignItems: 'center',
-  },
-  sheetTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 16,
-  },
-  sheetSubtitle: {
-    fontSize: 14,
-    color: '#666',
-    marginBottom: 12,
   },
 });

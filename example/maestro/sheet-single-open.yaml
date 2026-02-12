@@ -1,0 +1,41 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "main-title"
+    timeout: 30000
+
+# Open sheet and verify it's open
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "main-summary"
+    timeout: 5000
+- assertVisible:
+    id: "main-sheet-phase"
+
+# Close the sheet
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "main-summary"
+    timeout: 5000
+
+# Reopen and verify single instance behavior
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+# Close again
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000

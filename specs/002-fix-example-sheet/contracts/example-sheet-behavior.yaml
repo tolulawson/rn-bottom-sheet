@@ -1,0 +1,64 @@
+contract: example-sheet-behavior
+version: 1
+
+scope:
+  surface: example-app
+  feature: fix-example-sheet
+
+states:
+  sheetPhase:
+    type: enum
+    values: [closed, opening, open, dismissing]
+  inSheetRoute:
+    type: enum
+    values: [summary, details]
+  themeMode:
+    type: enum
+    values: [light, dark]
+
+events:
+  - name: open_sheet
+    source: main_screen
+  - name: close_sheet
+    source: in_sheet_or_main
+  - name: snap_to_detent
+    source: in_sheet
+    args: [index]
+  - name: toggle_behavior
+    source: in_sheet
+  - name: navigate_in_sheet
+    source: in_sheet
+    args: [summary_or_details]
+  - name: toggle_theme
+    source: main_screen
+
+rules:
+  - id: R1
+    name: single-sheet-instance
+    when: "sheetPhase in [opening, open] and event == open_sheet"
+    expectation: "no-op; no second sheet presentation is created"
+  - id: R2
+    name: route-summary-sync
+    when: "event == navigate_in_sheet"
+    expectation: "main screen route summary reflects inSheetRoute immediately"
+  - id: R3
+    name: control-accessibility
+    when: "sheetPhase == open"
+    expectation: "behavior controls are available inside sheet content"
+  - id: R4
+    name: theme-consistency
+    when: "event == toggle_theme"
+    expectation: "parent and sheet surfaces render in same theme mode"
+  - id: R5
+    name: close-resets-route
+    when: "sheetPhase transitions to closed"
+    expectation: "inSheetRoute resets to summary"
+
+maestro_requirements:
+  flows:
+    - example/maestro/sheet-single-open.yaml
+    - example/maestro/sheet-internal-controls.yaml
+    - example/maestro/sheet-theme-toggle.yaml
+  pass_gate: "all required flows pass before feature completion"
+  selectors:
+    expectation: "stable accessibility IDs/testIDs for open, close, detent controls, route controls, and theme toggle"
