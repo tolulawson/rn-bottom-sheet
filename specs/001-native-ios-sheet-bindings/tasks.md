@@ -96,7 +96,7 @@
 ### Tests for User Story 3
 
 - [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
-- [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+- [x] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
 
 ### Implementation for User Story 3
 

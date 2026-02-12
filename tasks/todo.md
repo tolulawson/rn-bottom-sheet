@@ -60,6 +60,10 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T026`: added `src/__tests__/bottom-sheet.reanimated.test.ts` to lock the documented Reanimated compatibility contract for `createAnimatedComponent` wrapping of both `BottomSheet` and `BottomSheetView`, including ref-method continuity and animated prop pass-through behavior.
+  - No production-code changes were required for `T026`; the existing wrapper/native export surface already satisfied the contract once coverage was added.
+  - Marked `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
   - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -174,5 +178,14 @@
 - [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
 - [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
 - [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (US3 Reanimated Contract Tests T026)
+
+- [x] Confirm `T026` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.reanimated.test.ts` does not already exist
+- [x] Add reanimated compatibility contract tests in `src/__tests__/bottom-sheet.reanimated.test.ts`
+- [x] Implement minimal production changes only if test-driven gaps are found
+- [x] Mark `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
