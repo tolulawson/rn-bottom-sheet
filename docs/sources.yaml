@@ -1,0 +1,76 @@
+{
+  "sources": [
+    {
+      "id": "nitro-view-components",
+      "name": "Nitro View Components",
+      "url": "https://nitro.margelo.com/docs/view-components",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "nitro docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/nitro-view-components.md"
+    },
+    {
+      "id": "apple-uikit-sheet",
+      "name": "UIKit UISheetPresentationController",
+      "url": "https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "Apple docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/ios-sheet-apis.md"
+    },
+    {
+      "id": "apple-swiftui-sheet-item",
+      "name": "SwiftUI View.sheet(item:onDismiss:content:)",
+      "url": "https://developer.apple.com/documentation/swiftui/view/sheet(item:ondismiss:content:)",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "Apple docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/swiftui-sheet-apis.md"
+    },
+    {
+      "id": "apple-swiftui-presentation-detents",
+      "name": "SwiftUI presentationDetents(_:)",
+      "url": "https://developer.apple.com/documentation/swiftui/view/presentationdetents(_:)",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "Apple docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/swiftui-sheet-apis.md"
+    },
+    {
+      "id": "react-navigation-native-stack",
+      "name": "React Navigation Native Stack Navigator",
+      "url": "https://reactnavigation.org/docs/native-stack-navigator/",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "v7 docs (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/react-navigation-form-sheet.md"
+    },
+    {
+      "id": "react-navigation-nesting",
+      "name": "React Navigation Nesting Navigators",
+      "url": "https://reactnavigation.org/docs/nesting-navigators/",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "v7 docs (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/react-navigation-form-sheet.md"
+    },
+    {
+      "id": "reanimated-create-animated-component",
+      "name": "Reanimated createAnimatedComponent",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/core/createAnimatedComponent/",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "Reanimated docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/reanimated-interop.md"
+    },
+    {
+      "id": "reanimated-use-animated-props",
+      "name": "Reanimated useAnimatedProps",
+      "url": "https://docs.swmansion.com/react-native-reanimated/docs/core/useAnimatedProps/",
+      "retrieved_at": "2026-02-12",
+      "version_pin": "Reanimated docs current (retrieved 2026-02-12)",
+      "license_notes": "Referenced and summarized; no full mirror",
+      "local_doc_path": "docs/references/reanimated-interop.md"
+    }
+  ]
+}

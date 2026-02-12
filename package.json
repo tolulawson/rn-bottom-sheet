@@ -41,7 +41,9 @@
     "typecheck": "tsc",
     "test": "jest",
     "release": "release-it --only-version",
-    "lint": "eslint \"**/*.{js,ts,tsx}\""
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "docs:sync": "node scripts/sync-knowledge.mjs",
+    "docs:check": "node scripts/check-knowledge.mjs"
   },
   "keywords": [
     "react-native",

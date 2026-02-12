@@ -24,6 +24,23 @@ import { RnBottomSheetView } from "rn-bottom-sheet";
 ```
 
 
+## Knowledge Base
+
+This repository includes a living knowledge base for architecture, references, and execution tracking:
+
+- `docs/README.md`
+- `docs/implementation-plan-v1.md`
+- `docs/knowledge-index.md`
+- `tasks/todo.md`
+- `tasks/lessons.md`
+
+Use these scripts to maintain it:
+
+```sh
+yarn docs:sync
+yarn docs:check
+```
+
 ## Contributing
 
 - [Development workflow](CONTRIBUTING.md#development-workflow)
