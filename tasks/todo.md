@@ -60,6 +60,9 @@
 - Date: 2026-02-12
 - Reviewer: Codex (GPT-5)
 - Findings:
+  - Ralph iteration `T033`: expanded `docs/adr/ADR-0001-ios-sheet-engine.md` to capture current architectural constraints and boundaries, including Nitro bridge surface, deterministic reason contract, optional navigation adapters, Reanimated compatibility scope, and explicit non-iOS fallback policy.
+  - Marked `T033` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
   - Ralph iteration `T032`: rewrote `README.md` to reflect the implemented API surface (wrapper/native exports, detent model, lifecycle callbacks, imperative methods, navigation adapter usage, Reanimated compatibility contract, and non-iOS fallback behavior).
   - Marked `T032` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
@@ -260,5 +263,13 @@
 - [x] Confirm `T032` is the highest-priority truly incomplete item and verify `README.md` API drift
 - [x] Update installation, usage, API reference, and fallback/navigation/reanimated notes in `README.md`
 - [x] Mark `T032` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish ADR Constraint Sync T033)
+
+- [x] Confirm `T033` is the highest-priority truly incomplete item and verify current ADR gaps
+- [x] Update `docs/adr/ADR-0001-ios-sheet-engine.md` with integration constraints and supported behavior boundaries
+- [x] Mark `T033` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
