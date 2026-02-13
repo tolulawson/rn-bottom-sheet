@@ -28,20 +28,11 @@ Before implementing, search the codebase to verify it's not already done.
 
 ---
 
-## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+## Phase 1b: No Incomplete Work
 
-**If ALL specs appear complete**, don't just exit — do a quality check:
-
-1. **Randomly pick** one completed spec from `specs/`
-2. **Strictly re-verify** ALL its acceptance criteria:
-   - Run the actual tests mentioned in the spec
-   - Manually verify each criterion is truly met
-   - Check edge cases
-   - Look for regressions
-3. **If any criterion fails**: Unmark the spec as complete and fix it
-4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
-
-This ensures the codebase stays healthy even when "nothing to do."
+If ALL specs are complete and `IMPLEMENTATION_PLAN.md` has no unchecked items:
+1. Output `<promise>DONE</promise>`
+2. Stop. Do not start re-verification loops unless explicitly requested by the user.
 
 ---
 

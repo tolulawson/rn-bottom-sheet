@@ -1,0 +1,1111 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c551c-a431-7933-8266-48b7a63f55f1
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP for all affected feature flows before completion. At minimum validate:
+- open sheet
+- dismiss sheet
+- detent interaction
+- primary in-sheet navigation flow
+
+Add additional scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: codex_apps starting
+mcp: context7 starting
+mcp: maestro starting
+mcp: pencil starting
+mcp: pencil ready
+2026-02-13T03:47:46.893353Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-619f-7a33-a4b6-a29306a53810
+2026-02-13T03:47:46.924172Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-ade7-7ec0-8c40-2280e6d568dc
+2026-02-13T03:47:46.953076Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-801f-7560-bf57-dc296cd22d13
+2026-02-13T03:47:46.968375Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-462a-7cb1-a40a-71d74868343a
+2026-02-13T03:47:46.991251Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-96d1-7ec2-9b10-378f526506a9
+2026-02-13T03:47:47.008049Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-69c1-7a50-b1cb-0a0b901301ab
+2026-02-13T03:47:47.030548Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-7ede-7422-8cce-28f0f69c8579
+2026-02-13T03:47:47.057689Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-25cd-7302-a25e-d71b6c8a6fdf
+2026-02-13T03:47:47.077036Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-c253-79b1-84e5-b4fd10c63b2e
+2026-02-13T03:47:47.106422Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-efac-76f3-a23e-fe794e09dcb0
+2026-02-13T03:47:47.133791Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-1710-75f0-9467-ae046f756377
+2026-02-13T03:47:47.172761Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-68de-7230-9784-c01c27c58d9a
+2026-02-13T03:47:47.201823Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-aceb-72a3-8e43-d6794492b965
+2026-02-13T03:47:47.227728Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-207e-7f22-8ee1-1704ff1dd885
+2026-02-13T03:47:47.250987Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-4ce3-7000-a115-2dafb695c1ed
+2026-02-13T03:47:47.275937Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-0cc2-70b1-8084-74bc912acef4
+2026-02-13T03:47:47.301389Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-ee8e-73b0-abbc-26b79dee1629
+2026-02-13T03:47:47.328910Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c533a-70ac-7082-b8e6-cad4f5c2b510
+2026-02-13T03:47:47.366173Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-0c75-7b12-a7a2-5dc752c24643
+2026-02-13T03:47:47.437229Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-3c87-7ef0-95c4-d507ab7aba8c
+2026-02-13T03:47:47.470465Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-0fe2-7833-bcb6-d7249ccc39ba
+2026-02-13T03:47:47.509624Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-96b1-7540-b62c-fe92e79a91cc
+2026-02-13T03:47:47.538933Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-dedc-7751-870a-494dffebc4f1
+2026-02-13T03:47:47.577487Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-0ac5-7232-9c6e-0a63cf504c3f
+2026-02-13T03:47:47.595862Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-d5c5-7410-bb17-80937fe73a17
+2026-02-13T03:47:47.622187Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-8085-75e0-91aa-ec2916dd2b54
+2026-02-13T03:47:47.641414Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5340-f30a-79b2-8d34-3567a3877fbe
+2026-02-13T03:47:47.664422Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-a2e4-7630-8c3a-1422c350000e
+2026-02-13T03:47:47.698166Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-23c1-7d43-b1a3-755829831f8f
+2026-02-13T03:47:47.713582Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-3b04-7b92-a7ce-7ca5cb2f241e
+2026-02-13T03:47:47.735504Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-c811-7d43-a2e9-342ff09c061c
+2026-02-13T03:47:47.765440Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-7729-7e11-a1ff-7eb91ce18bd1
+2026-02-13T03:47:47.797122Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-3678-7b90-b8c6-128071fbf6bc
+2026-02-13T03:47:47.812142Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-5274-7bf0-8631-fbc1ec5124a0
+2026-02-13T03:47:47.826422Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-f598-7002-b0bf-06f06e67100a
+2026-02-13T03:47:47.852233Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-03be-7c61-bf84-1dc8878791e5
+2026-02-13T03:47:47.867100Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-5c01-7f02-8115-4c290ce287d7
+2026-02-13T03:47:47.895921Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-3ba5-7f73-93a1-edc66fbdd613
+2026-02-13T03:47:47.922775Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-69d2-7b62-9a47-aa3b9c15fbc5
+2026-02-13T03:47:47.947858Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-53ee-76c0-ad54-d85f657bcc12
+2026-02-13T03:47:47.971821Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-c764-7d92-b287-3144b188dd8b
+2026-02-13T03:47:47.997287Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-ac10-76a1-b5d8-5f080c451457
+2026-02-13T03:47:48.021811Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-d75b-7ce3-9de4-48c9c7b859fa
+2026-02-13T03:47:48.044266Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-9714-7062-9cc8-be07f3f5abad
+2026-02-13T03:47:48.074279Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-231e-7311-afb2-c5e65c8c209f
+2026-02-13T03:47:48.097713Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-f5b9-7d00-a13e-672a499eb1b6
+2026-02-13T03:47:48.121511Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-5376-7383-b345-17233db6a9de
+2026-02-13T03:47:48.136626Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-df07-7b41-aef3-8efdae916db9
+2026-02-13T03:47:48.153375Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-2be1-7e52-8411-e6988eed056b
+2026-02-13T03:47:48.186476Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-8da6-72e3-9e85-044303f74417
+mcp: maestro ready
+mcp: context7 ready
+mcp: codex_apps ready
+mcp startup: ready: pencil, maestro, context7, codex_apps
+
+thinking
+**Outlining workflow and initial repo inspection**
+codex
+I’m starting with Phase 0 by reading `.specify/memory/constitution.md`, then I’ll inventory `specs/`, `IMPLEMENTATION_PLAN.md`, and any tracked issues to pick the highest-priority unfinished item before touching code.
+
+thinking
+**Planning parallel command execution**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,240p' .specify/memory/constitution.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+<!--
+Sync Impact Report
+Version change: 2.0.0 -> 2.1.0
+Modified principles:
+- IV. Living Knowledge Base -> IV. Living Knowledge Base (README synchronization now mandatory for API/user-visible behavior changes)
+- V. Deterministic Integration Contracts -> V. Deterministic Integration Contracts (public-surface changes require README updates)
+Added sections:
+- Documentation Synchronization Rules
+Removed sections:
+- None
+Templates/runtime sync status:
+- ✅ .specify/templates/spec-template.md (Maestro E2E coverage now mandatory)
+- ✅ .specify/templates/plan-template.md (Maestro E2E strategy + gate checks)
+- ✅ .specify/templates/tasks-template.md (test tasks mandatory; Maestro + README tasks required)
+- ✅ PROMPT_build.md (completion now requires Maestro MCP pass for affected flows)
+- ✅ PROMPT_plan.md (planning requires Maestro E2E tasks)
+- ✅ scripts/ralph-loop.sh (generated prompt policy aligned)
+- ✅ scripts/ralph-loop-codex.sh (generated prompt policy aligned)
+- ✅ .codex/prompts/speckit.specify.md (spec generation includes mandatory Maestro E2E coverage)
+- ✅ .codex/prompts/speckit.tasks.md (task generation enforces required tests + Maestro + README updates)
+
+thinking
+**Planning work item discovery**
+codex
+Constitution is loaded. I’m now enumerating unfinished work from `specs/`, `IMPLEMENTATION_PLAN.md`, and repo issue sources, then I’ll rank by priority and verify the selected item isn’t already implemented.
+
+thinking
+**Planning concurrent command execution**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && if [ -f IMPLEMENTATION_PLAN.md ]; then echo 'HAS_PLAN'; sed -n '1,260p' IMPLEMENTATION_PLAN.md; else echo 'NO_PLAN'; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg --files specs' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+HAS_PLAN
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+ succeeded in 51ms:
+specs/003-native-sheet-content-routing/spec.md
+specs/003-native-sheet-content-routing/plan.md
+specs/003-native-sheet-content-routing/research.md
+specs/003-native-sheet-content-routing/tasks.md
+specs/003-native-sheet-content-routing/quickstart.md
+specs/003-native-sheet-content-routing/maestro-evidence/reverification-2026-02-13.md
+specs/003-native-sheet-content-routing/checklists/requirements.md
+specs/002-fix-example-sheet/spec.md
+specs/002-fix-example-sheet/plan.md
+specs/002-fix-example-sheet/data-model.md
+specs/002-fix-example-sheet/research.md
+specs/002-fix-example-sheet/tasks.md
+specs/002-fix-example-sheet/quickstart.md
+specs/002-fix-example-sheet/contracts/example-sheet-behavior.yaml
+specs/002-fix-example-sheet/checklists/requirements.md
+specs/004-interactive-sheet-content/spec.md
+specs/004-interactive-sheet-content/plan.md
+specs/004-interactive-sheet-content/data-model.md
+specs/004-interactive-sheet-content/research.md
+specs/004-interactive-sheet-content/tasks.md
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && if command -v gh >/dev/null 2>&1; then echo 'GH_OK'; gh issue list --state open --limit 50; else echo 'GH_MISSING'; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 444ms:
+GH_OK
+
+thinking
+**Checking issue command output**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && for f in specs/*/spec.md; do echo "--- $f"; rg -n "''^## Status:" "$f" || echo "(no status)"; done' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+--- specs/001-native-ios-sheet-bindings/spec.md
+8:## Status: COMPLETE
+--- specs/002-fix-example-sheet/spec.md
+8:## Status: COMPLETE "The example application has several bugs and functional issues that need improvement: duplicate sheet open bug, inaccessible testing functions behind the sheet, and app-wide dark-mode toggle with bottom-sheet verification."
+--- specs/003-native-sheet-content-routing/spec.md
+8:## Status: COMPLETE
+--- specs/004-interactive-sheet-content/spec.md
+8:## Status: COMPLETE
+
+thinking
+**Planning random spec verification**
+codex
+All specs and the implementation plan are marked complete, so I’m entering Phase 1b re-verification mode. Next I’ll select one completed spec at random, write a verification plan into `tasks/todo.md`, and then execute every acceptance check including Maestro flows.
+
+thinking
+**Checking task file existence**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la tasks && if [ -f tasks/todo.md ]; then sed -n '1,260p' tasks/todo.md; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+total 216
+drwxr-xr-x@  4 tolu  staff     128 Feb 12 11:42 .
+drwxr-xr-x  49 tolu  staff    1568 Feb 12 17:31 ..
+-rw-r--r--@  1 tolu  staff    2171 Feb 12 11:00 lessons.md
+-rw-r--r--@  1 tolu  staff  105191 Feb 12 19:46 todo.md
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+thinking
+**Planning iteration updates**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls specs/*/spec.md | shuf -n 1' in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 127 in 51ms:
+zsh:1: command not found: shuf
+
+thinking
+**Implementing random line selection**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls specs/*/spec.md | awk 'BEGIN{srand()} {print rand()\"\\t\""'$0}'"' | sort -k1,1n | head -n 1 | cut -f2-" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+specs/003-native-sheet-content-routing/spec.md
+
+thinking
+**Reviewing spec for acceptance criteria**
+codex
+I selected `specs/003-native-sheet-content-routing/spec.md` randomly for strict re-verification. I’ll extract its acceptance criteria and required test commands next, then create a fresh checklist in `tasks/todo.md` before running anything.
+
+thinking
+**Planning parallel spec and tasks reading**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/003-native-sheet-content-routing/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/003-native-sheet-content-routing/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/003-native-sheet-content-routing/quickstart.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Feature Specification: Native Sheet Content Routing
+
+**Feature Branch**: `003-native-sheet-content-routing`
+**Created**: 2026-02-12
+**Status**: COMPLETE
+**Input**: User description: "Render React Native views inside native UIKit sheet"
+
+## Status: COMPLETE
+
+## User Scenarios & Testing
+
+### User Story 1 - Sheet Displays RN Children on Present (Priority: P1)
+
+A developer wraps arbitrary React Native components (Text, Button, ScrollView, custom components) as children of `<BottomSheet>`. When the sheet opens, those children appear inside the native UIKit sheet. When the sheet is closed, the children are not visible on the main screen.
+
+**Why this priority**: This is the fundamental value proposition of the library. Without reliable content rendering, no other feature matters.
+
+**Independent Test**: Open the example app, tap "Open Sheet", verify children (text, buttons) are visible inside the sheet. Close the sheet, verify children are not visible on the main screen.
+
+**Acceptance Scenarios**:
+ succeeded in 51ms:
+# Tasks: Native Sheet Content Routing
+
+**Input**: Design documents from `/specs/003-native-sheet-content-routing/`
+**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md
+
+**Tests**: Test tasks are REQUIRED for every feature. Include unit/integration coverage and comprehensive Maestro E2E tasks for affected flows.
+**Documentation**: No README update needed -- internal implementation fix only (FR-008).
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare the child routing infrastructure in the Swift native layer
+
+ succeeded in 51ms:
+# Quickstart: Example Sheet Stability and Testability
+
+## 1. Prerequisites
+
+1. Install dependencies at repo root: `yarn install`.
+2. Ensure iOS tooling/simulator is available for the example app.
+3. Ensure Maestro CLI (and Maestro MCP when used) is available in your environment.
+
+## 2. Run Fast Local Validation (Jest)
+
+1. Run library tests: `yarn test`.
+2. Run example integration test file if split execution is needed:
+   `yarn test example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+3. Confirm no regressions in open/close, detent, route, and toggle behavior logs/assertions.
+
+## 3. Run Example App
+
+1. Start example app on iOS:
+   `yarn workspace rn-bottom-sheet-example ios`
+2. Verify manually:
+
+thinking
+**Reviewing flow alignment with spec**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la example/maestro && rg -n \"sheet-open-content-visible|sheet-reopen-cycle|sheet-interactive-children|sheet-core-flows|sheet-single-open|sheet-internal-controls|sheet-theme-toggle\" example/maestro -g '*.yaml'" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 51ms:
+total 80
+drwxr-xr-x@ 12 tolu  staff   384 Feb 12 18:06 .
+drwxr-xr-x@ 17 tolu  staff   544 Feb 12 11:07 ..
+-rw-r--r--@  1 tolu  staff   603 Feb 12 18:06 README.md
+-rw-r--r--@  1 tolu  staff  1350 Feb 12 18:57 sheet-consumer-flow-compat.yaml
+-rw-r--r--@  1 tolu  staff  1076 Feb 12 19:44 sheet-interactive-children.yaml
+-rw-r--r--@  1 tolu  staff  1151 Feb 12 18:57 sheet-interactive-controls.yaml
+-rw-r--r--@  1 tolu  staff  1098 Feb 12 19:17 sheet-internal-controls.yaml
+-rw-r--r--@  1 tolu  staff  1256 Feb 12 19:42 sheet-open-content-visible.yaml
+-rw-r--r--@  1 tolu  staff  1214 Feb 12 19:43 sheet-reopen-cycle.yaml
+-rw-r--r--@  1 tolu  staff  1088 Feb 12 19:15 sheet-single-open.yaml
+-rw-r--r--@  1 tolu  staff  1018 Feb 12 19:17 sheet-theme-toggle.yaml
+-rw-r--r--@  1 tolu  staff  1330 Feb 12 18:57 sheet-width-contract.yaml
+
+thinking
+**Verifying open GitHub issues**
+codex
+I’ve pulled the spec requirements and located the required Maestro flows in `example/maestro/`. I’ll now lock a verification plan in `tasks/todo.md`, then run targeted tests, full validation, and Maestro MCP/device flows for open/dismiss/detent/navigation plus the spec-003 scenarios.
+
+thinking
+**Planning checklist section**
+Plan update
+Entering re-verification mode because all specs are complete; selected spec 003 at random for strict acceptance re-validation.
+  → Create/refresh a concrete verification checklist in tasks/todo.md for spec 003 re-verification
+  • Validate implementation coverage against spec 003 requirements and ensure no hidden incomplete work remains
+  • Run automated verification gates (lint, typecheck, tests) and targeted spec-related test suites
+  • Run required Maestro mobile flows (spec 003 + mandatory open/dismiss/detent/navigation) and capture evidence
+  • If all checks pass, update review artifacts, commit, push, and emit completion signal
+
+thinking
+**Preparing to append todo**
+codex
+I’m writing a new checkable iteration block to `tasks/todo.md` now so verification is tracked explicitly before execution, then I’ll start running the checklist in order.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && tail -n 80 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+- [x] Re-verify all Spec 002 acceptance scenarios and functional requirements against current implementation
+- [x] Run and pass validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Run Maestro MCP required baseline flows (open, dismiss, detent interaction, primary in-sheet navigation)
+- [x] Run Spec 002 Maestro flows (`example/maestro/sheet-single-open.yaml`, `example/maestro/sheet-internal-controls.yaml`, `example/maestro/sheet-theme-toggle.yaml`)
+- [x] Record evidence and completion decision in `tasks/todo.md` review addendum
+- [x] Commit and push this iteration once all gates pass
+
+## Review Addendum (2026-02-13, Spec 002 Re-Verification Round 2)
+
+- Discovery and prioritization:
+  - No actionable incomplete items were found in `IMPLEMENTATION_PLAN.md` (all checkboxes are complete), open GitHub issues (`gh issue list --state open --limit 50` returned no rows), or configured tracker resources.
+  - Re-verification mode selected `specs/002-fix-example-sheet/spec.md` (random completed-spec audit).
+- Acceptance-criteria audit (Spec 002):
+  - Duplicate-open idempotency behavior is present in `example/src/App.tsx` via guarded `requestOpenSheet` and covered by `example/src/__tests__/sheet-single-open.contract.test.tsx`.
+  - In-sheet control surface + parent summary synchronization is present in `example/src/components/InSheetControls.tsx` and covered by `example/src/__tests__/sheet-control-surface.contract.test.tsx`.
+  - Global theme toggle propagation and continuity is present in `example/src/App.tsx`/`example/src/theme.ts` and covered by `example/src/__tests__/sheet-theme.contract.test.tsx`.
+- Automated validation gates:
+  - `yarn lint`: pass (0 errors, 3 warnings from generated `coverage/lcov-report/*` files only).
+  - `yarn typecheck`: pass.
+  - `yarn test`: pass (`16/16` suites, `56` passed tests, `1` todo).
+
+thinking
+**Planning new iteration section**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+ M PROMPT_build.md
+ M example/app.json
+ M logs/ralph_codex_build_iter_6_20260212_030044.log
+ M logs/ralph_codex_build_session_20260212_022725.log
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop-cursor-agent.sh
+ M specs/003-native-sheet-content-routing/plan.md
+ M specs/003-native-sheet-content-routing/spec.md
+ M specs/003-native-sheet-content-routing/tasks.md
+ D todo.ts
+?? logs/ralph_codex_build_iter_1_20260212_173048.log
+?? logs/ralph_codex_build_iter_1_20260212_173920.log
+?? logs/ralph_codex_build_iter_1_20260212_174736.log
+?? logs/ralph_codex_build_iter_1_20260212_174950.log
+?? logs/ralph_codex_build_iter_1_20260212_175634.log
+?? logs/ralph_codex_build_iter_1_20260212_193023.log
+?? logs/ralph_codex_build_iter_1_20260212_194819.log
+?? logs/ralph_codex_build_iter_2_20260212_174606.log
+?? logs/ralph_codex_build_iter_2_20260212_190633.log
+?? logs/ralph_codex_build_iter_2_20260212_193113.log
+
+thinking
+**Clarifying handling of dirty worktree**
+codex
+I found the repo is already dirty from prior work, so I’ll isolate this run to only the files needed for this re-verification and leave unrelated changes untouched. I’m appending a fresh checklist section in `tasks/todo.md` for this audit pass now.
+
+thinking
+**Appending tasks with shell heredoc**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' >> tasks/todo.md
+
+## Ralph Iteration 2026-02-13 (Spec 003 Re-Verification Audit Round 2)
+
+- [ ] Confirm no higher-priority incomplete work exists across "'`specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [ ] Build a strict acceptance-criteria matrix for `specs/003-native-sheet-content-routing/spec.md` and map each criterion to executable verification
+- [ ] Re-verify implementation state in code for FR-001..FR-008 (including no public API drift)
+- [ ] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [ ] Run mandatory Maestro baseline flows covering open, dismiss, detent interaction, and primary in-sheet navigation
+- [ ] Run Spec 003 Maestro flows: `example/maestro/sheet-open-content-visible.yaml`, `example/maestro/sheet-reopen-cycle.yaml`, `example/maestro/sheet-interactive-children.yaml`
+- [ ] If any acceptance criterion fails, unmark spec completion and implement a fix with full re-validation
+- [ ] Record review evidence in `tasks/todo.md`, then commit and push only if all checks pass
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+
+thinking
+**Preparing detailed plan update**
+Plan update
+Added a fresh iteration checklist to tasks/todo.md per project workflow before execution.
+  ✓ Create/refresh a concrete verification checklist in tasks/todo.md for spec 003 re-verification
+  → Validate implementation coverage against spec 003 requirements and ensure no hidden incomplete work remains
+  • Run automated verification gates (lint, typecheck, tests) and targeted spec-related test suites
+  • Run required Maestro mobile flows (spec 003 + mandatory open/dismiss/detent/navigation) and capture evidence
+  • If all checks pass, update review artifacts, commit, push, and emit completion signal
+
+thinking
+**Checking task trackers availability**
+codex
+Plan is written and checked in. I’m now executing the discovery verification checklist: re-checking incomplete markers, issue queues, and configured tracker resources so priority selection is defensible before test execution.
+tool codex.list_mcp_resources({})
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && for f in specs/*/spec.md; do s=$(rg -n "''^## Status:" "$f" || true); echo "$f :: ${s:-MISSING_STATUS}"; done' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/spec.md :: 8:## Status: COMPLETE
+specs/002-fix-example-sheet/spec.md :: 8:## Status: COMPLETE "The example application has several bugs and functional issues that need improvement: duplicate sheet open bug, inaccessible testing functions behind the sheet, and app-wide dark-mode toggle with bottom-sheet verification."
+specs/003-native-sheet-content-routing/spec.md :: 8:## Status: COMPLETE
+specs/004-interactive-sheet-content/spec.md :: 8:## Status: COMPLETE
+ succeeded in 51ms:
+
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && gh issue list --state open --limit 50 --json number,title,labels,state,url' in /Users/tolu/Desktop/dev/rn-bottom-sheetcodex.list_mcp_resources({}) success in 238ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"resources\":[]}"
+    }
+  ],
+  "isError": false
+}
+ succeeded in 337ms:
+[]
+
+thinking
+**Planning code verification steps**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n \"SheetContentContainerView|routeChildView|unrouteChildView|prepareForRecycle|presentSheet\\(|dismissSheet\\(|sheetDidDismiss\\(\" ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '260,620p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' src/components/BottomSheet.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,220p' src/index.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+36:    private let contentContainer = SheetContentContainerView()
+365:            presentSheet()
+374:            dismissSheet(reason: .programmatic)
+414:            presentSheet()
+417:            dismissSheet(reason: .programmatic)
+500:            presentSheet()
+510:            dismissSheet(reason: .programmatic)
+514:    private func presentSheet() {
+572:    private func dismissSheet(reason: NativeChangeReason) {
+1011:                presentSheet()
+1024:                dismissSheet(reason: .system)
+1029:    func prepareForRecycle() {
+1077:    func routeChildView(_ childView: UIView, atIndex index: Int) {
+1089:    func unrouteChildView(_ childView: UIView) {
+1130:    func sheetDidDismiss(reason: NativeChangeReason) {
+1229:    func sheetDidDismiss(reason: NativeChangeReason)
+1248:    func sheetDidDismiss(reason: NativeChangeReason) {
+1249:        delegate?.sheetDidDismiss(reason: reason)
+1273:/// presents, children are moved to the `SheetContentContainerView`.
+1308:        lifecycleOwner?.routeChildView(childView, atIndex: index)
+ succeeded in 51ms:
+import UIKit
+import NitroModules
+
+/**
+ * HybridRnBottomSheet
+ *
+ * Native iOS implementation of the bottom sheet using UISheetPresentationController.
+ * This class conforms to the generated HybridRnBottomSheetSpec protocol from Nitrogen.
+ *
+ * Key responsibilities:
+ * - Present/dismiss native iOS sheets with React Native content
+ * - Map detent configurations to UISheetPresentationController.Detent
+ * - Handle lifecycle callbacks and state changes
+ * - Bridge interaction events back to JavaScript
+ */
+class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
+    private enum PendingPropUpdate: Hashable {
+        case detents
+        case selectedDetent
+        case openState
+ succeeded in 51ms:
+        }
+        set {
+            runOnMainSync {
+                contentBackgroundBlurStyleStorage = newValue
+                queuePropUpdate(.contentBackgroundBlurStyle)
+            }
+        }
+    }
+
+    // =========================================================================
+    // MARK: - Callbacks (conforming to HybridRnBottomSheetSpec)
+    // =========================================================================
+
+    private var onOpenChangeStorage: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void = { _, _ in }
+    var onOpenChange: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void {
+        get {
+            runOnMainSync {
+                onOpenChangeStorage
+            }
+        }
+ succeeded in 51ms:
+import { callback, type HybridRef } from 'react-native-nitro-modules';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { View } from 'react-native';
+import type {
+  NativeChangeReason,
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+import { RnBottomSheetView } from '../native/RnBottomSheetView';
+import {
+  isNativeSheetSupported,
+  warnUnsupportedPlatform,
+ succeeded in 51ms:
+/**
+ * rn-bottom-sheet
+ *
+ * Native iOS sheet bindings for React Native using Nitro Views.
+ */
+
+import { BottomSheet } from './components/BottomSheet';
+import { BottomSheetNativeView } from './components/BottomSheetNativeView';
+import { RnBottomSheetView } from './native/RnBottomSheetView';
+
+// =============================================================================
+// Public Components
+// =============================================================================
+
+/**
+ * Public BottomSheet wrapper component.
+ */
+export { BottomSheet };
+
+/**
+
+thinking
+**Inspecting iOS routing code**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '920,1380p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+                        sortValue: value / 1000,
+                        kind: .points(value)
+                    )
+                )
+            }
+        }
+
+        if definitions.isEmpty {
+            return [
+                ValidatedNativeDetent(identifier: .medium, sortValue: 0.5, kind: .semanticMedium),
+                ValidatedNativeDetent(identifier: .large, sortValue: 1.0, kind: .semanticLarge),
+            ]
+        }
+
+        return definitions.sorted {
+            if $0.sortValue == $1.sortValue {
+                return $0.identifier.rawValue < $1.identifier.rawValue
+            }
+            return $0.sortValue < $1.sortValue
+        }
+
+thinking
+**Inspecting mount/unmount overrides**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' nitrogen/generated/ios/c++/views/HybridRnBottomSheetComponent.mm" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+///
+/// HybridRnBottomSheetComponent.mm
+/// This file was generated by nitrogen. DO NOT MODIFY THIS FILE.
+/// https://github.com/mrousavy/nitro
+/// Copyright © Marc Rousavy @ Margelo
+///
+
+#import "HybridRnBottomSheetComponent.hpp"
+#import <memory>
+#import <react/renderer/componentregistry/ComponentDescriptorProvider.h>
+#import <React/RCTViewComponentView.h>
+#import <React/RCTComponentViewFactory.h>
+#import <React/UIView+ComponentViewProtocol.h>
+#import <NitroModules/NitroDefines.hpp>
+#import <UIKit/UIKit.h>
+#import <objc/message.h>
+
+#import "HybridRnBottomSheetSpecSwift.hpp"
+#import "RnBottomSheet-Swift-Cxx-Umbrella.hpp"
+
+
+thinking
+**Planning test inspection for coverage**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la example/src/__tests__' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/src/__tests__/sheet-control-surface.contract.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/src/__tests__/sheet-single-open.contract.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,300p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+total 48
+drwxr-xr-x@ 7 tolu  staff   224 Feb 12 11:26 .
+drwxr-xr-x@ 8 tolu  staff   256 Feb 12 19:07 ..
+-rw-r--r--@ 1 tolu  staff  7746 Feb 12 18:05 app-harness.ts
+-rw-r--r--@ 1 tolu  staff  2380 Feb 12 18:08 sheet-control-surface.contract.test.tsx
+-rw-r--r--@ 1 tolu  staff  3314 Feb 12 18:05 sheet-open-dismiss.integration.test.tsx
+-rw-r--r--@ 1 tolu  staff  1640 Feb 12 12:27 sheet-single-open.contract.test.tsx
+-rw-r--r--@ 1 tolu  staff  1901 Feb 12 18:05 sheet-theme.contract.test.tsx
+ succeeded in 52ms:
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example control-surface contract', () => {
+  it('exposes behavior controls inside the sheet and keeps parent summaries synced', () => {
+    const harness = createAppHarness();
+
+    expect(harness.hasButtonWithTestId(TEST_IDS.snapLargeButton)).toBe(false);
+    expect(harness.hasButtonWithTestId(TEST_IDS.closeSheetButton)).toBe(false);
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+
+    expect(harness.getTextByTestId(TEST_IDS.sheetTitle)).toContain(
+      'Sheet Controls'
+    );
+    expect(harness.getTextByTestId(TEST_IDS.sheetRouteSummary)).toContain(
+      'In-Sheet Route: Summary'
+    );
+    expect(
+      harness.getTextByTestId(TEST_IDS.sheetDetentPresetSummary)
+ succeeded in 50ms:
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example single-open contract', () => {
+  it('keeps one open transition while open/opening and supports reopen after close', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      // Silence expected callback logging in test assertions.
+    });
+    const harness = createAppHarness();
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Open'
+    );
+    expect(harness.getTextByTestId(TEST_IDS.mainSheetPhase)).toContain(
+      'Phase: open'
+    );
+ succeeded in 50ms:
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example iOS open/dismiss integration flow', () => {
+  it('opens, uses in-sheet controls, updates route/theme summaries, and dismisses cleanly', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      // Silence expected callback logging in test assertions.
+    });
+    const harness = createAppHarness();
+
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Closed'
+    );
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Open'
+
+thinking
+**Inspecting dynamic child rendering**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,320p' example/src/App.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,320p' example/src/components/InSheetControls.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,220p' example/src/testids.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useRef, useState } from 'react';
+import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetChangeReason,
+  BottomSheetContentBackgroundBlurStyle,
+  BottomSheetContentBackgroundStyle,
+  BottomSheetDetent,
+  BottomSheetMethods,
+  BottomSheetPreferredColorScheme,
+} from 'rn-bottom-sheet';
+
+import { InSheetControls } from './components/InSheetControls';
+import { getResetRouteOnClose, type InSheetRoute } from './example-state';
+import { TEST_IDS } from './testids';
+import { THEME_TOKENS, type ThemeMode } from './theme';
+
+type DetentPreset = 'all' | 'fit' | 'medium' | 'large';
+
+ succeeded in 52ms:
+import { Button, StyleSheet, Text, View } from 'react-native';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetContentBackgroundBlurStyle,
+  BottomSheetContentBackgroundStyle,
+  BottomSheetPreferredColorScheme,
+} from 'rn-bottom-sheet';
+
+import type { InSheetRoute } from '../example-state';
+import { TEST_IDS } from '../testids';
+import type { ThemeTokens } from '../theme';
+
+type InSheetControlsProps = {
+  availableDetentCount: number;
+  allowSwipeToDismiss: boolean;
+  backgroundInteraction: BackgroundInteractionMode;
+  contentBackgroundBlurStyle: BottomSheetContentBackgroundBlurStyle;
+  contentBackgroundStyle: BottomSheetContentBackgroundStyle;
+  currentDetent: number;
+  detentPresetLabel: string;
+ succeeded in 51ms:
+export const TEST_IDS = {
+  mainContainer: 'main-container',
+  mainTitle: 'main-title',
+  mainSummary: 'main-summary',
+  mainSheetPhase: 'main-sheet-phase',
+  mainRouteSummary: 'main-route-summary',
+  mainThemeSummary: 'main-theme-summary',
+  mainSheetStyleSummary: 'main-sheet-style-summary',
+  openSheetButton: 'open-sheet-button',
+  toggleThemeButton: 'toggle-theme-button',
+  sheetContent: 'sheet-content',
+  sheetTitle: 'sheet-title',
+  sheetRouteSummary: 'sheet-route-summary',
+  sheetDetentPresetSummary: 'sheet-detent-preset-summary',
+  sheetStyleSummary: 'sheet-style-summary',
+  routeToggleButton: 'route-toggle-button',
+  closeSheetButton: 'close-sheet-button',
+  snapFitButton: 'snap-fit-button',
+  snapMediumButton: 'snap-medium-button',
+  snapLargeButton: 'snap-large-button',
+
+thinking
+**Inspecting baseline flow YAMLs**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/maestro/sheet-internal-controls.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,300p' example/maestro/sheet-reopen-cycle.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/maestro/sheet-open-content-visible.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+appId: rnbottomsheet.example
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          id: "close-sheet-button"
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/maestro/sheet-interactive-children.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+appId: rnbottomsheet.example
+---
+# US2: Verify reliable open/close/reopen cycles (3 cycles)
+
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+# --- Cycle 1 ---
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+ succeeded in 51ms:
+appId: rnbottomsheet.example
+---
+# US1: Verify children visible inside sheet, not visible on main screen
+
+# Wait for app to load
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+# Before opening: sheet controls should NOT be visible on the main screen
+- assertNotVisible:
+    id: "sheet-title"
+- assertNotVisible:
+ succeeded in 52ms:
+appId: rnbottomsheet.example
+---
+# US3: Verify interactive children inside sheet (buttons respond to taps)
+
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+# Open the sheet
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+
+thinking
+**Planning Maestro MCP execution**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat example/package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+ succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "dependencies": {
+    "expo": "~54.0.33",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-nitro-modules": "^0.33.8"
+  },
+  "private": true,
+  "devDependencies": {
+    "expo-dev-client": "~6.0.20",
+    "react-native-builder-bob": "^0.40.18",
+
+thinking
+**Planning sequential checks**
+codex
+Discovery checks are clean: all specs are complete, no unchecked implementation tasks, no open GitHub issues, and no configured tracker resources. I’m moving to gate validation now (`lint`, `typecheck`, `test`) before Maestro execution.
+
+thinking
+**Running lint with increased output limit**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 8.78s:
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/block-navigation.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/prettify.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/sorter.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+thinking
+**Running typecheck after lint**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 2.03s:
+
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.41s:
+watchman warning:  Recrawled this watch 13 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS example/src/__tests__/sheet-theme.contract.test.tsx
+  ● Console
+
+    console.log
+      Will present
+
+      at log (example/src/App.tsx:327:19)
+
+    console.log
+      Did present
+
+      at log (example/src/App.tsx:318:19)
+
+
+thinking
+**Planning device and flow startup**
+codex
+Automated gates passed (`lint`, `typecheck`, `test`). I’m moving to mandatory Maestro MCP validation now, starting by provisioning a simulator/device and then executing baseline and spec-003 flow files.
+
+thinking
+**Invoking device listing**
+tool maestro.list_devices({})
+maestro.list_devices({}) success in 510ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"devices\":[{\"device_id\":\"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394\",\"name\":\"iPhone 17 Pro - iOS 26.0 - 6C7D88B6-E6F1-468B-9ACD-9B1DE753F394\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":true},{\"device_id\":\"9933BCAA-DDD6-4226-A9DD-5ED205D39D8B\",\"name\":\"iPhone 17 Pro - iOS 26.0 - 9933BCAA-DDD6-4226-A9DD-5ED205D39D8B\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"AD1B2F4D-D2B0-4B36-A373-20371922A429\",\"name\":\"iPhone 17 Pro - iOS 26.0 - AD1B2F4D-D2B0-4B36-A373-20371922A429\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"E875545B-1317-4186-89D6-3583A6CC43FA\",\"name\":\"iPhone 17 Pro Max - iOS 26.0 - E875545B-1317-4186-89D6-3583A6CC43FA\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"40330790-8621-48D1-A3BE-AF876175C47D\",\"name\":\"iPhone Air - iOS 26.0 - 40330790-8621-48D1-A3BE-AF876175C47D\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"D342D3E5-6819-4F45-8104-F51D8DC90FAA\",\"name\":\"iPhone 17 - iOS 26.0 - D342D3E5-6819-4F45-8104-F51D8DC90FAA\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"75E92292-4BCB-441D-B881-807920F3E400\",\"name\":\"iPhone 16e - iOS 26.0 - 75E92292-4BCB-441D-B881-807920F3E400\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"A73DF685-3418-4715-8152-D10A1DDB92D0\",\"name\":\"iPad Pro 11-inch (M4) - iOS 26.0 - A73DF685-3418-4715-8152-D10A1DDB92D0\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"169C2544-75B4-4C72-B1D4-775E8598A638\",\"name\":\"iPad Pro 13-inch (M4) - iOS 26.0 - 169C2544-75B4-4C72-B1D4-775E8598A638\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"E1A6845D-9029-4F2D-BF22-31CE982D716E\",\"name\":\"iPad mini (A17 Pro) - iOS 26.0 - E1A6845D-9029-4F2D-BF22-31CE982D716E\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"AFFD1533-6693-40FF-8256-F59AA597E5AE\",\"name\":\"iPad (A16) - iOS 26.0 - AFFD1533-6693-40FF-8256-F59AA597E5AE\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"F67C8C00-742E-4E90-AEBB-4F2545ED8EFC\",\"name\":\"iPad Air 13-inch (M3) - iOS 26.0 - F67C8C00-742E-4E90-AEBB-4F2545ED8EFC\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"07E486B1-7AA2-4162-8A64-1DA39F0326F3\",\"name\":\"iPad Air 11-inch (M3) - iOS 26.0 - 07E486B1-7AA2-4162-8A64-1DA39F0326F3\",\"platform\":\"ios\",\"type\":\"simulator\",\"connected\":false},{\"device_id\":\"chromium\",\"name\":\"Chromium Web Browser\",\"platform\":\"web\",\"type\":\"browser\",\"connected\":false}]}"
+    }
+  ],
+  "isError": false,
+  "_meta": {}
+}
+
+
+thinking
+**Preparing to launch app on device**
+thinking
+**Verifying metro server status**
+tool maestro.launch_app({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394","appId":"rnbottomsheet.example"})
+maestro.launch_app({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394","appId":"rnbottomsheet.example"}) success in 1.72s:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"success\":true,\"device_id\":\"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394\",\"app_id\":\"rnbottomsheet.example\",\"message\":\"App launched successfully\"}"
+    }
+  ],
+  "isError": false,
+  "_meta": {}
+}
+
+thinking
+**Checking app load state**
+tool maestro.inspect_view_hierarchy({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394"})
+maestro.inspect_view_hierarchy({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394"}) success in 397ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "element_num,depth,bounds,attributes,parent_num\n0,0,\"[0,0][0,0]\",\"\",\n1,1,\"[0,0][402,874]\",\"accessibilityText=RnBottomSheet Example; enabled=true\",0\n2,2,\"[0,0][402,874]\",\"enabled=true\",1\n3,3,\"[0,0][402,874]\",\"enabled=true\",2\n4,4,\"[0,0][402,874]\",\"enabled=true\",3\n5,5,\"[0,0][402,874]\",\"enabled=true\",4\n6,6,\"[0,0][402,874]\",\"enabled=true\",5\n7,7,\"[0,0][402,874]\",\"enabled=true\",6\n8,8,\"[20,-8][382,30]\",\"accessibilityText=main-route-summary; value=Route: Summary | Background: modal | Detents: All detents; text=Route: Summary | Background: modal | Detents: All detents; resource-id=main-route-summary; enabled=true\",7\n9,9,\"[20,-8][382,30]\",\"accessibilityText=main-route-summary; enabled=true\",8\n10,8,\"[0,0][402,874]\",\"accessibilityText=main-container; resource-id=main-container; enabled=true\",7\n11,8,\"[0,0][402,874]\",\"enabled=true\",7\n12,9,\"[0,0][402,874]\",\"enabled=true\",11\n13,10,\"[0,0][402,874]\",\"enabled=true\",12\n14,8,\"[155,42][246,61]\",\"accessibilityText=main-theme-summary; value=Theme: light; text=Theme: light; resource-id=main-theme-summary; enabled=true\",7\n15,9,\"[155,42][246,61]\",\"accessibilityText=main-theme-summary; enabled=true\",14\n16,8,\"[66,73][335,93]\",\"accessibilityText=main-sheet-style-summary; value=Sheet style: system / system / regular; text=Sheet style: system / system / regular; resource-id=main-sheet-style-summary; enabled=true\",7\n17,9,\"[66,73][335,93]\",\"accessibilityText=main-sheet-style-summary; enabled=true\",16\n18,8,\"[145,105][256,143]\",\"accessibilityText=open-sheet-button; resource-id=open-sheet-button; enabled=true\",7\n19,8,\"[119,151][282,188]\",\"accessibilityText=toggle-theme-button; resource-id=toggle-theme-button; enabled=true\",7\n20,8,\"[24,188][378,993]\",\"enabled=true\",7\n21,1,\"[0,0][0,0]\",\"\",0\n22,2,\"[0,0][402,54]\",\"enabled=true\",21\n23,2,\"[0,0][402,54]\",\"enabled=true\",21\n24,3,\"[0,0][402,54]\",\"enabled=true\",23\n25,4,\"[0,0][402,54]\",\"enabled=true\",24\n26,5,\"[55,14][92,51]\",\"enabled=true\",25\n27,5,\"[56,22][92,42]\",\"accessibilityText=7:50 PM; enabled=true\",25\n28,5,\"[309,14][345,51]\",\"enabled=true\",25\n29,5,\"[288,26][307,38]\",\"accessibilityText=Cellular; value=No signal; text=No signal; enabled=true\",25\n30,5,\"[315,26][332,38]\",\"value=SSID, 3 of 3 Wi-Fi bars; text=SSID, 3 of 3 Wi-Fi bars; resource-id=3 of 3 Wi-Fi bars; enabled=true\",25\n31,5,\"[339,26][366,39]\",\"accessibilityText=100% battery power; value=Not charging; text=Not charging; enabled=true\",25\n"
+    }
+  ],
+  "isError": false,
+  "_meta": {}
+}
+
+thinking
+**Planning sequential flow runs**
+codex
+The example app is already installed and running on the connected iOS simulator (`open-sheet-button` is visible), so I can run Maestro flows directly. I’ll execute one baseline flow (`sheet-internal-controls.yaml`) plus the three required Spec 003 flows and capture pass/fail evidence.
+
+thinking
+**Running baseline flow**
+tool maestro.run_flow_files({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394","flow_files":"/Users/tolu/Desktop/dev/rn-bottom-sheet/example/maestro/sheet-internal-controls.yaml"})
+maestro.run_flow_files({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394","flow_files":"/Users/tolu/Desktop/dev/rn-bottom-sheet/example/maestro/sheet-internal-controls.yaml"}) failed in 1ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "Files not found: /Users/tolu/Desktop/dev/rn-bottom-sheet/Users/tolu/Desktop/dev/rn-bottom-sheet/example/maestro/sheet-internal-controls.yaml"
+    }
+  ],
+  "isError": true,
+  "_meta": {}
+}
+
+thinking
+**Adjusting path resolution approach**
+tool maestro.run_flow_files({"device_id":"6C7D88B6-E6F1-468B-9ACD-9B1DE753F394","flow_files":"example/maestro/sheet-internal-controls.yaml"})

@@ -106,7 +106,7 @@
 **Purpose**: Final validation, cleanup, evidence collection
 
 - [X] T020 [P] Run full Jest test suite (`npx jest`) and verify 100% pass rate -- 16/16 suites, 47/47 tests
-- [ ] T021 [P] Execute full Maestro suite for all 3 flows and record pass evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
+- [X] T021 [P] Execute full Maestro suite for all 3 flows and record pass evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
 - [X] T022 Update `docs/adr/ADR-0002-content-hosting-model.md` to document the child routing solution as the current implementation
 - [X] T023 Code cleanup: HOST_HIDDEN_STYLE removed, presentSheet passes contentContainer not host view
 

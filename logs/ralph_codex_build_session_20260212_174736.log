@@ -1,0 +1,773 @@
+
+[0;32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;32m              RALPH LOOP (Codex) STARTING                    [0m
+[0;32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;34mMode:[0m     build
+[0;34mPrompt:[0m   PROMPT_build.md
+[0;34mBranch:[0m   004-interactive-sheet-content
+[1;33mYOLO:[0m     ENABLED
+[0;34mLog:[0m      /Users/tolu/desktop/dev/rn-bottom-sheet/logs/ralph_codex_build_session_20260212_174736.log
+[0;34mMax:[0m      50 iterations
+
+[0;34mWork source:[0m
+  [0;32m✓[0m specs/ folder (28 specs)
+
+[0;36mUsing: codex exec --dangerously-bypass-approvals-and-sandbox[0m
+[0;36mAgent must output <promise>DONE</promise> when complete.[0m
+
+[1;33mPress Ctrl+C to stop the loop[0m
+
+
+[0;35m════════════════════ LOOP 1 ════════════════════[0m
+[0;34m[2026-02-12 17:47:36][0m Starting iteration 1
+
+[0;34mRunning: cat PROMPT_build.md | codex exec --dangerously-bypass-approvals-and-sandbox - --output-last-message /Users/tolu/desktop/dev/rn-bottom-sheet/logs/ralph_codex_output_iter_1_20260212_174736.txt[0m
+
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c54ae-a25c-7b00-b8ca-723b657daac4
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP for all affected feature flows before completion. At minimum validate:
+- open sheet
+- dismiss sheet
+- detent interaction
+- primary in-sheet navigation flow
+
+Add additional scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: maestro starting
+mcp: pencil starting
+mcp: context7 starting
+mcp: codex_apps starting
+mcp: pencil ready
+2026-02-13T01:47:37.446284Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-619f-7a33-a4b6-a29306a53810
+2026-02-13T01:47:37.471327Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-ade7-7ec0-8c40-2280e6d568dc
+2026-02-13T01:47:37.509229Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-801f-7560-bf57-dc296cd22d13
+2026-02-13T01:47:37.532909Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-462a-7cb1-a40a-71d74868343a
+2026-02-13T01:47:37.548153Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-96d1-7ec2-9b10-378f526506a9
+2026-02-13T01:47:37.574932Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-69c1-7a50-b1cb-0a0b901301ab
+2026-02-13T01:47:37.600325Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-7ede-7422-8cce-28f0f69c8579
+2026-02-13T01:47:37.623243Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-25cd-7302-a25e-d71b6c8a6fdf
+2026-02-13T01:47:37.646414Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-c253-79b1-84e5-b4fd10c63b2e
+2026-02-13T01:47:37.665331Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-efac-76f3-a23e-fe794e09dcb0
+2026-02-13T01:47:37.688267Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-1710-75f0-9467-ae046f756377
+2026-02-13T01:47:37.713974Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-68de-7230-9784-c01c27c58d9a
+2026-02-13T01:47:37.739234Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-aceb-72a3-8e43-d6794492b965
+2026-02-13T01:47:37.762161Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-207e-7f22-8ee1-1704ff1dd885
+2026-02-13T01:47:37.785996Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-4ce3-7000-a115-2dafb695c1ed
+2026-02-13T01:47:37.810330Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-0cc2-70b1-8084-74bc912acef4
+2026-02-13T01:47:37.836259Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-ee8e-73b0-abbc-26b79dee1629
+2026-02-13T01:47:37.861483Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c533a-70ac-7082-b8e6-cad4f5c2b510
+2026-02-13T01:47:37.887167Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-0c75-7b12-a7a2-5dc752c24643
+2026-02-13T01:47:37.910167Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-3c87-7ef0-95c4-d507ab7aba8c
+2026-02-13T01:47:37.934528Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-0fe2-7833-bcb6-d7249ccc39ba
+2026-02-13T01:47:37.961038Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-96b1-7540-b62c-fe92e79a91cc
+2026-02-13T01:47:37.975203Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-dedc-7751-870a-494dffebc4f1
+2026-02-13T01:47:37.999144Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-0ac5-7232-9c6e-0a63cf504c3f
+2026-02-13T01:47:38.024529Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-d5c5-7410-bb17-80937fe73a17
+2026-02-13T01:47:38.051365Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-8085-75e0-91aa-ec2916dd2b54
+2026-02-13T01:47:38.081172Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5340-f30a-79b2-8d34-3567a3877fbe
+2026-02-13T01:47:38.094657Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-a2e4-7630-8c3a-1422c350000e
+2026-02-13T01:47:38.118745Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-23c1-7d43-b1a3-755829831f8f
+2026-02-13T01:47:38.143278Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-3b04-7b92-a7ce-7ca5cb2f241e
+2026-02-13T01:47:38.167168Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-c811-7d43-a2e9-342ff09c061c
+2026-02-13T01:47:38.191020Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-7729-7e11-a1ff-7eb91ce18bd1
+2026-02-13T01:47:38.223471Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-3678-7b90-b8c6-128071fbf6bc
+2026-02-13T01:47:38.248168Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-5274-7bf0-8631-fbc1ec5124a0
+2026-02-13T01:47:38.273423Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-f598-7002-b0bf-06f06e67100a
+2026-02-13T01:47:38.296569Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-03be-7c61-bf84-1dc8878791e5
+2026-02-13T01:47:38.310261Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-5c01-7f02-8115-4c290ce287d7
+2026-02-13T01:47:38.334173Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-3ba5-7f73-93a1-edc66fbdd613
+2026-02-13T01:47:38.358195Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-69d2-7b62-9a47-aa3b9c15fbc5
+2026-02-13T01:47:38.382306Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-53ee-76c0-ad54-d85f657bcc12
+2026-02-13T01:47:38.406526Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-c764-7d92-b287-3144b188dd8b
+2026-02-13T01:47:38.431252Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-ac10-76a1-b5d8-5f080c451457
+2026-02-13T01:47:38.455168Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5344-d75b-7ce3-9de4-48c9c7b859fa
+2026-02-13T01:47:38.478246Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-9714-7062-9cc8-be07f3f5abad
+2026-02-13T01:47:38.501117Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5343-231e-7311-afb2-c5e65c8c209f
+2026-02-13T01:47:38.524482Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-f5b9-7d00-a13e-672a499eb1b6
+2026-02-13T01:47:38.548961Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-5376-7383-b345-17233db6a9de
+2026-02-13T01:47:38.581046Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5342-df07-7b41-aef3-8efdae916db9
+2026-02-13T01:47:38.617919Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5345-2be1-7e52-8411-e6988eed056b
+2026-02-13T01:47:38.635842Z ERROR codex_core::rollout::list: state db missing rollout path for thread 019c5341-8da6-72e3-9e85-044303f74417
+mcp: maestro ready
+mcp: context7 ready
+mcp: codex_apps ready
+mcp startup: ready: pencil, maestro, context7, codex_apps
+
+thinking
+**Setting up autonomous workflow**
+codex
+I’m starting Ralph Build Mode now: first I’ll read `.specify/memory/constitution.md`, then scan specs and plans for the highest-priority incomplete item before making any code changes.
+exec
+/bin/zsh -lc 'ls -la' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "pwd && ls -la .specify/memory && sed -n '1,220p' .specify/memory/constitution.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 16
+drwxr-xr-x@ 3 tolu  staff    96 Feb 12 02:12 .
+drwxr-xr-x@ 5 tolu  staff   160 Feb 12 02:02 ..
+-rw-r--r--@ 1 tolu  staff  6679 Feb 12 10:41 constitution.md
+<!--
+Sync Impact Report
+Version change: 2.0.0 -> 2.1.0
+Modified principles:
+- IV. Living Knowledge Base -> IV. Living Knowledge Base (README synchronization now mandatory for API/user-visible behavior changes)
+- V. Deterministic Integration Contracts -> V. Deterministic Integration Contracts (public-surface changes require README updates)
+Added sections:
+- Documentation Synchronization Rules
+Removed sections:
+- None
+Templates/runtime sync status:
+- ✅ .specify/templates/spec-template.md (Maestro E2E coverage now mandatory)
+- ✅ .specify/templates/plan-template.md (Maestro E2E strategy + gate checks)
+- ✅ .specify/templates/tasks-template.md (test tasks mandatory; Maestro + README tasks required)
+- ✅ PROMPT_build.md (completion now requires Maestro MCP pass for affected flows)
+ succeeded in 51ms:
+total 1192
+drwxr-xr-x   49 tolu  staff    1568 Feb 12 17:31 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 16:22 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 17:47 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     930 Feb 12 16:22 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x    7 tolu  staff     224 Feb 12 17:28 .ralph
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------    1 tolu  staff    1245 Feb 12 16:20 AGENTS.md
+-rw-------    1 tolu  staff     616 Feb 12 13:28 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+
+thinking
+**Planning task review process**
+codex
+I’ve loaded the constitution and next I’m scanning `specs/`, `IMPLEMENTATION_PLAN.md`, and trackers to choose the highest-priority incomplete item, then I’ll verify whether it’s already implemented before touching code.
+exec
+/bin/zsh -lc 'ls -1 specs' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:" specs -g "*.md"' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "test -f tasks/todo.md && sed -n '1,220p' tasks/todo.md || echo \"(no tasks/todo.md)\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+001-native-ios-sheet-bindings
+002-fix-example-sheet
+003-native-sheet-content-routing
+004-interactive-sheet-content
+ exited 1 in 52ms:
+
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+specs/002-fix-example-sheet/spec.md:8:## Status: COMPLETE "The example application has several bugs and functional issues that need improvement: duplicate sheet open bug, inaccessible testing functions behind the sheet, and app-wide dark-mode toggle with bottom-sheet verification."
+ succeeded in 52ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [x] Implement presenter/controller architecture
+- [x] Map detent model and lifecycle events
+
+thinking
+**Inspecting incomplete spec files**
+codex
+I found completed tracker state in `tasks/todo.md`; now I’m inspecting `specs/003` and `specs/004` plus issue trackers to select the true highest-priority unfinished item.
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/003-native-sheet-content-routing/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "find specs -maxdepth 2 -type f -name '*.md' | sort" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/004-interactive-sheet-content/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Feature Specification: Interactive Sheet Content and Core Sheet Configuration
+
+**Feature Branch**: `004-interactive-sheet-content`
+**Created**: 2026-02-12
+**Status**: Draft
+**Input**: User description: "Mount native views as children of the bottom sheet so children are touch-responsive, fill sheet width, expose core UIKit sheet configuration, and keep navigation consumer-managed."
+
+## Problem Statement
+
+The current sheet content mounting path does not consistently deliver touch events to mounted children, and child content does not reliably fill the horizontal space of the sheet container. This blocks production use for interactive in-sheet controls and consumer-managed multi-step flows.
+
+## Research Summary
+
+### Current Observations
+
+1. Child content is mounted inside the sheet hierarchy, but touch behavior indicates gestures are being consumed at the sheet layer before child handlers run.
+2. Child width behavior is not constrained by a clear "sheet content width contract," resulting in content not naturally stretching to the available sheet width.
+3. The example app currently demonstrates route toggling through local state; this aligns with the intended direction that multi-screen flow orchestration should remain consumer-managed rather than package-owned.
+
+### Structural Direction
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/002-fix-example-sheet/data-model.md
+specs/002-fix-example-sheet/plan.md
+specs/002-fix-example-sheet/quickstart.md
+specs/002-fix-example-sheet/research.md
+specs/002-fix-example-sheet/spec.md
+specs/002-fix-example-sheet/tasks.md
+specs/003-native-sheet-content-routing/plan.md
+specs/003-native-sheet-content-routing/quickstart.md
+specs/003-native-sheet-content-routing/research.md
+specs/003-native-sheet-content-routing/spec.md
+specs/003-native-sheet-content-routing/tasks.md
+specs/004-interactive-sheet-content/data-model.md
+specs/004-interactive-sheet-content/plan.md
+specs/004-interactive-sheet-content/quickstart.md
+ succeeded in 51ms:
+# Feature Specification: Native Sheet Content Routing
+
+**Feature Branch**: `003-native-sheet-content-routing`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "Render React Native views inside native UIKit sheet"
+
+## User Scenarios & Testing
+
+### User Story 1 - Sheet Displays RN Children on Present (Priority: P1)
+
+A developer wraps arbitrary React Native components (Text, Button, ScrollView, custom components) as children of `<BottomSheet>`. When the sheet opens, those children appear inside the native UIKit sheet. When the sheet is closed, the children are not visible on the main screen.
+
+**Why this priority**: This is the fundamental value proposition of the library. Without reliable content rendering, no other feature matters.
+
+**Independent Test**: Open the example app, tap "Open Sheet", verify children (text, buttons) are visible inside the sheet. Close the sheet, verify children are not visible on the main screen.
+
+**Acceptance Scenarios**:
+
+1. **Given** a `<BottomSheet>` with Text and Button children and `isOpen={false}`, **When** the app renders, **Then** the children are not visible on the main screen.
+
+thinking
+**Planning task prioritization**
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/003-native-sheet-content-routing/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,320p' specs/004-interactive-sheet-content/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+# Tasks: Interactive Sheet Content and Core Sheet Configuration
+
+**Input**: Design documents from `/specs/004-interactive-sheet-content/`
+**Prerequisites**: `plan.md`, `spec.md`, `research.md`, `data-model.md`, `contracts/sheet-config-surface.yaml`, `quickstart.md`
+
+**Tests**: Test tasks are REQUIRED for this feature (unit/integration + Maestro E2E).
+**Documentation**: README update tasks are REQUIRED (public API/user-visible behavior changes).
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Align test/documentation scaffolding and ensure scenario paths exist.
+
+- [ ] T001 Confirm branch/tooling alignment to `004-interactive-sheet-content` and record preflight in `specs/004-interactive-sheet-content/maestro-evidence/preflight.md`
+- [ ] T002 [P] Create Maestro evidence directory at `specs/004-interactive-sheet-content/maestro-evidence/.gitkeep`
+- [ ] T003 [P] Add/refresh test IDs needed for new style controls and assertions in `example/src/testids.ts`
+
+---
+
+## Phase 2: Foundational (Blocking Prerequisites)
+
+ succeeded in 50ms:
+# Tasks: Native Sheet Content Routing
+
+**Input**: Design documents from `/specs/003-native-sheet-content-routing/`
+**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md
+
+**Tests**: Test tasks are REQUIRED for every feature. Include unit/integration coverage and comprehensive Maestro E2E tasks for affected flows.
+**Documentation**: No README update needed -- internal implementation fix only (FR-008).
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare the child routing infrastructure in the Swift native layer
+
+ succeeded in 52ms:
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+exec
+/bin/zsh -lc "gh issue list --limit 50 --state open 2>/tmp/gh_issue_err || true; test -s /tmp/gh_issue_err && { echo '---gh err---'; cat /tmp/gh_issue_err; }" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 403ms:
+
+
+thinking
+**Diagnosing issue listing failure**
+codex
+I found `specs/004` has many unchecked tasks and looks like the current active work; I’ll now confirm tracker access (`gh`, Linear/Jira signals) and then choose the single highest-priority item by the required ordering.
+exec
+/bin/zsh -lc 'gh --version' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+gh version 2.83.2 (2025-12-10)
+https://github.com/cli/cli/releases/tag/v2.83.2
+exec
+/bin/zsh -lc 'rg -n "linear|jira|youtrack|trello" -S . | head -n 80' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'gh auth status 2>&1 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+./PROMPT_build.md:20:4. **Any task tracker** — Jira, Linear, etc. if configured
+./scripts/ralph-loop.sh:349:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_6_20260212_084001.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_6_20260212_084001.log:233:/bin/zsh -lc "rg -n \"(Jira|Linear|linear|issue tracker|TODO\\(|TODO:)\" docs specs tasks .github 2>/dev/null || true" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+./logs/ralph_codex_build_iter_14_20260212_110929.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_12_20260212_110915.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_22_20260212_111017.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./scripts/ralph-loop-codex.sh:277:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_35_20260212_111134.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_42_20260212_111215.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./tasks/todo.md:581:  - `list_mcp_resources` returned no configured external tracker resources; focused doc scan across `AGENTS.md`, `README.md`, `docs/`, `.github/`, `.specify/`, `tasks/`, and `specs/` found no active Jira/Linear/other tracker configuration.
+./tasks/todo.md:740:  - No Jira/Linear tracker configuration was found in project docs/config.
+./logs/ralph_codex_build_iter_17_20260212_092025.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_46_20260212_111237.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_25_20260212_111034.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_23_20260212_111023.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_50_20260212_111300.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_32_20260212_111116.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_16_20260212_040715.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_28_20260212_111052.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+exec
+/bin/zsh -lc 'gh issue list --repo tolulawson/rn-bottom-sheet --state open --limit 50 2>&1 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 236ms:
+github.com
+  ✓ Logged in to github.com account tolulawson (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+ succeeded in 231ms:
+GraphQL: Could not resolve to a Repository with the name 'tolulawson/rn-bottom-sheet'. (repository)
+
+thinking
+**Correcting repo name and checking trackers**
+tool codex.list_mcp_resources({})
+tool codex.list_mcp_resource_templates({})
+exec
+/bin/zsh -lc 'gh issue list --repo tolulawson/rn-bottom-sheet --state open --limit 50 2>&1 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheetcodex.list_mcp_resources({}) success in 223ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"resources\":[]}"
+    }
+  ],
+  "isError": false
+}
+ succeeded in 301ms:
+
+codex.list_mcp_resource_templates({}) success in 467ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"resourceTemplates\":[]}"
+    }
+  ],
+  "isError": false
+}
+
+thinking
+**Verifying highest-priority incomplete spec**
+codex
+The highest-priority incomplete item is `specs/003-native-sheet-content-routing/spec.md` (still Draft). I’m now verifying whether its requirements are already implemented and only missing formal completion, before deciding if code changes are needed.
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'ls -la specs/003-native-sheet-content-routing && find specs/003-native-sheet-content-routing -maxdepth 2 -type f | sort' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+ M scripts/ralph-loop-cursor-agent.sh
+ M specs/003-native-sheet-content-routing/plan.md
+ M specs/003-native-sheet-content-routing/tasks.md
+ M tasks/todo.md
+ D todo.ts
+?? logs/ralph_codex_build_iter_1_20260212_173048.log
+?? logs/ralph_codex_build_iter_1_20260212_173920.log
+?? logs/ralph_codex_build_iter_1_20260212_174736.log
+?? logs/ralph_codex_build_iter_2_20260212_174606.log
+?? logs/ralph_codex_build_session_20260212_173048.log
+?? logs/ralph_codex_build_session_20260212_173920.log
+?? logs/ralph_codex_build_session_20260212_174736.log
+?? logs/ralph_cursor_agent_build_iter_1_20260212_172955.log
+?? logs/ralph_cursor_agent_build_session_20260212_172955.log
+?? specs/003-native-sheet-content-routing/quickstart.md
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/003-native-sheet-content-routing/quickstart.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+total 80
+drwxr-xr-x  8 tolu  staff   256 Feb 12 17:39 .
+drwxr-xr-x@ 6 tolu  staff   192 Feb 12 16:16 ..
+drwxr-xr-x  3 tolu  staff    96 Feb 12 13:26 checklists
+-rw-r--r--@ 1 tolu  staff  4505 Feb 12 17:38 plan.md
+-rw-r--r--  1 tolu  staff  1597 Feb 12 17:39 quickstart.md
+-rw-r--r--  1 tolu  staff  4184 Feb 12 13:28 research.md
+-rw-r--r--@ 1 tolu  staff  7771 Feb 12 13:26 spec.md
+-rw-r--r--  1 tolu  staff  8779 Feb 12 17:33 tasks.md
+specs/003-native-sheet-content-routing/checklists/requirements.md
+specs/003-native-sheet-content-routing/plan.md
+specs/003-native-sheet-content-routing/quickstart.md
+specs/003-native-sheet-content-routing/research.md
+specs/003-native-sheet-content-routing/spec.md
+specs/003-native-sheet-content-routing/tasks.md
+ succeeded in 50ms:
+# Quickstart: Example Sheet Stability and Testability
+
+## 1. Prerequisites
+
+1. Install dependencies at repo root: `yarn install`.
+2. Ensure iOS tooling/simulator is available for the example app.
+3. Ensure Maestro CLI (and Maestro MCP when used) is available in your environment.
+
+## 2. Run Fast Local Validation (Jest)
+
+1. Run library tests: `yarn test`.
+2. Run example integration test file if split execution is needed:
+   `yarn test example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+3. Confirm no regressions in open/close, detent, route, and toggle behavior logs/assertions.
+
+## 3. Run Example App
+
+1. Start example app on iOS:
+   `yarn workspace rn-bottom-sheet-example ios`
+2. Verify manually:
+exec
+/bin/zsh -lc 'rg -n "routeChildView|unrouteChildView|SheetContentContainerView|prepareForRecycle|HOST_HIDDEN_STYLE|sheet-open-content-visible|sheet-reopen-cycle|sheet-interactive-children" ios src example nitrogen/generated/ios/c++/views/HybridRnBottomSheetComponent.mm' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+nitrogen/generated/ios/c++/views/HybridRnBottomSheetComponent.mm:210:- (void)prepareForRecycle {
+nitrogen/generated/ios/c++/views/HybridRnBottomSheetComponent.mm:211:  [super prepareForRecycle];
+ios/RnBottomSheet.swift:33:    private let contentContainer = SheetContentContainerView()
+ios/RnBottomSheet.swift:946:    func prepareForRecycle() {
+ios/RnBottomSheet.swift:990:    func routeChildView(_ childView: UIView, atIndex index: Int) {
+ios/RnBottomSheet.swift:1001:    func unrouteChildView(_ childView: UIView) {
+ios/RnBottomSheet.swift:1164:/// presents, children are moved to the `SheetContentContainerView`.
+ios/RnBottomSheet.swift:1185:        lifecycleOwner?.routeChildView(childView, atIndex: index)
+ios/RnBottomSheet.swift:1190:        lifecycleOwner?.unrouteChildView(childView)
+ios/RnBottomSheet.swift:1194:final class SheetContentContainerView: UIView {
+
+thinking
+**Handling pre-existing dirty workspace**
+exec
+/bin/zsh -lc 'ls -la example/maestro && find example/maestro -maxdepth 2 -type f | sort' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+total 56
+drwxr-xr-x@  9 tolu  staff   288 Feb 12 13:33 .
+drwxr-xr-x@ 17 tolu  staff   544 Feb 12 11:07 ..
+-rw-r--r--@  1 tolu  staff   487 Feb 12 11:07 README.md
+-rw-r--r--   1 tolu  staff  1010 Feb 12 13:33 sheet-interactive-children.yaml
+-rw-r--r--@  1 tolu  staff  1029 Feb 12 12:27 sheet-internal-controls.yaml
+-rw-r--r--   1 tolu  staff  1138 Feb 12 13:33 sheet-open-content-visible.yaml
+-rw-r--r--   1 tolu  staff  1102 Feb 12 13:33 sheet-reopen-cycle.yaml
+-rw-r--r--@  1 tolu  staff   911 Feb 12 12:27 sheet-single-open.yaml
+-rw-r--r--@  1 tolu  staff   569 Feb 12 11:39 sheet-theme-toggle.yaml
+example/maestro/README.md
+example/maestro/sheet-interactive-children.yaml
+example/maestro/sheet-internal-controls.yaml
+example/maestro/sheet-open-content-visible.yaml
+example/maestro/sheet-reopen-cycle.yaml
+example/maestro/sheet-single-open.yaml
+example/maestro/sheet-theme-toggle.yaml
+
+thinking
+**Planning detailed tasks**
+Plan update
+Executing Ralph Build Mode for highest-priority incomplete spec (003), verifying implementation completeness before any targeted fixes.
+  → Confirm active highest-priority incomplete work item and map acceptance criteria for spec 003
+  • Verify implementation coverage in code/tests/flows and identify any gaps against spec 003
+  • Implement only missing pieces (if any), then run lint/typecheck/tests and mandatory Maestro MCP E2E flows
+  • Update tracking artifacts (spec status, tasks/todo review evidence), then commit and push
+
+thinking
+**Appending plan tasks**
+exec
+/bin/zsh -lc 'tail -n 120 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
+- Maestro gate outcome:
+  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 4)
+
+- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [x] Randomly select one completed spec and lock strict re-verification target
+- [x] Re-verify all acceptance scenarios and edge cases in `specs/001-native-ios-sheet-bindings/spec.md`
+- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+- [x] Run iOS native example build validation relevant to the active spec
+- [x] Evaluate conditional Maestro gate (`E2E Gate State`) and record deferred/required disposition
+- [x] Add review addendum with objective evidence and final completion status
+
+## Review Addendum (2026-02-12, Re-Verification Mode Round 4)
+
+- Discovery verification:
+  - `rg -n "^- \\[ \\]" specs IMPLEMENTATION_PLAN.md --glob "*.md"` returned `NO_UNCHECKED_ITEMS`.
+  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
+  - `list_mcp_resources` returned no configured external tracker resources (`{"resources":[]}`).
+
+thinking
+**Inspecting uncommitted spec changes**
+codex
+I discovered an in-progress local iteration for Spec 003 in `tasks/todo.md` (with “Pending execution” review text), so I’m inspecting the existing diffs first to avoid conflicting with your uncommitted work before proceeding.
+exec
+/bin/zsh -lc "git diff -- specs/003-native-sheet-content-routing/plan.md | sed -n '1,220p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "git diff -- tasks/todo.md | sed -n '1,320p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "git diff -- specs/003-native-sheet-content-routing/tasks.md | sed -n '1,260p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "git diff -- scripts/ralph-loop-cursor-agent.sh | sed -n '1,220p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ecbda8a..e1bc9e9 100644
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -984,3 +984,17 @@
+   - `sheet-theme-toggle.yaml`: theme toggle with active sheet
+   - Maestro execution encountered Expo dev client UI overlays; screenshots confirm correct app behavior
+ - Spec marked `## Status: COMPLETE`
++
++## Ralph Iteration 2026-02-13 (Spec 003 Native Sheet Content Routing Completion)
++
++- [x] Confirm `specs/003-native-sheet-content-routing` is the highest-priority incomplete spec and re-verify no higher-priority tracker item is pending
++- [x] Re-verify Spec 003 acceptance criteria against current implementation and identify any missing behavior or missing evidence artifacts
++- [x] Create missing Maestro evidence directory/files for Spec 003 and capture deterministic execution notes
++- [x] Run validation gates for this iteration: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Execute required Maestro flows for Spec 003 (`sheet-open-content-visible.yaml`, `sheet-reopen-cycle.yaml`, `sheet-interactive-children.yaml`) with MCP evidence
++- [x] Update completion bookkeeping (`specs/003-native-sheet-content-routing/tasks.md` T021, `specs/003-native-sheet-content-routing/spec.md` status, `tasks/todo.md` review section)
++- [x] Commit and push the complete Spec 003 completion change set
++
++## Review Addendum (2026-02-13, Spec 003 Native Sheet Content Routing Completion)
+ succeeded in 52ms:
+diff --git a/specs/003-native-sheet-content-routing/plan.md b/specs/003-native-sheet-content-routing/plan.md
+index 9425be0..8e1a035 100644
+--- a/specs/003-native-sheet-content-routing/plan.md
++++ b/specs/003-native-sheet-content-routing/plan.md
+@@ -17,14 +17,14 @@
+   the iteration process.
+ -->
+ 
+-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
+-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
+-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
+-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
++**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
++**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
++**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
++**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
+ **Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+-**Project Type**: [single/web/mobile - determines source structure]  
+-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
+-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
+ succeeded in 51ms:
+diff --git a/specs/003-native-sheet-content-routing/tasks.md b/specs/003-native-sheet-content-routing/tasks.md
+index 6598eae..c125fba 100644
+--- a/specs/003-native-sheet-content-routing/tasks.md
++++ b/specs/003-native-sheet-content-routing/tasks.md
+@@ -106,7 +106,7 @@
+ **Purpose**: Final validation, cleanup, evidence collection
+ 
+ - [X] T020 [P] Run full Jest test suite (`npx jest`) and verify 100% pass rate -- 16/16 suites, 47/47 tests
+-- [ ] T021 [P] Execute full Maestro suite for all 3 flows and record pass evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
++- [X] T021 [P] Execute full Maestro suite for all 3 flows and record pass evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
+ - [X] T022 Update `docs/adr/ADR-0002-content-hosting-model.md` to document the child routing solution as the current implementation
+ - [X] T023 Code cleanup: HOST_HIDDEN_STYLE removed, presentSheet passes contentContainer not host view
+ 
+ succeeded in 51ms:
+diff --git a/scripts/ralph-loop-cursor-agent.sh b/scripts/ralph-loop-cursor-agent.sh
+index 90949eb..1e792ab 100755
+--- a/scripts/ralph-loop-cursor-agent.sh
++++ b/scripts/ralph-loop-cursor-agent.sh
+@@ -268,7 +268,7 @@ while true; do
+     : > "$LOG_FILE"
+     WATCH_PID=""
+ 
+-    if [ "$ROLLING_OUTPUT_INTERVAL" -gt 0 ] && [ "$ROLLING_OUTPUT_LINES" -gt 0 ] && [ -t 1 ] && [ -w /dev/tty ]; then
++    if [ "$ROLLING_OUTPUT_INTERVAL" -gt 0 ] && [ "$ROLLING_OUTPUT_LINES" -gt 0 ]; then
+         watch_latest_output "$LOG_FILE" "Cursor Agent" &
+         WATCH_PID=$!
+     fi
+
+thinking
+**Deciding which changes to commit**
+exec
+/bin/zsh -lc "ls -la specs/003-native-sheet-content-routing/maestro-evidence 2>/dev/null || echo '(no maestro-evidence dir)'; rg -n \"Status|E2E|Maestro\" specs/003-native-sheet-content-routing/spec.md | sed -n '1,120p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+(no maestro-evidence dir)
+5:**Status**: Draft  
+92:### Maestro E2E Coverage
+94:- **Required Tooling**: Maestro (via Maestro MCP where available)
+104:- **SC-001**: Children of `<BottomSheet>` are never visible on the main screen when the sheet is closed (verified by Maestro assertion).
+106:- **SC-003**: Open/close/reopen cycles succeed 100% of the time over 5 consecutive cycles (verified by Maestro loop).
+109:- **SC-006**: Maestro scenarios for all affected primary/critical flows pass 100% before completion.
+
+thinking
+**Planning detailed iteration tasks**
+codex
+I’ve confirmed Spec 003 is incomplete only in completion bookkeeping/evidence, while implementation artifacts already exist. I’m entering execution with this plan:
+1. Add a fresh checkable plan block in `tasks/todo.md` for this run.
+2. Re-verify Spec 003 criteria with code + automated gates (`lint`, `typecheck`, `test`).
+3. Run required Maestro MCP flows and capture evidence under `specs/003-native-sheet-content-routing/maestro-evidence/`.
+4. Mark Spec 003 complete, update review notes, then commit/push only task-relevant files.
+
+thinking
+**Applying patch to task handling**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -1000 +1000,10 @@
+ - Pending execution.
++
++## Ralph Iteration 2026-02-13 (Spec 003 Native Sheet Content Routing Final Pass)
++
++- [ ] Confirm `specs/003-native-sheet-content-routing/spec.md` is still the highest-priority incomplete work item and that no higher-priority tracker item preempts it
++- [ ] Re-verify Spec 003 acceptance criteria against implementation and capture any gaps
++- [ ] Run validation gates for this pass: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Execute required Maestro MCP flows (`sheet-open-content-visible.yaml`, `sheet-reopen-cycle.yaml`, `sheet-interactive-children.yaml`) and store evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
++- [ ] Update completion artifacts (`specs/003-native-sheet-content-routing/spec.md` status, `tasks.md` check state, `tasks/todo.md` review)
++- [ ] Commit and push the Spec 003 completion change set
+apply_patch(auto_approved=true) exited 0 in 17ms:
+Success. Updated the following files:
+M tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index e1bc9e999fb0735b3d8f53e0c3a39f894c9bc68a..d1fc92bcd2286090333d94af6c82a35ec61d4d0e
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -998,3 +998,12 @@
+ ## Review Addendum (2026-02-13, Spec 003 Native Sheet Content Routing Completion)
+ 
+ - Pending execution.
++
++## Ralph Iteration 2026-02-13 (Spec 003 Native Sheet Content Routing Final Pass)
++
++- [ ] Confirm `specs/003-native-sheet-content-routing/spec.md` is still the highest-priority incomplete work item and that no higher-priority tracker item preempts it
++- [ ] Re-verify Spec 003 acceptance criteria against implementation and capture any gaps
++- [ ] Run validation gates for this pass: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Execute required Maestro MCP flows (`sheet-open-content-visible.yaml`, `sheet-reopen-cycle.yaml`, `sheet-interactive-children.yaml`) and store evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
++- [ ] Update completion artifacts (`specs/003-native-sheet-content-routing/spec.md` status, `tasks.md` check state, `tasks/todo.md` review)
++- [ ] Commit and push the Spec 003 completion change set
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index e1bc9e999fb0735b3d8f53e0c3a39f894c9bc68a..d1fc92bcd2286090333d94af6c82a35ec61d4d0e
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -998,3 +998,12 @@
+ ## Review Addendum (2026-02-13, Spec 003 Native Sheet Content Routing Completion)
+ 
+ - Pending execution.
++
++## Ralph Iteration 2026-02-13 (Spec 003 Native Sheet Content Routing Final Pass)
++
++- [ ] Confirm `specs/003-native-sheet-content-routing/spec.md` is still the highest-priority incomplete work item and that no higher-priority tracker item preempts it
++- [ ] Re-verify Spec 003 acceptance criteria against implementation and capture any gaps
++- [ ] Run validation gates for this pass: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Execute required Maestro MCP flows (`sheet-open-content-visible.yaml`, `sheet-reopen-cycle.yaml`, `sheet-interactive-children.yaml`) and store evidence in `specs/003-native-sheet-content-routing/maestro-evidence/`
++- [ ] Update completion artifacts (`specs/003-native-sheet-content-routing/spec.md` status, `tasks.md` check state, `tasks/todo.md` review)
++- [ ] Commit and push the Spec 003 completion change set
+
+[0;31m✗ Codex execution failed (exit code: 0)[0m
+[1;33mCheck log: /Users/tolu/desktop/dev/rn-bottom-sheet/logs/ralph_codex_build_iter_1_20260212_174736.log[0m

@@ -397,8 +397,8 @@ exec
 thinking
 **Assessing dirty git state**
 exec
-/bin/zsh -lc "if command -v gh >/dev/null 2>&1; then gh issue list --repo olulawson/rn-bottom-sheet --state open --limit 100 --json number,title,labels,state,updatedAt; else echo '__NO_GH__'; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 425ms:
-GraphQL: Could not resolve to a Repository with the name 'olulawson/rn-bottom-sheet'. (repository)
+/bin/zsh -lc "if command -v gh >/dev/null 2>&1; then gh issue list --repo tolulawson/rn-bottom-sheet --state open --limit 100 --json number,title,labels,state,updatedAt; else echo '__NO_GH__'; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 425ms:
+GraphQL: Could not resolve to a Repository with the name 'tolulawson/rn-bottom-sheet'. (repository)
 
 thinking
 **Correcting repo owner name**
