@@ -38,13 +38,13 @@ export function InSheetControls({
   currentDetent,
   expandsWhenScrolledToEdge,
   grabberVisible,
-  onClose: _onClose,
-  onCycleBackgroundInteraction: _onCycleBackgroundInteraction,
+  onClose,
+  onCycleBackgroundInteraction,
   onSnapToDetent,
-  onToggleExpandOnScroll: _onToggleExpandOnScroll,
-  onToggleGrabber: _onToggleGrabber,
+  onToggleExpandOnScroll,
+  onToggleGrabber,
   onToggleRoute,
-  onToggleSwipeDismiss: _onToggleSwipeDismiss,
+  onToggleSwipeDismiss,
   route,
   theme,
 }: InSheetControlsProps) {
@@ -113,7 +113,7 @@ export function InSheetControls({
         title="Snap to Large"
       />
       <View style={styles.buttonSpacer} />
-      {/* <Button
+      <Button
         accessibilityLabel={TEST_IDS.toggleGrabberButton}
         onPress={onToggleGrabber}
         testID={TEST_IDS.toggleGrabberButton}
@@ -146,7 +146,7 @@ export function InSheetControls({
         onPress={onClose}
         testID={TEST_IDS.closeSheetButton}
         title="Close Sheet"
-      /> */}
+      />
     </View>
   );
 }
