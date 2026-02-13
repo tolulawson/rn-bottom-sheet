@@ -1086,3 +1086,34 @@
   - `yarn test` passed (`16/16` suites, `56` passed tests, `1` todo).
 - README impact:
   - No public API or externally observable library contract changes; README update not required for this reconciliation pass.
+
+## Ralph Iteration 2026-02-13 (Spec 002 Re-Verification Round 2)
+
+- [x] Confirm no higher-priority incomplete item exists across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [x] Re-verify all Spec 002 acceptance scenarios and functional requirements against current implementation
+- [x] Run and pass validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Run Maestro MCP required baseline flows (open, dismiss, detent interaction, primary in-sheet navigation)
+- [x] Run Spec 002 Maestro flows (`example/maestro/sheet-single-open.yaml`, `example/maestro/sheet-internal-controls.yaml`, `example/maestro/sheet-theme-toggle.yaml`)
+- [x] Record evidence and completion decision in `tasks/todo.md` review addendum
+- [x] Commit and push this iteration once all gates pass
+
+## Review Addendum (2026-02-13, Spec 002 Re-Verification Round 2)
+
+- Discovery and prioritization:
+  - No actionable incomplete items were found in `IMPLEMENTATION_PLAN.md` (all checkboxes are complete), open GitHub issues (`gh issue list --state open --limit 50` returned no rows), or configured tracker resources.
+  - Re-verification mode selected `specs/002-fix-example-sheet/spec.md` (random completed-spec audit).
+- Acceptance-criteria audit (Spec 002):
+  - Duplicate-open idempotency behavior is present in `example/src/App.tsx` via guarded `requestOpenSheet` and covered by `example/src/__tests__/sheet-single-open.contract.test.tsx`.
+  - In-sheet control surface + parent summary synchronization is present in `example/src/components/InSheetControls.tsx` and covered by `example/src/__tests__/sheet-control-surface.contract.test.tsx`.
+  - Global theme toggle propagation and continuity is present in `example/src/App.tsx`/`example/src/theme.ts` and covered by `example/src/__tests__/sheet-theme.contract.test.tsx`.
+- Automated validation gates:
+  - `yarn lint`: pass (0 errors, 3 warnings from generated `coverage/lcov-report/*` files only).
+  - `yarn typecheck`: pass.
+  - `yarn test`: pass (`16/16` suites, `56` passed tests, `1` todo).
+- Maestro MCP validation:
+  - Spec-002 flow `example/maestro/sheet-single-open.yaml`: pass.
+  - Spec-002 flow `example/maestro/sheet-internal-controls.yaml`: pass.
+  - Spec-002 flow `example/maestro/sheet-theme-toggle.yaml`: pass.
+  - Baseline required flow (open + detent + primary in-sheet navigation + dismiss): pass via explicit MCP run and hierarchy verification; `sheet-route-summary` value confirmed `In-Sheet Route: Details | Detent: 1` before dismiss.
+- README impact:
+  - No public API or externally observable library contract changes were made; README update not required for this re-verification pass.
