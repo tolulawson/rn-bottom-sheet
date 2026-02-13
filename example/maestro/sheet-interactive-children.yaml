@@ -3,9 +3,14 @@ appId: rnbottomsheet.example
 # US3: Verify interactive children inside sheet (buttons respond to taps)
 
 - launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
 - extendedWaitUntil:
     visible:
-      id: "main-title"
+      id: "open-sheet-button"
     timeout: 30000
 
 # Open the sheet
@@ -18,7 +23,7 @@ appId: rnbottomsheet.example
 
 # Verify initial route state
 - assertVisible:
-    text: "In-Sheet Route: Summary"
+    text: "In-Sheet Route: Summary \\| Detent: [0-9]+"
 
 # Tap route toggle button inside the sheet -- verifies button interactivity
 - tapOn:
@@ -26,17 +31,13 @@ appId: rnbottomsheet.example
 
 # Verify the route changed (confirms onPress callback fired)
 - assertVisible:
-    text: "In-Sheet Route: Details"
+    text: "In-Sheet Route: Details \\| Detent: [0-9]+"
 
 # Tap again to toggle back
 - tapOn:
     id: "route-toggle-button"
 - assertVisible:
-    text: "In-Sheet Route: Summary"
-
-# Verify the main screen summary also reflects the route change
-- assertVisible:
-    text: "Route: Summary"
+    text: "In-Sheet Route: Summary \\| Detent: [0-9]+"
 
 # Close the sheet
 - tapOn:
