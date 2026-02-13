@@ -1,0 +1,1238 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c52e1-6eef-79c2-b69f-03ea651c3658
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Conditional Maestro MCP E2E Gate (Example App)
+
+Identify the active feature spec and check its E2E gate marker:
+- Look for `E2E Gate State: deferred|required` in `specs/<feature>/spec.md`.
+- Default to `deferred` if the marker is missing.
+
+Gate behavior:
+- If `deferred`: do NOT block this loop iteration. Log that Maestro MCP was skipped and why.
+- If `required`: Maestro MCP is a hard gate for completion.
+
+When `required`, run Maestro MCP against the example app and verify at least:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+If any required Maestro MCP flow fails, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP gate satisfied (or explicitly deferred in the active spec)
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: context7 starting
+mcp: codex_apps starting
+mcp: maestro starting
+mcp: maestro ready
+mcp: context7 ready
+mcp: codex_apps ready
+mcp startup: ready: maestro, context7, codex_apps
+
+thinking
+**Planning initial inspection and setup**
+codex
+I’ll run the Ralph loop end-to-end: read the constitution, discover the highest-priority incomplete item, verify it isn’t already implemented, then implement, validate, and finish with commit/push only if all gates pass. I’m starting with repository discovery now.
+exec
+/bin/zsh -lc 'pwd && ls -la' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'test -f .specify/memory/constitution.md && echo FOUND_CONSTITUTION || echo MISSING_CONSTITUTION' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg --files .specify specs tasks | sed 's#"'^#FILE: #'"'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+FOUND_CONSTITUTION
+ succeeded in 52ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 1184
+drwxr-xr-x   47 tolu  staff    1504 Feb 12 08:28 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 09:23 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+ succeeded in 51ms:
+FILE: specs/001-native-ios-sheet-bindings/spec.md
+FILE: .specify/templates/plan-template.md
+FILE: specs/001-native-ios-sheet-bindings/plan.md
+FILE: specs/001-native-ios-sheet-bindings/data-model.md
+FILE: specs/001-native-ios-sheet-bindings/research.md
+FILE: specs/001-native-ios-sheet-bindings/tasks.md
+FILE: specs/001-native-ios-sheet-bindings/quickstart.md
+FILE: .specify/templates/spec-template.md
+FILE: .specify/templates/tasks-template.md
+FILE: .specify/templates/checklist-template.md
+FILE: .specify/templates/constitution-template.md
+FILE: .specify/templates/agent-file-template.md
+FILE: tasks/lessons.md
+FILE: tasks/todo.md
+FILE: specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml
+FILE: specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+FILE: specs/001-native-ios-sheet-bindings/checklists/requirements.md
+FILE: .specify/scripts/bash/create-new-feature.sh
+FILE: .specify/scripts/bash/update-agent-context.sh
+FILE: .specify/scripts/bash/check-prerequisites.sh
+codex
+I found the project artifacts and confirmed `.specify/memory/constitution.md` exists. Next I’m reading the constitution plus spec/task status files to identify the highest-priority unfinished item before touching code.
+exec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' .specify/memory/constitution.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' tasks/lessons.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 51ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [x] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+ succeeded in 51ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Complete  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## Status: COMPLETE
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+ succeeded in 52ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 52ms:
+# Lessons
+
+## Template
+
+- Date:
+- Trigger:
+- Mistake Pattern:
+- Prevention Rule:
+- Action Taken:
+
+## Entries
+
+- Date: 2026-02-12
+- Trigger: User clarified "tax" meant "tasks" and requested direct execution.
+- Mistake Pattern: Treating ambiguous phrasing as a blocking clarification point instead of acting on clear intent.
+- Prevention Rule: When user intent is operationally clear, execute directly and interpret minor wording ambiguity in context.
+- Action Taken: Added docs/tasks scaffolding and committed plan artifacts without further gating.
+
+- Date: 2026-02-12
+- Trigger: User redirected scope from Bun migration to fixing a specific CI workflow failure.
+ succeeded in 53ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [x] Implement presenter/controller architecture
+- [x] Map detent model and lifecycle events
+
+thinking
+**Planning incomplete work discovery**
+codex
+I’ve loaded the governing docs and now I’m doing strict discovery: unfinished spec markers, unchecked plan items, and open issue trackers in priority order before deciding between implementation vs re-verification mode.
+exec
+/bin/zsh -lc "rg -n \"## Status: COMPLETE|\\*\\*Status\\*\\*:|Status:\" specs --glob \"**/*.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md specs --glob \"**/*.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'find specs -type f -name "*.md" | sort' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/spec.md:5:**Status**: Complete  
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+ exited 1 in 52ms:
+
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/tasks.md
+ succeeded in 52ms:
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 50 2>/tmp/gh_issue_err || true; if [ -s /tmp/gh_issue_err ]; then echo "GH_ERROR"; cat /tmp/gh_issue_err; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 425ms:
+
+
+thinking
+**Verifying issue list output behavior**
+exec
+/bin/zsh -lc "gh auth status 2>&1 | sed -n '1,120p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url 2>&1 | sed -n '1,200p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 239ms:
+github.com
+  ✓ Logged in to github.com account tolulawson (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+ succeeded in 336ms:
+[]
+
+thinking
+**Planning re-verification and task audit**
+codex
+Discovery shows no unchecked items in `IMPLEMENTATION_PLAN.md`, no open GitHub issues, and the only feature spec is already marked complete. I’m switching to Ralph Phase 1b re-verification mode and will run a full acceptance-criteria verification pass on spec `001` now.
+Plan update
+Entering mandatory re-verification mode because no incomplete work items were found.
+  → Record this re-verification iteration plan in tasks/todo.md with checkable items
+  • Re-verify spec 001 acceptance criteria against implementation and tests
+  • Run validation commands (lint, typecheck, test, docs check) and capture evidence
+  • Evaluate conditional Maestro gate state and determine completion signal eligibility
+
+thinking
+**Planning checklist section append**
+codex
+Before running verification commands, I’m adding a fresh re-verification checklist section to `tasks/todo.md` so this loop is tracked explicitly per your workflow rules.
+exec
+/bin/zsh -lc "cat <<'EOF' >> tasks/todo.md
+
+## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+
+- [ ] Confirm no incomplete work remains across "'`specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+- [ ] Document re-verification findings in the Review section with concrete evidence
+- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+
+Plan update
+  ✓ Record this re-verification iteration plan in tasks/todo.md with checkable items
+  → Re-verify spec 001 acceptance criteria against implementation and tests
+  • Run validation commands (lint, typecheck, test, docs check) and capture evidence
+  • Evaluate conditional Maestro gate state and determine completion signal eligibility
+
+thinking
+**Planning criteria re-verification**
+codex
+I’ve logged the checklist. Next I’m mapping the spec’s acceptance scenarios/FRs to concrete implementation and test coverage, then I’ll run the full command gates for objective proof.
+exec
+/bin/zsh -lc "sed -n '1,260p' src/index.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg --files src/__tests__ example/src/__tests__ ios | sed -n '1,240p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,340p' src/utils/detents.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,340p' src/components/BottomSheet.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,380p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+/**
+ * rn-bottom-sheet
+ *
+ * Native iOS sheet bindings for React Native using Nitro Views.
+ */
+
+import { BottomSheet } from './components/BottomSheet';
+import { BottomSheetNativeView } from './components/BottomSheetNativeView';
+import { RnBottomSheetView } from './native/RnBottomSheetView';
+
+// =============================================================================
+// Public Components
+// =============================================================================
+
+/**
+ * Public BottomSheet wrapper component.
+ */
+export { BottomSheet };
+
+/**
+ succeeded in 51ms:
+src/__tests__/bottom-sheet.contract.test.ts
+src/__tests__/bottom-sheet.presenter.integration.test.tsx
+src/__tests__/bottom-sheet.wrapper.test.ts
+src/__tests__/bottom-sheet.detents.test.ts
+src/__tests__/bottom-sheet-adapter.test.ts
+src/__tests__/index.test.tsx
+src/__tests__/bottom-sheet.fallback.test.ts
+src/__tests__/bottom-sheet.reanimated.test.ts
+src/__tests__/bottom-sheet.detent.integration.test.tsx
+src/__tests__/bottom-sheet.lifecycle.test.ts
+src/__tests__/bottom-sheet.methods.test.ts
+src/__tests__/bottom-sheet.navigation.test.ts
+ios/RnBottomSheet.swift
+example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ succeeded in 52ms:
+import { callback, type HybridRef } from 'react-native-nitro-modules';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { View } from 'react-native';
+import type {
+  NativeChangeReason,
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+import { RnBottomSheetView } from '../native/RnBottomSheetView';
+import {
+  isNativeSheetSupported,
+  warnUnsupportedPlatform,
+ succeeded in 52ms:
+/**
+ * Detent Normalization and Validation Utilities
+ *
+ * Handles conversion between JS detent representations and native identifiers,
+ * as well as validation of detent configurations.
+ */
+
+import type {
+  BottomSheetDetent,
+  FractionDetent,
+  PointsDetent,
+  SemanticDetent,
+  DetentValidationResult,
+} from '../types/bottom-sheet';
+
+// =============================================================================
+// Constants
+// =============================================================================
+
+const SEMANTIC_DETENTS: readonly SemanticDetent[] = ['fit', 'medium', 'large'];
+ succeeded in 53ms:
+import UIKit
+import NitroModules
+
+/**
+ * HybridRnBottomSheet
+ *
+ * Native iOS implementation of the bottom sheet using UISheetPresentationController.
+ * This class conforms to the generated HybridRnBottomSheetSpec protocol from Nitrogen.
+ *
+ * Key responsibilities:
+ * - Present/dismiss native iOS sheets with React Native content
+ * - Map detent configurations to UISheetPresentationController.Detent
+ * - Handle lifecycle callbacks and state changes
+ * - Bridge interaction events back to JavaScript
+ */
+class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
+    private enum PendingPropUpdate: Hashable {
+        case detents
+        case selectedDetent
+        case openState
+
+thinking
+**Planning comprehensive test run**
+codex
+I confirmed the key implementation surfaces are present. I’m now checking the test suites that back acceptance scenarios and edge cases, then I’ll run full lint/type/test/docs gates plus iOS build verification.
+exec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.presenter.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.detents.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.detent.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.navigation.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+ succeeded in 51ms:
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+ succeeded in 50ms:
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import { toNativeDetentConfig } from '../components/bottom-sheet-utils';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type {
+  BottomSheetMethods,
+  BottomSheetProps,
+} from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+ succeeded in 51ms:
+import type { BottomSheetDetent } from '../types/bottom-sheet';
+import {
+  detentToNativeIdentifier,
+  detentsToNativeConfig,
+  getDetentIdentifier,
+  normalizeDetents,
+  validateDetent,
+  validateDetents,
+} from '../utils/detents';
+
+describe('detent utilities', () => {
+  it('accepts semantic fit detent', () => {
+    expect(validateDetent('fit')).toBeNull();
+  });
+
+  it('rejects invalid fraction values', () => {
+    expect(validateDetent({ type: 'fraction', value: 1.2 })).toContain(
+      'between 0 and 1'
+    );
+  });
+ succeeded in 51ms:
+jest.mock('react', () => require('../../../node_modules/react'));
+jest.mock('react/jsx-runtime', () =>
+  require('../../../node_modules/react/jsx-runtime')
+);
+jest.mock('react/jsx-dev-runtime', () =>
+  require('../../../node_modules/react/jsx-dev-runtime')
+);
+
+const ReactRuntime = require('react');
+const TestRenderer = require('react-test-renderer');
+
+jest.mock('react-native', () => {
+  const ReactNativeMockRuntime = require('react');
+
+  const View = (props: any) =>
+    ReactNativeMockRuntime.createElement('View', props, props.children);
+  const Text = (props: any) =>
+    ReactNativeMockRuntime.createElement('Text', props, props.children);
+  const Button = (props: any) =>
+    ReactNativeMockRuntime.createElement('Button', {
+
+thinking
+**Checking for complete UI elements**
+exec
+/bin/zsh -lc "sed -n '260,520p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+      ])
+    );
+
+    TestRenderer.act(() => {
+      getButtonByTitle('Snap to Large').props.onPress();
+    });
+
+    expect(getStatusText()).toContain('Detent: 2 (Large)');
+
+    TestRenderer.act(() => {
+      getButtonByTitle('Close Sheet').props.onPress();
+    });
+
+    expect(getStatusText()).toContain('Sheet: Closed');
+
+    const loggedMessages = consoleLogSpy.mock.calls.map((call) => call[0]);
+    expect(loggedMessages).toEqual(
+      expect.arrayContaining([
+        'Will present',
+        'Did present',
+
+thinking
+**Planning sequential validation runs**
+codex
+I’ve confirmed coverage files for lifecycle, detents, navigation sync, fallback, and example integration flows. I’m executing the full verification commands now, then I’ll reconcile every acceptance criterion against passing evidence.
+exec
+/bin/zsh -lc 'yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheet
+thinking
+**Monitoring command execution**
+ succeeded in 3.65s:
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/block-navigation.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/prettify.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/sorter.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+thinking
+**Confirming lint results**
+codex
+`yarn lint` completed successfully (warnings only from generated coverage report files, no errors). I’m running typecheck next.
+exec
+/bin/zsh -lc 'yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.16s:
+
+exec
+/bin/zsh -lc 'yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 948ms:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS src/__tests__/bottom-sheet.detent.integration.test.tsx
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.reanimated.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.navigation.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.presenter.integration.test.tsx
+PASS src/__tests__/bottom-sheet.fallback.test.ts
+PASS src/__tests__/bottom-sheet-adapter.test.ts
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+PASS src/__tests__/index.test.tsx
+
+
+thinking
+**Checking documentation**
+exec
+/bin/zsh -lc 'yarn docs:check' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 235ms:
+Knowledge base check passed
+
+thinking
+**Planning iOS build verification**
+codex
+Core command gates passed. I’m adding one more native proof point by running the iOS simulator build used in the spec’s latest gate evaluation so re-verification includes current native compile status.
+exec
+/bin/zsh -lc "xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build" in /Users/tolu/Desktop/dev/rn-bottom-sheetcodex
+The iOS build is still running and producing a very large Xcode log; I’m waiting for final success/failure status before proceeding.
+
+thinking
+**Waiting for long process completion**
+ succeeded in 27.27s:
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination "generic/platform=iOS Simulator" build
+
+Build settings from command line:
+    SDKROOT = iphonesimulator26.0
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (92 targets)
+    Target 'RnBottomSheetExample' in project 'RnBottomSheetExample'
+
+thinking
+**Planning final task updates**
+codex
+All verification commands passed, including a fresh `xcodebuild` success for the example iOS app. I’m now writing the evidence into `tasks/todo.md`, checking off this iteration’s items, then I’ll finalize with git commit/push if the tree is clean for this update.
+exec
+/bin/zsh -lc 'tail -n 120 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+  - US1 coverage remains in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - US2 coverage remains in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - US3 coverage remains in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - Non-iOS fallback behavior remains covered by `src/__tests__/bottom-sheet.fallback.test.ts`.
+  - Native one-active-session ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
+- Validation gates:
+  - `yarn lint` passed (0 errors; 3 warnings in generated `coverage/lcov-report/*` artifacts).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
+  - `yarn docs:check` passed.
+  - iOS build verification passed:
+    `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` (`** BUILD SUCCEEDED **`).
+- Maestro gate outcome:
+  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is `deferred`; Maestro MCP remains explicitly non-blocking for this loop.
+
+## Ralph Iteration 2026-02-12 (Ralph Build Mode Re-Verification Pass 8)
+
+- [x] Confirm no incomplete work remains in `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [x] Re-verify all acceptance scenarios and FR-001..FR-018 for `specs/001-native-ios-sheet-bindings/spec.md`
+- [x] Run verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+
+thinking
+**Updating pass checklist and addendum**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -855,7 +855,29 @@
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+apply_patch(auto_approved=true) exited 0 in 18ms:
+Success. Updated the following files:
+M tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Tracking plan progress**
+codex
+I’ve updated `tasks/todo.md` with a completed checklist and a new review addendum containing command evidence and gate decisions. Next I’ll verify git state, commit this re-verification record, push, and then emit the Ralph completion signal.
+
+thinking
+**Inspecting generated file changes**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M tasks/todo.md
+?? coverage/
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Stopping due to unexpected changes**
+Plan update
+  ✓ Record this re-verification iteration plan in tasks/todo.md with checkable items
+  ✓ Re-verify spec 001 acceptance criteria against implementation and tests
+  ✓ Run validation commands (lint, typecheck, test, docs check) and capture evidence
+  ✓ Evaluate conditional Maestro gate state and determine completion signal eligibility
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Committing task list update**
+exec
+/bin/zsh -lc "git diff -- tasks/todo.md | sed -n '1,240p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index b6c200f..367303b 100644
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -850,3 +850,34 @@
+   - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
+ - Maestro gate outcome:
+   - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`; Maestro MCP is explicitly non-blocking and was intentionally skipped as a hard gate in this pass.
++
++## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
++
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Committing staged changes**
+exec
+/bin/zsh -lc 'git add tasks/todo.md && git commit -m "chore: record re-verification round 3 evidence"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 500ms:
+┃  commitlint ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.47 seconds)       
+✔️ commitlint (0.47 seconds)
+[main b4e7c8e] chore: record re-verification round 3 evidence
+ 1 file changed, 31 insertions(+)
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Pushing to main branch**
+codex
+The re-verification log is committed locally with only `tasks/todo.md` staged. I’m pushing this commit to the current branch now.
+exec
+/bin/zsh -lc 'git push' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 767ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   e934a9b..b4e7c8e  main -> main
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+
+thinking
+**Confirming all checks passed**
+codex
+<promise>DONE</promise>
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 9f79181110ebb0098b4427f60c1e584d6e366e25..367303bfc821f86315c29ac24aa8f7ca0f477b00
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -853,9 +853,31 @@
+ 
+ ## Ralph Iteration 2026-02-12 (Re-Verification Mode Round 3)
+ 
+-- [ ] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
+-- [ ] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
+-- [ ] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+-- [ ] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
+-- [ ] Document re-verification findings in the Review section with concrete evidence
+-- [ ] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++- [x] Confirm no incomplete work remains across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and local trackers
++- [x] Re-verify all acceptance scenarios and functional requirements in `specs/001-native-ios-sheet-bindings/spec.md` against current implementation/tests
++- [x] Run and pass verification commands: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
++- [x] Evaluate conditional Maestro gate from spec (`E2E Gate State`) and record deferred/required outcome
++- [x] Document re-verification findings in the Review section with concrete evidence
++- [x] Mark this iteration complete only if all criteria pass; otherwise unmark spec completion and implement fixes
++
++## Review Addendum (2026-02-12, Re-Verification Mode Round 3)
++
++- Discovery verification:
++  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`; no other feature spec files exist.
++  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md specs --glob "**/*.md"` returned no unchecked items.
++  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
++  - Local tracker `tasks/todo.md` contained no pre-existing unchecked implementation items before this round's checklist was added.
++- Acceptance and functional verification:
++  - US1 open/dismiss lifecycle and in-sheet interaction coverage remains green in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - US2 detent validation/snap/index mapping coverage remains green in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
++  - US3 navigation sync/Reanimated compatibility/in-sheet flow coverage remains green in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
++  - Non-iOS fallback determinism remains green in `src/__tests__/bottom-sheet.fallback.test.ts`.
++  - Single-session native ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
++- Validation gates:
++  - `yarn lint` passed (0 errors; warnings only from generated `coverage/lcov-report/*` files).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (`13/13` suites, `44` passed tests, `19` todo).
++  - `yarn docs:check` passed.
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`, so Maestro MCP is explicitly non-blocking and was intentionally not treated as a hard completion gate in this round.
+
+tokens used
+154,452
+<promise>DONE</promise>

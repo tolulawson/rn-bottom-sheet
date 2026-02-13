@@ -1,0 +1,57 @@
+appId: rnbottomsheet.example
+---
+# US1: Verify children visible inside sheet, not visible on main screen
+
+# Wait for app to load
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+# Before opening: sheet controls should NOT be visible on the main screen
+- assertNotVisible:
+    id: "sheet-title"
+- assertNotVisible:
+    id: "close-sheet-button"
+- assertNotVisible:
+    id: "snap-large-button"
+
+# Open the sheet
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+# Sheet is open: children should be visible inside
+- assertVisible:
+    id: "sheet-title"
+- assertVisible:
+    id: "close-sheet-button"
+- assertVisible:
+    id: "snap-large-button"
+- assertVisible:
+    id: "route-toggle-button"
+
+# Close the sheet
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000
+
+# After closing: children should NOT be visible on the main screen
+- assertNotVisible:
+    id: "sheet-title"
+- assertNotVisible:
+    id: "close-sheet-button"
+- assertNotVisible:
+    id: "snap-large-button"

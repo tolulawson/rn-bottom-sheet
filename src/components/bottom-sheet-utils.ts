@@ -1,10 +1,16 @@
 import type {
   NativeBackgroundInteraction,
+  NativeContentBackgroundBlurStyle,
+  NativeContentBackgroundStyle,
   NativeDetentConfig,
+  NativePreferredColorScheme,
 } from '../RnBottomSheet.nitro';
 import type {
+  BottomSheetContentBackgroundBlurStyle,
+  BottomSheetContentBackgroundStyle,
   BackgroundInteractionMode,
   BottomSheetDetent,
+  BottomSheetPreferredColorScheme,
   BottomSheetProps,
   ControlledProps,
 } from '../types/bottom-sheet';
@@ -66,6 +72,55 @@ export function toNativeBackgroundInteraction(
   }
 
   return upThrough;
+}
+
+export function toNativePreferredColorScheme(
+  scheme: BottomSheetPreferredColorScheme | undefined
+): NativePreferredColorScheme {
+  if (!scheme) {
+    return 'system';
+  }
+  if (scheme === 'system' || scheme === 'light' || scheme === 'dark') {
+    return scheme;
+  }
+  throw new Error(
+    `${ERROR_PREFIX} Invalid preferredColorScheme value: ${String(scheme)}`
+  );
+}
+
+export function toNativeContentBackgroundStyle(
+  style: BottomSheetContentBackgroundStyle | undefined
+): NativeContentBackgroundStyle {
+  if (!style) {
+    return 'system';
+  }
+  if (style === 'system' || style === 'blur' || style === 'clear') {
+    return style;
+  }
+  throw new Error(
+    `${ERROR_PREFIX} Invalid contentBackgroundStyle value: ${String(style)}`
+  );
+}
+
+export function toNativeContentBackgroundBlurStyle(
+  blurStyle: BottomSheetContentBackgroundBlurStyle | undefined
+): NativeContentBackgroundBlurStyle {
+  if (!blurStyle) {
+    return 'regular';
+  }
+  if (
+    blurStyle === 'regular' ||
+    blurStyle === 'prominent' ||
+    blurStyle === 'light' ||
+    blurStyle === 'dark'
+  ) {
+    return blurStyle;
+  }
+  throw new Error(
+    `${ERROR_PREFIX} Invalid contentBackgroundBlurStyle value: ${String(
+      blurStyle
+    )}`
+  );
 }
 
 export function resolveInitialDetentIndex(

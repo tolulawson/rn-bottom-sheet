@@ -84,3 +84,6 @@ android/generated
 
 # React Native Nitro Modules
 nitrogen/
+
+# Ralph config (may contain API key)
+.cursor/ralph-config.json

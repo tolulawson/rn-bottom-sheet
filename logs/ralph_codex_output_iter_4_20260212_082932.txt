@@ -1,0 +1,9 @@
+Re-verification loop completed for `specs/001-native-ios-sheet-bindings/spec.md` (Phase 1b path).
+
+- No higher-priority incomplete work found in specs/plan/issues/trackers.
+- Validation passed: `yarn lint` (0 errors), `yarn typecheck`, `yarn test` (13/13 suites), and native build `xcodebuild ... RnBottomSheetExample ... build`.
+- Updated evidence and checklist in `tasks/todo.md`.
+- Synchronized stale E2E gate evaluation note in `specs/001-native-ios-sheet-bindings/spec.md` (gate remains `deferred`).
+- Committed and pushed: `95eb0bb` to `main`.
+
+<promise>DONE</promise>

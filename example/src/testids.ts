@@ -1,0 +1,32 @@
+export const TEST_IDS = {
+  mainContainer: 'main-container',
+  mainTitle: 'main-title',
+  mainSummary: 'main-summary',
+  mainSheetPhase: 'main-sheet-phase',
+  mainRouteSummary: 'main-route-summary',
+  mainThemeSummary: 'main-theme-summary',
+  mainSheetStyleSummary: 'main-sheet-style-summary',
+  openSheetButton: 'open-sheet-button',
+  toggleThemeButton: 'toggle-theme-button',
+  sheetContent: 'sheet-content',
+  sheetTitle: 'sheet-title',
+  sheetRouteSummary: 'sheet-route-summary',
+  sheetDetentPresetSummary: 'sheet-detent-preset-summary',
+  sheetStyleSummary: 'sheet-style-summary',
+  routeToggleButton: 'route-toggle-button',
+  closeSheetButton: 'close-sheet-button',
+  snapFitButton: 'snap-fit-button',
+  snapMediumButton: 'snap-medium-button',
+  snapLargeButton: 'snap-large-button',
+  cycleDetentPresetButton: 'cycle-detent-preset-button',
+  toggleGrabberButton: 'toggle-grabber-button',
+  toggleSwipeDismissButton: 'toggle-swipe-dismiss-button',
+  toggleExpandOnScrollButton: 'toggle-expand-on-scroll-button',
+  cycleBackgroundInteractionButton: 'cycle-background-interaction-button',
+  cyclePreferredColorSchemeButton: 'cycle-preferred-color-scheme-button',
+  cycleContentBackgroundStyleButton: 'cycle-content-background-style-button',
+  cycleContentBackgroundBlurStyleButton:
+    'cycle-content-background-blur-style-button',
+} as const;
+
+export type TestId = (typeof TEST_IDS)[keyof typeof TEST_IDS];

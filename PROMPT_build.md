@@ -28,20 +28,11 @@ Before implementing, search the codebase to verify it's not already done.
 
 ---
 
-## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+## Phase 1b: No Incomplete Work
 
-**If ALL specs appear complete**, don't just exit — do a quality check:
-
-1. **Randomly pick** one completed spec from `specs/`
-2. **Strictly re-verify** ALL its acceptance criteria:
-   - Run the actual tests mentioned in the spec
-   - Manually verify each criterion is truly met
-   - Check edge cases
-   - Look for regressions
-3. **If any criterion fails**: Unmark the spec as complete and fix it
-4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
-
-This ensures the codebase stays healthy even when "nothing to do."
+If ALL specs are complete and `IMPLEMENTATION_PLAN.md` has no unchecked items:
+1. Output `<promise>DONE</promise>`
+2. Stop. Do not start re-verification loops unless explicitly requested by the user.
 
 ---
 
@@ -63,12 +54,25 @@ Run the project's test suite and verify:
 
 ---
 
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP for all affected feature flows before completion. At minimum validate:
+- open sheet
+- dismiss sheet
+- detent interaction
+- primary in-sheet navigation flow
+
+Add additional scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
 ## Phase 4: Commit & Update
 
 1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
-2. `git add -A`
-3. `git commit` with a descriptive message
-4. `git push`
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
 
 ---
 
@@ -80,6 +84,8 @@ Check:
 - [ ] Implementation matches all requirements
 - [ ] All tests pass
 - [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
 - [ ] Changes committed and pushed
 - [ ] Spec marked as complete
 

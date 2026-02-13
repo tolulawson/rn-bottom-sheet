@@ -1,0 +1,18 @@
+Completed one Ralph iteration for the highest-priority incomplete item in `specs/001-native-ios-sheet-bindings/tasks.md`: `T024`.
+
+- Implemented detent controls + behavior toggles in `example/src/App.tsx`.
+- Expanded integration coverage in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` (including ref/snap behavior in the mock).
+- Marked task complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+- Synced tracking in `IMPLEMENTATION_PLAN.md` and `tasks/todo.md`.
+
+Verification run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (7/7 suites)
+
+Commit/push:
+- Commit: `f617cc20c13db8061acf7aa48368aea83f950ebf`
+- Message: `feat(example): add detent controls and behavior toggles for T024`
+- Pushed to `origin/main`
+
+Remaining highest-priority incomplete item is now `T025` in `specs/001-native-ios-sheet-bindings/tasks.md:98`, so `<promise>DONE</promise>` is not emitted yet.

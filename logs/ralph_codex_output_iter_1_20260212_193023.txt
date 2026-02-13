@@ -1,0 +1,6 @@
+I found unexpected pre-existing changes in the working tree (multiple modified/untracked files I didn’t create this turn).  
+Per your repo rules, I have to stop and ask how you want to proceed.
+
+Choose one:
+1. Continue on this dirty state and I’ll make only minimal targeted edits for this Ralph re-verification pass.
+2. Pause while you clean/stash, then I continue from a clean tree.

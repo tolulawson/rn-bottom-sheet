@@ -1,0 +1,18 @@
+Implemented one Ralph iteration for the highest-priority incomplete spec task: `T025`.
+
+Changes pushed on `main` in commit `ebb7127`:
+- Added navigation-sync tests in `src/__tests__/bottom-sheet.navigation.test.ts`
+- Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md:98`
+- Added iteration plan/checklist + review notes in `tasks/todo.md`
+
+What the new tests verify:
+- Controlled `isOpen` stays in sync with external (route-like) state updates
+- Native close intent is forwarded via `onOpenChange` without forcing native dismiss in controlled mode
+- Controlled imperative `present`/`dismiss` uses callback-only flow to avoid loops
+
+Validation run and passing:
+- `yarn lint`
+- `yarn typecheck`
+- `yarn test`
+
+I did not output `<promise>DONE</promise>` because the feature spec is still not fully complete (remaining unchecked tasks exist).

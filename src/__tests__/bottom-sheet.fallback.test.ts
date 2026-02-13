@@ -6,6 +6,7 @@ import { Platform } from 'react-native';
 import {
   createFallbackMethod,
   getFallbackState,
+  getPlatformConfig,
   guardNativeOnly,
   isNativeSheetSupported,
   warnUnsupportedPlatform,
@@ -80,5 +81,17 @@ describe('non-ios fallback behavior', () => {
     warnUnsupportedPlatform('snapToDetent');
 
     expect(warnSpy).not.toHaveBeenCalled();
+  });
+
+  it('keeps styling feature flags deterministic by platform', () => {
+    platform.OS = 'ios';
+    expect(getPlatformConfig().features.preferredColorScheme).toBe(true);
+    expect(getPlatformConfig().features.contentBackgroundStyle).toBe(true);
+    expect(getPlatformConfig().features.contentBackgroundBlurStyle).toBe(true);
+
+    platform.OS = 'android';
+    expect(getPlatformConfig().features.preferredColorScheme).toBe(false);
+    expect(getPlatformConfig().features.contentBackgroundStyle).toBe(false);
+    expect(getPlatformConfig().features.contentBackgroundBlurStyle).toBe(false);
   });
 });

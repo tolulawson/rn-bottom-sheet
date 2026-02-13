@@ -140,4 +140,53 @@ describe('bottom-sheet presenter detent integration', () => {
     expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(1);
     expect(ref.current?.getCurrentDetentIndex()).toBe(2);
   });
+
+  it('supports single-detent restriction patterns through native config', () => {
+    const configurations: Array<BottomSheetProps['detents']> = [
+      ['fit'],
+      ['medium'],
+      ['large'],
+    ];
+
+    for (const detents of configurations) {
+      TestRenderer.act(() => {
+        TestRenderer.create(
+          React.createElement(BottomSheet, {
+            isOpen: true,
+            onOpenChange: jest.fn(),
+            detents,
+            initialDetent: 0,
+            selectedDetent: 0,
+          })
+        );
+      });
+
+      expect(mockLatestProps?.detents).toEqual(toNativeDetentConfig(detents));
+      expect(mockLatestProps?.detents).toHaveLength(1);
+      expect(mockLatestProps?.selectedDetentIndex).toBe(0);
+    }
+  });
+
+  it('preserves child root width styles for full-width content contracts', () => {
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(
+          BottomSheet,
+          {
+            isOpen: true,
+            onOpenChange: jest.fn(),
+          },
+          React.createElement('View', { style: { width: '100%' } })
+        )
+      );
+    });
+
+    const nativeChildren = (
+      mockLatestProps as unknown as { children?: React.ReactNode } | null
+    )?.children;
+    expect(React.isValidElement(nativeChildren)).toBe(true);
+    expect((nativeChildren as React.ReactElement<any>).props.style).toEqual(
+      expect.objectContaining({ width: '100%' })
+    );
+  });
 });

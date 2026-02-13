@@ -26,6 +26,8 @@
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Maestro E2E Strategy**: [scenario files, execution command, pass criteria, and evidence location]
+**README Impact**: [none / required; list sections to update when public API or user-visible behavior changes]
 
 ## Constitution Check
 
@@ -36,6 +38,8 @@
 - [ ] Scope Discipline: Out-of-scope items are explicitly deferred with no hidden expansion.
 - [ ] Knowledge Base Sync: Required `docs/` updates and ADR impact are identified.
 - [ ] Deterministic Contracts: Public API behavior and unsupported cases are explicit and testable.
+- [ ] Maestro E2E Discipline: Plan defines comprehensive Maestro scenarios and makes them completion-blocking.
+- [ ] README Sync Discipline: Public API or user-visible behavior changes include required README updates.
 
 ## Project Structure
 

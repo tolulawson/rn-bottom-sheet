@@ -85,7 +85,7 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **FR-013**: System MUST provide deterministic non-iOS fallback behavior that avoids runtime crashes.
 - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
 - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
-- **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
+- **FR-016**: System MUST define comprehensive Maestro MCP E2E coverage for the example app and require passing results before feature completion.
 - **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
 - **FR-018**: System MUST handle content-size and keyboard-driven vertical-space changes while visible without crashes, preserving the current detent when valid and otherwise moving to the nearest valid configured detent.
 
@@ -98,21 +98,16 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 
 ## Success Criteria *(mandatory)*
 
-### E2E Stability Gate
+### Maestro E2E Coverage *(mandatory)*
 
-- **E2E Gate State**: `deferred`
-- **Promotion Criteria to `required`**:
-  1. User Story 2 and User Story 3 implementation tasks are complete.
-  2. Baseline checks (`yarn lint`, `yarn typecheck`, `yarn test`) are passing.
-  3. Example app behavior is expected to be stable enough for deterministic E2E validation.
-- **Latest Gate Evaluation (2026-02-12)**:
-  - Criteria 1 and 2 are satisfied.
-  - The iOS example app native build now succeeds
-    (`xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`).
-  - Gate state remains `deferred` because deterministic Maestro MCP execution has not yet been established as a stable, repeatable hard gate in this loop.
-- **Blocking Rule**:
-  - While `deferred`, Maestro MCP execution is informational and MUST NOT block loop completion.
-  - When switched to `required`, Maestro MCP example-app flows become a hard acceptance gate.
+- **Required Tooling**: Maestro (via Maestro MCP where available)
+- **Required Flows**:
+  - sheet open from example UI
+  - sheet dismiss flow
+  - detent interaction and selection updates
+  - in-sheet navigation journey (`Go to Details` -> `Back to Summary`)
+- **Pass Requirement**: Feature completion requires all defined Maestro scenarios to pass.
+- **Evidence Location**: Feature task/review artifacts in `tasks/todo.md` and related verification notes.
 
 ### Measurable Outcomes
 
@@ -121,7 +116,7 @@ As a developer, I can integrate sheet flows with React Navigation and use suppor
 - **SC-003**: In example app test runs, primary user flows (open, dismiss, detent change, in-sheet navigation) complete successfully in at least 95% of runs without manual recovery.
 - **SC-004**: The package provides and passes an automated verification set covering unit-level API behavior plus at least one integration-level sheet lifecycle flow.
 - **SC-005**: Non-iOS execution paths complete without crashes and produce documented, deterministic fallback behavior in 100% of tested runs.
-- **SC-006**: When `E2E Gate State` is `required`, Maestro MCP flows for the example app pass for open, dismiss, detent interaction, and in-sheet navigation in 100% of release-gate runs.
+- **SC-006**: Maestro MCP flows for open, dismiss, detent interaction, and in-sheet navigation pass in 100% of completion-gate runs.
 - **SC-007**: In automated lifecycle verification, callback ordering for successful open/close cycles is deterministic (`onWillPresent` -> `onDidPresent` -> `onWillDismiss` -> `onDidDismiss`) in 100% of tested runs.
 
 ## Assumptions

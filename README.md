@@ -34,6 +34,9 @@ export function ExampleScreen() {
         onOpenChange={(open) => setIsOpen(open)}
         detents={['fit', 'medium', 'large']}
         initialDetent={1}
+        preferredColorScheme="system"
+        contentBackgroundStyle="system"
+        contentBackgroundBlurStyle="regular"
       >
         <View />
       </BottomSheet>
@@ -73,6 +76,9 @@ Supported detent values:
 - `expandsWhenScrolledToEdge?: boolean`
 - `cornerRadius?: number`
 - `backgroundInteraction?: 'modal' | 'nonModal' | { upThrough: number }`
+- `preferredColorScheme?: 'system' | 'light' | 'dark'` (iOS)
+- `contentBackgroundStyle?: 'system' | 'blur' | 'clear'` (iOS)
+- `contentBackgroundBlurStyle?: 'regular' | 'prominent' | 'light' | 'dark'` (iOS, used when `contentBackgroundStyle="blur"`)
 
 ### Callbacks
 
@@ -102,6 +108,27 @@ const navigationSheet = useBottomSheetNavigation({
 ```
 
 Also exported: `createBottomSheetNavigationAdapter`.
+
+## iPhone Option Matrix
+
+| Option | Status | Notes |
+|---|---|---|
+| `detents` (`fit`/`medium`/`large`/`fraction`/`points`) | Implemented | Deterministic normalization and identifier mapping. |
+| `initialDetent`, `selectedDetent` | Implemented | Controlled + uncontrolled flows supported. |
+| `grabberVisible` | Implemented | Maps to native grabber visibility. |
+| `allowSwipeToDismiss` | Implemented | Mapped through modal-in-presentation behavior. |
+| `expandsWhenScrolledToEdge` | Implemented | Maps to `prefersScrollingExpandsWhenScrolledToEdge`. |
+| `backgroundInteraction` | Implemented | Modal / non-modal / up-through-detent behavior. |
+| `cornerRadius` | Implemented | Uses native preferred corner radius. |
+| `preferredColorScheme` | Implemented | `system` / `light` / `dark`. |
+| `contentBackgroundStyle` | Implemented | `system` / `blur` / `clear` for sheet content host. |
+| `contentBackgroundBlurStyle` | Implemented | `regular` / `prominent` / `light` / `dark` blur presets. |
+| iPad edge-attached width-following options | Deferred | Explicitly out of current feature scope. |
+
+## Non-Goals
+
+- Package-owned in-sheet navigation stack APIs (push/pop/replace) are out of scope.
+- Custom backdrop blur opacity/strength controls are not exposed through standard UIKit sheet APIs.
 
 ## Reanimated Compatibility
 
@@ -134,6 +161,8 @@ yarn docs:check
 
 ## Contributing
 
+- If a change modifies public API surface area, usage behavior, or other user-visible library
+  contracts, update this README in the same branch/PR.
 - [Development workflow](CONTRIBUTING.md#development-workflow)
 - [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
 - [Code of conduct](CODE_OF_CONDUCT.md)

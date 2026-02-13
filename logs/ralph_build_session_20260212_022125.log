@@ -1,0 +1,25 @@
+
+[0;32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+[0;32m              RALPH LOOP (Claude Code) STARTING              [0m
+[0;32m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m
+
+[0;34mMode:[0m     build
+[0;34mPrompt:[0m   PROMPT_build.md
+[0;34mBranch:[0m   001-native-ios-sheet-bindings
+[1;33mYOLO:[0m     ENABLED
+[0;34mLog:[0m      /Users/tolu/desktop/dev/rn-bottom-sheet/logs/ralph_build_session_20260212_022125.log
+[0;34mMax:[0m      20 iterations
+
+[0;34mWork source:[0m
+  [0;32m✓[0m IMPLEMENTATION_PLAN.md (will use this)
+  [0;32m✓[0m specs/ folder (8 specs)
+
+[0;36mThe loop checks for <promise>DONE</promise> in each iteration.[0m
+[0;36mAgent must verify acceptance criteria before outputting it.[0m
+
+[1;33mPress Ctrl+C to stop the loop[0m
+
+
+[0;35m════════════════════ LOOP 1 ════════════════════[0m
+[0;34m[2026-02-12 02:21:25][0m Starting iteration 1
+

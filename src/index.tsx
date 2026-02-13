@@ -49,6 +49,9 @@ export type {
   LifecycleCallback,
   // Interaction types
   BackgroundInteractionMode,
+  BottomSheetPreferredColorScheme,
+  BottomSheetContentBackgroundStyle,
+  BottomSheetContentBackgroundBlurStyle,
   // Props types
   BottomSheetProps,
   BottomSheetBaseProps,
@@ -107,6 +110,9 @@ export type {
   NativeDetentConfig,
   NativeChangeReason,
   NativeBackgroundInteraction,
+  NativePreferredColorScheme,
+  NativeContentBackgroundStyle,
+  NativeContentBackgroundBlurStyle,
   RnBottomSheetProps as NativeBottomSheetProps,
   RnBottomSheetMethods as NativeBottomSheetMethods,
 } from './RnBottomSheet.nitro';

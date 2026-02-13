@@ -34,6 +34,7 @@ TAIL_RENDERED_LINES=0
 ROLLING_OUTPUT_LINES=5
 ROLLING_OUTPUT_INTERVAL=10
 ROLLING_RENDERED_LINES=0
+STOP_WHEN_NO_INCOMPLETE_WORK="${STOP_WHEN_NO_INCOMPLETE_WORK:-true}"
 
 # Colors
 RED='\033[0;31m'
@@ -94,7 +95,7 @@ print_latest_output() {
 
     [ -f "$log_file" ] || return 0
 
-    if [ ! -w "$target" ]; then
+    if [ ! -t 1 ] || [ ! -w "$target" ]; then
         target="/dev/stdout"
     fi
 
@@ -121,7 +122,7 @@ watch_latest_output() {
 
     [ -f "$log_file" ] || return 0
 
-    if [ ! -w "$target" ]; then
+    if [ ! -t 1 ] || [ ! -w "$target" ]; then
         target="/dev/stdout"
     else
         use_tty=true
@@ -165,6 +166,24 @@ watch_latest_output() {
 
         sleep "$ROLLING_OUTPUT_INTERVAL"
     done
+}
+
+has_incomplete_specs() {
+    [ -d "specs" ] || return 1
+
+    local spec_file
+    while IFS= read -r spec_file; do
+        if ! grep -qE '^## Status:[[:space:]]*COMPLETE|^\*\*Status\*\*:[[:space:]]*COMPLETE' "$spec_file"; then
+            return 0
+        fi
+    done < <(find specs -type f -name "spec.md" 2>/dev/null)
+
+    return 1
+}
+
+has_incomplete_implementation_plan() {
+    [ -f "IMPLEMENTATION_PLAN.md" ] || return 1
+    grep -qE '^[[:space:]]*([-*]|[0-9]+\.)[[:space:]]+\[ \]' "IMPLEMENTATION_PLAN.md"
 }
 
 # Parse arguments
@@ -287,18 +306,9 @@ Before implementing, search the codebase to verify it's not already done.
 
 ## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
 
-**If ALL specs appear complete**, don't just exit — do a quality check:
-
-1. **Randomly pick** one completed spec from `specs/`
-2. **Strictly re-verify** ALL its acceptance criteria:
-   - Run the actual tests mentioned in the spec
-   - Manually verify each criterion is truly met
-   - Check edge cases
-   - Look for regressions
-3. **If any criterion fails**: Unmark the spec as complete and fix it
-4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
-
-This ensures the codebase stays healthy even when "nothing to do."
+If ALL specs are complete and `IMPLEMENTATION_PLAN.md` has no unchecked items:
+1. Output `<promise>DONE</promise>`
+2. Stop. Do not start re-verification loops unless explicitly requested by the user.
 
 ---
 
@@ -320,12 +330,25 @@ Run the project's test suite and verify:
 
 ---
 
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP for all affected feature flows before completion. At minimum validate:
+- open sheet
+- dismiss sheet
+- detent interaction
+- primary in-sheet navigation flow
+
+Add additional scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
 ## Phase 4: Commit & Update
 
 1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
-2. `git add -A`
-3. `git commit` with a descriptive message
-4. `git push`
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
 
 ---
 
@@ -337,6 +360,8 @@ Check:
 - [ ] Implementation matches all requirements
 - [ ] All tests pass
 - [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
 - [ ] Changes committed and pushed
 - [ ] Spec marked as complete
 
@@ -388,7 +413,7 @@ Create `IMPLEMENTATION_PLAN.md` with a prioritized task list:
 ## Priority Tasks
 
 - [ ] [HIGH] Task description - from spec NNN
-- [ ] [HIGH] Task description - from spec NNN  
+- [ ] [HIGH] Task description - from spec NNN
 - [ ] [MEDIUM] Task description
 - [ ] [LOW] Task description
 
@@ -421,11 +446,11 @@ fi
 # Get current branch
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
 
-# Check for work sources - count .md files in specs/
+# Check for work sources - count markdown files recursively in specs/
 HAS_SPECS=false
 SPEC_COUNT=0
 if [ -d "specs" ]; then
-    SPEC_COUNT=$(find specs -maxdepth 1 -name "*.md" -type f 2>/dev/null | wc -l)
+    SPEC_COUNT=$(find specs -type f -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
     [ "$SPEC_COUNT" -gt 0 ] && HAS_SPECS=true
 fi
 
@@ -446,7 +471,7 @@ echo -e "${BLUE}Work source:${NC}"
 if [ "$HAS_SPECS" = true ]; then
     echo -e "  ${GREEN}✓${NC} specs/ folder ($SPEC_COUNT specs)"
 else
-    echo -e "  ${RED}✗${NC} specs/ folder (no .md files found)"
+    echo -e "  ${RED}✗${NC} specs/ folder (no .md files found recursively)"
 fi
 echo ""
 echo -e "${CYAN}Using: $CODEX_CMD $CODEX_FLAGS${NC}"
@@ -458,12 +483,21 @@ echo ""
 ITERATION=0
 CONSECUTIVE_FAILURES=0
 MAX_CONSECUTIVE_FAILURES=3
+LOOP_DONE=false
 
 while true; do
     # Check max iterations
     if [ $MAX_ITERATIONS -gt 0 ] && [ $ITERATION -ge $MAX_ITERATIONS ]; then
         echo -e "${GREEN}Reached max iterations: $MAX_ITERATIONS${NC}"
         break
+    fi
+
+    if [ "$MODE" = "build" ] && [ "$STOP_WHEN_NO_INCOMPLETE_WORK" = "true" ]; then
+        if ! has_incomplete_specs && ! has_incomplete_implementation_plan; then
+            echo -e "${GREEN}No incomplete specs or implementation-plan tasks found.${NC}"
+            echo -e "${GREEN}Stopping Ralph loop to avoid re-verification churn.${NC}"
+            break
+        fi
     fi
 
     ITERATION=$((ITERATION + 1))
@@ -481,7 +515,7 @@ while true; do
     : > "$LOG_FILE"
     WATCH_PID=""
 
-    if [ "$ROLLING_OUTPUT_INTERVAL" -gt 0 ] && [ "$ROLLING_OUTPUT_LINES" -gt 0 ] && [ -t 1 ] && [ -w /dev/tty ]; then
+    if [ "$ROLLING_OUTPUT_INTERVAL" -gt 0 ] && [ "$ROLLING_OUTPUT_LINES" -gt 0 ]; then
         watch_latest_output "$LOG_FILE" "Codex" &
         WATCH_PID=$!
     fi
@@ -543,7 +577,7 @@ EOF
     # Use --output-last-message to capture the final response for checking
     echo -e "${BLUE}Running: cat $EFFECTIVE_PROMPT_FILE | $CODEX_CMD $CODEX_FLAGS - --output-last-message $OUTPUT_FILE${NC}"
     echo ""
-    
+
     CODEX_EXIT=0
     if cat "$EFFECTIVE_PROMPT_FILE" | "$CODEX_CMD" $CODEX_FLAGS - --output-last-message "$OUTPUT_FILE" 2>&1 | tee "$LOG_FILE"; then
         if [ -n "$WATCH_PID" ]; then
@@ -552,27 +586,20 @@ EOF
         fi
         echo ""
         echo -e "${GREEN}✓ Codex execution completed${NC}"
-        
-        # Check if DONE promise was output (accept both DONE and ALL_DONE variants)
+
+        # Check completion signal ONLY from --output-last-message
         if [ -f "$OUTPUT_FILE" ] && grep -qE "<promise>(ALL_)?DONE</promise>" "$OUTPUT_FILE"; then
             DETECTED_SIGNAL=$(grep -oE "<promise>(ALL_)?DONE</promise>" "$OUTPUT_FILE" | tail -1)
             echo -e "${GREEN}✓ Completion signal detected: ${DETECTED_SIGNAL}${NC}"
             echo -e "${GREEN}✓ Task completed successfully!${NC}"
             CONSECUTIVE_FAILURES=0
             RLM_STATUS="done"
-            
+            LOOP_DONE=true
+
             if [ "$MODE" = "plan" ]; then
                 echo ""
                 echo -e "${GREEN}Planning complete!${NC}"
-                break
             fi
-        # Also check the main log
-        elif grep -qE "<promise>(ALL_)?DONE</promise>" "$LOG_FILE"; then
-            DETECTED_SIGNAL=$(grep -oE "<promise>(ALL_)?DONE</promise>" "$LOG_FILE" | tail -1)
-            echo -e "${GREEN}✓ Completion signal detected: ${DETECTED_SIGNAL}${NC}"
-            echo -e "${GREEN}✓ Task completed successfully!${NC}"
-            CONSECUTIVE_FAILURES=0
-            RLM_STATUS="done"
         else
             echo -e "${YELLOW}⚠ No completion signal found${NC}"
             echo -e "${YELLOW}  Agent did not output <promise>DONE</promise> or <promise>ALL_DONE</promise>${NC}"
@@ -580,7 +607,7 @@ EOF
             CONSECUTIVE_FAILURES=$((CONSECUTIVE_FAILURES + 1))
             RLM_STATUS="incomplete"
             print_latest_output "$LOG_FILE" "Codex"
-            
+
             if [ $CONSECUTIVE_FAILURES -ge $MAX_CONSECUTIVE_FAILURES ]; then
                 echo ""
                 echo -e "${RED}⚠ $MAX_CONSECUTIVE_FAILURES consecutive iterations without completion.${NC}"
@@ -622,6 +649,12 @@ EOF
             git push -u origin "$CURRENT_BRANCH" 2>/dev/null || true
         fi
     }
+
+    if [ "$LOOP_DONE" = true ]; then
+        echo ""
+        echo -e "${GREEN}Completion signal received; stopping loop.${NC}"
+        break
+    fi
 
     # Brief pause between iterations
     echo ""

@@ -1,0 +1,3842 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c518d-4a11-76d2-bc77-5395a2bc787b
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: codex_apps starting
+mcp: context7 starting
+mcp: maestro starting
+mcp: context7 ready
+mcp: codex_apps ready
+mcp: maestro ready
+mcp startup: ready: context7, codex_apps, maestro
+
+thinking
+**Acknowledging request and preparing**
+codex
+I’m going to run the Ralph workflow exactly: first read the project constitution, then discover the highest-priority incomplete item from specs/plans/issues, verify it isn’t already implemented, and only then implement and validate end-to-end. I’ll start by inspecting `.specify/memory/constitution.md` and current task files.
+
+thinking
+**Planning parallel file listing**
+exec
+/bin/zsh -lc 'cat .specify/memory/constitution.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "pwd && ls -la && rg --files .specify/memory tasks specs | sed 's#"'^#FILE: #'"'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 51ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 1184
+drwxr-xr-x   46 tolu  staff    1472 Feb 12 02:30 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 03:11 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+
+thinking
+**Preparing follow-up discovery**
+codex
+I’ve loaded the constitution and will now identify the highest-priority unfinished item by scanning `specs/` status markers, unchecked tasks in `IMPLEMENTATION_PLAN.md`, and then open issues to break ties.
+
+thinking
+**Inspecting spec files for status markers**
+exec
+/bin/zsh -lc "cat tasks/todo.md && echo '---' && cat tasks/lessons.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'if [ -f IMPLEMENTATION_PLAN.md ]; then rg -n "''^- '"\\[ \\]|"'^#|'"\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]\" IMPLEMENTATION_PLAN.md; else echo \"IMPLEMENTATION_PLAN.md not found\"; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status|''^- '"\\[ \\]|\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]\" specs -g \"*.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+ succeeded in 51ms:
+1:# Implementation Plan
+6:## Priority Tasks
+8:### Phase 1: API and Nitro Contract
+10:- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+11:- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+12:- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+13:- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+14:- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+15:- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+16:- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+18:### Phase 2: iOS Sheet Engine
+20:- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+21:- [x] [HIGH] Implement detent normalization (fit/medium/large/fraction/points to native identifiers) - from ios-sheet-apis.md
+22:- [x] [HIGH] Implement detent validation (order low-to-high, unique identifiers) - from ios-sheet-apis.md
+23:- [x] [HIGH] Map selectedDetentIdentifier bidirectionally - from IMPLEMENTATION_PLAN API Design
+24:- [ ] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
+25:- [ ] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
+26:- [ ] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
+27:- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+28:- [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/tasks.md:76:- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:84:- [ ] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:98:- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:99:- [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:105:- [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:106:- [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+specs/001-native-ios-sheet-bindings/tasks.md:107:- [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:117:- [ ] T032 [P] Update public usage documentation and API surface in README.md
+specs/001-native-ios-sheet-bindings/tasks.md:118:- [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
+specs/001-native-ios-sheet-bindings/tasks.md:119:- [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
+specs/001-native-ios-sheet-bindings/tasks.md:120:- [ ] T035 Execute validation commands and capture results in tasks/todo.md
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:11:- [ ] CHK001 Are requirements defined for both controlled and imperative sheet control modes? [Completeness, Spec §FR-001, FR-002]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:12:- [ ] CHK002 Are requirements defined for rendering arbitrary child content and not only static content? [Completeness, Spec §FR-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:13:- [ ] CHK003 Are non-iOS fallback requirements explicitly documented? [Completeness, Spec §FR-013]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:14:- [ ] CHK004 Are example-app demonstration requirements defined for all major capabilities? [Completeness, Spec §FR-014]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:18:- [ ] CHK005 Is “native-feeling” behavior clarified through measurable or testable outcomes? [Clarity, Spec §SC-001, SC-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:19:- [ ] CHK006 Are detent validation rules specific enough to avoid interpretation drift? [Clarity, Spec §FR-004, FR-005]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:20:- [ ] CHK007 Is “deterministic behavior” defined in terms of explicit callback/state expectations? [Clarity, Spec §FR-006, FR-007, FR-009]
+
+thinking
+**Planning incomplete spec discovery**
+codex
+I found remaining unchecked work in the feature task list; next I’m inspecting `spec.md` and `tasks.md` to select the exact highest-priority item (by order/priority tags) before touching code.
+exec
+/bin/zsh -lc "sed -n '1,220p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'for f in specs/001-native-ios-sheet-bindings/*.md; do echo "--- $f"; rg -n "''^## Status:" "$f" || echo "(no status marker)"; done' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+
+1. **Given** a screen using the library, **When** the developer triggers open state, **Then** a native iOS sheet appears and displays provided child content.
+ succeeded in 51ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 50ms:
+--- specs/001-native-ios-sheet-bindings/data-model.md
+(no status marker)
+--- specs/001-native-ios-sheet-bindings/plan.md
+(no status marker)
+--- specs/001-native-ios-sheet-bindings/quickstart.md
+(no status marker)
+--- specs/001-native-ios-sheet-bindings/research.md
+(no status marker)
+--- specs/001-native-ios-sheet-bindings/spec.md
+(no status marker)
+--- specs/001-native-ios-sheet-bindings/tasks.md
+(no status marker)
+
+thinking
+**Assessing task priority and git status**
+codex
+I’m now checking repository issue trackers and the current working tree, then I’ll lock the single highest-priority incomplete task and verify whether it’s already implemented before editing anything.
+exec
+/bin/zsh -lc 'if command -v rg >/dev/null; then rg -n "Linear|Jira|task tracker|TODO" docs specs tasks .github -g "*.md"; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git status --short && git branch --show-current && git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+docs/changelog-notes/README.md:11:- Follow-up risk or TODO
+ succeeded in 51ms:
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+?? logs/
+?? yarn.lock
+main
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 50 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 446ms:
+
+
+thinking
+**Evaluating dirty worktree handling**
+exec
+/bin/zsh -lc "if [ -f src/__tests__/bottom-sheet.methods.test.ts ]; then sed -n '1,260p' src/__tests__/bottom-sheet.methods.test.ts; else echo \"missing src/__tests__/bottom-sheet.methods.test.ts\"; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,320p' src/components/BottomSheet.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'ls -la src/__tests__ && rg -n "snapToDetent|getCurrentDetentIndex|onDetentChange|detent" src/__tests__ -g "*.test.ts*"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+missing src/__tests__/bottom-sheet.methods.test.ts
+ succeeded in 51ms:
+import { callback, type HybridRef } from 'react-native-nitro-modules';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { View } from 'react-native';
+import type {
+  NativeChangeReason,
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+import { RnBottomSheetView } from '../native/RnBottomSheetView';
+import {
+  isNativeSheetSupported,
+  warnUnsupportedPlatform,
+ succeeded in 51ms:
+total 40
+drwxr-xr-x@  7 tolu  staff   224 Feb 12 02:56 .
+drwxr-xr-x@ 10 tolu  staff   320 Feb 12 02:47 ..
+-rw-r--r--@  1 tolu  staff  1567 Feb 12 02:22 bottom-sheet.contract.test.ts
+-rw-r--r--@  1 tolu  staff  2931 Feb 12 02:41 bottom-sheet.detents.test.ts
+-rw-r--r--@  1 tolu  staff  1218 Feb 12 02:56 bottom-sheet.lifecycle.test.ts
+-rw-r--r--@  1 tolu  staff  2453 Feb 12 02:50 bottom-sheet.wrapper.test.ts
+-rw-r--r--@  1 tolu  staff    25 Feb 12 00:45 index.test.tsx
+src/__tests__/bottom-sheet.contract.test.ts:20:    it.todo('should accept valid semantic detents (medium, large)');
+src/__tests__/bottom-sheet.contract.test.ts:21:    it.todo('should accept valid fraction detents (0..1)');
+src/__tests__/bottom-sheet.contract.test.ts:22:    it.todo('should accept valid points detents (>0)');
+src/__tests__/bottom-sheet.contract.test.ts:23:    it.todo('should reject empty detent array');
+src/__tests__/bottom-sheet.contract.test.ts:26:    it.todo('should normalize detent order to low-to-high');
+src/__tests__/bottom-sheet.contract.test.ts:27:    it.todo('should deduplicate equivalent detents');
+src/__tests__/bottom-sheet.contract.test.ts:31:    it.todo('should validate initialDetent is within detent bounds');
+src/__tests__/bottom-sheet.contract.test.ts:32:    it.todo('should validate selectedDetent is within detent bounds');
+src/__tests__/bottom-sheet.wrapper.test.ts:43:  it('converts detents to native config and applies defaults', () => {
+src/__tests__/bottom-sheet.wrapper.test.ts:58:  it('rejects invalid detent configuration', () => {
+src/__tests__/bottom-sheet.wrapper.test.ts:61:    ).toThrow('Invalid detent configuration');
+src/__tests__/bottom-sheet.wrapper.test.ts:64:  it('validates initial and selected detent indexes', () => {
+
+thinking
+**Inspecting wrapper tests for imperative methods**
+exec
+/bin/zsh -lc "sed -n '1,320p' src/__tests__/bottom-sheet.wrapper.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+import {
+  isControlledProps,
+  resolveInitialDetentIndex,
+  resolveSelectedDetentIndex,
+  toNativeBackgroundInteraction,
+  toNativeDetentConfig,
+} from '../components/bottom-sheet-utils';
+import type { BottomSheetProps } from '../types/bottom-sheet';
+
+describe('bottom-sheet wrapper utilities', () => {
+  it('detects controlled props', () => {
+    const controlledProps: BottomSheetProps = {
+      isOpen: false,
+      onOpenChange: jest.fn(),
+    };
+
+    expect(isControlledProps(controlledProps)).toBe(true);
+  });
+
+  it('detects uncontrolled props', () => {
+
+thinking
+**Planning test implementation**
+exec
+/bin/zsh -lc "sed -n '1,320p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.lifecycle.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,320p' src/components/bottom-sheet-utils.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
+
+describe('bottom-sheet lifecycle handlers', () => {
+  it('maps native lifecycle events to user callbacks', () => {
+    const onWillPresent = jest.fn();
+    const onDidPresent = jest.fn();
+    const onWillDismiss = jest.fn();
+    const onDidDismiss = jest.fn();
+
+    const handlers = createLifecycleHandlers({
+      onWillPresent,
+      onDidPresent,
+      onWillDismiss,
+      onDidDismiss,
+    });
+
+    handlers.onNativeWillPresent();
+    handlers.onNativeDidPresent();
+    handlers.onNativeWillDismiss();
+    handlers.onNativeDidDismiss();
+ succeeded in 52ms:
+jest.mock('react', () => require('../../../node_modules/react'));
+jest.mock('react/jsx-runtime', () =>
+  require('../../../node_modules/react/jsx-runtime')
+);
+jest.mock('react/jsx-dev-runtime', () =>
+  require('../../../node_modules/react/jsx-dev-runtime')
+);
+
+const ReactRuntime = require('react');
+const TestRenderer = require('react-test-renderer');
+
+jest.mock('react-native', () => {
+  const ReactNativeMockRuntime = require('react');
+
+  const View = (props: any) =>
+    ReactNativeMockRuntime.createElement('View', props, props.children);
+  const Text = (props: any) =>
+    ReactNativeMockRuntime.createElement('Text', props, props.children);
+  const Button = (props: any) =>
+    ReactNativeMockRuntime.createElement('Button', {
+ succeeded in 51ms:
+import type {
+  NativeBackgroundInteraction,
+  NativeDetentConfig,
+} from '../RnBottomSheet.nitro';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetDetent,
+  BottomSheetProps,
+  ControlledProps,
+} from '../types/bottom-sheet';
+import {
+  DEFAULT_DETENTS,
+  detentsToNativeConfig,
+  validateDetents,
+} from '../utils/detents';
+
+const ERROR_PREFIX = '[rn-bottom-sheet]';
+
+export function isControlledProps(
+  props: BottomSheetProps
+exec
+/bin/zsh -lc 'cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+
+thinking
+**Locating existing BottomSheet mocks**
+exec
+/bin/zsh -lc 'rg -n "RnBottomSheetView|isNativeSheetSupported|warnUnsupportedPlatform|useImperativeHandle|snapToDetent" src/__tests__ example/src/__tests__ -g "*.test.ts*"' in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 51ms:
+
+
+thinking
+**Planning new component tests**
+exec
+/bin/zsh -lc "sed -n '1,240p' src/native/RnBottomSheetView.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,280p' src/types/bottom-sheet.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,280p' src/RnBottomSheet.nitro.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 51ms:
+sed: src/native/RnBottomSheetView.ts: No such file or directory
+ succeeded in 51ms:
+/**
+ * Nitro View Contract for RnBottomSheet
+ *
+ * This file defines the native view interface used by Nitrogen to generate
+ * the Swift/Kotlin bindings and JavaScript host component configuration.
+ *
+ * IMPORTANT: Run `yarn nitrogen` after any changes to regenerate bindings.
+ */
+
+import type {
+  HybridView,
+  HybridViewMethods,
+  HybridViewProps,
+} from 'react-native-nitro-modules';
+
+// =============================================================================
+// Detent Types (Native Bridge)
+// =============================================================================
+
+/**
+ succeeded in 51ms:
+/**
+ * Bottom Sheet Type Definitions
+ *
+ * Core type definitions for the bottom sheet API.
+ * These types are used across the JS and native layers.
+ */
+
+// =============================================================================
+// Detent Types
+// =============================================================================
+
+/**
+ * Semantic detent identifiers that map to iOS system detents.
+ */
+export type SemanticDetent = 'fit' | 'medium' | 'large';
+
+/**
+ * Fraction-based detent (0..1 range representing percentage of screen height).
+ * Maps to UISheetPresentationController.Detent.custom(identifier:resolver:)
+ */
+
+thinking
+**Listing native component files**
+exec
+/bin/zsh -lc 'ls -la src/native && rg --files src/native' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+total 8
+drwxr-xr-x@  3 tolu  staff   96 Feb 12 02:47 .
+drwxr-xr-x@ 10 tolu  staff  320 Feb 12 02:47 ..
+-rw-r--r--@  1 tolu  staff  485 Feb 12 02:47 RnBottomSheetView.tsx
+src/native/RnBottomSheetView.tsx
+exec
+/bin/zsh -lc "sed -n '1,240p' src/native/RnBottomSheetView.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+import { getHostComponent } from 'react-native-nitro-modules';
+import type {
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+
+const RnBottomSheetConfig = require('../../nitrogen/generated/shared/json/RnBottomSheetConfig.json');
+
+/**
+ * Internal native view component.
+ * Use BottomSheet for the public API.
+ */
+export const RnBottomSheetView = getHostComponent<
+  RnBottomSheetProps,
+  RnBottomSheetMethods
+>('RnBottomSheet', () => RnBottomSheetConfig);
+
+thinking
+**Planning detailed task management**
+codex
+I’ve identified `T019` as the top unresolved spec task and confirmed the target file doesn’t exist yet, so it’s not already implemented. I’m now loading the local `ralph-wiggum` skill instructions and then I’ll add a focused iteration plan section to `tasks/todo.md` before implementing.
+exec
+/bin/zsh -lc "sed -n '1,260p' /Users/tolu/.agents/skills/ralph-wiggum/SKILL.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,220p' AGENTS.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+---
+name: ralph-wiggum
+description: Autonomous AI coding with spec-driven development. Implements Geoffrey Huntley's iterative bash loop methodology where agents work through specs one at a time, outputting a completion signal only when acceptance criteria are 100% met.
+license: MIT
+metadata:
+  author: fstandhartinger
+  version: "1.0"
+  repository: https://github.com/fstandhartinger/ralph-wiggum
+  website: https://ralph-wiggum.ai
+---
+
+# Ralph Wiggum
+
+> Autonomous AI coding with spec-driven development
+
+## What is Ralph Wiggum?
+
+Ralph Wiggum combines **Geoffrey Huntley's iterative bash loop** with **spec-driven development** for fully autonomous AI-assisted software development.
+
+The key insight: **Fresh context each iteration**. Each loop starts a new agent process with a clean context window, preventing context overflow and degradation.
+ succeeded in 51ms:
+# Agent Instructions
+
+Read `.specify/memory/constitution.md` first.
+That file is the source of truth for this project.
+
+## Active Technologies
+- TypeScript 5.9 (public API), Swift 5 (iOS native layer), Kotlin (existing Android fallback path) + react-native 0.81.5, react-native-nitro-modules 0.33.x, nitrogen, optional react-navigation and react-native-reanimated adapters (001-native-ios-sheet-bindings)
+- N/A (runtime UI behavior only) (001-native-ios-sheet-bindings)
+
+## Recent Changes
+- 001-native-ios-sheet-bindings: Added TypeScript 5.9 (public API), Swift 5 (iOS native layer), Kotlin (existing Android fallback path) + react-native 0.81.5, react-native-nitro-modules 0.33.x, nitrogen, optional react-navigation and react-native-reanimated adapters
+
+thinking
+**Planning multi-step tracking**
+Plan update
+Executing Ralph Build loop for the highest-priority incomplete spec task (T019).
+  ✓ Select highest-priority incomplete work item and verify it is not already implemented
+  → Write iteration plan with checkable items in tasks/todo.md and check in before implementation
+  • Implement T019 by adding imperative snap/detent callback tests
+  • Run verification commands (lint, typecheck, tests) and ensure passing
+  • Update task trackers/spec status, commit, and push
+
+thinking
+**Adding iteration plan section**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -142 +142,9 @@
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 16ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Confirming plan before implementation**
+codex
+I’ve added a new unchecked Ralph iteration plan block in `tasks/todo.md` for `T019`, satisfying the plan-first/check-in requirement. Next I’m implementing the missing methods test file and then I’ll run full validation.
+
+thinking
+**Designing BottomSheet imperative method tests**
+codex
+I’m now adding `src/__tests__/bottom-sheet.methods.test.ts` with focused unit coverage for the two missing behaviors: imperative `snapToDetent` forwarding and `onDetentChange` callback mapping from native events.
+file update
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.methods.test.ts
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: RnBottomSheetProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
+}));
+
+jest.mock('../platform/fallback', () => ({
+  isNativeSheetSupported: () => true,
+  warnUnsupportedPlatform: jest.fn(),
+}));
+
+jest.mock('../native/RnBottomSheetView', () => {
+  const ReactRuntime = require('react');
+
+  return {
+    RnBottomSheetView: (props: RnBottomSheetProps) => {
+      mockLatestProps = props;
+
+      ReactRuntime.useEffect(() => {
+        props.hybridRef?.(mockNativeMethods as never);
+      }, [props.hybridRef]);
+
+      return null;
+    },
+  };
+});
+
+describe('bottom-sheet imperative methods and detent callbacks', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockLatestProps = null;
+    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
+  });
+
+  it('forwards imperative snapToDetent calls to native methods', () => {
+    const ref = createRef<BottomSheetMethods>();
+
+    TestRenderer.act(() => {
+      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
+    });
+
+    TestRenderer.act(() => {
+      ref.current?.snapToDetent(2);
+    });
+
+    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
+  });
+
+  it('maps native detent change events to onDetentChange callback', () => {
+    const onDetentChange = jest.fn();
+
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(BottomSheet, {
+          defaultOpen: false,
+          onDetentChange,
+        })
+      );
+    });
+
+    expect(mockLatestProps).not.toBeNull();
+
+    TestRenderer.act(() => {
+      mockLatestProps?.onDetentChange(1, 'swipe');
+    });
+
+    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
+  });
+});
+apply_patch(auto_approved=true) exited 0 in 37ms:
+Success. Updated the following files:
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.methods.test.ts
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..4bf269db179e7883b30edfdab9583e451739b702
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,82 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: RnBottomSheetProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: RnBottomSheetProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..4bf269db179e7883b30edfdab9583e451739b702
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,82 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: RnBottomSheetProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: RnBottomSheetProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning targeted test and status update**
+Plan update
+  ✓ Select highest-priority incomplete work item and verify it is not already implemented
+  ✓ Write iteration plan with checkable items in tasks/todo.md and check in before implementation
+  → Implement T019 by adding imperative snap/detent callback tests
+  • Run verification commands (lint, typecheck, tests) and ensure passing
+  • Update task trackers/spec status, commit, and push
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..4bf269db179e7883b30edfdab9583e451739b702
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,82 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: RnBottomSheetProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: RnBottomSheetProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning targeted and full tests**
+codex
+The new test file is in place; I’m running it first to catch any harness/mocking issues quickly, then I’ll run the full `lint`, `typecheck`, and `test` suite.
+exec
+/bin/zsh -lc 'yarn test src/__tests__/bottom-sheet.methods.test.ts' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 2 in 1.00s:
+src/__tests__/bottom-sheet.methods.test.ts(33,15): error TS2339: Property 'hybridRef' does not exist on type 'RnBottomSheetProps'.
+src/__tests__/bottom-sheet.methods.test.ts(34,17): error TS2339: Property 'hybridRef' does not exist on type 'RnBottomSheetProps'.
+ succeeded in 1.27s:
+PASS src/__tests__/bottom-sheet.methods.test.ts
+  bottom-sheet imperative methods and detent callbacks
+    ✓ forwards imperative snapToDetent calls to native methods (4 ms)
+    ✓ maps native detent change events to onDetentChange callback (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.562 s
+Ran all test suites matching /src\/__tests__\/bottom-sheet.methods.test.ts/i.
+ exited 1 in 1.92s:
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.methods.test.ts
+  52:27  error  Replace `React.createElement(BottomSheet,·{·defaultOpen:·false,·ref·})` with `⏎········React.createElement(BottomSheet,·{·defaultOpen:·false,·ref·})⏎······`  prettier/prettier
+
+✖ 1 problem (1 error, 0 warnings)
+  1 error and 0 warnings potentially fixable with the `--fix` option.
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..4bf269db179e7883b30edfdab9583e451739b702
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,82 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: RnBottomSheetProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: RnBottomSheetProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Fixing lint and type errors**
+codex
+The targeted test passed, but full validation surfaced one formatting issue and a type issue (`hybridRef` in mock props). I’m patching the test typing/formatting now, then rerunning validation.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.methods.test.ts
+@@ -6,2 +6,6 @@
+ 
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
+ const mockNativeMethods = {
+@@ -13,3 +17,3 @@
+ 
+-let mockLatestProps: RnBottomSheetProps | null = null;
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+ 
+@@ -28,3 +32,3 @@
+   return {
+-    RnBottomSheetView: (props: RnBottomSheetProps) => {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
+       mockLatestProps = props;
+@@ -51,3 +55,5 @@
+     TestRenderer.act(() => {
+-      TestRenderer.create(React.createElement(BottomSheet, { defaultOpen: false, ref }));
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
+     });
+apply_patch(auto_approved=true) exited 0 in 44ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.methods.test.ts
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Deciding to run commands in parallel**
+exec
+/bin/zsh -lc 'yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 902ms:
+
+ succeeded in 1.16s:
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/index.test.tsx
+
+Test Suites: 7 passed, 7 total
+Tests:       19 todo, 22 passed, 41 total
+Snapshots:   0 total
+Time:        0.555 s, estimated 1 s
+Ran all test suites.
+ succeeded in 1.66s:
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating task and review documentation**
+codex
+The implementation and full verification now pass. I’m updating trackers next: marking `T019` complete in the spec task list and recording this iteration’s completed checklist plus review notes in `tasks/todo.md`.
+exec
+/bin/zsh -lc "sed -n '64,96p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,280p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "T019|US2 Imperative Method Coverage|## Review|Findings:" specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+---
+
+## Phase 4: User Story 2 - Configure Detents and Sheet Behavior (Priority: P1)
+
+**Goal**: Support validated detent configuration, detent change reporting, and configurable interaction behavior.
+
+**Independent Test**: Sheet supports semantic/numeric detents, initial selection, snapping, and deterministic validation errors.
+
+### Tests for User Story 2
+
+- [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+
+### Implementation for User Story 2
+
+- [x] T020 [US2] Implement detent parsing and error surface in src/utils/detents.ts
+- [x] T021 [US2] Add configurable behavior props wiring (`grabber`, swipe dismiss, background mode) in src/components/BottomSheet.tsx
+- [x] T022 [US2] Implement detent mapping and selected-detent updates in ios/RnBottomSheet.swift
+- [x] T023 [US2] Implement imperative `snapToDetent` and `getCurrentDetentIndex` bridge in ios/RnBottomSheet.swift
+ succeeded in 50ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+ succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/tasks.md:76:- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+tasks/todo.md:57:## Review
+tasks/todo.md:61:- Findings:
+tasks/todo.md:144:## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
+tasks/todo.md:146:- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
+tasks/todo.md:148:- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+file update:
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Adding review summary and marking tasks done**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -75,3 +75,3 @@
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+apply_patch(auto_approved=true) exited 0 in 33ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..b9653d06e186d0c5bd611339cd139a3846217dba
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -140,3 +140,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Reviewing todos with checkboxes**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -61,2 +61,4 @@
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+@@ -145,6 +147,6 @@
+ 
+-- [ ] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
+-- [ ] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
+-- [ ] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+-- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+-- [ ] Capture verification outcomes in the Review section
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 57ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Confirming final validation steps**
+exec
+/bin/zsh -lc 'yarn lint && yarn typecheck && yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 2.90s:
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+PASS src/__tests__/index.test.tsx
+
+Test Suites: 7 passed, 7 total
+Tests:       19 todo, 22 passed, 41 total
+Snapshots:   0 total
+Time:        0.213 s, estimated 1 s
+Ran all test suites.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating plan step statuses**
+Plan update
+  ✓ Select highest-priority incomplete work item and verify it is not already implemented
+  ✓ Write iteration plan with checkable items in tasks/todo.md and check in before implementation
+  ✓ Implement T019 by adding imperative snap/detent callback tests
+  ✓ Run verification commands (lint, typecheck, tests) and ensure passing
+  → Update task trackers/spec status, commit, and push
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Assessing commit scope amid preexisting changes**
+codex
+Implementation and verification are complete; I’m preparing the commit now. I’ll inspect the dirty tree and commit only this iteration’s task files so unrelated pre-existing script/log changes remain untouched.
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M tasks/todo.md
+?? logs/
+?? src/__tests__/bottom-sheet.methods.test.ts
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Deciding files for commit**
+exec
+/bin/zsh -lc 'git diff -- src/__tests__/bottom-sheet.methods.test.ts' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git diff -- specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+ succeeded in 50ms:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f0..f8ca1a1 100644
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829..4dcc27e 100644
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Inspecting untracked file content**
+exec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.methods.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Committing test additions**
+exec
+/bin/zsh -lc 'git add src/__tests__/bottom-sheet.methods.test.ts specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md && git commit -m "test: add US2 imperative detent method coverage (T019)"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 2.00s:
+┃  types ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+┃  lint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 1.61 seconds)       
+✔️ types (1.04 seconds)
+✔️ lint (1.61 seconds)
+╭──────────────────────────────────────╮
+│ 🥊 lefthook v2.1.1  hook: commit-msg │
+╰──────────────────────────────────────╯
+┃  commitlint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.35 seconds)       
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Pushing committed changes**
+exec
+/bin/zsh -lc 'git push origin main' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 777ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   34df55c..d86a07a  main -> main
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Confirming completion signal criteria**
+Plan update
+  ✓ Select highest-priority incomplete work item and verify it is not already implemented
+  ✓ Write iteration plan with checkable items in tasks/todo.md and check in before implementation
+  ✓ Implement T019 by adding imperative snap/detent callback tests
+  ✓ Run verification commands (lint, typecheck, tests) and ensure passing
+  ✓ Update task trackers/spec status, commit, and push
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Verifying final git status**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Finalizing completion signal**
+codex
+<promise>DONE</promise>
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index f7ee0f023f0f45449f66e8f0f8d1dece8d22a08e..f8ca1a12ef21cfe3d3d2bb3d8f32fd544cfaf15e
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -73,7 +73,7 @@
+ ### Tests for User Story 2
+ 
+ - [x] T018 [P] [US2] Add detent normalization/validation unit tests in src/__tests__/bottom-sheet.detents.test.ts
+-- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
++- [x] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+ 
+ ### Implementation for User Story 2
+ 
+diff --git a/src/__tests__/bottom-sheet.methods.test.ts b/src/__tests__/bottom-sheet.methods.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..db9de49d32bfdfbec25253110d120e5dadbe9f6c
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.methods.test.ts
+@@ -0,0 +1,88 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet imperative methods and detent callbacks', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++    mockNativeMethods.getCurrentDetentIndex.mockReturnValue(1);
++  });
++
++  it('forwards imperative snapToDetent calls to native methods', () => {
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, { defaultOpen: false, ref })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.snapToDetent(2);
++    });
++
++    expect(mockNativeMethods.snapToDetent).toHaveBeenCalledWith(2);
++  });
++
++  it('maps native detent change events to onDetentChange callback', () => {
++    const onDetentChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          defaultOpen: false,
++          onDetentChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps).not.toBeNull();
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onDetentChange(1, 'swipe');
++    });
++
++    expect(onDetentChange).toHaveBeenCalledWith(1, 'swipe');
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index a9f6829ccac9a213d2147a9776f87aac6b59ce59..4dcc27e166e3bd9ad610d93b4c136a430979e1c4
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -59,6 +59,8 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T019`: added `src/__tests__/bottom-sheet.methods.test.ts` with imperative `snapToDetent` forwarding coverage and native-to-JS detent callback mapping assertions.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T011`: added `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` with integration assertions for open/dismiss transitions and lifecycle callback flow using a deterministic `rn-bottom-sheet` mock.
+   - Synchronized stale task state by checking `T003` (test scaffold already existed at `src/__tests__/bottom-sheet.contract.test.ts`) and checking `T011` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+   - Added `react-test-renderer@19.1.0` dev dependency to support example integration rendering in Jest.
+@@ -140,3 +142,11 @@
+ - [x] Mark `T011` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture results in the Review section
++
++## Ralph Iteration 2026-02-12 (US2 Imperative Method Coverage T019)
++
++- [x] Confirm `T019` is the highest-priority truly incomplete task and verify test coverage does not already exist
++- [x] Add imperative `snapToDetent` and detent callback tests in `src/__tests__/bottom-sheet.methods.test.ts`
++- [x] Mark `T019` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+tokens used
+106,703
+<promise>DONE</promise>

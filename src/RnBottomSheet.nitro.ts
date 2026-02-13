@@ -49,6 +49,9 @@ export type NativeChangeReason =
  * Background interaction mode for native layer.
  */
 export type NativeBackgroundInteraction = string | number;
+export type NativePreferredColorScheme = string;
+export type NativeContentBackgroundStyle = string;
+export type NativeContentBackgroundBlurStyle = string;
 
 // =============================================================================
 // Props Interface
@@ -104,6 +107,24 @@ export interface RnBottomSheetProps extends HybridViewProps {
    * Whether sheet expands when scrolled content reaches edge.
    */
   expandsWhenScrolledToEdge: boolean;
+
+  /**
+   * Preferred color scheme override for the presented sheet content.
+   * 'system' | 'light' | 'dark'
+   */
+  preferredColorScheme: NativePreferredColorScheme;
+
+  /**
+   * Background style for sheet content host.
+   * 'system' | 'blur' | 'clear'
+   */
+  contentBackgroundStyle: NativeContentBackgroundStyle;
+
+  /**
+   * Blur style used when contentBackgroundStyle is 'blur'.
+   * 'regular' | 'prominent' | 'light' | 'dark'
+   */
+  contentBackgroundBlurStyle: NativeContentBackgroundBlurStyle;
 
   // -------------------------------------------------------------------------
   // Callbacks (wrapped by Nitro callback system)

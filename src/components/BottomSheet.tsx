@@ -26,10 +26,13 @@ import type {
 import {
   createLifecycleHandlers,
   isControlledProps,
+  toNativeContentBackgroundBlurStyle,
+  toNativeContentBackgroundStyle,
   resolveInitialDetentIndex,
   resolveSelectedDetentIndex,
   toNativeBackgroundInteraction,
   toNativeDetentConfig,
+  toNativePreferredColorScheme,
 } from './bottom-sheet-utils';
 
 type NativeBottomSheetRef = HybridRef<RnBottomSheetProps, RnBottomSheetMethods>;
@@ -54,6 +57,9 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
       backgroundInteraction,
       cornerRadius = -1,
       expandsWhenScrolledToEdge = true,
+      preferredColorScheme,
+      contentBackgroundStyle,
+      contentBackgroundBlurStyle,
       children,
     } = props;
 
@@ -72,6 +78,18 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
     const nativeBackgroundInteraction = useMemo(
       () => toNativeBackgroundInteraction(backgroundInteraction),
       [backgroundInteraction]
+    );
+    const nativePreferredColorScheme = useMemo(
+      () => toNativePreferredColorScheme(preferredColorScheme),
+      [preferredColorScheme]
+    );
+    const nativeContentBackgroundStyle = useMemo(
+      () => toNativeContentBackgroundStyle(contentBackgroundStyle),
+      [contentBackgroundStyle]
+    );
+    const nativeContentBackgroundBlurStyle = useMemo(
+      () => toNativeContentBackgroundBlurStyle(contentBackgroundBlurStyle),
+      [contentBackgroundBlurStyle]
     );
     const initialDetentIndex = useMemo(
       () => resolveInitialDetentIndex(initialDetent, nativeDetents.length),
@@ -182,7 +200,7 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
     );
 
     if (!supported) {
-      return <View>{children}</View>;
+      return resolvedIsOpen ? <View>{children}</View> : null;
     }
 
     return (
@@ -197,6 +215,9 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
         backgroundInteraction={nativeBackgroundInteraction}
         cornerRadius={cornerRadius}
         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+        preferredColorScheme={nativePreferredColorScheme}
+        contentBackgroundStyle={nativeContentBackgroundStyle}
+        contentBackgroundBlurStyle={nativeContentBackgroundBlurStyle}
         onOpenChange={callback(handleNativeOpenChange)}
         onDetentChange={callback(handleNativeDetentChange)}
         onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}

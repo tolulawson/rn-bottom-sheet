@@ -1,0 +1,1 @@
+I found pre-existing uncommitted changes in unrelated files (`.specify/templates/*`, `PROMPT_*`, `scripts/ralph-loop*`, plus untracked `logs/` and `yarn.lock`). Per your repo rules, I need your direction before continuing: should I proceed with the dismissal-reason work and commit only the files I touch, leaving those existing changes untouched?

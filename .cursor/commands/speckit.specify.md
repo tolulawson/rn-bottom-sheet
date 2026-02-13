@@ -12,7 +12,9 @@ $ARGUMENTS
 2. Find next spec number from `specs/`
 3. Create `specs/NNN-short-name.md`
 4. Include clear acceptance criteria
-5. Add completion signal:
+5. Include comprehensive Maestro E2E acceptance criteria for affected flows
+6. Include explicit README update requirements when public API/user-visible behavior changes
+7. Add completion signal:
    ```
    **Output when complete:** `<promise>DONE</promise>`
    ```

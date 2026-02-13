@@ -1,0 +1,5178 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c5195-f787-75b3-94c1-c138b1973281
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Conditional Maestro MCP E2E Gate (Example App)
+
+Identify the active feature spec and check its E2E gate marker:
+- Look for `E2E Gate State: deferred|required` in `specs/<feature>/spec.md`.
+- Default to `deferred` if the marker is missing.
+
+Gate behavior:
+- If `deferred`: do NOT block this loop iteration. Log that Maestro MCP was skipped and why.
+- If `required`: Maestro MCP is a hard gate for completion.
+
+When `required`, run Maestro MCP against the example app and verify at least:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+If any required Maestro MCP flow fails, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP gate satisfied (or explicitly deferred in the active spec)
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: maestro starting
+mcp: codex_apps starting
+mcp: context7 starting
+mcp: maestro ready
+mcp: codex_apps ready
+mcp: context7 ready
+mcp startup: ready: maestro, codex_apps, context7
+
+thinking
+**Planning parallel repo inspection**
+codex
+I’ll run the Ralph loop exactly as requested: start by reading `.specify/memory/constitution.md`, then discover the highest-priority incomplete item across `specs/`, `IMPLEMENTATION_PLAN.md`, and issues, and only then implement and validate. I’m gathering that context now.
+exec
+/bin/zsh -lc 'cat .specify/memory/constitution.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'ls -la && (test -d specs && rg --files specs || true) && (test -f IMPLEMENTATION_PLAN.md && echo IMPLEMENTATION_PLAN.md || true)' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 51ms:
+total 1184
+drwxr-xr-x   46 tolu  staff    1472 Feb 12 02:30 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 03:21 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+-rw-r--r--@   1 tolu  staff    5406 Feb 12 00:45 CONTRIBUTING.md
+
+thinking
+**Exploring specs and issues**
+codex
+I’ve loaded the constitution and now I’m identifying the highest-priority incomplete work item from `specs/`, `IMPLEMENTATION_PLAN.md`, and open GitHub issues before touching code.
+exec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:|''^- '"\\[ \\]\" specs -g \"*.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+20:- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+24:- [ ] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
+25:- [ ] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
+26:- [ ] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
+27:- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+28:- [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
+29:- [ ] [MEDIUM] Implement allowSwipeToDismiss behavior - from IMPLEMENTATION_PLAN API Design
+30:- [ ] [MEDIUM] Implement expandsWhenScrolledToEdge mapping - from IMPLEMENTATION_PLAN API Design
+31:- [ ] [MEDIUM] Implement cornerRadius mapping - from IMPLEMENTATION_PLAN API Design
+32:- [ ] [MEDIUM] Implement largestUndimmedDetent mapping - from IMPLEMENTATION_PLAN API Design
+33:- [ ] [MEDIUM] Implement backgroundInteraction behavior - from IMPLEMENTATION_PLAN API Design
+34:- [ ] [MEDIUM] Implement snapToDetent() with animateChanges batching - from ios-sheet-apis.md
+35:- [ ] [LOW] Implement single active sheet enforcement (manager-level ownership) - from IMPLEMENTATION_PLAN Architecture
+39:- [ ] [HIGH] Create native container view for RN children inside sheet - from ADR-0002
+40:- [ ] [HIGH] Implement RN children mounting into native-hosted container - from ADR-0002
+41:- [ ] [HIGH] Implement attach lifecycle handling - from nitro-view-components.md
+42:- [ ] [HIGH] Implement detach lifecycle handling - from nitro-view-components.md
+43:- [ ] [HIGH] Implement prepareForRecycle() for recycled view cleanup - from nitro-view-components.md
+44:- [ ] [MEDIUM] Handle thread-safety for props arriving from different threads - from nitro-view-components.md
+45:- [ ] [MEDIUM] Implement beforeUpdate()/afterUpdate() for batched prop application - from nitro-view-components.md
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/tasks.md:98:- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:99:- [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:105:- [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:106:- [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+specs/001-native-ios-sheet-bindings/tasks.md:107:- [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:117:- [ ] T032 [P] Update public usage documentation and API surface in README.md
+specs/001-native-ios-sheet-bindings/tasks.md:118:- [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
+specs/001-native-ios-sheet-bindings/tasks.md:119:- [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
+specs/001-native-ios-sheet-bindings/tasks.md:120:- [ ] T035 Execute validation commands and capture results in tasks/todo.md
+specs/001-native-ios-sheet-bindings/tasks.md:121:- [ ] T036 [P] Add Maestro example-app E2E flow definitions in example/.maestro/sheet-core-flows.yaml
+specs/001-native-ios-sheet-bindings/tasks.md:122:- [ ] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
+specs/001-native-ios-sheet-bindings/tasks.md:123:- [ ] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:11:- [ ] CHK001 Are requirements defined for both controlled and imperative sheet control modes? [Completeness, Spec §FR-001, FR-002]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:12:- [ ] CHK002 Are requirements defined for rendering arbitrary child content and not only static content? [Completeness, Spec §FR-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:13:- [ ] CHK003 Are non-iOS fallback requirements explicitly documented? [Completeness, Spec §FR-013]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:14:- [ ] CHK004 Are example-app demonstration requirements defined for all major capabilities? [Completeness, Spec §FR-014]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:18:- [ ] CHK005 Is “native-feeling” behavior clarified through measurable or testable outcomes? [Clarity, Spec §SC-001, SC-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:19:- [ ] CHK006 Are detent validation rules specific enough to avoid interpretation drift? [Clarity, Spec §FR-004, FR-005]
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 100' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 489ms:
+
+
+thinking
+**Prioritizing incomplete tasks from specs and tasks files**
+codex
+I found multiple unchecked items; next I’m pinpointing the single highest-priority candidate by reading the active spec/task definitions and checking whether it is already implemented before selecting it.
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+ succeeded in 51ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 51ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+
+1. **Given** a screen using the library, **When** the developer triggers open state, **Then** a native iOS sheet appears and displays provided child content.
+
+thinking
+**Prioritizing highest incomplete task**
+codex
+The active feature spec (`001`) is still draft, and the first unchecked task in its ordered list is `T025`. I’m now verifying whether `T025` is already implemented so we avoid duplicate work before writing anything.
+exec
+/bin/zsh -lc 'rg -n "navigation|BottomSheetNativeView|fallback|reanimated|useBottomSheetNavigation|adapter" src example/src' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg --files src/__tests__ src/navigation src/components src/platform example/src | sort' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+rg: src/navigation: No such file or directory (os error 2)
+example/src/App.tsx
+example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+src/__tests__/bottom-sheet.contract.test.ts
+src/__tests__/bottom-sheet.detents.test.ts
+src/__tests__/bottom-sheet.lifecycle.test.ts
+src/__tests__/bottom-sheet.methods.test.ts
+src/__tests__/bottom-sheet.wrapper.test.ts
+src/__tests__/index.test.tsx
+src/components/BottomSheet.tsx
+src/components/bottom-sheet-utils.ts
+src/platform/fallback.ts
+ succeeded in 51ms:
+src/__tests__/bottom-sheet.methods.test.ts:24:jest.mock('../platform/fallback', () => ({
+src/platform/fallback.ts:4: * Provides deterministic fallback behavior for non-iOS platforms.
+src/platform/fallback.ts:5: * Per constitution: Non-iOS platforms get explicit fallback (no crash).
+src/platform/fallback.ts:66:  /** Whether fallback mode is active */
+src/platform/fallback.ts:68:  /** Reason for fallback */
+src/platform/fallback.ts:75: * Get fallback state for current platform.
+src/components/BottomSheet.tsx:21:} from '../platform/fallback';
+
+thinking
+**Planning next task implementation**
+codex
+I confirmed `T025` is not implemented (`src/__tests__/bottom-sheet.navigation.test.ts` is missing), so I’ll treat that as the highest-priority incomplete spec task and create a concrete execution plan in `tasks/todo.md` before implementation.
+exec
+/bin/zsh -lc "sed -n '1,260p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+
+thinking
+**Scoping task T025 implementation and tests**
+codex
+I’m moving into plan mode now: I’ll append a focused checklist for `T025` in `tasks/todo.md`, then implement only what’s required to make that task verifiably complete and passing.
+exec
+/bin/zsh -lc "sed -n '1,320p' src/components/BottomSheet.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.wrapper.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/index.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/platform/fallback.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+import {
+  isControlledProps,
+  resolveInitialDetentIndex,
+  resolveSelectedDetentIndex,
+  toNativeBackgroundInteraction,
+  toNativeDetentConfig,
+} from '../components/bottom-sheet-utils';
+import type { BottomSheetProps } from '../types/bottom-sheet';
+
+describe('bottom-sheet wrapper utilities', () => {
+  it('detects controlled props', () => {
+    const controlledProps: BottomSheetProps = {
+      isOpen: false,
+      onOpenChange: jest.fn(),
+    };
+
+    expect(isControlledProps(controlledProps)).toBe(true);
+  });
+
+  it('detects uncontrolled props', () => {
+ succeeded in 52ms:
+import { callback, type HybridRef } from 'react-native-nitro-modules';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { View } from 'react-native';
+import type {
+  NativeChangeReason,
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+import { RnBottomSheetView } from '../native/RnBottomSheetView';
+import {
+  isNativeSheetSupported,
+  warnUnsupportedPlatform,
+ succeeded in 52ms:
+/**
+ * rn-bottom-sheet
+ *
+ * Native iOS sheet bindings for React Native using Nitro Views.
+ */
+
+import { BottomSheet } from './components/BottomSheet';
+import { RnBottomSheetView } from './native/RnBottomSheetView';
+
+// =============================================================================
+// Public Components
+// =============================================================================
+
+/**
+ * Public BottomSheet wrapper component.
+ */
+export { BottomSheet };
+
+/**
+ * Internal native view component export for advanced use-cases.
+ succeeded in 52ms:
+/**
+ * Non-iOS Fallback Utilities
+ *
+ * Provides deterministic fallback behavior for non-iOS platforms.
+ * Per constitution: Non-iOS platforms get explicit fallback (no crash).
+ */
+
+import { Platform } from 'react-native';
+
+// =============================================================================
+// Platform Detection
+// =============================================================================
+
+/**
+ * Check if native sheet is supported on current platform.
+ */
+export function isNativeSheetSupported(): boolean {
+  return Platform.OS === 'ios';
+}
+
+
+thinking
+**Inspecting adapter design and specs**
+codex
+I’ve confirmed the current wrapper has no navigation adapter yet, so I’m pulling the navigation contract details from the feature artifacts next to define `T025` tests against the intended behavior.
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/plan.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/research.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "navigation|FR-010|useBottomSheetNavigation|route|sync" specs/001-native-ios-sheet-bindings -g "*.md"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Implementation Plan: Native iOS Sheet Bindings
+
+**Branch**: `001-native-ios-sheet-bindings` | **Date**: 2026-02-12 | **Spec**: `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md`
+**Input**: Feature specification from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md`
+
+## Summary
+
+Deliver an iOS-first React Native bottom sheet library built on Nitro Views that presents native iOS sheets, renders arbitrary React Native child content, supports deterministic detent and lifecycle control, and provides optional navigation/animation integration with explicit contract boundaries.
+
+## Technical Context
+
+**Language/Version**: TypeScript 5.9 (public API), Swift 5 (iOS native layer), Kotlin (existing Android fallback path)  
+**Primary Dependencies**: react-native 0.81.5, react-native-nitro-modules 0.33.x, nitrogen, optional react-navigation and react-native-reanimated adapters  
+**Storage**: N/A (runtime UI behavior only)  
+**Testing**: Jest for JS contract tests, iOS integration checks in example app target, Maestro for end-to-end flows  
+**Target Platform**: iOS 16+ (primary), non-iOS deterministic fallback behavior  
+**Project Type**: Mobile React Native library with example app  
+**Performance Goals**: Native sheet interactions maintain smooth 60fps feel in example scenarios; open/dismiss transitions perceived as immediate for standard content  
+**Constraints**: New Architecture/Fabric required; single active sheet session in v1; non-iOS parity explicitly out of scope; no crash on unsupported platforms  
+**Scale/Scope**: One publishable library package, one example app, and one complete feature spec/plan/tasks artifact set
+ succeeded in 51ms:
+# Research: Native iOS Sheet Bindings
+
+## Decision 1: Primary Native Presentation Engine
+
+- Decision: Use UIKit sheet presentation semantics as the runtime behavior source for v1.
+- Rationale: Deterministic detent control, lifecycle callbacks, and native interaction fidelity are critical.
+- Alternatives considered:
+  - Pure declarative sheet presentation abstraction: rejected due to weaker deterministic control for required API contract.
+
+## Decision 2: Public API State Model
+
+- Decision: Support both controlled (`isOpen`) and imperative (`present`, `dismiss`, `snapToDetent`) access.
+- Rationale: Consumers need declarative state for app architecture and imperative controls for orchestration edge cases.
+- Alternatives considered:
+  - Controlled-only API: rejected due to practical orchestration limits.
+  - Imperative-only API: rejected due to reduced integration with declarative app state.
+
+## Decision 3: Content Hosting Strategy
+
+- Decision: Support arbitrary React Native child content within the presented sheet.
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/spec.md:6:**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+specs/001-native-ios-sheet-bindings/spec.md:48:**Independent Test**: In a sample flow, a nested navigation journey inside the sheet works, and supported animation wrappers run without breaking sheet state.
+specs/001-native-ios-sheet-bindings/spec.md:52:1. **Given** an app route triggers a sheet flow, **When** route state changes, **Then** sheet open/close state can be synchronized with navigation behavior.
+specs/001-native-ios-sheet-bindings/spec.md:53:2. **Given** nested navigation content inside the sheet, **When** the user navigates between internal screens, **Then** the sheet remains stable and navigation actions resolve predictably.
+specs/001-native-ios-sheet-bindings/spec.md:64:- What happens when a route change attempts to dismiss an already dismissed sheet?
+specs/001-native-ios-sheet-bindings/spec.md:80:- **FR-010**: System MUST provide optional integration utilities that allow synchronization with React Navigation state.
+specs/001-native-ios-sheet-bindings/spec.md:81:- **FR-011**: System MUST allow navigation content within the sheet without forcing a custom navigation stack API.
+specs/001-native-ios-sheet-bindings/spec.md:84:- **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+specs/001-native-ios-sheet-bindings/spec.md:93:- **Integration Binding**: Represents optional synchronization mapping between navigation state, sheet state, and callbacks.
+specs/001-native-ios-sheet-bindings/spec.md:112:- **SC-003**: In example app test runs, primary user flows (open, dismiss, detent change, in-sheet navigation) complete successfully in at least 95% of runs without manual recovery.
+specs/001-native-ios-sheet-bindings/spec.md:115:- **SC-006**: When `E2E Gate State` is `required`, Maestro MCP flows for the example app pass for open, dismiss, detent interaction, and in-sheet navigation in 100% of release-gate runs.
+specs/001-native-ios-sheet-bindings/spec.md:121:- Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
+specs/001-native-ios-sheet-bindings/plan.md:8:Deliver an iOS-first React Native bottom sheet library built on Nitro Views that presents native iOS sheets, renders arbitrary React Native child content, supports deterministic detent and lifecycle control, and provides optional navigation/animation integration with explicit contract boundaries.
+specs/001-native-ios-sheet-bindings/plan.md:13:**Primary Dependencies**: react-native 0.81.5, react-native-nitro-modules 0.33.x, nitrogen, optional react-navigation and react-native-reanimated adapters  
+specs/001-native-ios-sheet-bindings/data-model.md:49:- Purpose: Optional mapping between sheet lifecycle and navigation/animation layers.
+specs/001-native-ios-sheet-bindings/data-model.md:51:  - `navigationSyncEnabled` (boolean)
+specs/001-native-ios-sheet-bindings/research.md:27:- Decision: Keep core package navigation-agnostic and provide optional integration helpers.
+specs/001-native-ios-sheet-bindings/tasks.md:94:**Independent Test**: Example app can drive a sheet from navigation state and run supported animated wrapper flow without state breakage.
+specs/001-native-ios-sheet-bindings/tasks.md:98:- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+
+thinking
+**Reviewing adapter API details**
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/data-model.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/quickstart.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Data Model: Native iOS Sheet Bindings
+
+## Entity: BottomSheetConfiguration
+
+- Purpose: Declares runtime behavior and interaction settings for one sheet instance.
+- Fields:
+  - `isOpen` (boolean, optional, controlled state)
+  - `defaultOpen` (boolean, optional, uncontrolled initial state)
+  - `detents` (list of `DetentDefinition`)
+  - `initialDetent` (index or `last`)
+  - `selectedDetent` (index, optional controlled detent)
+  - `grabberVisible` (boolean)
+  - `allowSwipeToDismiss` (boolean)
+  - `backgroundInteractionMode` (`modal` or threshold mode)
+- Validation Rules:
+  - Detent list must be non-empty when provided.
+  - Detent values must be valid and sortable.
+  - Detent indexes must resolve to an existing detent.
+
+## Entity: DetentDefinition
+ succeeded in 50ms:
+contract: bottom-sheet-component
+version: 1
+
+component:
+  name: BottomSheet
+  props:
+    isOpen:
+      type: boolean
+      required: false
+    defaultOpen:
+      type: boolean
+      required: false
+    detents:
+      type: array
+      items: detent
+      required: false
+    initialDetent:
+      type: integer_or_last
+      required: false
+    selectedDetent:
+ succeeded in 52ms:
+# Quickstart: Native iOS Sheet Bindings
+
+## 1. Install and Prepare
+
+1. Install dependencies and run codegen.
+2. Ensure New Architecture/Fabric is enabled.
+3. Build and run the example app on iOS.
+
+## 2. Minimal Usage Flow
+
+1. Render sheet component with simple child content.
+2. Toggle open state.
+3. Observe present/dismiss callbacks.
+
+## 3. Detent Configuration Flow
+
+1. Provide a detent list with initial detent.
+2. Trigger user drag/programmatic snap.
+3. Validate detent change callback and current detent state.
+
+
+thinking
+**Searching docs for navigation design**
+exec
+/bin/zsh -lc 'rg -n "useBottomSheetNavigation|navigation adapter|route|open state|circular" docs specs -g "*.md"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md:20:1. **Given** a screen using the library, **When** the developer triggers open state, **Then** a native iOS sheet appears and displays provided child content.
+specs/001-native-ios-sheet-bindings/spec.md:52:1. **Given** an app route triggers a sheet flow, **When** route state changes, **Then** sheet open/close state can be synchronized with navigation behavior.
+specs/001-native-ios-sheet-bindings/spec.md:64:- What happens when a route change attempts to dismiss an already dismissed sheet?
+specs/001-native-ios-sheet-bindings/spec.md:71:- **FR-001**: System MUST provide a component interface that supports both controlled and uncontrolled sheet open state.
+specs/001-native-ios-sheet-bindings/data-model.md:55:  - Must not create circular open/dismiss loops.
+specs/001-native-ios-sheet-bindings/tasks.md:56:- [x] T012 [US1] Implement controlled/uncontrolled open state orchestration in src/components/BottomSheet.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+specs/001-native-ios-sheet-bindings/quickstart.md:12:2. Toggle open state.
+specs/001-native-ios-sheet-bindings/quickstart.md:23:1. Wire optional navigation adapter helper.
+specs/001-native-ios-sheet-bindings/quickstart.md:24:2. Open sheet from route transition.
+specs/001-native-ios-sheet-bindings/quickstart.md:25:3. Verify route and sheet states remain synchronized.
+docs/references/react-navigation-form-sheet.md:21:2. Provide optional adapter utilities for open/dismiss synchronization with route state.
+exec
+/bin/zsh -lc 'ls -la docs/references && rg --files docs/references' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+total 40
+drwxr-xr-x@ 7 tolu  staff   224 Feb 12 01:30 .
+drwxr-xr-x@ 9 tolu  staff   288 Feb 12 02:22 ..
+-rw-r--r--@ 1 tolu  staff  1093 Feb 12 01:30 ios-sheet-apis.md
+-rw-r--r--@ 1 tolu  staff  1120 Feb 12 01:30 nitro-view-components.md
+-rw-r--r--@ 1 tolu  staff   912 Feb 12 01:30 react-navigation-form-sheet.md
+-rw-r--r--@ 1 tolu  staff   820 Feb 12 01:30 reanimated-interop.md
+-rw-r--r--@ 1 tolu  staff  1044 Feb 12 01:30 swiftui-sheet-apis.md
+docs/references/nitro-view-components.md
+docs/references/react-navigation-form-sheet.md
+docs/references/swiftui-sheet-apis.md
+docs/references/ios-sheet-apis.md
+docs/references/reanimated-interop.md
+
+thinking
+**Checking navigation test adapter**
+exec
+/bin/zsh -lc "sed -n '1,260p' docs/references/react-navigation-form-sheet.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# React Navigation Form Sheet Notes
+
+## Why It Matters
+
+Consumers need navigation interoperability with native sheet presentation.
+
+## Key Observations (Native Stack)
+
+1. `presentation: 'formSheet'` exists in native stack docs and exposes sheet-related options.
+2. Options include `sheetAllowedDetents`, `sheetGrabberVisible`, and related behavior controls.
+3. Docs call out known platform integration limitations for some `flex: 1` and nested scenarios.
+
+## Nesting Behavior
+
+1. Navigation actions are handled by the current navigator first, then bubble to parents.
+2. In nested sheet flows, `goBack()` behavior must be coordinated to avoid unexpected dismiss/pop ordering.
+
+## Implications for rn-bottom-sheet
+
+1. Keep core package navigation-agnostic.
+
+thinking
+**Planning test design for adapter**
+exec
+/bin/zsh -lc "rg -n \"navigation|adapter|useBottomSheetNavigation|sync\" docs/implementation-plan-v1.md && sed -n '1,260p' docs/implementation-plan-v1.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+5:Build an iOS-first React Native library that presents native iOS sheets using `UISheetPresentationController` via Nitro Views, supports arbitrary React Native children in sheet content, provides optional React Navigation adapters, defines a constrained Reanimated interop contract, and maintains a living in-repo knowledge base.
+73:- Keep core package navigation-agnostic.
+74:- Provide optional adapter utilities in `rn-bottom-sheet/navigation`.
+101:5. Navigation adapter and examples.
+# Native iOS Sheet Library Plan (v1)
+
+## Summary
+
+Build an iOS-first React Native library that presents native iOS sheets using `UISheetPresentationController` via Nitro Views, supports arbitrary React Native children in sheet content, provides optional React Navigation adapters, defines a constrained Reanimated interop contract, and maintains a living in-repo knowledge base.
+
+## Scope
+
+1. Ship v1 for iOS 16+ on RN 0.81+ with New Architecture/Fabric.
+2. Expose controlled + imperative API surface.
+3. Support semantic and numeric detents with runtime changes.
+4. Support arbitrary React Native child content in the sheet.
+5. Support single active sheet globally in v1.
+6. Provide optional React Navigation integration package.
+7. Provide curated documentation and architecture records in `docs/`.
+8. Enforce verification with unit, iOS integration, and Maestro happy-path E2E.
+
+thinking
+**Inspecting existing test patterns**
+codex
+I now have enough contract context; next I’m drafting `T025` tests in the same style as existing unit suites so they exercise navigation-sync semantics without overreaching into unimplemented APIs.
+exec
+/bin/zsh -lc "sed -n '1,320p' src/__tests__/bottom-sheet.lifecycle.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,320p' src/__tests__/bottom-sheet.methods.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.contract.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
+
+describe('bottom-sheet lifecycle handlers', () => {
+  it('maps native lifecycle events to user callbacks', () => {
+    const onWillPresent = jest.fn();
+    const onDidPresent = jest.fn();
+    const onWillDismiss = jest.fn();
+    const onDidDismiss = jest.fn();
+
+    const handlers = createLifecycleHandlers({
+      onWillPresent,
+      onDidPresent,
+      onWillDismiss,
+      onDidDismiss,
+    });
+
+    handlers.onNativeWillPresent();
+    handlers.onNativeDidPresent();
+    handlers.onNativeWillDismiss();
+    handlers.onNativeDidDismiss();
+ succeeded in 51ms:
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+ succeeded in 50ms:
+/**
+ * Contract tests for bottom sheet API behavior
+ *
+ * These tests validate the public API contract without requiring
+ * the native implementation. They focus on:
+ * - Type definitions and exports
+ * - Validation logic
+ * - Error handling
+ */
+
+describe('BottomSheet Contract', () => {
+  describe('Type Exports', () => {
+    it.todo('should export BottomSheetDetent type');
+    it.todo('should export BottomSheetProps type');
+    it.todo('should export BottomSheetMethods type');
+    it.todo('should export BottomSheetChangeReason type');
+  });
+
+  describe('Detent Validation', () => {
+    it.todo('should accept valid semantic detents (medium, large)');
+
+thinking
+**Inspecting utility file for navigation helpers**
+exec
+/bin/zsh -lc "sed -n '1,340p' src/components/bottom-sheet-utils.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+import type {
+  NativeBackgroundInteraction,
+  NativeDetentConfig,
+} from '../RnBottomSheet.nitro';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetDetent,
+  BottomSheetProps,
+  ControlledProps,
+} from '../types/bottom-sheet';
+import {
+  DEFAULT_DETENTS,
+  detentsToNativeConfig,
+  validateDetents,
+} from '../utils/detents';
+
+const ERROR_PREFIX = '[rn-bottom-sheet]';
+
+export function isControlledProps(
+  props: BottomSheetProps
+
+thinking
+**Evaluating test implementation scope**
+exec
+/bin/zsh -lc 'cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+
+thinking
+**Outlining navigation-sync tests plan**
+codex
+I’ve identified `T025` as the highest-priority incomplete spec task and confirmed it is not already present.  
+Execution plan for this iteration:
+
+1. Add a dedicated `T025` checklist block to `tasks/todo.md` (plan-first requirement).
+2. Implement `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style synchronization behavior:
+- controlled `isOpen` follows external state changes,
+- native open-change events bubble deterministically through `onOpenChange`,
+- controlled imperative calls notify state owner without causing native loop calls.
+3. Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+4. Run verification (`yarn lint`, `yarn typecheck`, `yarn test`), then record outcomes in `tasks/todo.md` Review.
+5. Commit and push this iteration.
+
+I’ll start by writing the plan block into `tasks/todo.md` now.
+Plan update
+Executing Ralph iteration for highest-priority incomplete spec task T025 with plan-first and verification-first workflow.
+  → Add T025 iteration checklist in tasks/todo.md
+  • Implement navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+  • Mark T025 complete in specs tasks and update review notes
+  • Run lint, typecheck, and test verification
+  • Commit and push changes
+
+thinking
+**Appending iteration block**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -167 +167,9 @@
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 21ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating plan status**
+codex
+Plan block is now written to `tasks/todo.md`. Next I’m implementing `src/__tests__/bottom-sheet.navigation.test.ts` with controlled-state sync assertions that map to navigation-driven route changes.
+Plan update
+  ✓ Add T025 iteration checklist in tasks/todo.md
+  → Implement navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+  • Mark T025 complete in specs tasks and update review notes
+  • Run lint, typecheck, and test verification
+  • Commit and push changes
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Designing controlled navigation tests**
+file update
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.navigation.test.ts
+import React, { createRef } from 'react';
+import TestRenderer from 'react-test-renderer';
+import { BottomSheet } from '../components/BottomSheet';
+import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
+import type { BottomSheetMethods } from '../types/bottom-sheet';
+
+type MockRnBottomSheetViewProps = RnBottomSheetProps & {
+  hybridRef?: (instance: unknown) => void;
+};
+
+const mockNativeMethods = {
+  present: jest.fn(),
+  dismiss: jest.fn(),
+  snapToDetent: jest.fn(),
+  getCurrentDetentIndex: jest.fn(),
+};
+
+let mockLatestProps: MockRnBottomSheetViewProps | null = null;
+
+jest.mock('react-native-nitro-modules', () => ({
+  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
+}));
+
+jest.mock('../platform/fallback', () => ({
+  isNativeSheetSupported: () => true,
+  warnUnsupportedPlatform: jest.fn(),
+}));
+
+jest.mock('../native/RnBottomSheetView', () => {
+  const ReactRuntime = require('react');
+
+  return {
+    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
+      mockLatestProps = props;
+
+      ReactRuntime.useEffect(() => {
+        props.hybridRef?.(mockNativeMethods as never);
+      }, [props.hybridRef]);
+
+      return null;
+    },
+  };
+});
+
+describe('bottom-sheet navigation sync behavior', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockLatestProps = null;
+  });
+
+  it('syncs controlled open state when route-level state changes', () => {
+    const onOpenChange = jest.fn();
+
+    const renderer = TestRenderer.create(
+      React.createElement(BottomSheet, {
+        isOpen: false,
+        onOpenChange,
+      })
+    );
+
+    expect(mockLatestProps?.isOpen).toBe(false);
+
+    TestRenderer.act(() => {
+      renderer.update(
+        React.createElement(BottomSheet, {
+          isOpen: true,
+          onOpenChange,
+        })
+      );
+    });
+
+    expect(mockLatestProps?.isOpen).toBe(true);
+
+    TestRenderer.act(() => {
+      renderer.update(
+        React.createElement(BottomSheet, {
+          isOpen: false,
+          onOpenChange,
+        })
+      );
+    });
+
+    expect(mockLatestProps?.isOpen).toBe(false);
+  });
+
+  it('emits native close intent to controlled owner without forcing native dismiss', () => {
+    const onOpenChange = jest.fn();
+
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(BottomSheet, {
+          isOpen: true,
+          onOpenChange,
+        })
+      );
+    });
+
+    expect(mockLatestProps?.isOpen).toBe(true);
+
+    TestRenderer.act(() => {
+      mockLatestProps?.onOpenChange(false, 'swipe');
+    });
+
+    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
+    expect(mockLatestProps?.isOpen).toBe(true);
+    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
+  });
+
+  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
+    const onOpenChange = jest.fn();
+    const ref = createRef<BottomSheetMethods>();
+
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(BottomSheet, {
+          isOpen: false,
+          onOpenChange,
+          ref,
+        })
+      );
+    });
+
+    TestRenderer.act(() => {
+      ref.current?.present();
+      ref.current?.dismiss();
+    });
+
+    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
+    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
+    expect(mockNativeMethods.present).not.toHaveBeenCalled();
+    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
+  });
+});
+apply_patch(auto_approved=true) exited 0 in 33ms:
+Success. Updated the following files:
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.navigation.test.ts
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2812e720a17144c926c2d46d0695cf0e605ad2e
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,133 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++
++    const renderer = TestRenderer.create(
++      React.createElement(BottomSheet, {
++        isOpen: false,
++        onOpenChange,
++      })
++    );
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2812e720a17144c926c2d46d0695cf0e605ad2e
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,133 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++
++    const renderer = TestRenderer.create(
++      React.createElement(BottomSheet, {
++        isOpen: false,
++        onOpenChange,
++      })
++    );
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning targeted lint and test run**
+codex
+The navigation test file is in place. I’m running the new suite first to validate behavior quickly, then I’ll proceed to full lint/typecheck/test verification.
+exec
+/bin/zsh -lc 'yarn test src/__tests__/bottom-sheet.navigation.test.ts --runInBand' in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 871ms:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+  console.error
+    An update to Root inside a test was not wrapped in act(...).
+    
+    When testing, code that causes React state updates should be wrapped into act(...):
+    
+    act(() => {
+      /* fire events that update state */
+    });
+    /* assert on the output */
+    
+    This ensures that you're testing the behavior the user would see in the browser. Learn more at https://react.dev/link/wrap-tests-with-act
+
+      52 |     const onOpenChange = jest.fn();
+      53 |
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..e2812e720a17144c926c2d46d0695cf0e605ad2e
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,133 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++
++    const renderer = TestRenderer.create(
++      React.createElement(BottomSheet, {
++        isOpen: false,
++        onOpenChange,
++      })
++    );
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Fixing create call within act**
+codex
+The first run exposed a test harness issue, not product behavior: initial render wasn’t wrapped in `act`, so props capture didn’t stabilize. I’m fixing that and re-running the test file.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -52,9 +52,12 @@
+     const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
+ 
+-    const renderer = TestRenderer.create(
+-      React.createElement(BottomSheet, {
+-        isOpen: false,
+-        onOpenChange,
+-      })
+-    );
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
+ 
+@@ -63,3 +66,3 @@
+     TestRenderer.act(() => {
+-      renderer.update(
++      renderer!.update(
+         React.createElement(BottomSheet, {
+@@ -74,3 +77,3 @@
+     TestRenderer.act(() => {
+-      renderer.update(
++      renderer!.update(
+         React.createElement(BottomSheet, {
+apply_patch(auto_approved=true) exited 0 in 45ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.navigation.test.ts
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Rerunning targeted test**
+exec
+/bin/zsh -lc 'yarn test src/__tests__/bottom-sheet.navigation.test.ts --runInBand' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 770ms:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS src/__tests__/bottom-sheet.navigation.test.ts
+  bottom-sheet navigation sync behavior
+    ✓ syncs controlled open state when route-level state changes (5 ms)
+    ✓ emits native close intent to controlled owner without forcing native dismiss (1 ms)
+    ✓ uses callback-only imperative flow in controlled mode to avoid loops (1 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        0.285 s, estimated 1 s
+Ran all test suites matching /src\/__tests__\/bottom-sheet.navigation.test.ts/i.
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Marking task completion and updating plan status**
+codex
+The new navigation-sync tests now pass. Next I’ll update task tracking (`specs/.../tasks.md` and this iteration checklist in `tasks/todo.md`), then run full project verification.
+Plan update
+  ✓ Add T025 iteration checklist in tasks/todo.md
+  ✓ Implement navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+  → Mark T025 complete in specs tasks and update review notes
+  • Run lint, typecheck, and test verification
+  • Commit and push changes
+file update:
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Patching task status and todo marks**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -97,3 +97,3 @@
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+apply_patch(auto_approved=true) exited 0 in 38ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cefb49633c82b13ecef2126bce3f607ae75362a3
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Marking first three checkboxes done**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -170,5 +170,5 @@
+ 
+-- [ ] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
+-- [ ] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
+-- [ ] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+apply_patch(auto_approved=true) exited 0 in 51ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..64a6c111664320d825be4b58aecd804de66666de
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..64a6c111664320d825be4b58aecd804de66666de
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning sequential verification commands**
+codex
+Task state is synced for `T025`. I’m running full verification now (`yarn lint`, `yarn typecheck`, `yarn test`) before recording results and committing.
+exec
+/bin/zsh -lc 'yarn lint && yarn typecheck && yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 3.90s:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS src/__tests__/bottom-sheet.navigation.test.ts
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/index.test.tsx
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+
+Test Suites: 8 passed, 8 total
+Tests:       19 todo, 25 passed, 44 total
+Snapshots:   0 total
+Time:        0.229 s, estimated 1 s
+Ran all test suites.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..64a6c111664320d825be4b58aecd804de66666de
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -165,3 +165,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating checklist and review notes**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -62,2 +62,5 @@
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+@@ -173,3 +176,3 @@
+ - [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+-- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+-- [ ] Capture verification outcomes in the Review section
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 45ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating plan status**
+codex
+Verification is green and the review log is updated. I’ll now inspect the diff, commit this `T025` iteration, and push to the current branch.
+Plan update
+  ✓ Add T025 iteration checklist in tasks/todo.md
+  ✓ Implement navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+  ✓ Mark T025 complete in specs tasks and update review notes
+  ✓ Run lint, typecheck, and test verification
+  → Commit and push changes
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Checking git status and diff**
+exec
+/bin/zsh -lc 'git status --short && git rev-parse --abbrev-ref HEAD && git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M tasks/todo.md
+?? logs/
+?? src/__tests__/bottom-sheet.navigation.test.ts
+?? yarn.lock
+main
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Assessing uncommitted changes**
+exec
+/bin/zsh -lc "git diff -- src/__tests__/bottom-sheet.navigation.test.ts specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md | sed -n '1,260p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0..cad36fe 100644
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328..cfee83a 100644
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Preparing selective commit and push**
+exec
+/bin/zsh -lc 'git add src/__tests__/bottom-sheet.navigation.test.ts specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md && git commit -m "test: add navigation sync coverage for controlled sheet state"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.98s:
+┃  types ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+┃  lint ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 1.57 seconds)       
+✔️ types (1.40 seconds)
+✔️ lint (1.57 seconds)
+╭──────────────────────────────────────╮
+│ 🥊 lefthook v2.1.1  hook: commit-msg │
+╰──────────────────────────────────────╯
+┃  commitlint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.36 seconds)       
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Pushing committed changes**
+codex
+I committed only the three `T025` files to avoid unrelated dirty-worktree changes. I’m pushing this commit to `origin/main` now.
+exec
+/bin/zsh -lc 'git push' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 796ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   f617cc2..ebb7127  main -> main
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Confirming successful push**
+Plan update
+  ✓ Add T025 iteration checklist in tasks/todo.md
+  ✓ Implement navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+  ✓ Mark T025 complete in specs tasks and update review notes
+  ✓ Run lint, typecheck, and test verification
+  ✓ Commit and push changes
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Confirming incomplete tasks remain**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Summarizing completed task and next steps**
+codex
+Implemented one Ralph iteration for the highest-priority incomplete spec task: `T025`.
+
+Changes pushed on `main` in commit `ebb7127`:
+- Added navigation-sync tests in `src/__tests__/bottom-sheet.navigation.test.ts`
+- Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md:98`
+- Added iteration plan/checklist + review notes in `tasks/todo.md`
+
+What the new tests verify:
+- Controlled `isOpen` stays in sync with external (route-like) state updates
+- Native close intent is forwarded via `onOpenChange` without forcing native dismiss in controlled mode
+- Controlled imperative `present`/`dismiss` uses callback-only flow to avoid loops
+
+Validation run and passing:
+- `yarn lint`
+- `yarn typecheck`
+- `yarn test`
+
+I did not output `<promise>DONE</promise>` because the feature spec is still not fully complete (remaining unchecked tasks exist).
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index bfe35e0171859955a0568aec66719f33ede873b6..cad36fe124f491a5f27530234b7c7f71ead63798
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -95,7 +95,7 @@
+ 
+ ### Tests for User Story 3
+ 
+-- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
++- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+ - [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+ 
+ ### Implementation for User Story 3
+diff --git a/src/__tests__/bottom-sheet.navigation.test.ts b/src/__tests__/bottom-sheet.navigation.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..f2f3a35ad3e031315d9b0830e538949a919e72b4
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.navigation.test.ts
+@@ -0,0 +1,136 @@
++import React, { createRef } from 'react';
++import TestRenderer from 'react-test-renderer';
++import { BottomSheet } from '../components/BottomSheet';
++import type { RnBottomSheetProps } from '../RnBottomSheet.nitro';
++import type { BottomSheetMethods } from '../types/bottom-sheet';
++
++type MockRnBottomSheetViewProps = RnBottomSheetProps & {
++  hybridRef?: (instance: unknown) => void;
++};
++
++const mockNativeMethods = {
++  present: jest.fn(),
++  dismiss: jest.fn(),
++  snapToDetent: jest.fn(),
++  getCurrentDetentIndex: jest.fn(),
++};
++
++let mockLatestProps: MockRnBottomSheetViewProps | null = null;
++
++jest.mock('react-native-nitro-modules', () => ({
++  callback: <T extends (...args: any[]) => any>(fn: T) => fn,
++}));
++
++jest.mock('../platform/fallback', () => ({
++  isNativeSheetSupported: () => true,
++  warnUnsupportedPlatform: jest.fn(),
++}));
++
++jest.mock('../native/RnBottomSheetView', () => {
++  const ReactRuntime = require('react');
++
++  return {
++    RnBottomSheetView: (props: MockRnBottomSheetViewProps) => {
++      mockLatestProps = props;
++
++      ReactRuntime.useEffect(() => {
++        props.hybridRef?.(mockNativeMethods as never);
++      }, [props.hybridRef]);
++
++      return null;
++    },
++  };
++});
++
++describe('bottom-sheet navigation sync behavior', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    mockLatestProps = null;
++  });
++
++  it('syncs controlled open state when route-level state changes', () => {
++    const onOpenChange = jest.fn();
++    let renderer: TestRenderer.ReactTestRenderer;
++
++    TestRenderer.act(() => {
++      renderer = TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      renderer!.update(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(false);
++  });
++
++  it('emits native close intent to controlled owner without forcing native dismiss', () => {
++    const onOpenChange = jest.fn();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: true,
++          onOpenChange,
++        })
++      );
++    });
++
++    expect(mockLatestProps?.isOpen).toBe(true);
++
++    TestRenderer.act(() => {
++      mockLatestProps?.onOpenChange(false, 'swipe');
++    });
++
++    expect(onOpenChange).toHaveBeenCalledWith(false, 'swipe');
++    expect(mockLatestProps?.isOpen).toBe(true);
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++
++  it('uses callback-only imperative flow in controlled mode to avoid loops', () => {
++    const onOpenChange = jest.fn();
++    const ref = createRef<BottomSheetMethods>();
++
++    TestRenderer.act(() => {
++      TestRenderer.create(
++        React.createElement(BottomSheet, {
++          isOpen: false,
++          onOpenChange,
++          ref,
++        })
++      );
++    });
++
++    TestRenderer.act(() => {
++      ref.current?.present();
++      ref.current?.dismiss();
++    });
++
++    expect(onOpenChange).toHaveBeenNthCalledWith(1, true, 'programmatic');
++    expect(onOpenChange).toHaveBeenNthCalledWith(2, false, 'programmatic');
++    expect(mockNativeMethods.present).not.toHaveBeenCalled();
++    expect(mockNativeMethods.dismiss).not.toHaveBeenCalled();
++  });
++});
+diff --git a/tasks/todo.md b/tasks/todo.md
+index ab92328a12d95b576fd123701e680b2518794f9b..cfee83a9561d0c629bf60e10b9b976e2fd4f05fb
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -60,6 +60,9 @@
+ - Date: 2026-02-12
+ - Reviewer: Codex (GPT-5)
+ - Findings:
++  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
++  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+   - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+   - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+@@ -165,3 +168,11 @@
+ - [x] Mark `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and sync `IMPLEMENTATION_PLAN.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Sync Tests T025)
++
++- [x] Confirm `T025` is the highest-priority truly incomplete item and verify `src/__tests__/bottom-sheet.navigation.test.ts` does not already exist
++- [x] Add navigation-sync behavior tests in `src/__tests__/bottom-sheet.navigation.test.ts`
++- [x] Mark `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+tokens used
+107,168
+Implemented one Ralph iteration for the highest-priority incomplete spec task: `T025`.
+
+Changes pushed on `main` in commit `ebb7127`:
+- Added navigation-sync tests in `src/__tests__/bottom-sheet.navigation.test.ts`
+- Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md:98`
+- Added iteration plan/checklist + review notes in `tasks/todo.md`
+
+What the new tests verify:
+- Controlled `isOpen` stays in sync with external (route-like) state updates
+- Native close intent is forwarded via `onOpenChange` without forcing native dismiss in controlled mode
+- Controlled imperative `present`/`dismiss` uses callback-only flow to avoid loops
+
+Validation run and passing:
+- `yarn lint`
+- `yarn typecheck`
+- `yarn test`
+
+I did not output `<promise>DONE</promise>` because the feature spec is still not fully complete (remaining unchecked tasks exist).

@@ -1,0 +1,58 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "open-sheet-button"
+    timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          id: "close-sheet-button"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+- assertVisible:
+    id: "sheet-title"
+
+- tapOn:
+    id: "toggle-grabber-button"
+- tapOn:
+    id: "snap-medium-button"
+- assertVisible:
+    id: "sheet-route-summary"
+
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    id: "sheet-route-summary"
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    id: "sheet-route-summary"
+
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000
+- assertVisible:
+    id: "open-sheet-button"

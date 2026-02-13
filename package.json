@@ -37,7 +37,7 @@
     "example": "yarn workspace rn-bottom-sheet-example",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "nitrogen": "nitrogen",
+    "nitrogen": "nitrogen && node scripts/patch-ios-child-routing.mjs",
     "typecheck": "tsc",
     "test": "jest",
     "release": "release-it --only-version",
@@ -131,6 +131,9 @@
     "modulePathIgnorePatterns": [
       "<rootDir>/example/node_modules",
       "<rootDir>/lib/"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/example/src/__tests__/app-harness\\.ts$"
     ]
   },
   "commitlint": {
