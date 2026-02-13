@@ -10,9 +10,9 @@
 
 **Purpose**: Prepare shared files and deterministic selectors used by all stories.
 
-- [ ] T001 Create shared example app test ID constants in `example/src/testids.ts`
-- [ ] T002 [P] Add Maestro scenario scaffold directory with feature README in `example/maestro/README.md`
-- [ ] T003 [P] Add feature verification section template in `tasks/todo.md`
+- [X] T001 Create shared example app test ID constants in `example/src/testids.ts`
+- [X] T002 [P] Add Maestro scenario scaffold directory with feature README in `example/maestro/README.md`
+- [X] T003 [P] Add feature verification section template in `tasks/todo.md`
 
 ---
 
@@ -22,10 +22,10 @@
 
 **⚠️ CRITICAL**: No user story work starts until this phase is complete.
 
-- [ ] T004 Add stable `testID`/accessibility labels for sheet controls and status fields in `example/src/App.tsx`
-- [ ] T005 [P] Introduce centralized example view-state model types in `example/src/example-state.ts`
-- [ ] T006 [P] Add helper utilities for open idempotency and route reset rules in `example/src/example-state.ts`
-- [ ] T007 Wire foundational state helpers into the screen root in `example/src/App.tsx`
+- [X] T004 Add stable `testID`/accessibility labels for sheet controls and status fields in `example/src/App.tsx`
+- [X] T005 [P] Introduce centralized example view-state model types in `example/src/example-state.ts`
+- [X] T006 [P] Add helper utilities for open idempotency and route reset rules in `example/src/example-state.ts`
+- [X] T007 Wire foundational state helpers into the screen root in `example/src/App.tsx`
 
 **Checkpoint**: Foundational state/selectors are ready; story work can begin.
 
@@ -39,16 +39,16 @@
 
 ### Tests for User Story 1 (REQUIRED)
 
-- [ ] T008 [P] [US1] Add contract test for single-sheet-instance rule in `example/src/__tests__/sheet-single-open.contract.test.tsx`
-- [ ] T009 [P] [US1] Add integration test for rapid/repeated open actions in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
-- [ ] T010 [P] [US1] Add Maestro flow for duplicate-open prevention in `example/maestro/sheet-single-open.yaml`
+- [X] T008 [P] [US1] Add contract test for single-sheet-instance rule in `example/src/__tests__/sheet-single-open.contract.test.tsx`
+- [X] T009 [P] [US1] Add integration test for rapid/repeated open actions in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
+- [X] T010 [P] [US1] Add Maestro flow for duplicate-open prevention in `example/maestro/sheet-single-open.yaml`
 
 ### Implementation for User Story 1
 
-- [ ] T011 [US1] Implement idempotent open-action guard in `example/src/App.tsx`
-- [ ] T012 [US1] Model explicit sheet phase transitions (`closed/opening/open/dismissing`) in `example/src/App.tsx`
-- [ ] T013 [US1] Ensure repeated open requests are no-op while opening/open in `example/src/App.tsx`
-- [ ] T014 [US1] Update status summary to expose phase and verify single-instance behavior in `example/src/App.tsx`
+- [X] T011 [US1] Implement idempotent open-action guard in `example/src/App.tsx`
+- [X] T012 [US1] Model explicit sheet phase transitions (`closed/opening/open/dismissing`) in `example/src/App.tsx`
+- [X] T013 [US1] Ensure repeated open requests are no-op while opening/open in `example/src/App.tsx`
+- [X] T014 [US1] Update status summary to expose phase and verify single-instance behavior in `example/src/App.tsx`
 
 **Checkpoint**: Duplicate-open bug is fixed and independently validated.
 
@@ -62,16 +62,16 @@
 
 ### Tests for User Story 2 (REQUIRED)
 
-- [ ] T015 [P] [US2] Add contract test for in-sheet control accessibility and route-summary sync in `example/src/__tests__/sheet-control-surface.contract.test.tsx`
-- [ ] T016 [P] [US2] Extend integration test for in-sheet snap/toggle/close/route flows in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
-- [ ] T017 [P] [US2] Add Maestro flow for in-sheet controls and route transitions in `example/maestro/sheet-internal-controls.yaml`
+- [X] T015 [P] [US2] Add contract test for in-sheet control accessibility and route-summary sync in `example/src/__tests__/sheet-control-surface.contract.test.tsx`
+- [X] T016 [P] [US2] Extend integration test for in-sheet snap/toggle/close/route flows in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
+- [X] T017 [P] [US2] Add Maestro flow for in-sheet controls and route transitions in `example/maestro/sheet-internal-controls.yaml`
 
 ### Implementation for User Story 2
 
-- [ ] T018 [US2] Create in-sheet behavior control panel component in `example/src/components/InSheetControls.tsx`
-- [ ] T019 [US2] Move snap/toggle/close controls from parent page into `InSheetControls` in `example/src/App.tsx`
-- [ ] T020 [US2] Keep only global open action and route/state summary on parent surface in `example/src/App.tsx`
-- [ ] T021 [US2] Ensure in-sheet route navigation (`summary/details`) updates parent summary consistently in `example/src/App.tsx`
+- [X] T018 [US2] Create in-sheet behavior control panel component in `example/src/components/InSheetControls.tsx`
+- [X] T019 [US2] Move snap/toggle/close controls from parent page into `InSheetControls` in `example/src/App.tsx`
+- [X] T020 [US2] Keep only global open action and route/state summary on parent surface in `example/src/App.tsx`
+- [X] T021 [US2] Ensure in-sheet route navigation (`summary/details`) updates parent summary consistently in `example/src/App.tsx`
 
 **Checkpoint**: Sheet interaction controls are fully testable from within the open sheet.
 
@@ -85,16 +85,16 @@
 
 ### Tests for User Story 3 (REQUIRED)
 
-- [ ] T022 [P] [US3] Add contract test for theme-state propagation to parent and sheet surfaces in `example/src/__tests__/sheet-theme.contract.test.tsx`
-- [ ] T023 [P] [US3] Extend integration test for theme toggle with active sheet interactions in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
-- [ ] T024 [P] [US3] Add Maestro flow for light/dark behavior validation in `example/maestro/sheet-theme-toggle.yaml`
+- [X] T022 [P] [US3] Add contract test for theme-state propagation to parent and sheet surfaces in `example/src/__tests__/sheet-theme.contract.test.tsx`
+- [X] T023 [P] [US3] Extend integration test for theme toggle with active sheet interactions in `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`
+- [X] T024 [P] [US3] Add Maestro flow for light/dark behavior validation in `example/maestro/sheet-theme-toggle.yaml`
 
 ### Implementation for User Story 3
 
-- [ ] T025 [US3] Add app-level theme mode state (`light|dark`) and toggle control in `example/src/App.tsx`
-- [ ] T026 [US3] Extract theme tokens/styles for parent and sheet content in `example/src/theme.ts`
-- [ ] T027 [US3] Apply theme-aware styles to all status text, controls, and sheet content in `example/src/App.tsx`
-- [ ] T028 [US3] Preserve sheet and route interaction continuity across theme toggles in `example/src/App.tsx`
+- [X] T025 [US3] Add app-level theme mode state (`light|dark`) and toggle control in `example/src/App.tsx`
+- [X] T026 [US3] Extract theme tokens/styles for parent and sheet content in `example/src/theme.ts`
+- [X] T027 [US3] Apply theme-aware styles to all status text, controls, and sheet content in `example/src/App.tsx`
+- [X] T028 [US3] Preserve sheet and route interaction continuity across theme toggles in `example/src/App.tsx`
 
 **Checkpoint**: Global dark-mode behavior is stable and validated with active sheet interactions.
 
@@ -104,11 +104,11 @@
 
 **Purpose**: Final validation, evidence capture, and documentation sync checks.
 
-- [ ] T029 [P] Run full Jest verification for example flow changes and record outcomes in `tasks/todo.md`
-- [ ] T030 [P] Run required Maestro feature flows and record outcomes in `tasks/todo.md`
-- [ ] T031 Validate quickstart steps against implemented behavior in `specs/002-fix-example-sheet/quickstart.md`
-- [ ] T032 Review public API/library behavior impact and update `README.md` only if required
-- [ ] T033 Finalize feature review notes and completion evidence in `tasks/todo.md`
+- [X] T029 [P] Run full Jest verification for example flow changes and record outcomes in `tasks/todo.md`
+- [X] T030 [P] Run required Maestro feature flows and record outcomes in `tasks/todo.md`
+- [X] T031 Validate quickstart steps against implemented behavior in `specs/002-fix-example-sheet/quickstart.md`
+- [X] T032 Review public API/library behavior impact and update `README.md` only if required
+- [X] T033 Finalize feature review notes and completion evidence in `tasks/todo.md`
 
 ---
 

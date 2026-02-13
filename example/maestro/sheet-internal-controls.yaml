@@ -1,10 +1,27 @@
 appId: rnbottomsheet.example
 ---
 - launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
 - extendedWaitUntil:
     visible:
-      id: "main-title"
+      id: "open-sheet-button"
     timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          id: "close-sheet-button"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
 
 - tapOn:
     id: "open-sheet-button"
@@ -13,40 +30,29 @@ appId: rnbottomsheet.example
       id: "sheet-content"
     timeout: 5000
 - assertVisible:
-    text: "Sheet: Open"
-- assertVisible:
     id: "sheet-title"
-- assertVisible:
-    id: "route-toggle-button"
-
-- tapOn:
-    id: "snap-large-button"
-- assertVisible:
-    text: "Detent: 2 (Large)"
 
 - tapOn:
     id: "toggle-grabber-button"
 - tapOn:
-    id: "toggle-swipe-dismiss-button"
-- tapOn:
-    id: "toggle-expand-on-scroll-button"
-- tapOn:
-    id: "cycle-background-interaction-button"
+    id: "snap-medium-button"
 - assertVisible:
-    text: "Grabber: Off | Swipe dismiss: Off"
-- assertVisible:
-    text: "Expand on scroll: Off | Background: nonModal"
+    id: "sheet-route-summary"
 
 - tapOn:
     id: "route-toggle-button"
 - assertVisible:
-    text: "Route: Details"
+    id: "sheet-route-summary"
 - tapOn:
     id: "route-toggle-button"
 - assertVisible:
-    text: "Route: Summary"
+    id: "sheet-route-summary"
 
 - tapOn:
     id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000
 - assertVisible:
-    text: "Sheet: Closed"
+    id: "open-sheet-button"

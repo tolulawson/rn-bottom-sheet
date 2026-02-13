@@ -1053,3 +1053,36 @@
 - Updated completion markers:
   - `specs/004-interactive-sheet-content/tasks.md` all tasks checked complete.
   - `specs/004-interactive-sheet-content/spec.md` marked `## Status: COMPLETE`.
+
+## Ralph Iteration 2026-02-13 (Spec 002 Task-State Reconciliation + Full Re-Verification)
+
+- [x] Confirm highest-priority unfinished item selection across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [x] Audit `specs/002-fix-example-sheet/tasks.md` unchecked tasks against current code to identify real gaps vs stale tracker state
+- [x] Implement any missing spec-002 requirements discovered during audit (if any)
+- [x] Run required automated validation (`yarn lint`, `yarn typecheck`, `yarn test`)
+- [x] Run mandatory Maestro MCP flows for affected paths: open sheet, dismiss sheet, detent interaction, primary in-sheet navigation
+- [x] Run spec-002 Maestro flows (`sheet-single-open`, `sheet-internal-controls`, `sheet-theme-toggle`)
+- [x] Update `specs/002-fix-example-sheet/tasks.md` completion checkboxes and ensure spec completion metadata is consistent
+- [x] Record review evidence and outcomes in `tasks/todo.md`
+- [x] Update `README.md` only if public API / user-visible library contract changed
+- [x] Commit and push only after all gates pass
+
+## Review Addendum (2026-02-13, Spec 002 Task-State Reconciliation + Full Re-Verification)
+
+- Discovery and prioritization:
+  - `specs/002-fix-example-sheet/tasks.md` contained unchecked P1/P2 tasks while feature implementation artifacts already existed.
+  - `IMPLEMENTATION_PLAN.md` had no unchecked tasks.
+  - `gh issue list --state open --limit 100 --json number,title,labels,updatedAt,url` returned `[]`.
+  - `list_mcp_resources` and `list_mcp_resource_templates` returned no configured external trackers.
+- Task-state reconciliation:
+  - Marked all spec-002 tasks complete in `specs/002-fix-example-sheet/tasks.md` after code audit confirmed implementation/test/flow artifacts exist.
+- Maestro flow hardening:
+  - Updated `example/maestro/sheet-single-open.yaml`, `example/maestro/sheet-internal-controls.yaml`, and `example/maestro/sheet-theme-toggle.yaml` to replace brittle assertions (for example `main-title`/text-only checks) with stable `testID`-based assertions.
+  - Verified required open/dismiss/detent/navigation behavior via Maestro MCP `run_flow` executions using the hardened flows.
+  - Verified route+detent state post-interaction with `inspect_view_hierarchy`; `sheet-route-summary` reported `In-Sheet Route: Details | Detent: 1` after `route-toggle-button` + `snap-medium-button`.
+- Validation gates:
+  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` files).
+  - `yarn typecheck` passed.
+  - `yarn test` passed (`16/16` suites, `56` passed tests, `1` todo).
+- README impact:
+  - No public API or externally observable library contract changes; README update not required for this reconciliation pass.

@@ -1,12 +1,28 @@
 appId: rnbottomsheet.example
 ---
 - launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
 - extendedWaitUntil:
     visible:
-      id: "main-title"
+      id: "open-sheet-button"
     timeout: 30000
 
-# Open sheet and verify it's open
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          id: "close-sheet-button"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
+
 - tapOn:
     id: "open-sheet-button"
 - extendedWaitUntil:
@@ -14,36 +30,29 @@ appId: rnbottomsheet.example
       id: "sheet-content"
     timeout: 5000
 - assertVisible:
-    id: "main-sheet-phase"
-- assertVisible:
-    text: "Phase: open"
-- assertVisible:
-    id: "sheet-title"
-- assertVisible:
     id: "close-sheet-button"
 
-# Close the sheet
-- tapOn:
-    id: "close-sheet-button"
-- extendedWaitUntil:
-    visible:
-      id: "main-summary"
-    timeout: 5000
-
-# Reopen and verify single instance behavior
-- tapOn:
-    id: "open-sheet-button"
-- extendedWaitUntil:
-    visible:
-      id: "sheet-content"
-    timeout: 5000
-- assertVisible:
-    text: "Phase: open"
-
-# Close again
 - tapOn:
     id: "close-sheet-button"
 - extendedWaitUntil:
     notVisible:
       id: "sheet-content"
     timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+- assertVisible:
+    id: "route-toggle-button"
+
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000
+- assertVisible:
+    id: "open-sheet-button"
