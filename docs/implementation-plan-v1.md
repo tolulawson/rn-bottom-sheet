@@ -160,10 +160,8 @@ Use this sequence for each implementation slice before changing task state:
   - in-sheet navigation flow works (`Go to Details` -> `Back to Summary`)
   - sheet dismisses cleanly
 - Gate behavior:
-  - if spec `E2E Gate State` is `deferred`, Maestro MCP execution is
-    informational and non-blocking for loop completion
-  - if spec `E2E Gate State` is `required`, Maestro MCP execution is blocking
-    and must pass before completion signal
+  - Maestro MCP execution is mandatory for affected feature flows.
+  - Feature completion is blocked until required Maestro scenarios pass.
 - Failure handling:
   - on Maestro failure in `required` mode, capture failing step context and keep
     the loop open until fixed and re-verified

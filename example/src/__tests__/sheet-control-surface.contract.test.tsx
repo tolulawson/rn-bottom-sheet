@@ -10,6 +10,12 @@ describe('example control-surface contract', () => {
 
     harness.pressButtonByTestId(TEST_IDS.openSheetButton);
 
+    expect(harness.getTextByTestId(TEST_IDS.sheetTitle)).toContain(
+      'Sheet Controls'
+    );
+    expect(harness.getTextByTestId(TEST_IDS.sheetRouteSummary)).toContain(
+      'In-Sheet Route: Summary'
+    );
     expect(harness.hasButtonWithTestId(TEST_IDS.snapLargeButton)).toBe(true);
     expect(harness.hasButtonWithTestId(TEST_IDS.closeSheetButton)).toBe(true);
     expect(harness.hasButtonWithTestId(TEST_IDS.openSheetButton)).toBe(true);

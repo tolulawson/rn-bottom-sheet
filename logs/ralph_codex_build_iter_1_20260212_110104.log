@@ -1,0 +1,2185 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c533a-70ac-7082-b8e6-cad4f5c2b510
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP against the example app for all affected feature flows before completion. At minimum validate:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+Add additional Maestro scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: context7 starting
+mcp: maestro starting
+mcp: codex_apps starting
+mcp: codex_apps ready
+mcp: maestro ready
+mcp: context7 ready
+mcp startup: ready: codex_apps, maestro, context7
+
+thinking
+**Starting constitution review**
+codex
+I’m starting with Phase 0 by reading `.specify/memory/constitution.md`, then I’ll discover the highest-priority incomplete work item from specs/plans/issues before implementing anything.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat .specify/memory/constitution.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+<!--
+Sync Impact Report
+Version change: 2.0.0 -> 2.1.0
+Modified principles:
+- IV. Living Knowledge Base -> IV. Living Knowledge Base (README synchronization now mandatory for API/user-visible behavior changes)
+- V. Deterministic Integration Contracts -> V. Deterministic Integration Contracts (public-surface changes require README updates)
+Added sections:
+- Documentation Synchronization Rules
+Removed sections:
+- None
+Templates/runtime sync status:
+- ✅ .specify/templates/spec-template.md (Maestro E2E coverage now mandatory)
+- ✅ .specify/templates/plan-template.md (Maestro E2E strategy + gate checks)
+- ✅ .specify/templates/tasks-template.md (test tasks mandatory; Maestro + README tasks required)
+- ✅ PROMPT_build.md (completion now requires Maestro MCP pass for affected flows)
+- ✅ PROMPT_plan.md (planning requires Maestro E2E tasks)
+- ✅ scripts/ralph-loop.sh (generated prompt policy aligned)
+- ✅ scripts/ralph-loop-codex.sh (generated prompt policy aligned)
+- ✅ .codex/prompts/speckit.specify.md (spec generation includes mandatory Maestro E2E coverage)
+- ✅ .codex/prompts/speckit.tasks.md (task generation enforces required tests + Maestro + README updates)
+
+thinking
+**Planning spec discovery and task listing**
+codex
+I’ve loaded the constitution and now I’m scanning `specs/`, `IMPLEMENTATION_PLAN.md`, and repo metadata to pick the highest-priority unfinished item before touching code.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && if [ -f IMPLEMENTATION_PLAN.md ]; then echo IMPLEMENTATION_PLAN.md; else echo NO_IMPLEMENTATION_PLAN; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg --files specs' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+IMPLEMENTATION_PLAN.md
+ succeeded in 51ms:
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+ succeeded in 51ms:
+specs/002-fix-example-sheet/spec.md
+specs/002-fix-example-sheet/plan.md
+specs/002-fix-example-sheet/data-model.md
+specs/002-fix-example-sheet/research.md
+specs/002-fix-example-sheet/tasks.md
+specs/002-fix-example-sheet/quickstart.md
+specs/002-fix-example-sheet/contracts/example-sheet-behavior.yaml
+specs/002-fix-example-sheet/checklists/requirements.md
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+
+thinking
+**Inspecting spec and task statuses**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n "''^## Status:|''^Status:" specs/*/spec.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n \"\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]|Priority|priority\" specs/*/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+ succeeded in 52ms:
+
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md:12:### User Story 1 - Present Native Sheet Content (Priority: P1)
+specs/001-native-ios-sheet-bindings/spec.md:16:**Why this priority**: This is the core product value and the minimum viable capability for the package.
+specs/001-native-ios-sheet-bindings/spec.md:28:### User Story 2 - Configure Detents and Sheet Behavior (Priority: P1)
+specs/001-native-ios-sheet-bindings/spec.md:32:**Why this priority**: Detent and behavior configuration is essential to achieve native quality and practical adoption.
+specs/001-native-ios-sheet-bindings/spec.md:44:### User Story 3 - Navigation and Animation Interop (Priority: P2)
+specs/001-native-ios-sheet-bindings/spec.md:48:**Why this priority**: Integration determines production usefulness across real apps, but depends on core sheet behavior being complete first.
+specs/002-fix-example-sheet/spec.md:16:### User Story 1 - Prevent Duplicate Sheet Presentation (Priority: P1)
+specs/002-fix-example-sheet/spec.md:20:**Why this priority**: Duplicate presentation breaks core correctness and undermines confidence in the package.
+specs/002-fix-example-sheet/spec.md:32:### User Story 2 - Make Test Controls Usable While Sheet Is Open (Priority: P1)
+specs/002-fix-example-sheet/spec.md:36:**Why this priority**: The example app must support realistic interaction testing while the sheet is visible.
+specs/002-fix-example-sheet/spec.md:48:### User Story 3 - Validate Global Dark Mode Behavior (Priority: P2)
+specs/002-fix-example-sheet/spec.md:52:**Why this priority**: Theme support is required for realistic application validation and presentation quality.
+
+thinking
+**Checking for missing status and open issues**
+codex
+I found `001` marked complete and no unchecked tasks in `IMPLEMENTATION_PLAN.md`; next I’m checking `002` status and open GitHub issues to resolve the true highest-priority item.
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,220p' specs/002-fix-example-sheet/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Feature Specification: Example Sheet Stability and Testability
+
+**Feature Branch**: `002-fix-example-sheet`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "The example application has several bugs and functional issues that need improvement: duplicate sheet open bug, inaccessible testing functions behind the sheet, and app-wide dark-mode toggle with bottom-sheet verification."
+
+## Clarifications
+
+### Session 2026-02-12
+
+- Q: How should repeated Open actions behave while the sheet is already opening/open? → A: Ignore additional open actions (no-op).
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Prevent Duplicate Sheet Presentation (Priority: P1)
+
+As a developer evaluating the example app, I can open the sheet once per open action so the behavior is stable and trustworthy.
+
+**Why this priority**: Duplicate presentation breaks core correctness and undermines confidence in the package.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && gh issue list --state open --limit 50 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 530ms:
+
+
+thinking
+**Verifying task status before implementation**
+codex
+I identified `specs/002-fix-example-sheet/spec.md` as the highest-priority incomplete item (`Status: Draft`). Next I’m checking whether it may already be implemented and then I’ll create/update `tasks/todo.md` with a concrete execution plan before edits.
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && if [ -f tasks/todo.md ]; then sed -n '1,260p' tasks/todo.md; else echo NO_TASKS_TODO; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/002-fix-example-sheet/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Tasks: Example Sheet Stability and Testability
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/002-fix-example-sheet/`
+**Prerequisites**: plan.md, spec.md, research.md, data-model.md, contracts/example-sheet-behavior.yaml, quickstart.md
+
+**Tests**: Required. Each user story includes Jest and Maestro coverage.
+**Documentation**: README updates are only required if implementation changes public API or user-visible library contracts.
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare shared files and deterministic selectors used by all stories.
+
+- [ ] T001 Create shared example app test ID constants in `example/src/testids.ts`
+- [ ] T002 [P] Add Maestro scenario scaffold directory with feature README in `example/maestro/README.md`
+- [ ] T003 [P] Add feature verification section template in `tasks/todo.md`
+
+---
+
+## Phase 2: Foundational (Blocking Prerequisites)
+
+ succeeded in 51ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [x] Implement presenter/controller architecture
+- [x] Map detent model and lifecycle events
+ succeeded in 52ms:
+ M .claude/commands/speckit.specify.md
+ M .codex/prompts/speckit.plan.md
+ M .codex/prompts/speckit.specify.md
+ M .codex/prompts/speckit.tasks.md
+ M .cursor/commands/speckit.specify.md
+ M .specify/memory/constitution.md
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M .specify/templates/tasks-template.md
+ M AGENTS.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M README.md
+ M docs/implementation-plan-v1.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M tasks/lessons.md
+ M tasks/todo.md
+
+thinking
+**Prioritizing incomplete spec tasks**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la example/src' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,320p' example/src/App.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la example/src/__tests__ && ls -la example/maestro || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+total 16
+drwxr-xr-x@  4 tolu  staff   128 Feb 12 03:06 .
+drwxr-xr-x@ 16 tolu  staff   512 Feb 12 03:54 ..
+-rw-r--r--@  1 tolu  staff  7839 Feb 12 03:48 App.tsx
+drwxr-xr-x@  3 tolu  staff    96 Feb 12 03:06 __tests__
+ succeeded in 51ms:
+import { View, StyleSheet, Text, Button } from 'react-native';
+import { useRef, useState, useCallback, useMemo } from 'react';
+import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
+import type {
+  BottomSheetChangeReason,
+  BottomSheetMethods,
+  BackgroundInteractionMode,
+} from 'rn-bottom-sheet';
+
+type InSheetRoute = 'summary' | 'details';
+
+function resolveAnimatedBottomSheet(): {
+  Component: typeof BottomSheet;
+  isReanimatedWrapperActive: boolean;
+} {
+  try {
+    const reanimated = require('react-native-reanimated') as {
+      createAnimatedComponent?: (
+        component: typeof BottomSheet
+      ) => typeof BottomSheet;
+ succeeded in 51ms:
+total 24
+drwxr-xr-x@ 3 tolu  staff    96 Feb 12 03:06 .
+drwxr-xr-x@ 4 tolu  staff   128 Feb 12 03:06 ..
+-rw-r--r--@ 1 tolu  staff  8482 Feb 12 03:48 sheet-open-dismiss.integration.test.tsx
+ls: example/maestro: No such file or directory
+
+thinking
+**Verifying GitHub issues presence**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && gh auth status || true' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && gh issue list --state open --json number,title,labels,createdAt --limit 100 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 355ms:
+github.com
+  ✓ Logged in to github.com account tolulawson (keyring)
+  - Active account: true
+  - Git operations protocol: ssh
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo'
+ succeeded in 491ms:
+[]
+
+thinking
+**Checking for task tracker configuration**
+tool codex.list_mcp_resources({})
+codex.list_mcp_resources({}) success in 309ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"resources\":[]}"
+    }
+  ],
+  "isError": false
+}
+
+thinking
+**Planning detailed task list**
+codex
+I confirmed no open GitHub issues and no configured external tracker, so `002-fix-example-sheet` remains the top item. I’ll now read its plan/quickstart/contracts and write a fresh checkable execution plan into `tasks/todo.md`, then check in before implementation.
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,320p' specs/002-fix-example-sheet/plan.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/002-fix-example-sheet/quickstart.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' specs/002-fix-example-sheet/contracts/example-sheet-behavior.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Implementation Plan: Example Sheet Stability and Testability
+
+**Branch**: `002-fix-example-sheet` | **Date**: 2026-02-12 | **Spec**: `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/002-fix-example-sheet/spec.md`
+**Input**: Feature specification from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/002-fix-example-sheet/spec.md`
+
+## Summary
+
+Stabilize the example app by enforcing idempotent sheet-open behavior, relocating behavior-test controls into the sheet content, and adding app-wide theme switching validation so core flows can be tested reliably in both light and dark modes. Implementation remains scoped to the example app and its verification artifacts.
+
+## Technical Context
+
+**Language/Version**: TypeScript 5.9 (React 19, React Native 0.81.5)
+**Primary Dependencies**: react-native, rn-bottom-sheet, optional react-native-reanimated wrapper path, expo example runtime
+**Storage**: N/A (in-memory UI state only)
+**Testing**: Jest/react-test-renderer integration tests for example behavior; Maestro E2E scenarios for example app acceptance flows
+**Target Platform**: iOS simulator/device via Expo dev client (primary), non-iOS out of scope for this feature
+**Project Type**: React Native library monorepo with example mobile app
+**Performance Goals**: No duplicate sheet presentation under repeated open actions; open/close/snap/theme interactions remain responsive and deterministic during repeated runs
+**Constraints**: No public library API redesign; preserve existing route/state visibility on main screen; keep one active sheet presentation at a time
+**Scale/Scope**: One example screen (`example/src/App.tsx`) plus related tests and Maestro flows for the three scoped user stories
+ succeeded in 51ms:
+# Quickstart: Example Sheet Stability and Testability
+
+## 1. Prerequisites
+
+1. Install dependencies at repo root: `yarn install`.
+2. Ensure iOS tooling/simulator is available for the example app.
+3. Ensure Maestro CLI (and Maestro MCP when used) is available in your environment.
+
+## 2. Run Fast Local Validation (Jest)
+
+1. Run library tests: `yarn test`.
+2. Run example integration test file if split execution is needed:
+   `yarn test example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+3. Confirm no regressions in open/close, detent, route, and toggle behavior logs/assertions.
+
+## 3. Run Example App
+
+1. Start example app on iOS:
+   `yarn workspace rn-bottom-sheet-example ios`
+2. Verify manually:
+ succeeded in 50ms:
+contract: example-sheet-behavior
+version: 1
+
+scope:
+  surface: example-app
+  feature: fix-example-sheet
+
+states:
+  sheetPhase:
+    type: enum
+    values: [closed, opening, open, dismissing]
+  inSheetRoute:
+    type: enum
+    values: [summary, details]
+  themeMode:
+    type: enum
+    values: [light, dark]
+
+events:
+  - name: open_sheet
+
+thinking
+**Confirming skill usage**
+codex
+I’m switching into the `ralph-wiggum` skill flow now because this request explicitly uses Ralph Build Mode; I’ll follow its loop constraints while executing the feature tasks.
+exec
+/bin/zsh -lc "cat '/Users/tolu/.agents/skills/ralph-wiggum/SKILL.md'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+---
+name: ralph-wiggum
+description: Autonomous AI coding with spec-driven development. Implements Geoffrey Huntley's iterative bash loop methodology where agents work through specs one at a time, outputting a completion signal only when acceptance criteria are 100% met.
+license: MIT
+metadata:
+  author: fstandhartinger
+  version: "1.0"
+  repository: https://github.com/fstandhartinger/ralph-wiggum
+  website: https://ralph-wiggum.ai
+---
+
+# Ralph Wiggum
+
+> Autonomous AI coding with spec-driven development
+
+## What is Ralph Wiggum?
+
+Ralph Wiggum combines **Geoffrey Huntley's iterative bash loop** with **spec-driven development** for fully autonomous AI-assisted software development.
+
+The key insight: **Fresh context each iteration**. Each loop starts a new agent process with a clean context window, preventing context overflow and degradation.
+
+thinking
+**Planning phased implementation and commit strategy**
+codex
+I’ve confirmed this is genuinely incomplete in code (the current example still keeps most controls on the parent screen and has no `example/maestro` flows). I’m now writing a concrete execution checklist into `tasks/todo.md` and then I’ll start implementation against that plan.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && ls -la example && find example -maxdepth 3 -type f | sort' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+Total output lines: 2216
+
+total 64
+drwxr-xr-x@  16 tolu  staff    512 Feb 12 03:54 .
+drwxr-xr-x   47 tolu  staff   1504 Feb 12 10:59 ..
+drwxr-xr-x@   8 tolu  staff    256 Feb 12 10:01 .expo
+-rw-r--r--@   1 tolu  staff     63 Feb 12 00:45 .gitignore
+drwxr-xr-x@   3 tolu  staff     96 Feb 12 03:54 .maestro
+-rw-r--r--@   1 tolu  staff    763 Feb 12 00:45 app.json
+drwxr-xr-x@   6 tolu  staff    192 Feb 12 00:45 assets
+-rw-r--r--@   1 tolu  staff    339 Feb 12 00:45 babel.config.js
+-rw-r--r--@   1 tolu  staff    311 Feb 12 00:45 index.js
+drwxr-xr-x@  13 tolu  staff    416 Feb 12 03:19 ios
+-rw-r--r--@   1 tolu  staff    462 Feb 12 00:45 metro.config.js
+drwxr-xr-x@ 450 tolu  staff  14400 Feb 12 02:26 node_modules
+-rw-r--r--@   1 tolu  staff    554 Feb 12 00:45 package.json
+-rw-r--r--@   1 tolu  staff    372 Feb 12 00:45 react-native.config.js
+drwxr-xr-x@   4 tolu  staff    128 Feb 12 03:06 src
+-rw-r--r--@   1 tolu  staff    108 Feb 12 00:45 tsconfig.json
+example/.expo/README.md
+
+thinking
+**Planning flow reuse**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/.maestro/sheet-core-flows.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: "rn-bottom-sheet Example"
+
+# Open sheet from the example UI.
+- tapOn: "Open Sheet"
+- assertVisible: "Sheet: Open"
+
+# Detent interaction.
+- tapOn: "Snap to Large"
+- assertVisible: "Detent: 2 (Large)"
+
+# Primary in-sheet navigation flow.
+- tapOn: "Go to Details"
+- assertVisible: "In-Sheet Route: Details"
+- tapOn: "Back to Summary"
+- assertVisible: "In-Sheet Route: Summary"
+
+# Dismiss sheet cleanly.
+
+thinking
+**Assessing UI control updates**
+codex
+I found an existing Maestro flow under `example/.maestro/` from the prior feature; this spec expects new flows under `example/maestro/`, so I’ll keep that in mind during implementation and validation. I’m now reviewing current example tests to design the minimal code/test deltas.
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,360p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+jest.mock('react', () => require('../../../node_modules/react'));
+jest.mock('react/jsx-runtime', () =>
+  require('../../../node_modules/react/jsx-runtime')
+);
+jest.mock('react/jsx-dev-runtime', () =>
+  require('../../../node_modules/react/jsx-dev-runtime')
+);
+
+const ReactRuntime = require('react');
+const TestRenderer = require('react-test-renderer');
+
+jest.mock('react-native', () => {
+  const ReactNativeMockRuntime = require('react');
+
+  const View = (props: any) =>
+    ReactNativeMockRuntime.createElement('View', props, props.children);
+  const Text = (props: any) =>
+    ReactNativeMockRuntime.createElement('Text', props, props.children);
+  const Button = (props: any) =>
+    ReactNativeMockRuntime.createElement('Button', {
+
+thinking
+**Assessing test structure and config**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat tsconfig.json' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat jest.config.js' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+ exited 1 in 51ms:
+cat: jest.config.js: No such file or directory
+ succeeded in 51ms:
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "rn-bottom-sheet": ["./src/index"]
+    },
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "customConditions": ["react-native-strict-api"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+
+thinking
+**Planning test integration**
+Plan update
+Executing Ralph loop for highest-priority incomplete spec 002 with mandatory verification and Maestro gate.
+  ✓ Confirm spec 002 is highest-priority incomplete work and verify gaps in current example implementation
+  → Write a checkable implementation plan for this iteration in tasks/todo.md and map it to spec 002 acceptance criteria
+  • Implement example app changes (idempotent open state machine, in-sheet control relocation, global theme toggle, stable test IDs)
+  • Add/update Jest and Maestro coverage for US1/US2/US3 flows
+  • Run lint/typecheck/tests and run Maestro MCP flows for required scenarios
+  • Update spec/task tracking artifacts, commit, and push
+
+thinking
+**Planning incremental task logging**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && tail -n 220 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+    `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` (`** BUILD SUCCEEDED **`).
+- Maestro gate outcome:
+  - `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` remains `deferred`; Maestro MCP is explicitly non-blocking for this loop iteration per spec policy.
+
+## Review Addendum (2026-02-12, Ralph Build Mode Re-Verification Pass 7)
+
+- Discovery verification:
+  - `specs/001-native-ios-sheet-bindings/spec.md` remains marked `## Status: COMPLETE`.
+  - `rg -n "^- \\[ \\]" IMPLEMENTATION_PLAN.md` returned no unchecked tasks.
+  - `gh issue list --state open --limit 50` returned no open issues.
+  - No Jira/Linear tracker configuration was found in project docs/config.
+- Acceptance and edge-case re-verification:
+  - US1 coverage remains in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - US2 coverage remains in `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.methods.test.ts`, and `src/__tests__/bottom-sheet.wrapper.test.ts`.
+  - US3 coverage remains in `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, and `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`.
+  - Non-iOS fallback behavior remains covered by `src/__tests__/bottom-sheet.fallback.test.ts`.
+  - Native one-active-session ownership remains implemented in `ios/RnBottomSheet.swift` via `SingleActiveSheetSessionCoordinator`.
+- Validation gates:
+  - `yarn lint` passed (0 errors; 3 warnings in generated `coverage/lcov-report/*` artifacts).
+  - `yarn typecheck` passed.
+
+thinking
+**Planning appending unchecked tasks**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' >> tasks/todo.md
+
+## Ralph Iteration 2026-02-12 (Spec 002 Example Sheet Stability and Testability)
+
+- [ ] Reconfirm "'`specs/002-fix-example-sheet/spec.md` is the highest-priority incomplete item and verify missing behavior in current `example/src/App.tsx`
+- [ ] Implement shared example selectors/state helpers (`example/src/testids.ts`, `example/src/example-state.ts`) and wire them into `example/src/App.tsx`
+- [ ] Implement US1: idempotent open guard with explicit `sheetPhase` transitions and single-instance status reporting
+- [ ] Implement US2: move behavior controls into in-sheet content while preserving parent open action + route/state summary
+- [ ] Implement US3: global light/dark theme toggle with synchronized parent + sheet styling and continuity across interactions
+- [ ] Add/update Jest coverage for US1/US2/US3 contracts and integration flows in `example/src/__tests__/`
+- [ ] Add Maestro feature flows in `example/maestro/` for single-open, in-sheet controls+route flow, and theme toggling
+- [ ] Run verification gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [ ] Run required Maestro MCP validation against example app/device for open, dismiss, detent, navigation, and theme flows
+- [ ] Update tracking artifacts (`specs/002-fix-example-sheet/tasks.md`, `specs/002-fix-example-sheet/spec.md`, `tasks/todo.md` review), then `git add -A`, `git commit`, and `git push`
+
+## Review Addendum (2026-02-12, Spec 002 Example Sheet Stability and Testability)
+
+- Pending implementation and verification.
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+
+thinking
+**Advancing implementation steps**
+Plan update
+  ✓ Confirm spec 002 is highest-priority incomplete work and verify gaps in current example implementation
+  ✓ Write a checkable implementation plan for this iteration in tasks/todo.md and map it to spec 002 acceptance criteria
+  → Implement example app changes (idempotent open state machine, in-sheet control relocation, global theme toggle, stable test IDs)
+  • Add/update Jest and Maestro coverage for US1/US2/US3 flows
+  • Run lint/typecheck/tests and run Maestro MCP flows for required scenarios
+  • Update spec/task tracking artifacts, commit, and push
+
+thinking
+**Planning state, tests, theme**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat example/tsconfig.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+{
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    // Avoid expo-cli auto-generating a tsconfig
+  }
+}
+
+thinking
+**Planning appId inspection**
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat example/package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+{
+  "name": "rn-bottom-sheet-example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "expo start --dev-client",
+    "android": "expo run:android",
+    "ios": "expo run:ios"
+  },
+  "dependencies": {
+    "expo": "~54.0.33",
+    "expo-status-bar": "~3.0.9",
+    "react": "19.1.0",
+    "react-native": "0.81.5",
+    "react-native-nitro-modules": "^0.33.8"
+  },
+  "private": true,
+  "devDependencies": {
+    "expo-dev-client": "~6.0.20",
+    "react-native-builder-bob": "^0.40.18",
+
+thinking
+**Designing state and testID strategy**
+codex
+Plan is now written in `tasks/todo.md` with checkboxes. I’m starting implementation by adding shared example state/testID/theme modules and refactoring `example/src/App.tsx` plus a new `InSheetControls` component to satisfy US1/US2/US3 behavior.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && mkdir -p example/src/components' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/testids.ts
+export const TEST_IDS = {
+  mainContainer: 'main-container',
+  mainTitle: 'main-title',
+  mainSummary: 'main-summary',
+  mainSheetPhase: 'main-sheet-phase',
+  mainRouteSummary: 'main-route-summary',
+  mainThemeSummary: 'main-theme-summary',
+  openSheetButton: 'open-sheet-button',
+  toggleThemeButton: 'toggle-theme-button',
+  sheetContent: 'sheet-content',
+  sheetTitle: 'sheet-title',
+  sheetRouteSummary: 'sheet-route-summary',
+  routeToggleButton: 'route-toggle-button',
+  closeSheetButton: 'close-sheet-button',
+  snapFitButton: 'snap-fit-button',
+  snapMediumButton: 'snap-medium-button',
+  snapLargeButton: 'snap-large-button',
+  toggleGrabberButton: 'toggle-grabber-button',
+  toggleSwipeDismissButton: 'toggle-swipe-dismiss-button',
+  toggleExpandOnScrollButton: 'toggle-expand-on-scroll-button',
+  cycleBackgroundInteractionButton: 'cycle-background-interaction-button',
+} as const;
+
+export type TestId = (typeof TEST_IDS)[keyof typeof TEST_IDS];
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/example-state.ts
+export type SheetPhase = 'closed' | 'opening' | 'open' | 'dismissing';
+export type InSheetRoute = 'summary' | 'details';
+
+export function isOpenRequestNoOp(phase: SheetPhase): boolean {
+  return phase === 'opening' || phase === 'open';
+}
+
+export function getPhaseForOpenRequest(phase: SheetPhase): SheetPhase {
+  if (isOpenRequestNoOp(phase)) {
+    return phase;
+  }
+
+  return 'opening';
+}
+
+export function getPhaseForCloseRequest(phase: SheetPhase): SheetPhase {
+  if (phase === 'closed') {
+    return 'closed';
+  }
+
+  return 'dismissing';
+}
+
+export function getResetRouteOnClose(
+  nextOpen: boolean,
+  currentRoute: InSheetRoute
+): InSheetRoute {
+  if (nextOpen) {
+    return currentRoute;
+  }
+
+  return 'summary';
+}
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+ succeeded in 51ms:
+
+ succeeded in 51ms:
+
+
+thinking
+**Designing theme and sheet component**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/theme.ts
+export type ThemeMode = 'light' | 'dark';
+
+export type ThemeTokens = {
+  background: string;
+  surface: string;
+  text: string;
+  mutedText: string;
+  border: string;
+};
+
+export const THEME_TOKENS: Record<ThemeMode, ThemeTokens> = {
+  light: {
+    background: '#F6F7FB',
+    surface: '#FFFFFF',
+    text: '#14213D',
+    mutedText: '#56617A',
+    border: '#D9DFEA',
+  },
+  dark: {
+    background: '#0B1220',
+    surface: '#172033',
+    text: '#E5ECF9',
+    mutedText: '#A9B5CC',
+    border: '#2A3954',
+  },
+};
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/components/InSheetControls.tsx
+import { Button, StyleSheet, Text, View } from 'react-native';
+import type { BackgroundInteractionMode } from 'rn-bottom-sheet';
+
+import type { InSheetRoute } from '../example-state';
+import { TEST_IDS } from '../testids';
+import type { ThemeTokens } from '../theme';
+
+type InSheetControlsProps = {
+  allowSwipeToDismiss: boolean;
+  backgroundInteraction: BackgroundInteractionMode;
+  currentDetent: number;
+  expandsWhenScrolledToEdge: boolean;
+  grabberVisible: boolean;
+  onClose: () => void;
+  onCycleBackgroundInteraction: () => void;
+  onSnapToDetent: (index: number) => void;
+  onToggleExpandOnScroll: () => void;
+  onToggleGrabber: () => void;
+  onToggleRoute: () => void;
+  onToggleSwipeDismiss: () => void;
+  route: InSheetRoute;
+  theme: ThemeTokens;
+};
+
+function renderBackgroundInteractionLabel(
+  mode: BackgroundInteractionMode
+): string {
+  if (typeof mode === 'string') {
+    return mode;
+  }
+
+  return "'`upThrough(${mode.upThrough})`;
+}
+
+export function InSheetControls({
+  allowSwipeToDismiss,
+  backgroundInteraction,
+  currentDetent,
+  expandsWhenScrolledToEdge,
+  grabberVisible,
+  onClose,
+  onCycleBackgroundInteraction,
+  onSnapToDetent,
+  onToggleExpandOnScroll,
+  onToggleGrabber,
+  onToggleRoute,
+  onToggleSwipeDismiss,
+  route,
+  theme,
+}: InSheetControlsProps) {
+  return (
+    <View
+      accessibilityLabel={TEST_IDS.sheetContent}
+      style={[
+        styles.content,
+        {
+          backgroundColor: theme.surface,
+          borderColor: theme.border,
+        },
+      ]}
+      testID={TEST_IDS.sheetContent}
+    >
+      <Text
+        accessibilityLabel={TEST_IDS.sheetTitle}
+        style={[styles.title, { color: theme.text }]}
+        testID={TEST_IDS.sheetTitle}
+      >
+        Sheet Controls
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.sheetRouteSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.sheetRouteSummary}
+      >
+        In-Sheet Route: {route === '"'summary' ? 'Summary' : 'Details'} | Detent:{' '}
+        {currentDetent}
+      </Text>
+      <Text style={[styles.status, { color: theme.mutedText }]}>
+        Grabber: {grabberVisible ? 'On' : 'Off'} | Swipe dismiss:{' '}
+        {allowSwipeToDismiss ? 'On' : 'Off'}
+      </Text>
+      <Text style={[styles.status, { color: theme.mutedText }]}>
+        Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+      </Text>
+
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.routeToggleButton}
+        onPress={onToggleRoute}
+        testID={TEST_IDS.routeToggleButton}
+        title={route === 'summary' ? 'Go to Details' : 'Back to Summary'}
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.snapFitButton}
+        onPress={() => onSnapToDetent(0)}
+        testID={TEST_IDS.snapFitButton}
+        title=\"Snap to Fit\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.snapMediumButton}
+        onPress={() => onSnapToDetent(1)}
+        testID={TEST_IDS.snapMediumButton}
+        title=\"Snap to Medium\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.snapLargeButton}
+        onPress={() => onSnapToDetent(2)}
+        testID={TEST_IDS.snapLargeButton}
+        title=\"Snap to Large\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.toggleGrabberButton}
+        onPress={onToggleGrabber}
+        testID={TEST_IDS.toggleGrabberButton}
+        title=\"Toggle Grabber\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.toggleSwipeDismissButton}
+        onPress={onToggleSwipeDismiss}
+        testID={TEST_IDS.toggleSwipeDismissButton}
+        title=\"Toggle Swipe Dismiss\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.toggleExpandOnScrollButton}
+        onPress={onToggleExpandOnScroll}
+        testID={TEST_IDS.toggleExpandOnScrollButton}
+        title=\"Toggle Expand On Scroll\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.cycleBackgroundInteractionButton}
+        onPress={onCycleBackgroundInteraction}
+        testID={TEST_IDS.cycleBackgroundInteractionButton}
+        title=\"Cycle Background Interaction\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.closeSheetButton}
+        onPress={onClose}
+        testID={TEST_IDS.closeSheetButton}
+        title=\"Close Sheet\"
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  content: {
+    alignItems: 'center',
+    borderRadius: 16,
+    borderWidth: 1,
+    padding: 20,
+    width: '100%',
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    marginBottom: 12,
+  },
+  status: {
+    fontSize: 14,
+    marginBottom: 8,
+    textAlign: 'center',
+  },
+  buttonSpacer: {
+    height: 8,
+  },
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+
+thinking
+**Rewriting main component**
+codex
+I’ve added the shared modules and I’m now rewriting `example/src/App.tsx` to enforce the sheet phase/idempotency model, move controls into the sheet component, and apply global theme behavior with stable selectors.
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/App.tsx
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetChangeReason,
+  BottomSheetMethods,
+} from 'rn-bottom-sheet';
+
+import { InSheetControls } from './components/InSheetControls';
+import {
+  getPhaseForCloseRequest,
+  getPhaseForOpenRequest,
+  getResetRouteOnClose,
+  isOpenRequestNoOp,
+  type InSheetRoute,
+  type SheetPhase,
+} from './example-state';
+import { TEST_IDS } from './testids';
+import { THEME_TOKENS, type ThemeMode } from './theme';
+
+const DETENTS = ['fit', 'medium', 'large'] as const;
+const DETENT_LABELS = ['Fit', 'Medium', 'Large'] as const;
+const BACKGROUND_MODES: BackgroundInteractionMode[] = [
+  'modal',
+  'nonModal',
+  { upThrough: 1 },
+];
+
+function resolveAnimatedBottomSheet(): {
+  Component: typeof BottomSheet;
+  isReanimatedWrapperActive: boolean;
+} {
+  try {
+    const reanimated = require('react-native-reanimated') as {
+      createAnimatedComponent?: (
+        component: typeof BottomSheet
+      ) => typeof BottomSheet;
+    };
+
+    if (typeof reanimated.createAnimatedComponent === 'function') {
+      return {
+        Component: reanimated.createAnimatedComponent(
+          BottomSheet
+        ) as typeof BottomSheet,
+        isReanimatedWrapperActive: true,
+      };
+    }
+  } catch {
+    // Optional dependency: fallback to the standard BottomSheet component.
+  }
+
+  return {
+    Component: BottomSheet,
+    isReanimatedWrapperActive: false,
+  };
+}
+
+function renderBackgroundInteractionLabel(
+  mode: BackgroundInteractionMode
+): string {
+  if (typeof mode === 'string') {
+    return mode;
+  }
+
+  return "'`upThrough(${mode.upThrough})`;
+}
+
+/**
+ * Example app demonstrating controlled BottomSheet usage.
+ */
+export default function App() {
+  const sheetRef = useRef<BottomSheetMethods>(null);
+  const [routeSheetOpen, setRouteSheetOpen] = useState(false);
+  const [sheetPhase, setSheetPhase] = useState<SheetPhase>('"'closed');
+  const [currentDetent, setCurrentDetent] = useState(1);
+  const [selectedDetent, setSelectedDetent] = useState(1);
+  const [inSheetRoute, setInSheetRoute] = useState<InSheetRoute>('summary');
+  const [grabberVisible, setGrabberVisible] = useState(true);
+  const [allowSwipeToDismiss, setAllowSwipeToDismiss] = useState(true);
+  const [expandsWhenScrolledToEdge, setExpandsWhenScrolledToEdge] =
+    useState(true);
+  const [backgroundModeIndex, setBackgroundModeIndex] = useState(0);
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+  const { Component: AnimatedSheetComponent, isReanimatedWrapperActive } =
+    useMemo(resolveAnimatedBottomSheet, []);
+
+  const theme = THEME_TOKENS[themeMode];
+  const backgroundInteraction = BACKGROUND_MODES[backgroundModeIndex] ?? 'modal';
+
+  const handleOpenChange = useCallback(
+    (open: boolean, reason: BottomSheetChangeReason) => {
+      console.log("'`Sheet open changed: ${open}, reason: ${reason}`);
+
+      if (!open) {
+        setInSheetRoute((currentRoute) =>
+          getResetRouteOnClose(false, currentRoute)
+        );
+      }
+    },
+    []
+  );
+
+  const handleDetentChange = useCallback(
+    (index: number, reason: BottomSheetChangeReason) => {
+      console.log(`Detent changed: ${index}, reason: ${reason}`);
+      setCurrentDetent(index);
+      setSelectedDetent(index);
+    },
+    []
+  );
+
+  const requestOpenSheet = useCallback(() => {
+    if (isOpenRequestNoOp(sheetPhase)) {
+      return;
+    }
+
+    setSheetPhase(getPhaseForOpenRequest(sheetPhase));
+    setRouteSheetOpen(true);
+  }, [sheetPhase]);
+
+  const requestCloseSheet = useCallback(() => {
+    setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
+    setRouteSheetOpen(false);
+    setInSheetRoute((currentRoute) => getResetRouteOnClose(false, currentRoute));
+  }, []);
+
+  const handleToggleTheme = useCallback(() => {
+    setThemeMode((currentMode) => (currentMode === '"'light' ? 'dark' : 'light'));
+  }, []);
+
+  const handleToggleRoute = useCallback(() => {
+    setInSheetRoute((currentRoute) =>
+      currentRoute === 'summary' ? 'details' : 'summary'
+    );
+  }, []);
+
+  const handleSnapToDetent = useCallback((index: number) => {
+    setSelectedDetent(index);
+    sheetRef.current?.snapToDetent(index);
+  }, []);
+
+  const navigationSheet = useBottomSheetNavigation({
+    routeIsOpen: routeSheetOpen,
+    onRouteOpen(reason) {
+      console.log("'`Route requested open, reason: ${reason}`);
+      setRouteSheetOpen(true);
+      setSheetPhase((currentPhase) => getPhaseForOpenRequest(currentPhase));
+    },
+    onRouteClose(reason) {
+      console.log(`Route requested close, reason: ${reason}`);
+      setRouteSheetOpen(false);
+      setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
+      setInSheetRoute((currentRoute) =>
+        getResetRouteOnClose(false, currentRoute)
+      );
+    },
+    onOpenChange: handleOpenChange,
+  });
+
+  const cycleBackgroundInteraction = useCallback(() => {
+    setBackgroundModeIndex(
+      (currentIndex) => (currentIndex + 1) % BACKGROUND_MODES.length
+    );
+  }, []);
+
+  return (
+    <View
+      accessibilityLabel={TEST_IDS.mainContainer}
+      style={[styles.container, { backgroundColor: theme.background }]}
+      testID={TEST_IDS.mainContainer}
+    >
+      <Text
+        accessibilityLabel={TEST_IDS.mainTitle}
+        style={[styles.title, { color: theme.text }]}
+        testID={TEST_IDS.mainTitle}
+      >
+        rn-bottom-sheet Example
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.mainSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainSummary}
+      >
+        Sheet: {navigationSheet.isOpen ? '"'Open' : 'Closed'} | Detent:{' '}
+        {currentDetent} ({DETENT_LABELS[currentDetent] ?? 'Unknown'})
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.mainSheetPhase}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainSheetPhase}
+      >
+        Phase: {sheetPhase}
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.mainRouteSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainRouteSummary}
+      >
+        Route: {inSheetRoute === 'summary' ? 'Summary' : 'Details'} |
+        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.mainThemeSummary}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.mainThemeSummary}
+      >
+        Theme: {themeMode} | Animation wrapper:{' '}
+        {isReanimatedWrapperActive ? 'Reanimated' : 'Fallback'}
+      </Text>
+      <Button
+        accessibilityLabel={TEST_IDS.openSheetButton}
+        onPress={requestOpenSheet}
+        testID={TEST_IDS.openSheetButton}
+        title=\"Open Sheet\"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.toggleThemeButton}
+        onPress={handleToggleTheme}
+        testID={TEST_IDS.toggleThemeButton}
+        title={themeMode === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
+      />
+
+      <AnimatedSheetComponent
+        allowSwipeToDismiss={allowSwipeToDismiss}
+        backgroundInteraction={backgroundInteraction}
+        cornerRadius={-1}
+        detents={[...DETENTS]}
+        expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+        grabberVisible={grabberVisible}
+        initialDetent={1}
+        isOpen={navigationSheet.isOpen}
+        onDetentChange={handleDetentChange}
+        onDidDismiss={() => {
+          console.log('Did dismiss');
+          setSheetPhase('closed');
+          setInSheetRoute((currentRoute) =>
+            getResetRouteOnClose(false, currentRoute)
+          );
+        }}
+        onDidPresent={() => {
+          console.log('Did present');
+          setSheetPhase('open');
+        }}
+        onOpenChange={navigationSheet.onOpenChange}
+        onWillDismiss={() => {
+          console.log('Will dismiss');
+          setSheetPhase('dismissing');
+        }}
+        onWillPresent={() => {
+          console.log('Will present');
+          setSheetPhase('opening');
+        }}
+        ref={sheetRef}
+        selectedDetent={selectedDetent}
+      >
+        <InSheetControls
+          allowSwipeToDismiss={allowSwipeToDismiss}
+          backgroundInteraction={backgroundInteraction}
+          currentDetent={currentDetent}
+          expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+          grabberVisible={grabberVisible}
+          onClose={requestCloseSheet}
+          onCycleBackgroundInteraction={cycleBackgroundInteraction}
+          onSnapToDetent={handleSnapToDetent}
+          onToggleExpandOnScroll={() =>
+            setExpandsWhenScrolledToEdge((expand) => "'!expand)
+          }
+          onToggleGrabber={() => setGrabberVisible((visible) => !visible)}
+          onToggleRoute={handleToggleRoute}
+          onToggleSwipeDismiss={() =>
+            setAllowSwipeToDismiss((allowed) => !allowed)
+          }
+          route={inSheetRoute}
+          theme={theme}
+        />
+      </AnimatedSheetComponent>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: '"'center',
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  status: {
+    fontSize: 16,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  buttonSpacer: {
+    height: 8,
+  },
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+
+thinking
+**Designing comprehensive test harness**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/__tests__/app-harness.ts
+jest.mock('react', () => require('../../../node_modules/react'));
+jest.mock('react/jsx-runtime', () =>
+  require('../../../node_modules/react/jsx-runtime')
+);
+jest.mock('react/jsx-dev-runtime', () =>
+  require('../../../node_modules/react/jsx-dev-runtime')
+);
+
+const ReactRuntime = require('react');
+const TestRenderer = require('react-test-renderer');
+
+jest.mock('react-native', () => {
+  const ReactNativeMockRuntime = require('react');
+
+  const View = (props: any) =>
+    ReactNativeMockRuntime.createElement('View', props, props.children);
+  const Text = (props: any) =>
+    ReactNativeMockRuntime.createElement('Text', props, props.children);
+  const Button = (props: any) =>
+    ReactNativeMockRuntime.createElement('Button', {
+      accessibilityLabel: props.accessibilityLabel,
+      onPress: props.onPress,
+      testID: props.testID,
+      title: props.title,
+    });
+
+  return {
+    Button,
+    StyleSheet: {
+      create: (styles: unknown) => styles,
+    },
+    Text,
+    View,
+  };
+});
+
+jest.mock(
+  'rn-bottom-sheet',
+  () => {
+    const ReactBottomSheetMockRuntime = require('react');
+    const { View } = require('react-native');
+
+    const BottomSheet = ReactBottomSheetMockRuntime.forwardRef(
+      function BottomSheet(props: any, ref: any) {
+        const {
+          isOpen,
+          onDidDismiss,
+          onDidPresent,
+          onDetentChange,
+          onOpenChange,
+          onWillDismiss,
+          onWillPresent,
+          selectedDetent,
+          children,
+        } = props;
+        const previousOpenState = ReactBottomSheetMockRuntime.useRef(
+          null as boolean | null
+        );
+        const previousSelectedDetent =
+          ReactBottomSheetMockRuntime.useRef(selectedDetent);
+        const currentDetentIndex = ReactBottomSheetMockRuntime.useRef(
+          selectedDetent ?? 0
+        );
+
+        ReactBottomSheetMockRuntime.useImperativeHandle(
+          ref,
+          () => ({
+            dismiss() {
+              onOpenChange?.(false, 'programmatic');
+            },
+            getCurrentDetentIndex() {
+              return currentDetentIndex.current;
+            },
+            present() {
+              onOpenChange?.(true, 'programmatic');
+            },
+            snapToDetent(index: number) {
+              currentDetentIndex.current = index;
+              onDetentChange?.(index, 'programmatic');
+            },
+          }),
+          [onDetentChange, onOpenChange]
+        );
+
+        ReactBottomSheetMockRuntime.useEffect(() => {
+          if (previousOpenState.current === null) {
+            previousOpenState.current = isOpen;
+            return;
+          }
+
+          if (previousOpenState.current === isOpen) {
+            return;
+          }
+
+          if (isOpen) {
+            onWillPresent?.();
+            onDidPresent?.();
+            onOpenChange?.(true, 'programmatic');
+          } else {
+            onWillDismiss?.();
+            onDidDismiss?.();
+            onOpenChange?.(false, 'programmatic');
+          }
+
+          previousOpenState.current = isOpen;
+        }, [
+          isOpen,
+          onDidDismiss,
+          onDidPresent,
+          onOpenChange,
+          onWillDismiss,
+          onWillPresent,
+        ]);
+
+        ReactBottomSheetMockRuntime.useEffect(() => {
+          if (previousSelectedDetent.current === selectedDetent) {
+            return;
+          }
+
+          if (typeof selectedDetent === 'number') {
+            currentDetentIndex.current = selectedDetent;
+            onDetentChange?.(selectedDetent, 'programmatic');
+          }
+
+          previousSelectedDetent.current = selectedDetent;
+        }, [onDetentChange, selectedDetent]);
+
+        if ("'!isOpen) {
+          return null;
+        }
+
+        return ReactBottomSheetMockRuntime.createElement(
+          View,
+          { testID: '"'mock-bottom-sheet' },
+          children
+        );
+      }
+    );
+    BottomSheet.displayName = 'BottomSheetMock';
+
+    const useBottomSheetNavigation = (options: any) => ({
+      isOpen: options.routeIsOpen,
+      onOpenChange(nextOpen: boolean, reason: string) {
+        options.onOpenChange?.(nextOpen, reason);
+
+        if (nextOpen === options.routeIsOpen) {
+          return;
+        }
+
+        if (nextOpen) {
+          options.onRouteOpen?.(reason);
+          return;
+        }
+
+        options.onRouteClose?.(reason);
+      },
+    });
+
+    return {
+      BottomSheet,
+      useBottomSheetNavigation,
+    };
+  },
+  { virtual: true }
+);
+
+const { Button, Text } = require('react-native');
+const App = require('../App').default;
+
+function flattenTextContent(value: unknown): string {
+  if (Array.isArray(value)) {
+    return value.map((item) => flattenTextContent(item)).join('');
+  }
+
+  if (value === null || value === undefined || typeof value === 'boolean') {
+    return '';
+  }
+
+  return String(value);
+}
+
+function flattenStyle(style: unknown): Record<string, unknown> {
+  if ("'!style) {
+    return {};
+  }
+
+  if (!Array.isArray(style)) {
+    return style as Record<string, unknown>;
+  }
+
+  return style.reduce<Record<string, unknown>>((resolved, currentStyle) => {
+    if (!currentStyle) {
+      return resolved;
+    }
+
+    return {
+      ...resolved,
+      ...(currentStyle as Record<string, unknown>),
+    };
+  }, {});
+}
+
+export function createAppHarness() {
+  let renderer: any;
+
+  TestRenderer.act(() => {
+    renderer = TestRenderer.create(ReactRuntime.createElement(App));
+  });
+
+  const getButtonByTitle = (title: string) => {
+    const button = renderer.root
+      .findAllByType(Button)
+      .find((node: any) => node.props.title === title);
+
+    if (!button) {
+      throw new Error(`Expected button titled '"\\\""'${title}'"\\\" to exist"'`);
+    }
+
+    return button;
+  };
+
+  const getButtonByTestId = (testID: string) => {
+    const button = renderer.root
+      .findAllByType(Button)
+      .find((node: any) => node.props.testID === testID);
+
+    if (!button) {
+      throw new Error(`Expected button with testID '"\\\""'${testID}'"\\\" to exist"'`);
+    }
+
+    return button;
+  };
+
+  const pressButtonByTitle = (title: string) => {
+    TestRenderer.act(() => {
+      getButtonByTitle(title).props.onPress();
+    });
+  };
+
+  const pressButtonByTestId = (testID: string) => {
+    TestRenderer.act(() => {
+      getButtonByTestId(testID).props.onPress();
+    });
+  };
+
+  const getTextByTestId = (testID: string) => {
+    const textNode = renderer.root
+      .findAllByType(Text)
+      .find((node: any) => node.props.testID === testID);
+
+    if (!textNode) {
+      throw new Error(`Expected text with testID '"\\\""'${testID}'"\\\" to exist"'`);
+    }
+
+    return flattenTextContent(textNode.props.children);
+  };
+
+  const hasButtonWithTestId = (testID: string) =>
+    renderer.root
+      .findAllByType(Button)
+      .some((node: any) => node.props.testID === testID);
+
+  const getViewStyleByTestId = (testID: string) => {
+    const node = renderer.root
+      .findAll((candidate: any) => candidate.props.testID === testID)
+      .at(0);
+
+    if (!node) {
+      throw new Error(`Expected view with testID '"\\\""'${testID}'"\\\" to exist"'`);
+    }
+
+    return flattenStyle(node.props.style);
+  };
+
+  const getAllTextContent = () =>
+    renderer.root
+      .findAllByType(Text)
+      .map((node: any) => flattenTextContent(node.props.children));
+
+  const getButtonTitles = () =>
+    renderer.root.findAllByType(Button).map((node: any) => node.props.title);
+
+  return {
+    getAllTextContent,
+    getButtonByTestId,
+    getButtonTitles,
+    getTextByTestId,
+    getViewStyleByTestId,
+    hasButtonWithTestId,
+    pressButtonByTestId,
+    pressButtonByTitle,
+    unmount() {
+      renderer.unmount();
+    },
+  };
+}
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/__tests__/sheet-control-surface.contract.test.tsx
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example control-surface contract', () => {
+  it('exposes behavior controls inside the sheet and keeps parent summaries synced', () => {
+    const harness = createAppHarness();
+
+    expect(harness.hasButtonWithTestId(TEST_IDS.snapLargeButton)).toBe(false);
+    expect(harness.hasButtonWithTestId(TEST_IDS.closeSheetButton)).toBe(false);
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+
+    expect(harness.hasButtonWithTestId(TEST_IDS.snapLargeButton)).toBe(true);
+    expect(harness.hasButtonWithTestId(TEST_IDS.closeSheetButton)).toBe(true);
+    expect(harness.hasButtonWithTestId(TEST_IDS.openSheetButton)).toBe(true);
+
+    harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Details'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.closeSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Closed'
+    );
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.unmount();
+  });
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/__tests__/sheet-single-open.contract.test.tsx
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example single-open contract', () => {
+  it('keeps one open transition while open/opening and supports reopen after close', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      // Silence expected callback logging in test assertions.
+    });
+    const harness = createAppHarness();
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Open');
+    expect(harness.getTextByTestId(TEST_IDS.mainSheetPhase)).toContain('Phase: open');
+
+    const willPresentCountAfterDuplicateOpen = consoleLogSpy.mock.calls.filter(
+      (call) => call[0] === 'Will present'
+    ).length;
+    expect(willPresentCountAfterDuplicateOpen).toBe(1);
+
+    harness.pressButtonByTestId(TEST_IDS.closeSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Closed'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Open');
+
+    const totalWillPresentCount = consoleLogSpy.mock.calls.filter(
+      (call) => call[0] === 'Will present'
+    ).length;
+    expect(totalWillPresentCount).toBe(2);
+
+    harness.unmount();
+    consoleLogSpy.mockRestore();
+  });
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/__tests__/sheet-theme.contract.test.tsx
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+import { THEME_TOKENS } from '../theme';
+
+describe('example theme contract', () => {
+  it('propagates theme mode across parent and sheet content while interactions continue', () => {
+    const harness = createAppHarness();
+
+    expect(harness.getTextByTestId(TEST_IDS.mainThemeSummary)).toContain(
+      'Theme: light'
+    );
+
+    const lightMainStyle = harness.getViewStyleByTestId(TEST_IDS.mainContainer);
+    expect(lightMainStyle.backgroundColor).toBe(THEME_TOKENS.light.background);
+
+    harness.pressButtonByTestId(TEST_IDS.toggleThemeButton);
+
+    expect(harness.getTextByTestId(TEST_IDS.mainThemeSummary)).toContain(
+      'Theme: dark'
+    );
+
+    const darkMainStyle = harness.getViewStyleByTestId(TEST_IDS.mainContainer);
+    expect(darkMainStyle.backgroundColor).toBe(THEME_TOKENS.dark.background);
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    const darkSheetStyle = harness.getViewStyleByTestId(TEST_IDS.sheetContent);
+    expect(darkSheetStyle.backgroundColor).toBe(THEME_TOKENS.dark.surface);
+
+    harness.pressButtonByTestId(TEST_IDS.toggleThemeButton);
+
+    expect(harness.getTextByTestId(TEST_IDS.mainThemeSummary)).toContain(
+      'Theme: light'
+    );
+
+    const lightSheetStyle = harness.getViewStyleByTestId(TEST_IDS.sheetContent);
+    expect(lightSheetStyle.backgroundColor).toBe(THEME_TOKENS.light.surface);
+
+    harness.pressButtonByTestId(TEST_IDS.closeSheetButton);
+    harness.unmount();
+  });
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+ succeeded in 52ms:
+
+ succeeded in 52ms:
+
+ succeeded in 51ms:
+
+
+thinking
+**Planning new integration test**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example iOS open/dismiss integration flow', () => {
+  it('opens, uses in-sheet controls, updates route/theme summaries, and dismisses cleanly', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      // Silence expected callback logging in test assertions.
+    });
+    const harness = createAppHarness();
+
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Closed');
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Open');
+
+    harness.pressButtonByTestId(TEST_IDS.snapLargeButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Detent: 2 (Large)'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.toggleGrabberButton);
+    harness.pressButtonByTestId(TEST_IDS.toggleSwipeDismissButton);
+    harness.pressButtonByTestId(TEST_IDS.toggleExpandOnScrollButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleBackgroundInteractionButton);
+
+    const allStatusLines = harness.getAllTextContent();
+    expect(allStatusLines).toEqual(
+      expect.arrayContaining([
+        expect.stringContaining('Grabber: Off | Swipe dismiss: Off'),
+        expect.stringContaining('Expand on scroll: Off |Background: nonModal'),
+      ])
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Details'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.toggleThemeButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainThemeSummary)).toContain(
+      'Theme: dark'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.closeSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+      'Sheet: Closed'
+    );
+
+    const loggedMessages = consoleLogSpy.mock.calls.map((call) => call[0]);
+    expect(loggedMessages).toEqual(
+      expect.arrayContaining([
+        'Will present',
+        'Did present',
+        'Sheet open changed: true, reason: programmatic',
+        'Detent changed: 2, reason: programmatic',
+        'Will dismiss',
+        'Did dismiss',
+        'Sheet open changed: false, reason: programmatic',
+      ])
+    );
+
+    harness.unmount();
+    consoleLogSpy.mockRestore();
+  });
+});
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+
+thinking
+**Designing Maestro flow examples**
+codex
+Core code and Jest test scaffolding are in place. I’m now adding the required Maestro flow files under `example/maestro/` so we can run the mandatory MCP E2E gate for this spec.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && mkdir -p example/maestro' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/maestro/README.md
+# Spec 002 Maestro Flows
+
+This directory contains required Maestro acceptance flows for "'`specs/002-fix-example-sheet`.
+
+## Required flows
+
+- `sheet-single-open.yaml`: verifies duplicate-open prevention and clean reopen cycle.
+- `sheet-internal-controls.yaml`: verifies in-sheet detent/toggle controls and route transitions.
+- `sheet-theme-toggle.yaml`: verifies global theme switching while sheet interactions remain functional.
+
+Run all flows:
+
+```bash
+maestro test example/maestro
+```
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/maestro/sheet-single-open.yaml
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: \"rn-bottom-sheet Example\"
+
+- tapOn: \"Open Sheet\"
+- tapOn: \"Open Sheet\"
+- tapOn: \"Open Sheet\"
+- assertVisible: \"Sheet: Open\"
+- assertVisible: \"Phase: open\"
+
+- tapOn: \"Close Sheet\"
+- assertVisible: \"Sheet: Closed\"
+
+- tapOn: \"Open Sheet\"
+- assertVisible: \"Sheet: Open\"
+- tapOn: \"Close Sheet\"
+- assertVisible: \"Sheet: Closed\"
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/maestro/sheet-internal-controls.yaml
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: \"rn-bottom-sheet Example\"
+
+- tapOn: \"Open Sheet\"
+- assertVisible: \"Sheet: Open\"
+
+- tapOn: \"Snap to Large\"
+- assertVisible: \"Detent: 2 (Large)\"
+
+- tapOn: \"Toggle Grabber\"
+- tapOn: \"Toggle Swipe Dismiss\"
+- tapOn: \"Toggle Expand On Scroll\"
+- tapOn: \"Cycle Background Interaction\"
+- assertVisible: \"Grabber: Off | Swipe dismiss: Off\"
+- assertVisible: \"Expand on scroll: Off |Background: nonModal\"
+
+- tapOn: \"Go to Details\"
+- assertVisible: \"Route: Details\"
+- tapOn: \"Back to Summary\"
+- assertVisible: \"Route: Summary\"
+
+- tapOn: \"Close Sheet\"
+- assertVisible: \"Sheet: Closed\"
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 52ms:
+zsh:1: no such file or directory: example/maestro/README.md
+ succeeded in 51ms:
+
+ succeeded in 50ms:
+
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && cat <<'EOF' > example/maestro/sheet-theme-toggle.yaml
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: \"rn-bottom-sheet Example\"
+- assertVisible: \"Theme: light\"
+
+- tapOn: \"Enable Dark Mode\"
+- assertVisible: \"Theme: dark\"
+
+- tapOn: \"Open Sheet\"
+- assertVisible: \"Sheet: Open\"
+- tapOn: \"Go to Details\"
+- assertVisible: \"Route: Details\"
+- tapOn: \"Close Sheet\"
+- assertVisible: \"Sheet: Closed\"
+
+- tapOn: \"Enable Light Mode\"
+- assertVisible: \"Theme: light\"
+EOF" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+ succeeded in 51ms:
+
+
+thinking
+**Ensuring directory before README creation**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && mkdir -p example/maestro && cat <<'EOF' > example/maestro/README.md
+# Spec 002 Maestro Flows
+
+This directory contains required Maestro acceptance flows for "'`specs/002-fix-example-sheet`.
+
+## Required flows
+
+- `sheet-single-open.yaml`: verifies duplicate-open prevention and clean reopen cycle.
+- `sheet-internal-controls.yaml`: verifies in-sheet detent/toggle controls and route transitions.
+- `sheet-theme-toggle.yaml`: verifies global theme switching while sheet interactions remain functional.
+
+Run all flows:
+
+```bash
+maestro test example/maestro
+```
+EOF' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+
+thinking
+**Fixing string spacing in UI text**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/example/src/components/InSheetControls.tsx
+@@ -83,3 +83,3 @@
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+apply_patch(auto_approved=true) exited 0 in 22ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/example/src/components/InSheetControls.tsx
+file update:
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+file update:
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+
+thinking
+**Updating test and maestro formatting**
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,260p' example/maestro/sheet-internal-controls.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && sed -n '1,240p' example/src/__tests__/sheet-open-dismiss.integration.test.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && rg -n \"\\|Background\" example/src/__tests__ example/maestro && true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+appId: rnbottomsheet.example
+---
+- launchApp
+- assertVisible: "rn-bottom-sheet Example"
+
+- tapOn: "Open Sheet"
+- assertVisible: "Sheet: Open"
+
+- tapOn: "Snap to Large"
+- assertVisible: "Detent: 2 (Large)"
+
+- tapOn: "Toggle Grabber"
+- tapOn: "Toggle Swipe Dismiss"
+- tapOn: "Toggle Expand On Scroll"
+- tapOn: "Cycle Background Interaction"
+- assertVisible: "Grabber: Off | Swipe dismiss: Off"
+- assertVisible: "Expand on scroll: Off |Background: nonModal"
+
+- tapOn: "Go to Details"
+- assertVisible: "Route: Details"
+ succeeded in 52ms:
+import { createAppHarness } from './app-harness';
+import { TEST_IDS } from '../testids';
+
+describe('example iOS open/dismiss integration flow', () => {
+  it('opens, uses in-sheet controls, updates route/theme summaries, and dismisses cleanly', () => {
+    const consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {
+      // Silence expected callback logging in test assertions.
+    });
+    const harness = createAppHarness();
+
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Closed');
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.openSheetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain('Sheet: Open');
+
+    harness.pressButtonByTestId(TEST_IDS.snapLargeButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
+ succeeded in 52ms:
+example/maestro/sheet-internal-controls.yaml:17:- assertVisible: "Expand on scroll: Off |Background: nonModal"
+example/src/__tests__/sheet-open-dismiss.integration.test.tsx:33:        expect.stringContaining('Expand on scroll: Off |Background: nonModal'),
+file update:
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+exec
+/bin/zsh -lc "cd /Users/tolu/Desktop/dev/rn-bottom-sheet && perl -0pi -e 's/\\|Background/\\| Background/g' example/src/__tests__/sheet-open-dismiss.integration.test.tsx example/maestro/sheet-internal-controls.yaml" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+file update:
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+
+thinking
+**Planning targeted test runs**
+codex
+I’ve finished the main code/test/maestro scaffolding and I’m running the example Jest suites now to catch implementation issues before full lint/type/test/maestro validation.
+exec
+/bin/zsh -lc 'cd /Users/tolu/Desktop/dev/rn-bottom-sheet && yarn test example/src/__tests__/sheet-single-open.contract.test.tsx example/src/__tests__/sheet-control-surface.contract.test.tsx example/src/__tests__/sheet-theme.contract.test.tsx example/src/__tests__/sheet-open-dismiss.integration.test.tsx' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.81s:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS example/src/__tests__/sheet-theme.contract.test.tsx
+  ● Console
+
+    console.log
+      Will present
+
+      at log (example/src/App.tsx:252:19)
+
+    console.log
+      Did present
+
+      at log (example/src/App.tsx:243:19)
+
+    console.log
+file update:
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+
+thinking
+**Fixing unmount warnings**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/example/src/__tests__/app-harness.ts
+@@ -292,3 +292,5 @@
+     unmount() {
+-      renderer.unmount();
++      TestRenderer.act(() => {
++        renderer.unmount();
++      });
+     },
+apply_patch(auto_approved=true) exited 0 in 33ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/example/src/__tests__/app-harness.ts
+file update:
+diff --git a/example/src/__tests__/app-harness.ts b/example/src/__tests__/app-harness.ts
+index 04c718ac4b9ed50848f80432221f27bdde618ff9..9c3f8a30dde1cd622a10e5e814340c99c196c84b
+--- a/example/src/__tests__/app-harness.ts
++++ b/example/src/__tests__/app-harness.ts
+@@ -290,7 +290,9 @@
+     pressButtonByTestId,
+     pressButtonByTitle,
+     unmount() {
+-      renderer.unmount();
++      TestRenderer.act(() => {
++        renderer.unmount();
++      });
+     },
+   };
+ }
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+file update:
+diff --git a/example/src/__tests__/app-harness.ts b/example/src/__tests__/app-harness.ts
+index 04c718ac4b9ed50848f80432221f27bdde618ff9..9c3f8a30dde1cd622a10e5e814340c99c196c84b
+--- a/example/src/__tests__/app-harness.ts
++++ b/example/src/__tests__/app-harness.ts
+@@ -290,7 +290,9 @@
+     pressButtonByTestId,
+     pressButtonByTitle,
+     unmount() {
+-      renderer.unmount();
++      TestRenderer.act(() => {
++        renderer.unmount();
++      });
+     },
+   };
+ }
+diff --git a/example/src/components/InSheetControls.tsx b/example/src/components/InSheetControls.tsx
+index 0a51fd0f94d2a7e7eb4d31af3acbd5c3b91b1dc7..1a4c6ad75af4699c83e9894996a62d572af95014
+--- a/example/src/components/InSheetControls.tsx
++++ b/example/src/components/InSheetControls.tsx
+@@ -81,7 +81,7 @@
+       </Text>
+       <Text style={[styles.status, { color: theme.mutedText }]}>
+         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |
+-        Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
++        {' '}Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
+       </Text>
+ 
+       <View style={styles.buttonSpacer} />
+
+2026-02-12T19:08:08.203212Z ERROR codex_api::endpoint::responses: error=http 429 Too Many Requests: Some("{\"error\":{\"type\":\"usage_limit_reached\",\"message\":\"The usage limit has been reached\",\"plan_type\":\"plus\",\"resets_at\":1770930575,\"eligible_promo\":null,\"resets_in_seconds\":7287}}")
+ERROR: You've hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/codex/settings/usage to purchase more credits or try again at 1:09 PM.
+Warning: no last agent message; wrote empty content to /Users/tolu/desktop/dev/rn-bottom-sheet/logs/ralph_codex_output_iter_1_20260212_110104.txt
+tokens used
+163,830

@@ -1,0 +1,521 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c51bf-950d-7ce1-ad47-c434488ed7f3
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Conditional Maestro MCP E2E Gate (Example App)
+
+Identify the active feature spec and check its E2E gate marker:
+- Look for `E2E Gate State: deferred|required` in `specs/<feature>/spec.md`.
+- Default to `deferred` if the marker is missing.
+
+Gate behavior:
+- If `deferred`: do NOT block this loop iteration. Log that Maestro MCP was skipped and why.
+- If `required`: Maestro MCP is a hard gate for completion.
+
+When `required`, run Maestro MCP against the example app and verify at least:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+If any required Maestro MCP flow fails, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP gate satisfied (or explicitly deferred in the active spec)
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: codex_apps starting
+mcp: maestro starting
+mcp: context7 starting
+mcp: codex_apps ready
+mcp: maestro ready
+mcp: context7 ready
+mcp startup: ready: codex_apps, maestro, context7
+
+thinking
+**Confirming execution approach**
+codex
+I’m starting with orientation and work discovery exactly as requested: I’ll read the project constitution first, then scan `specs/`, `IMPLEMENTATION_PLAN.md`, and repo signals to select the highest-priority unfinished item before making any code changes.
+exec
+/bin/zsh -lc 'pwd; ls -la' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg --files .specify/memory || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 1184
+drwxr-xr-x   46 tolu  staff    1472 Feb 12 02:30 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 04:07 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+ succeeded in 51ms:
+.specify/memory/constitution.md
+codex
+I confirmed the workspace and found `.specify/memory/constitution.md`. Next I’m reading it plus the existing task-tracking files so I can create/update `tasks/todo.md` before implementation.
+exec
+/bin/zsh -lc "sed -n '1,240p' .specify/memory/constitution.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "ls -la tasks; echo '---'; sed -n '1,240p' tasks/todo.md 2>/dev/null || true; echo '---'; sed -n '1,240p' tasks/lessons.md 2>/dev/null || true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 50ms:
+total 64
+drwxr-xr-x@  4 tolu  staff    128 Feb 12 01:30 .
+drwxr-xr-x  46 tolu  staff   1472 Feb 12 02:30 ..
+-rw-r--r--@  1 tolu  staff   1017 Feb 12 02:48 lessons.md
+-rw-r--r--@  1 tolu  staff  27328 Feb 12 04:06 todo.md
+---
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+
+thinking
+**Assessing remaining tasks**
+codex
+I’ve loaded the governing constitution and current task logs. I’m now performing the Phase 1 discovery sweep in priority order: `specs/`, then `IMPLEMENTATION_PLAN.md`, then tracker checks, and I’ll pick the highest-priority truly incomplete item after verifying it isn’t already implemented.
+exec
+/bin/zsh -lc "find specs -type f -name '*.md' | sort" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:" specs -g '"'*.md'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/tasks.md
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+ succeeded in 51ms:
+27:- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+28:- [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
+29:- [ ] [MEDIUM] Implement allowSwipeToDismiss behavior - from IMPLEMENTATION_PLAN API Design
+30:- [ ] [MEDIUM] Implement expandsWhenScrolledToEdge mapping - from IMPLEMENTATION_PLAN API Design
+31:- [ ] [MEDIUM] Implement cornerRadius mapping - from IMPLEMENTATION_PLAN API Design
+32:- [ ] [MEDIUM] Implement largestUndimmedDetent mapping - from IMPLEMENTATION_PLAN API Design
+33:- [ ] [MEDIUM] Implement backgroundInteraction behavior - from IMPLEMENTATION_PLAN API Design
+34:- [ ] [MEDIUM] Implement snapToDetent() with animateChanges batching - from ios-sheet-apis.md
+35:- [ ] [LOW] Implement single active sheet enforcement (manager-level ownership) - from IMPLEMENTATION_PLAN Architecture
+39:- [ ] [HIGH] Create native container view for RN children inside sheet - from ADR-0002
+40:- [ ] [HIGH] Implement RN children mounting into native-hosted container - from ADR-0002
+41:- [ ] [HIGH] Implement attach lifecycle handling - from nitro-view-components.md
+42:- [ ] [HIGH] Implement detach lifecycle handling - from nitro-view-components.md
+43:- [ ] [HIGH] Implement prepareForRecycle() for recycled view cleanup - from nitro-view-components.md
+44:- [ ] [MEDIUM] Handle thread-safety for props arriving from different threads - from nitro-view-components.md
+45:- [ ] [MEDIUM] Implement beforeUpdate()/afterUpdate() for batched prop application - from nitro-view-components.md
+52:- [ ] [MEDIUM] Document supported animated prop pathways - from reanimated-interop.md
+53:- [ ] [LOW] Document unsupported full-transition control expectations - from reanimated-interop.md
+61:- [ ] [HIGH] Add iOS integration tests for presenter lifecycle - from IMPLEMENTATION_PLAN Verification
+62:- [ ] [HIGH] Add iOS integration tests for detent behavior - from IMPLEMENTATION_PLAN Verification
+
+thinking
+**Clarifying incomplete spec detection**
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" specs/001-native-ios-sheet-bindings/tasks.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Complete  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## Status: COMPLETE
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+ succeeded in 52ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 51ms:
+
+
+thinking
+**Confirming next highest-priority task**
+codex
+All feature-spec tasks are checked, so the active remaining backlog appears to be in `IMPLEMENTATION_PLAN.md`. I’m verifying priority there and checking external trackers (`gh` issues) before selecting the single highest-priority unfinished item.
+exec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [x] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 50 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'gh repo view --json nameWithOwner,defaultBranchRef || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 440ms:
+{"defaultBranchRef":{"name":"main"},"nameWithOwner":"tolulawson/rn-bottom-sheet"}
+ succeeded in 440ms:
+
+
+thinking
+**Clarifying incomplete item selection**
+codex
+Discovery found no open GitHub issues and no unchecked tasks in the feature `specs/*/tasks.md`; the top unfinished backlog item is `IMPLEMENTATION_PLAN.md` Phase 2 `[HIGH] Implement dismissal reason detection`. I’m now auditing current Swift/TS code to confirm what’s missing before writing the plan checklist in `tasks/todo.md`.
+exec
+/bin/zsh -lc "sed -n '320,680p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,320p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg -n \"dismiss|reason|onDidDismiss|onWillDismiss|backdrop|swipe|programmatic|system\" ios/RnBottomSheet.swift src -g '"'!**/node_modules/**'"'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+import UIKit
+
+/**
+ * HybridRnBottomSheet
+ *
+ * Native iOS implementation of the bottom sheet using UISheetPresentationController.
+ * This class conforms to the generated HybridRnBottomSheetSpec protocol from Nitrogen.
+ *
+ * Key responsibilities:
+ * - Present/dismiss native iOS sheets with React Native content
+ * - Map detent configurations to UISheetPresentationController.Detent
+ * - Handle lifecycle callbacks and state changes
+ * - Bridge interaction events back to JavaScript
+ */
+class HybridRnBottomSheet: HybridRnBottomSheetSpec {
+
+    // =========================================================================
+    // MARK: - UIView (required by HybridViewSpec)
+    // =========================================================================
+
+ succeeded in 51ms:
+              let contentVC = sheetViewController?.contentViewController,
+              let sheet = contentVC.sheetPresentationController else {
+            return
+        }
+
+        sheet.animateChanges {
+            sheet.detents = buildNativeDetents()
+        }
+    }
+
+    private func updateGrabberVisibility() {
+        guard isCurrentlyPresented,
+              let contentVC = sheetViewController?.contentViewController,
+              let sheet = contentVC.sheetPresentationController else {
+            return
+        }
+
+        sheet.animateChanges {
+            sheet.prefersGrabberVisible = grabberVisible
+        }
+ succeeded in 52ms:
+ios/RnBottomSheet.swift:10: * - Present/dismiss native iOS sheets with React Native content
+ios/RnBottomSheet.swift:39:    /// Suppress one delegate callback after programmatic detent changes to avoid duplicate events
+ios/RnBottomSheet.swift:79:    /// Allow swipe to dismiss
+ios/RnBottomSheet.swift:93:    /// Corner radius (-1 for system default)
+ios/RnBottomSheet.swift:111:    var onOpenChange: (_ isOpen: Bool, _ reason: NativeChangeReason) -> Void = { _, _ in }
+ios/RnBottomSheet.swift:112:    var onDetentChange: (_ index: Double, _ reason: NativeChangeReason) -> Void = { _, _ in }
+ios/RnBottomSheet.swift:115:    var onWillDismiss: () -> Void = {}
+ios/RnBottomSheet.swift:116:    var onDidDismiss: () -> Void = {}
+ios/RnBottomSheet.swift:127:    func dismiss() throws {
+ios/RnBottomSheet.swift:129:        dismissSheet(reason: .programmatic)
+ios/RnBottomSheet.swift:148:            dismissSheet(reason: .programmatic)
+ios/RnBottomSheet.swift:179:            self?.onOpenChange(true, .programmatic)
+ios/RnBottomSheet.swift:183:    private func dismissSheet(reason: NativeChangeReason) {
+ios/RnBottomSheet.swift:185:        contentVC.dismissalReasonOverride = reason
+ios/RnBottomSheet.swift:186:        contentVC.dismiss(animated: true)
+ios/RnBottomSheet.swift:214:        onDetentChange(Double(index), .programmatic)
+ios/RnBottomSheet.swift:260:                        let fittedHeight = self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+ios/RnBottomSheet.swift:574:            onDetentChange(Double(index), .swipe)
+ios/RnBottomSheet.swift:584:    func sheetWillDismiss(reason: NativeChangeReason) {
+ios/RnBottomSheet.swift:585:        onWillDismiss()
+exec
+/bin/zsh -lc "sed -n '680,760p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+            NSLayoutConstraint.activate([
+                content.topAnchor.constraint(equalTo: view.topAnchor),
+                content.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                content.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                content.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if isBeingDismissed {
+            let reason = dismissalReasonOverride ?? .swipe
+            presenterDelegate?.sheetWillDismiss(reason: reason)
+        }
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isBeingDismissed {
+
+thinking
+**Planning enhanced dismissal detection**
+exec
+/bin/zsh -lc "sed -n '1,260p' docs/reference-summaries/ios-sheet-apis.md 2>/dev/null || true" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,280p' docs/implementation-plan-v1.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg -n \"dismissal reason|backdrop|programmatic|system|swipe\" docs specs IMPLEMENTATION_PLAN.md ios -g '*.md' -g '*.swift'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+ succeeded in 50ms:
+IMPLEMENTATION_PLAN.md:27:- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:109:4. Documentation in repo is sufficient to implement and maintain the system
+ios/RnBottomSheet.swift:39:    /// Suppress one delegate callback after programmatic detent changes to avoid duplicate events
+ios/RnBottomSheet.swift:79:    /// Allow swipe to dismiss
+ios/RnBottomSheet.swift:93:    /// Corner radius (-1 for system default)
+ios/RnBottomSheet.swift:129:        dismissSheet(reason: .programmatic)
+ios/RnBottomSheet.swift:148:            dismissSheet(reason: .programmatic)
+ios/RnBottomSheet.swift:179:            self?.onOpenChange(true, .programmatic)
+ios/RnBottomSheet.swift:214:        onDetentChange(Double(index), .programmatic)
+ios/RnBottomSheet.swift:260:                        let fittedHeight = self.view.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+ios/RnBottomSheet.swift:574:            onDetentChange(Double(index), .swipe)
+ios/RnBottomSheet.swift:668:        view.backgroundColor = .systemBackground
+ios/RnBottomSheet.swift:692:            let reason = dismissalReasonOverride ?? .swipe
+ios/RnBottomSheet.swift:700:            let reason = dismissalReasonOverride ?? .swipe
+specs/001-native-ios-sheet-bindings/spec.md:39:2. **Given** a visible sheet with multiple detents, **When** user drag or programmatic snap occurs, **Then** the sheet moves to a valid detent and reports the new detent.
+specs/001-native-ios-sheet-bindings/spec.md:40:3. **Given** invalid detent input, **When** configuration is parsed, **Then** the system rejects configuration with a clear developer-facing error.
+specs/001-native-ios-sheet-bindings/spec.md:63:- How does the system handle rapid open/close toggles in short succession?
+specs/001-native-ios-sheet-bindings/spec.md:64:- How does the system behave when content height changes while the sheet is visible?
+specs/001-native-ios-sheet-bindings/spec.md:80:- **FR-008**: System MUST provide configurable interaction behavior including swipe dismissal, grabber visibility, and background interaction mode.
+specs/001-native-ios-sheet-bindings/data-model.md:41:  - `lastChangeReason` (`programmatic`, `swipe`, `backdrop`, `system`)
+ succeeded in 50ms:
+# Native iOS Sheet Library Plan (v1)
+
+## Summary
+
+Build an iOS-first React Native library that presents native iOS sheets using `UISheetPresentationController` via Nitro Views, supports arbitrary React Native children in sheet content, provides optional React Navigation adapters, defines a constrained Reanimated interop contract, and maintains a living in-repo knowledge base.
+
+## Scope
+
+1. Ship v1 for iOS 16+ on RN 0.81+ with New Architecture/Fabric.
+2. Expose controlled + imperative API surface.
+3. Support semantic and numeric detents with runtime changes.
+4. Support arbitrary React Native child content in the sheet.
+5. Support single active sheet globally in v1.
+6. Provide optional React Navigation integration package.
+7. Provide curated documentation and architecture records in `docs/`.
+8. Enforce verification with unit, iOS integration, and Maestro happy-path E2E.
+
+## Non-Goals
+
+1. Android native parity in v1.
+
+thinking
+**Inspecting ADR for detection details**
+exec
+/bin/zsh -lc "sed -n '1,240p' docs/adr/ADR-0001-ios-sheet-engine.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# ADR-0001: Use UISheetPresentationController as v1 Engine
+
+- Status: Accepted
+- Date: 2026-02-12
+
+## Context
+
+The library goal is native-feeling iOS sheet behavior from React Native with
+deterministic control over open state, lifecycle callbacks, and detent changes.
+The implementation must preserve New Architecture compatibility, support React
+Native child content in-sheet, and keep unsupported behavior explicit.
+
+## Decision
+
+Use `UISheetPresentationController` as the primary presentation engine for v1.
+
+The v1 architecture standardizes on:
+
+1. `BottomSheet` wrapper component as the public control surface (controlled and
+   uncontrolled open state + imperative ref methods).
+
+thinking
+**Planning detailed dismissal reason detection**
+codex
+I confirmed the gap: native dismiss reasons still default to `swipe` unless programmatic override is set, so `backdrop`/`system` are not actually detected. I’m writing a short, checkable iteration plan into `tasks/todo.md` now, then I’ll implement the Swift reason-resolution path and verify it with full project checks.
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+?? logs/
+?? yarn.lock
+
+thinking
+**Asking user about unexpected changes**
+codex
+I found pre-existing uncommitted changes in unrelated files (`.specify/templates/*`, `PROMPT_*`, `scripts/ralph-loop*`, plus untracked `logs/` and `yarn.lock`). Per your repo rules, I need your direction before continuing: should I proceed with the dismissal-reason work and commit only the files I touch, leaving those existing changes untouched?
+codex
+I found pre-existing uncommitted changes in unrelated files (`.specify/templates/*`, `PROMPT_*`, `scripts/ralph-loop*`, plus untracked `logs/` and `yarn.lock`). Per your repo rules, I need your direction before continuing: should I proceed with the dismissal-reason work and commit only the files I touch, leaving those existing changes untouched?
+tokens used
+51,283
+I found pre-existing uncommitted changes in unrelated files (`.specify/templates/*`, `PROMPT_*`, `scripts/ralph-loop*`, plus untracked `logs/` and `yarn.lock`). Per your repo rules, I need your direction before continuing: should I proceed with the dismissal-reason work and commit only the files I touch, leaving those existing changes untouched?

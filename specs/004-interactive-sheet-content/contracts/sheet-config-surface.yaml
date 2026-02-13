@@ -1,0 +1,88 @@
+contract: sheet-config-surface
+version: 1
+
+scope:
+  surface: rn-bottom-sheet-public-api
+  feature: interactive-sheet-content-core-config
+
+types:
+  semanticDetent:
+    type: enum
+    values: [fit, medium, large]
+  backgroundInteractionMode:
+    type: enum_or_object
+    values: [modal, nonModal, upThrough]
+  preferredColorScheme:
+    type: enum
+    values: [system, light, dark]
+  contentBackgroundStyle:
+    type: enum
+    values: [system, blur, clear]
+  contentBackgroundBlurStyle:
+    type: enum
+    values: [regular, prominent, light, dark]
+
+props:
+  - name: detents
+    required: false
+    expectation: "non-empty resolved detent set; supports semantic, fraction, and points forms"
+  - name: initialDetent
+    required: false
+    expectation: "integer index within resolved detent bounds"
+  - name: selectedDetent
+    required: false
+    expectation: "integer index within resolved detent bounds for controlled usage"
+  - name: allowSwipeToDismiss
+    required: false
+    expectation: "maps to native swipe-dismiss allowance"
+  - name: backgroundInteraction
+    required: false
+    expectation: "maps to modal/nonModal/upThrough native interaction behavior"
+  - name: expandsWhenScrolledToEdge
+    required: false
+    expectation: "maps to native scroll-expansion behavior"
+  - name: cornerRadius
+    required: false
+    expectation: "maps to native preferred corner radius behavior"
+  - name: grabberVisible
+    required: false
+    expectation: "maps to native grabber visibility"
+  - name: preferredColorScheme
+    required: false
+    expectation: "iOS styling control; system/light/dark override"
+  - name: contentBackgroundStyle
+    required: false
+    expectation: "iOS styling control; system/blur/clear content host background"
+  - name: contentBackgroundBlurStyle
+    required: false
+    expectation: "effective only when contentBackgroundStyle is blur"
+
+rules:
+  - id: R1
+    name: consumer_managed_navigation_non_goal
+    expectation: "package does not expose a package-owned in-sheet navigation stack API"
+  - id: R2
+    name: single_detent_restriction_pattern
+    expectation: "fit-only, medium-only, and large-only restrictions are achieved by supplying one detent"
+  - id: R3
+    name: common_iphone_scope_only
+    expectation: "common iPhone sheet options are exposed; iPad/compact-height niche options are deferred"
+  - id: R4
+    name: styling_native_limits_explicit
+    expectation: "content styling is configurable, but configurable backdrop blur/opacity is explicitly documented as unsupported in standard UIKit sheet APIs"
+
+callbacks:
+  - onOpenChange(isOpen, reason)
+  - onDetentChange(index, reason)
+  - onWillPresent()
+  - onDidPresent()
+  - onWillDismiss()
+  - onDidDismiss()
+
+maestro_requirements:
+  flows:
+    - example/maestro/sheet-interactive-controls.yaml
+    - example/maestro/sheet-width-contract.yaml
+    - example/maestro/sheet-consumer-flow-compat.yaml
+  pass_gate: "all required flows pass before feature completion"
+  evidence_location: "specs/004-interactive-sheet-content/maestro-evidence/"

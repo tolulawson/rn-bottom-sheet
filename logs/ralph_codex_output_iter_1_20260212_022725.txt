@@ -1,0 +1,24 @@
+Completed one full Ralph iteration for the highest active Phase 1 blocker (contract/codegen/typecheck), and pushed it.
+
+- Fixed Nitro codegen blockers in `src/RnBottomSheet.nitro.ts` by extracting `NativeDetentType` and making `NativeBackgroundInteraction` codegen-safe.
+- Fixed Nitro callback typing in `example/src/App.tsx` by wrapping callbacks with `callback(...)`.
+- Updated tracking and review in `tasks/todo.md` and `IMPLEMENTATION_PLAN.md`.
+- Included supporting Phase 1 contract/type/util files in the commit:
+  - `src/index.tsx`
+  - `src/types/bottom-sheet.ts`
+  - `src/utils/detents.ts`
+  - `src/platform/fallback.ts`
+  - `src/__tests__/bottom-sheet.contract.test.ts`
+  - `docs/changelog-notes/README.md`
+  - `docs/knowledge-index.md`
+
+Validation run (pass):
+- `yarn lint`
+- `yarn typecheck`
+- `yarn test`
+
+Commit/push:
+- `7dc3513` on `main`
+- pushed to `origin/main`
+
+Not outputting `<promise>DONE</promise>` because the full spec set is still incomplete (remaining tasks in `specs/001-native-ios-sheet-bindings/tasks.md` and unstaged local changes still exist in `ios/RnBottomSheet.swift`, `scripts/ralph-loop-codex.sh`, `scripts/ralph-loop.sh`, `logs/`, `yarn.lock`).

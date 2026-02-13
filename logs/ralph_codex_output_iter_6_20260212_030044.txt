@@ -1,0 +1,9 @@
+Completed one Ralph iteration for the highest-priority true gap (`T002`).
+
+- Added direct feature contract pointer in `docs/knowledge-index.md:18`.
+- Marked `T002` complete in `specs/001-native-ios-sheet-bindings/tasks.md:21`.
+- Recorded plan + review results in `tasks/todo.md`.
+- Verified successfully: `yarn lint`, `yarn typecheck`, `yarn test` (5 suites passed).
+- Committed and pushed: `6b751ad` to `main`.
+
+<promise>DONE</promise>

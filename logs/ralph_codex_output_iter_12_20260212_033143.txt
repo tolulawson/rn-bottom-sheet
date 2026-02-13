@@ -1,0 +1,26 @@
+Completed one Ralph loop iteration for the highest-priority incomplete spec task: `T027` in `specs/001-native-ios-sheet-bindings/tasks.md`.
+
+- Added navigation adapter helpers in `src/navigation/bottom-sheet-adapter.ts`:
+  - `createBottomSheetNavigationAdapter(...)`
+  - `useBottomSheetNavigation(...)`
+- Added unit coverage in `src/__tests__/bottom-sheet-adapter.test.ts` for:
+  - route-state -> `isOpen` mapping
+  - route open/close callback propagation
+  - loop-prevention when state is already aligned
+- Marked task complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+- Recorded plan + review results in `tasks/todo.md`.
+
+Validation run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (10 suites, 32 passed tests)
+
+Git:
+- Commit: `d7b383e`
+- Message: `feat: add navigation adapter helpers for bottom sheet`
+- Pushed to `origin/main`
+
+Gate note:
+- `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is still `deferred`, so Maestro MCP was not a blocking gate this iteration.
+
+I did not output `<promise>DONE</promise>` because there are still incomplete spec tasks (`T028+`).

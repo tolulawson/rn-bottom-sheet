@@ -12,6 +12,7 @@ Generated from `docs/sources.yaml`.
 | react-navigation-nesting | React Navigation Nesting Navigators | v7 docs (retrieved 2026-02-12) | 2026-02-12 | Action bubbling behavior for in-sheet nested navigation. | `docs/references/react-navigation-form-sheet.md` | [link](https://reactnavigation.org/docs/nesting-navigators/) |
 | reanimated-create-animated-component | Reanimated createAnimatedComponent | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated wrapper contract for custom host components. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/createAnimatedComponent/) |
 | reanimated-use-animated-props | Reanimated useAnimatedProps | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated prop and adapter constraints for interop. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/useAnimatedProps/) |
+| rn-native-sheet-content-patterns | RN Native Sheet Content Patterns | N/A (original research) | 2026-02-12 | Documents how RN libraries render children inside native modals; compares reparenting, addView override, UIHostingController, JS-only, and portal patterns. | `docs/references/rn-native-sheet-content-patterns.md` | N/A |
 
 ## Feature Contracts
 

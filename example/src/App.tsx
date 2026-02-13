@@ -1,5 +1,5 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { BottomSheet, useBottomSheetNavigation } from 'rn-bottom-sheet';
 import type {
   BackgroundInteractionMode,
@@ -8,53 +8,17 @@ import type {
 } from 'rn-bottom-sheet';
 
 import { InSheetControls } from './components/InSheetControls';
-import {
-  getPhaseForCloseRequest,
-  getPhaseForOpenRequest,
-  getResetRouteOnClose,
-  isOpenRequestNoOp,
-  type InSheetRoute,
-  type SheetPhase,
-} from './example-state';
+import { getResetRouteOnClose, type InSheetRoute } from './example-state';
 import { TEST_IDS } from './testids';
 import { THEME_TOKENS, type ThemeMode } from './theme';
 
-const DETENTS = ['fit', 'medium', 'large'] as const;
+const DETENTS = ['fit'] as const;
 const DETENT_LABELS = ['Fit', 'Medium', 'Large'] as const;
 const BACKGROUND_MODES: BackgroundInteractionMode[] = [
   'modal',
   'nonModal',
   { upThrough: 1 },
 ];
-
-function resolveAnimatedBottomSheet(): {
-  Component: typeof BottomSheet;
-  isReanimatedWrapperActive: boolean;
-} {
-  try {
-    const reanimated = require('react-native-reanimated') as {
-      createAnimatedComponent?: (
-        component: typeof BottomSheet
-      ) => typeof BottomSheet;
-    };
-
-    if (typeof reanimated.createAnimatedComponent === 'function') {
-      return {
-        Component: reanimated.createAnimatedComponent(
-          BottomSheet
-        ) as typeof BottomSheet,
-        isReanimatedWrapperActive: true,
-      };
-    }
-  } catch {
-    // Optional dependency: fallback to the standard BottomSheet component.
-  }
-
-  return {
-    Component: BottomSheet,
-    isReanimatedWrapperActive: false,
-  };
-}
 
 function renderBackgroundInteractionLabel(
   mode: BackgroundInteractionMode
@@ -68,13 +32,21 @@ function renderBackgroundInteractionLabel(
 
 /**
  * Example app demonstrating controlled BottomSheet usage.
+ *
+ * State philosophy:
+ * - `routeSheetOpen` is the single source of truth for open/close.
+ * - `sheetPhase` is display-only, driven exclusively by native lifecycle
+ *   callbacks (onWillPresent / onDidPresent / onWillDismiss / onDidDismiss).
+ * - `handleOpenChange` is the sole callback that syncs `routeSheetOpen`.
+ *   No `onRouteOpen` / `onRouteClose` callbacks are used, eliminating
+ *   double-update races that previously caused the reopen-after-close bug.
  */
 export default function App() {
   const sheetRef = useRef<BottomSheetMethods>(null);
   const [routeSheetOpen, setRouteSheetOpen] = useState(false);
-  const [sheetPhase, setSheetPhase] = useState<SheetPhase>('closed');
-  const [currentDetent, setCurrentDetent] = useState(1);
-  const [selectedDetent, setSelectedDetent] = useState(1);
+  const [sheetPhase, setSheetPhase] = useState<string>('closed');
+  const [currentDetent, setCurrentDetent] = useState(0);
+  const [selectedDetent, setSelectedDetent] = useState(0);
   const [inSheetRoute, setInSheetRoute] = useState<InSheetRoute>('summary');
   const [grabberVisible, setGrabberVisible] = useState(true);
   const [allowSwipeToDismiss, setAllowSwipeToDismiss] = useState(true);
@@ -82,21 +54,21 @@ export default function App() {
     useState(true);
   const [backgroundModeIndex, setBackgroundModeIndex] = useState(0);
   const [themeMode, setThemeMode] = useState<ThemeMode>('light');
-  const { Component: AnimatedSheetComponent, isReanimatedWrapperActive } =
-    useMemo(resolveAnimatedBottomSheet, []);
 
   const theme = THEME_TOKENS[themeMode];
   const backgroundInteraction =
     BACKGROUND_MODES[backgroundModeIndex] ?? 'modal';
 
+  // -------------------------------------------------------------------
+  // Sole open-state synchronisation handler.  No other callback should
+  // write to `routeSheetOpen`.
+  // -------------------------------------------------------------------
   const handleOpenChange = useCallback(
-    (open: boolean, reason: BottomSheetChangeReason) => {
-      console.log(`Sheet open changed: ${open}, reason: ${reason}`);
-
+    (open: boolean, _reason: BottomSheetChangeReason) => {
+      console.log(`Sheet open changed: ${open}, reason: ${_reason}`);
+      setRouteSheetOpen(open);
       if (!open) {
-        setInSheetRoute((currentRoute) =>
-          getResetRouteOnClose(false, currentRoute)
-        );
+        setInSheetRoute((r) => getResetRouteOnClose(false, r));
       }
     },
     []
@@ -111,31 +83,25 @@ export default function App() {
     []
   );
 
+  // -------------------------------------------------------------------
+  // Open / close requests — guard only on `routeSheetOpen`.
+  // -------------------------------------------------------------------
   const requestOpenSheet = useCallback(() => {
-    if (isOpenRequestNoOp(sheetPhase)) {
-      return;
-    }
-
-    setSheetPhase(getPhaseForOpenRequest(sheetPhase));
+    if (routeSheetOpen) return;
     setRouteSheetOpen(true);
-  }, [sheetPhase]);
+  }, [routeSheetOpen]);
 
   const requestCloseSheet = useCallback(() => {
-    setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
+    if (!routeSheetOpen) return;
     setRouteSheetOpen(false);
-    setInSheetRoute((currentRoute) =>
-      getResetRouteOnClose(false, currentRoute)
-    );
-  }, []);
+  }, [routeSheetOpen]);
 
   const handleToggleTheme = useCallback(() => {
-    setThemeMode((currentMode) => (currentMode === 'light' ? 'dark' : 'light'));
+    setThemeMode((m) => (m === 'light' ? 'dark' : 'light'));
   }, []);
 
   const handleToggleRoute = useCallback(() => {
-    setInSheetRoute((currentRoute) =>
-      currentRoute === 'summary' ? 'details' : 'summary'
-    );
+    setInSheetRoute((r) => (r === 'summary' ? 'details' : 'summary'));
   }, []);
 
   const handleSnapToDetent = useCallback((index: number) => {
@@ -143,28 +109,17 @@ export default function App() {
     sheetRef.current?.snapToDetent(index);
   }, []);
 
+  // -------------------------------------------------------------------
+  // Navigation adapter — only `onOpenChange` is provided.
+  // No `onRouteOpen` / `onRouteClose` to prevent double-updates.
+  // -------------------------------------------------------------------
   const navigationSheet = useBottomSheetNavigation({
     routeIsOpen: routeSheetOpen,
-    onRouteOpen(reason) {
-      console.log(`Route requested open, reason: ${reason}`);
-      setRouteSheetOpen(true);
-      setSheetPhase((currentPhase) => getPhaseForOpenRequest(currentPhase));
-    },
-    onRouteClose(reason) {
-      console.log(`Route requested close, reason: ${reason}`);
-      setRouteSheetOpen(false);
-      setSheetPhase((currentPhase) => getPhaseForCloseRequest(currentPhase));
-      setInSheetRoute((currentRoute) =>
-        getResetRouteOnClose(false, currentRoute)
-      );
-    },
     onOpenChange: handleOpenChange,
   });
 
   const cycleBackgroundInteraction = useCallback(() => {
-    setBackgroundModeIndex(
-      (currentIndex) => (currentIndex + 1) % BACKGROUND_MODES.length
-    );
+    setBackgroundModeIndex((i) => (i + 1) % BACKGROUND_MODES.length);
   }, []);
 
   return (
@@ -208,8 +163,7 @@ export default function App() {
         style={[styles.status, { color: theme.mutedText }]}
         testID={TEST_IDS.mainThemeSummary}
       >
-        Theme: {themeMode} | Animation wrapper:{' '}
-        {isReanimatedWrapperActive ? 'Reanimated' : 'Fallback'}
+        Theme: {themeMode}
       </Text>
       <Button
         accessibilityLabel={TEST_IDS.openSheetButton}
@@ -225,22 +179,20 @@ export default function App() {
         title={themeMode === 'light' ? 'Enable Dark Mode' : 'Enable Light Mode'}
       />
 
-      <AnimatedSheetComponent
+      <BottomSheet
         allowSwipeToDismiss={allowSwipeToDismiss}
         backgroundInteraction={backgroundInteraction}
         cornerRadius={-1}
         detents={[...DETENTS]}
         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
         grabberVisible={grabberVisible}
-        initialDetent={1}
+        initialDetent={0}
         isOpen={navigationSheet.isOpen}
         onDetentChange={handleDetentChange}
         onDidDismiss={() => {
           console.log('Did dismiss');
           setSheetPhase('closed');
-          setInSheetRoute((currentRoute) =>
-            getResetRouteOnClose(false, currentRoute)
-          );
+          setInSheetRoute((r) => getResetRouteOnClose(false, r));
         }}
         onDidPresent={() => {
           console.log('Did present');
@@ -267,18 +219,14 @@ export default function App() {
           onClose={requestCloseSheet}
           onCycleBackgroundInteraction={cycleBackgroundInteraction}
           onSnapToDetent={handleSnapToDetent}
-          onToggleExpandOnScroll={() =>
-            setExpandsWhenScrolledToEdge((expand) => !expand)
-          }
-          onToggleGrabber={() => setGrabberVisible((visible) => !visible)}
+          onToggleExpandOnScroll={() => setExpandsWhenScrolledToEdge((v) => !v)}
+          onToggleGrabber={() => setGrabberVisible((v) => !v)}
           onToggleRoute={handleToggleRoute}
-          onToggleSwipeDismiss={() =>
-            setAllowSwipeToDismiss((allowed) => !allowed)
-          }
+          onToggleSwipeDismiss={() => setAllowSwipeToDismiss((v) => !v)}
           route={inSheetRoute}
           theme={theme}
         />
-      </AnimatedSheetComponent>
+      </BottomSheet>
     </View>
   );
 }

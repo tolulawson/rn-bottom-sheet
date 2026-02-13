@@ -11,10 +11,16 @@ appId: rnbottomsheet.example
     id: "open-sheet-button"
 - extendedWaitUntil:
     visible:
-      id: "main-summary"
+      id: "sheet-content"
     timeout: 5000
 - assertVisible:
     id: "main-sheet-phase"
+- assertVisible:
+    text: "Phase: open"
+- assertVisible:
+    id: "sheet-title"
+- assertVisible:
+    id: "close-sheet-button"
 
 # Close the sheet
 - tapOn:
@@ -31,6 +37,8 @@ appId: rnbottomsheet.example
     visible:
       id: "sheet-content"
     timeout: 5000
+- assertVisible:
+    text: "Phase: open"
 
 # Close again
 - tapOn:

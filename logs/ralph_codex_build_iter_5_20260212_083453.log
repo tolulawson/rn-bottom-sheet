@@ -1,0 +1,2222 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c52b4-9ab3-7bc0-b89a-ecc5aa2bee66
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Conditional Maestro MCP E2E Gate (Example App)
+
+Identify the active feature spec and check its E2E gate marker:
+- Look for `E2E Gate State: deferred|required` in `specs/<feature>/spec.md`.
+- Default to `deferred` if the marker is missing.
+
+Gate behavior:
+- If `deferred`: do NOT block this loop iteration. Log that Maestro MCP was skipped and why.
+- If `required`: Maestro MCP is a hard gate for completion.
+
+When `required`, run Maestro MCP against the example app and verify at least:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+If any required Maestro MCP flow fails, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP gate satisfied (or explicitly deferred in the active spec)
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: maestro starting
+mcp: context7 starting
+mcp: codex_apps starting
+mcp: maestro ready
+mcp: codex_apps ready
+mcp: context7 ready
+mcp startup: ready: maestro, codex_apps, context7
+
+thinking
+**Initiating repo inspection and task planning**
+codex
+I’m starting by orienting on project rules, then I’ll scan `specs/`, `IMPLEMENTATION_PLAN.md`, and repo state to pick the highest-priority incomplete item and verify whether it’s already implemented before making changes.
+
+thinking
+**Running file discovery commands**
+exec
+/bin/zsh -lc 'cat .specify/memory/constitution.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'if [ -f IMPLEMENTATION_PLAN.md ]; then echo IMPLEMENTATION_PLAN.md; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'pwd && ls -la' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg --files specs || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+IMPLEMENTATION_PLAN.md
+ succeeded in 52ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 51ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 1184
+drwxr-xr-x   47 tolu  staff    1504 Feb 12 08:28 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 08:34 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+
+thinking
+**Inspecting incomplete specs**
+codex
+I’ve loaded the constitution and confirmed `IMPLEMENTATION_PLAN.md` plus one feature spec set exists. Next I’m checking status markers and unchecked tasks to select the top incomplete item by priority.
+
+thinking
+**Scanning documentation and tasks**
+exec
+/bin/zsh -lc "sed -n '1,220p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:|''^- '"\\[ \\]|\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]|E2E Gate State\" specs/001-native-ios-sheet-bindings/spec.md specs/001-native-ios-sheet-bindings/tasks.md IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Complete  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## Status: COMPLETE
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+ succeeded in 51ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 51ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [x] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+specs/001-native-ios-sheet-bindings/spec.md:101:- **E2E Gate State**: `deferred`
+specs/001-native-ios-sheet-bindings/spec.md:122:- **SC-006**: When `E2E Gate State` is `required`, Maestro MCP flows for the example app pass for open, dismiss, detent interaction, and in-sheet navigation in 100% of release-gate runs.
+specs/001-native-ios-sheet-bindings/tasks.md:123:- [x] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
+specs/001-native-ios-sheet-bindings/tasks.md:135:- **Maestro MCP Gate**: runs in Phase 6 as non-blocking while `E2E Gate State` is `deferred`, and becomes blocking only after it is switched to `required`.
+IMPLEMENTATION_PLAN.md:10:- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:11:- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:12:- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:13:- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:14:- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+IMPLEMENTATION_PLAN.md:15:- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+IMPLEMENTATION_PLAN.md:16:- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:20:- [x] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+IMPLEMENTATION_PLAN.md:21:- [x] [HIGH] Implement detent normalization (fit/medium/large/fraction/points to native identifiers) - from ios-sheet-apis.md
+IMPLEMENTATION_PLAN.md:22:- [x] [HIGH] Implement detent validation (order low-to-high, unique identifiers) - from ios-sheet-apis.md
+IMPLEMENTATION_PLAN.md:23:- [x] [HIGH] Map selectedDetentIdentifier bidirectionally - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:24:- [x] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:25:- [x] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:26:- [x] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
+IMPLEMENTATION_PLAN.md:27:- [x] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+
+thinking
+**Planning strict re-verification**
+codex
+All listed spec and implementation tasks are marked complete, so I’m switching to re-verification mode. I’ll quickly check GitHub issues/task trackers, then create a concrete verification plan in `tasks/todo.md` and execute full validation against the completed spec.
+exec
+/bin/zsh -lc "sed -n '1,260p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+exec
+/bin/zsh -lc "rg -n \"linear|jira|task tracker|issue\" . --glob '"'!node_modules/**'"' --glob '"'!.git/**'"'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+Total output lines: 686
+
+./PROMPT_build.md:19:3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+./PROMPT_build.md:20:4. **Any task tracker** — Jira, Linear, etc. if configured
+./PROMPT_build.md:109:**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+./logs/ralph_codex_build_iter_12_20260212_033143.log:31:3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+./logs/ralph_codex_build_iter_12_20260212_033143.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_12_20260212_033143.log:121:**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+./logs/ralph_codex_build_iter_12_20260212_033143.log:313:/bin/zsh -lc 'gh issue list --state open --limit 50' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 426ms:
+./logs/ralph_codex_build_iter_12_20260212_033143.log:2782:`lint` failed on a hook dependency issue in `useBottomSheetNavigation`; I’m fixing it by destructuring option fields and using stable dependencies so exhaustive-deps passes cleanly.
+./logs/ralph_codex_build_iter_12_20260212_033143.log:3345:I’ve patched the dependency issue and am rerunning the full validation set now.
+./logs/ralph_codex_build_iter_8_20260212_031219.log:31:3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+./logs/ralph_codex_build_iter_8_20260212_031219.log:32:4. **Any task tracker** — Jira, Linear, etc. if configured
+./logs/ralph_codex_build_iter_8_20260212_031219.log:100:**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+./logs/ralph_codex_build_iter_8_20260212_031219.log:113:I’m going to run the Ralph workflow exactly: first read the project constitution, then discover the highest-priority incomplete item from specs/plans/issues, verify it isn’t already implemented, and only then implement and validate end-to-end. I’ll start by inspecting `.specify/memory/constitution.md` and current task files.
+./logs/ralph_codex_build_iter_8_20260212_031219.log:165:I’ve loaded the constitution and will now identify the highest-priority unfinished item by scanning `specs/` status markers, unchecked tasks in `IMPLEMENTATION_PLAN.md`, and then open issues to break ties.
+./logs/ralph_codex_build_iter_8_20260212_031219.log:302:I’m now checking repository issue trackers and the current working tree, then I’ll lock the single highest-priority incomplete task and verify whether it’s already implemented before editing anything.
+./logs/ralph_codex_build_iter_8_20260212_031219.log:304:/bin/zsh -lc 'if command -v rg >/dev/null; then rg -n "Linear|Jira|task tracker|TODO" docs specs tasks .github -g "*.md"; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+./logs/ralph_codex_build_iter_8_20260212_031219.log:316:/bin/zsh -lc 'gh issue list --state open --limit 50 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 446ms:
+./logs/ralph_codex_build_iter_8_20260212_031219.log:617:  • Update task trackers/spec status, commit, and push
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 50' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 513ms:
+
+
+thinking
+**Planning re-verification and task tracking**
+codex
+Discovery is complete: no incomplete spec/plan tasks and `gh issue list` returned no open issues, so the loop requires strict re-verification of the completed feature. I’m now creating a fresh checklist in `tasks/todo.md`, then I’ll run the full verification gates and acceptance-criteria checks against `001-native-ios-sheet-bindings`.
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'env | rg -i "linear|jira|youtrack|trello|asana" || true' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "E2E Gate State|Acceptance Scenarios|Functional Requirements|Success Criteria|Edge Cases" specs/001-native-ios-sheet-bindings/spec.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+?? coverage/
+?? logs/
+?? yarn.lock
+ succeeded in 51ms:
+
+ succeeded in 51ms:
+20:**Acceptance Scenarios**:
+36:**Acceptance Scenarios**:
+52:**Acceptance Scenarios**:
+60:### Edge Cases
+71:### Functional Requirements
+97:## Success Criteria *(mandatory)*
+101:- **E2E Gate State**: `deferred`
+122:- **SC-006**: When `E2E Gate State` is `required`, Maestro MCP flows for the example app pass for open, dismiss, detent interaction, and in-sheet navigation in 100% of release-gate runs.
+
+thinking
+**Classifying existing dirty files**
+exec
+/bin/zsh -lc 'tail -n 120 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+- [x] Confirm `T034` is the highest-priority truly incomplete item and verify current runbook gaps
+- [x] Add verification/runbook notes for feature workflows in `docs/implementation-plan-v1.md`
+- [x] Mark `T034` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Validation Capture T035)
+
+- [x] Confirm `T035` is the highest-priority truly incomplete item and verify missing explicit validation capture
+- [x] Execute verification commands and record outcomes in `tasks/todo.md`
+- [x] Mark `T035` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn docs:check`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Polish Maestro Flow Definitions T036)
+
+- [x] Confirm `T036` is the highest-priority truly incomplete item and verify missing Maestro flow artifacts
+- [x] Add core example app Maestro flow definitions in `example/.maestro/sheet-core-flows.yaml`
+- [x] Validate Maestro flow YAML syntax
+
+thinking
+**Deciding next verification step**
+exec
+/bin/zsh -lc 'for f in $(rg --files specs -g '"'*.md'); do if "'! rg -q '"'"'^## Status: COMPLETE'"' \""'$f"; then echo "$f"; fi; done' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+
+thinking
+**Evaluating checklist completeness for priority**
+codex
+I found that several `specs/**.md` files still lack a `## Status: COMPLETE` marker, so strictly speaking there is still an incomplete docs artifact before Phase 1b. I’m inspecting those checklist/spec artifacts now to identify the highest-priority actual gap and resolve it first.
+
+thinking
+**Searching for unchecked and high flags**
+exec
+/bin/zsh -lc "sed -n '1,220p' specs/001-native-ios-sheet-bindings/checklists/requirements.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,220p' specs/001-native-ios-sheet-bindings/checklists/native-sheet.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]|\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]|Gap|Status\" specs/001-native-ios-sheet-bindings/plan.md specs/001-native-ios-sheet-bindings/data-model.md specs/001-native-ios-sheet-bindings/research.md specs/001-native-ios-sheet-bindings/tasks.md specs/001-native-ios-sheet-bindings/quickstart.md specs/001-native-ios-sheet-bindings/checklists/native-sheet.md specs/001-native-ios-sheet-bindings/checklists/requirements.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Specification Quality Checklist: Native iOS Sheet Bindings
+
+**Purpose**: Validate specification completeness and quality before proceeding to planning  
+**Created**: 2026-02-12  
+**Feature**: /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md
+
+## Content Quality
+
+- [x] No implementation details (languages, frameworks, APIs)
+- [x] Focused on user value and business needs
+- [x] Written for non-technical stakeholders
+- [x] All mandatory sections completed
+
+## Requirement Completeness
+
+- [x] No [NEEDS CLARIFICATION] markers remain
+- [x] Requirements are testable and unambiguous
+- [x] Success criteria are measurable
+- [x] Success criteria are technology-agnostic (no implementation details)
+- [x] All acceptance scenarios are defined
+ succeeded in 52ms:
+# Native Sheet Requirements Checklist: Native iOS Sheet Bindings
+
+**Purpose**: Validate the quality, clarity, and completeness of native-sheet requirements before implementation.
+**Created**: 2026-02-12
+**Feature**: /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md
+
+**Note**: This checklist evaluates requirement quality, not implementation behavior.
+
+## Requirement Completeness
+
+- [ ] CHK001 Are requirements defined for both controlled and imperative sheet control modes? [Completeness, Spec §FR-001, FR-002]
+- [ ] CHK002 Are requirements defined for rendering arbitrary child content and not only static content? [Completeness, Spec §FR-003]
+- [ ] CHK003 Are non-iOS fallback requirements explicitly documented? [Completeness, Spec §FR-013]
+- [ ] CHK004 Are example-app demonstration requirements defined for all major capabilities? [Completeness, Spec §FR-014]
+
+## Requirement Clarity
+
+- [ ] CHK005 Is “native-feeling” behavior clarified through measurable or testable outcomes? [Clarity, Spec §SC-001, SC-003]
+- [ ] CHK006 Are detent validation rules specific enough to avoid interpretation drift? [Clarity, Spec §FR-004, FR-005]
+- [ ] CHK007 Is “deterministic behavior” defined in terms of explicit callback/state expectations? [Clarity, Spec §FR-006, FR-007, FR-009]
+ succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:11:- [ ] CHK001 Are requirements defined for both controlled and imperative sheet control modes? [Completeness, Spec §FR-001, FR-002]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:12:- [ ] CHK002 Are requirements defined for rendering arbitrary child content and not only static content? [Completeness, Spec §FR-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:13:- [ ] CHK003 Are non-iOS fallback requirements explicitly documented? [Completeness, Spec §FR-013]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:14:- [ ] CHK004 Are example-app demonstration requirements defined for all major capabilities? [Completeness, Spec §FR-014]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:18:- [ ] CHK005 Is “native-feeling” behavior clarified through measurable or testable outcomes? [Clarity, Spec §SC-001, SC-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:19:- [ ] CHK006 Are detent validation rules specific enough to avoid interpretation drift? [Clarity, Spec §FR-004, FR-005]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:20:- [ ] CHK007 Is “deterministic behavior” defined in terms of explicit callback/state expectations? [Clarity, Spec §FR-006, FR-007, FR-009]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:24:- [ ] CHK008 Are lifecycle callback requirements consistent with sheet session state transitions? [Consistency, Spec §FR-006, Data Model alignment]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:25:- [ ] CHK009 Are integration requirements for navigation and animation consistent with declared v1 scope boundaries? [Consistency, Spec §FR-010, FR-012, Assumptions]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:26:- [ ] CHK010 Is single-session behavior consistent across functional requirements and edge-case descriptions? [Consistency, Spec §FR-009, Edge Cases]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:30:- [ ] CHK011 Are success criteria objectively measurable without implementation-specific tooling assumptions? [Measurability, Spec §SC-001..SC-005]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:31:- [ ] CHK012 Do acceptance scenarios cover open, dismiss, detent change, and integration paths for each user story? [Acceptance Criteria, Spec §User Scenarios]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:35:- [ ] CHK013 Are rapid state toggles and concurrent trigger scenarios explicitly addressed in requirements? [Coverage, Spec §Edge Cases]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:36:- [ ] CHK014 Are keyboard and content-resize edge cases represented as requirement-level behavior expectations? [Coverage, Edge Case, Spec §Edge Cases]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:37:- [ ] CHK015 Are invalid input/error scenarios mapped to explicit requirement obligations? [Coverage, Spec §FR-005]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:41:- [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:42:- [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:43:- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:47:- [ ] CHK019 Are New Architecture and iOS version assumptions explicitly tied to scope and acceptance outcomes? [Assumption, Spec §Assumptions]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:48:- [ ] CHK020 Are optional integration boundaries (navigation/animation) clearly scoped to prevent implicit parity expectations? [Assumption, Spec §FR-010..FR-012]
+
+thinking
+**Prioritizing checklist gap fix**
+tool codex.list_mcp_resources({})
+codex.list_mcp_resources({}) success in 284ms:
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"resources\":[]}"
+    }
+  ],
+  "isError": false
+}
+
+thinking
+**Recognizing missing resources and updating plan**
+codex
+Plan for this loop:
+1. Re-run discovery checks with strict ordering and record the selected highest-priority item.
+2. Execute full re-verification for `specs/001-native-ios-sheet-bindings/spec.md` (lint, typecheck, tests, and iOS build check).
+3. Validate acceptance criteria/edge-case coverage against concrete test files and confirm Maestro gate behavior (`deferred` vs `required`).
+4. Update `tasks/todo.md` with this loop’s checklist and review evidence.
+5. Commit and push only this loop’s tracker update if verification is clean; otherwise fix failures first.
+
+thinking
+**Planning status updates**
+Plan update
+  → Re-run discovery checks in required order and confirm highest-priority incomplete item decision
+  • Run verification gates (lint, typecheck, test, iOS build) for spec 001
+  • Map acceptance criteria and edge cases to concrete tests and gate state
+  • Update tasks/todo.md with this iteration checklist and review evidence
+  • Commit and push iteration updates if all gates pass
+
+thinking
+**Verifying incomplete specs and observability**
+exec
+/bin/zsh -lc 'rg -n "observability|diagnos|logging|telemetry|deferred" specs/001-native-ios-sheet-bindings/spec.md docs README.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status: COMPLETE" specs/001-native-ios-sheet-bindings/*.md specs/001-native-ios-sheet-bindings/checklists/*.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/spec.md:8:## Status: COMPLETE
+ succeeded in 50ms:
+specs/001-native-ios-sheet-bindings/spec.md:101:- **E2E Gate State**: `deferred`
+specs/001-native-ios-sheet-bindings/spec.md:110:  - Gate state remains `deferred` because deterministic Maestro MCP execution has not yet been established as a stable, repeatable hard gate in this loop.
+specs/001-native-ios-sheet-bindings/spec.md:112:  - While `deferred`, Maestro MCP execution is informational and MUST NOT block loop completion.
+docs/implementation-plan-v1.md:163:  - if spec `E2E Gate State` is `deferred`, Maestro MCP execution is
+
+thinking
+**Planning checklist update**
+exec
+/bin/zsh -lc 'tail -n 60 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+- [x] Implement a native sheet host container view for RN children with explicit attach/detach lifecycle hooks in `ios/RnBottomSheet.swift`
+- [x] Implement `prepareForRecycle()` cleanup to reset presenter/session state safely for Nitro view reuse in `ios/RnBottomSheet.swift`
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
+- [x] Update `IMPLEMENTATION_PLAN.md` and `tasks/todo.md` Review with outcomes
+
+## Ralph Iteration 2026-02-12 (Phase 3 Thread-Safe Prop Updates)
+
+- [x] Confirm highest-priority truly incomplete item is cross-thread prop safety and verify current implementation lacks explicit thread marshaling
+- [x] Implement main-thread marshaling for Nitro prop setters/getters and imperative methods in `ios/RnBottomSheet.swift`
+- [x] Implement `beforeUpdate()` / `afterUpdate()` batching hooks for grouped prop application in `ios/RnBottomSheet.swift`
+- [x] Synchronize stale-complete entries in `IMPLEMENTATION_PLAN.md` based on verified implementation state
+- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`, `yarn workspace rn-bottom-sheet-example ios`
+- [x] Capture verification outcomes in the Review section
+
+## Ralph Iteration 2026-02-12 (Phase 2 Single Active Sheet Enforcement)
+
+- [x] Confirm the highest-priority incomplete item is single active sheet enforcement and verify manager-level ownership is not already implemented
+- [x] Implement manager-level global ownership in `ios/RnBottomSheet.swift` so only one sheet session can be active at a time
+- [x] Define deterministic behavior for concurrent open requests (handoff to newest request) and enforce it in native presenter flow
+- [x] Verify single-active-session behavior via available automated gates (`yarn lint`, `yarn typecheck`, `yarn test`) and native compile gate (`xcodebuild ... RnBottomSheetExample ... build`) since no dedicated iOS XCTest target exists yet
+
+thinking
+**Planning checklist updates**
+codex
+I’m adding a new checklist-driven iteration entry to `tasks/todo.md` before edits, then I’ll implement the selected checklist gap and run the full verification gates.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -464 +464,9 @@
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+apply_patch(auto_approved=true) exited 0 in 22ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Adding observability requirement note**
+🌐 Searching the web...
+🌐 Searched: dummy
+
+thinking
+**Ignoring irrelevant tool output**
+exec
+/bin/zsh -lc "sed -n '60,170p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+### Edge Cases
+
+- What happens when a detent list is empty, unsorted, duplicated, or out of valid range?
+- How does the system handle rapid open/close toggles in short succession?
+- How does the system behave when content height changes while the sheet is visible?
+- How is behavior defined when keyboard appearance changes available vertical space?
+- What happens when a route change attempts to dismiss an already dismissed sheet?
+- How does fallback behavior work on non-iOS platforms?
+
+## Requirements *(mandatory)*
+
+### Functional Requirements
+
+- **FR-001**: System MUST provide a component interface that supports both controlled and uncontrolled sheet open state.
+- **FR-002**: System MUST allow imperative sheet control through a stable reference API (including present, dismiss, and detent snap actions).
+- **FR-003**: System MUST render arbitrary React Native child content inside the sheet.
+- **FR-004**: System MUST support configurable sheet detents including semantic options and numeric sizing variants.
+- **FR-005**: System MUST validate sheet configuration input and surface clear developer-facing errors for invalid values.
+- **FR-006**: System MUST emit lifecycle callbacks for present/dismiss transitions.
+- **FR-007**: System MUST emit detent change callbacks when detent selection changes.
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Verifying developer warnings in fallback and detents**
+exec
+/bin/zsh -lc "sed -n '1,220p' src/platform/fallback.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/utils/detents.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+/**
+ * Non-iOS Fallback Utilities
+ *
+ * Provides deterministic fallback behavior for non-iOS platforms.
+ * Per constitution: Non-iOS platforms get explicit fallback (no crash).
+ */
+
+import { Platform } from 'react-native';
+
+// =============================================================================
+// Platform Detection
+// =============================================================================
+
+/**
+ * Check if native sheet is supported on current platform.
+ */
+export function isNativeSheetSupported(): boolean {
+  return Platform.OS === 'ios';
+}
+
+ succeeded in 51ms:
+/**
+ * Detent Normalization and Validation Utilities
+ *
+ * Handles conversion between JS detent representations and native identifiers,
+ * as well as validation of detent configurations.
+ */
+
+import type {
+  BottomSheetDetent,
+  FractionDetent,
+  PointsDetent,
+  SemanticDetent,
+  DetentValidationResult,
+} from '../types/bottom-sheet';
+
+// =============================================================================
+// Constants
+// =============================================================================
+
+const SEMANTIC_DETENTS: readonly SemanticDetent[] = ['fit', 'medium', 'large'];
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Updating checklist item status**
+codex
+I’ve confirmed CHK018 is still genuinely unresolved: the spec currently defines behavior but does not explicitly state observability expectations/deferment. I’m now patching `spec.md` to add that contract and updating the checklist item state, then I’ll run full validation gates.
+
+thinking
+**Updating spec and checklist with observability**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md
+@@ -88,2 +88,3 @@
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+@@ -128 +129,2 @@
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+apply_patch(auto_approved=true) exited 0 in 26ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/spec.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Starting checklist patch**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -42,3 +42,3 @@
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+apply_patch(auto_approved=true) exited 0 in 36ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Planning sequential verification runs**
+codex
+Spec/checklist updates are in place. I’m running the required gates now (`lint`, `typecheck`, `test`, and iOS `xcodebuild`) to verify this change set is still clean end to end.
+exec
+/bin/zsh -lc 'yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheetfile update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Checking command session status**
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+ succeeded in 3.58s:
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/block-navigation.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/prettify.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+/Users/tolu/Desktop/dev/rn-bottom-sheet/coverage/lcov-report/sorter.js
+  1:0  warning  Unexpected unlimited 'eslint-disable' comment. Specify some rule names to disable  eslint-comments/no-unlimited-disable
+
+✖ 3 problems (0 errors, 3 warnings)
+
+
+thinking
+**Sequencing typecheck test xcodebuild**
+exec
+/bin/zsh -lc 'yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheetfile update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+ succeeded in 1.14s:
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Running tests successfully**
+exec
+/bin/zsh -lc 'yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 925ms:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS src/__tests__/bottom-sheet.detent.integration.test.tsx
+PASS src/__tests__/bottom-sheet.reanimated.test.ts
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.presenter.integration.test.tsx
+PASS src/__tests__/bottom-sheet.fallback.test.ts
+PASS src/__tests__/bottom-sheet.navigation.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/bottom-sheet-adapter.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/index.test.tsx
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Preparing to run build command**
+codex
+JS validation gates are green so far. I’m running the native iOS build check now to complete the verification block for this iteration.
+exec
+/bin/zsh -lc "xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build" in /Users/tolu/Desktop/dev/rn-bottom-sheetfile update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Planning periodic update polling**
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Managing large output flow**
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Adjusting output polling strategy**
+codex
+Native build is still running; I’m waiting for completion status and then I’ll summarize the final result plus any warnings that matter for release gates.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+ succeeded in 25.20s:
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination "generic/platform=iOS Simulator" build
+
+Build settings from command line:
+    SDKROOT = iphonesimulator26.0
+
+ComputePackagePrebuildTargetDependencyGraph
+
+Prepare packages
+
+CreateBuildRequest
+
+SendProjectDescription
+
+CreateBuildOperation
+
+ComputeTargetDependencyGraph
+note: Building targets in dependency order
+note: Target dependency graph (92 targets)
+    Target 'RnBottomSheetExample' in project 'RnBottomSheetExample'
+
+thinking
+**Planning status updates and review addendum**
+exec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md specs/001-native-ios-sheet-bindings/tasks.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'for f in $(rg --files specs -g '"'*.md'); do if "'! rg -q '"'"'^## Status: COMPLETE'"' \""'$f"; then echo "$f"; fi; done' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 20' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 410ms:
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Confirming task completion**
+exec
+/bin/zsh -lc 'rg -n "CHK018|FR-017|telemetry|observability" specs/001-native-ios-sheet-bindings/spec.md specs/001-native-ios-sheet-bindings/checklists/native-sheet.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:43:- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+specs/001-native-ios-sheet-bindings/spec.md:89:- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+specs/001-native-ios-sheet-bindings/spec.md:130:- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..9b4842d5ffbc8a92646c6805a434203906209527
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,11 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
+
+
+thinking
+**Updating todo section and appending review**
+codex
+Verification is complete and passing. I’m now updating `tasks/todo.md` with checked items plus a review addendum for this iteration, then I’ll commit just the affected spec/checklist/todo files.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -467,6 +467,25 @@
+ 
+-- [ ] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
+-- [ ] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
+-- [ ] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
+-- [ ] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
+-- [ ] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+apply_patch(auto_approved=true) exited 0 in 38ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+
+thinking
+**Updating plan statuses**
+Plan update
+Selected and resolved checklist gap CHK018, then completed full validation gates and documented evidence. Proceeding to commit/push iteration files only.
+  ✓ Re-run discovery checks in required order and confirm highest-priority incomplete item decision
+  ✓ Run verification gates (lint, typecheck, test, iOS build) for spec 001
+  ✓ Map acceptance criteria and edge cases to concrete tests and gate state
+  ✓ Update tasks/todo.md with this iteration checklist and review evidence
+  → Commit and push iteration updates if all gates pass
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+
+thinking
+**Staging selective files for commit**
+codex
+I’ve documented the iteration review and am now staging only the three files touched for this gap (`spec.md`, checklist, and `tasks/todo.md`) so unrelated existing worktree changes remain untouched.
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git add specs/001-native-ios-sheet-bindings/spec.md specs/001-native-ios-sheet-bindings/checklists/native-sheet.md tasks/todo.md && git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+ M specs/001-native-ios-sheet-bindings/spec.md
+ M tasks/todo.md
+?? coverage/
+?? logs/
+?? yarn.lock
+ succeeded in 52ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+M  specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+M  specs/001-native-ios-sheet-bindings/spec.md
+M  tasks/todo.md
+?? coverage/
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+
+thinking
+**Committing staged changes**
+exec
+/bin/zsh -lc 'git commit -m "docs(spec): resolve CHK018 observability gap for spec 001"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 503ms:
+┃  commitlint ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.47 seconds)       
+✔️ commitlint (0.47 seconds)
+[main c1c0b9f] docs(spec): resolve CHK018 observability gap for spec 001
+ 3 files changed, 30 insertions(+), 1 deletion(-)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+
+thinking
+**Completing code push**
+exec
+/bin/zsh -lc 'git push' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 713ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   95eb0bb..c1c0b9f  main -> main
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+Plan update
+Committed and pushed the CHK018 observability-gap documentation fix and iteration tracker updates.
+  ✓ Re-run discovery checks in required order and confirm highest-priority incomplete item decision
+  ✓ Run verification gates (lint, typecheck, test, iOS build) for spec 001
+  ✓ Map acceptance criteria and edge cases to concrete tests and gate state
+  ✓ Update tasks/todo.md with this iteration checklist and review evidence
+  ✓ Commit and push iteration updates if all gates pass
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+
+thinking
+**Confirming final completion criteria**
+codex
+<promise>DONE</promise>
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+index 1700bb04547af9c6e34ea1f4c7048f91793d8746..9b0718a404b7a2a1d5267edc39a7a7f2db8bd77d
+--- a/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
++++ b/specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+@@ -40,7 +40,7 @@
+ 
+ - [ ] CHK016 Are performance expectations for interaction smoothness and responsiveness specific and reviewable? [Non-Functional, Spec §Technical assumptions + SC-003]
+ - [ ] CHK017 Are reliability expectations defined for lifecycle event ordering and no-crash fallback behavior? [Non-Functional, Spec §FR-013, SC-005]
+-- [ ] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Gap]
++- [x] CHK018 Are observability expectations for diagnosable failures and integration issues defined or intentionally deferred? [Resolved: Spec §FR-017 + Assumptions]
+ 
+ ## Dependencies & Assumptions
+ 
+diff --git a/specs/001-native-ios-sheet-bindings/spec.md b/specs/001-native-ios-sheet-bindings/spec.md
+index 9ca3038c4cf7437b5ab51701744f15c67ec38a1e..954abe8d86f199049839ce3881f061478e56bf70
+--- a/specs/001-native-ios-sheet-bindings/spec.md
++++ b/specs/001-native-ios-sheet-bindings/spec.md
+@@ -86,6 +86,7 @@
+ - **FR-014**: System MUST include an example app demonstrating core usage, detent configuration, navigation integration, and animation interoperability.
+ - **FR-015**: System MUST provide in-repository knowledge artifacts that document design decisions, references, and maintenance workflow for the feature.
+ - **FR-016**: System MUST define a conditional Maestro MCP E2E gate for the example app that is non-blocking while implementation is unstable and blocking only after stability criteria are met.
++- **FR-017**: System MUST provide diagnosable developer-facing observability for integration failures through deterministic validation errors and development warnings, while explicitly deferring production telemetry integration beyond these diagnostics for v1.
+ 
+ ### Key Entities *(include if feature involves data)*
+ 
+@@ -126,3 +127,4 @@
+ - v1 focuses on iOS-native fidelity; equivalent Android native parity is out of scope.
+ - The package targets New Architecture React Native projects that can host Nitro Views.
+ - Integration with navigation and animation is scoped to documented supported pathways rather than unlimited interoperability guarantees.
++- Production telemetry and analytics plumbing is intentionally deferred for v1; observability scope is limited to deterministic validation errors, lifecycle callbacks, and documented development warnings.
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 8b81ca36de22ae887d3e8e95aaed31c8f1e37caa..cbc8eb9215fc1280f1a757c81a55cb6e174f8646
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -462,3 +462,30 @@
+   - Native build health check passed: `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`.
+ - Maestro gate outcome:
+   - Active spec marker remains `E2E Gate State: deferred`; Maestro MCP is non-blocking for this iteration.
++
++## Ralph Iteration 2026-02-12 (Spec Checklist Gap CHK018)
++
++- [x] Confirm the highest-priority incomplete item in `specs/` and verify it is not already resolved
++- [x] Resolve CHK018 by explicitly defining observability expectations or documenting intentional deferral in `specs/001-native-ios-sheet-bindings/spec.md`
++- [x] Update checklist tracking in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`
++- [x] Run and pass verification gates: `yarn lint`, `yarn typecheck`, `yarn test`, `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build`
++- [x] Capture results in `tasks/todo.md` Review Addendum with Maestro gate disposition
++
++## Review Addendum (2026-02-12, Spec Checklist Gap CHK018)
++
++- Discovery verification:
++  - Highest-priority unresolved gap in `specs/` was `CHK018` in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++  - `IMPLEMENTATION_PLAN.md` and `specs/001-native-ios-sheet-bindings/tasks.md` have no unchecked `- [ ]` items.
++  - `gh issue list --state open` returned no open issues.
++  - No external tracker resources are configured via MCP.
++- Resolution delivered:
++  - Added `FR-017` in `specs/001-native-ios-sheet-bindings/spec.md` to define developer-facing observability obligations and explicit v1 telemetry deferral.
++  - Added matching assumption text in `specs/001-native-ios-sheet-bindings/spec.md` to document observability boundaries.
++  - Marked `CHK018` complete in `specs/001-native-ios-sheet-bindings/checklists/native-sheet.md`.
++- Verification gates:
++  - `yarn lint` passed (0 errors, 3 warnings from generated `coverage/lcov-report/*` artifacts).
++  - `yarn typecheck` passed.
++  - `yarn test` passed (13/13 suites, 44 passed, 19 todo).
++  - `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build` passed (`** BUILD SUCCEEDED **`).
++- Maestro gate outcome:
++  - Active feature spec still sets `E2E Gate State: deferred`; Maestro MCP remains non-blocking for this iteration.
+
+tokens used
+87,894
+<promise>DONE</promise>

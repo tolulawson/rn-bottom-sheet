@@ -1,0 +1,2302 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c51a3-6e3d-7322-a519-a7da63f1378a
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 3b: Conditional Maestro MCP E2E Gate (Example App)
+
+Identify the active feature spec and check its E2E gate marker:
+- Look for `E2E Gate State: deferred|required` in `specs/<feature>/spec.md`.
+- Default to `deferred` if the marker is missing.
+
+Gate behavior:
+- If `deferred`: do NOT block this loop iteration. Log that Maestro MCP was skipped and why.
+- If `required`: Maestro MCP is a hard gate for completion.
+
+When `required`, run Maestro MCP against the example app and verify at least:
+- sheet opens from example UI
+- sheet dismisses cleanly
+- detent interaction works
+- primary in-sheet navigation flow works
+
+If any required Maestro MCP flow fails, do NOT output `<promise>DONE</promise>`.
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Maestro MCP gate satisfied (or explicitly deferred in the active spec)
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: maestro starting
+mcp: codex_apps starting
+mcp: context7 starting
+mcp: codex_apps ready
+mcp: maestro ready
+mcp: context7 ready
+mcp startup: ready: codex_apps, maestro, context7
+
+thinking
+**Planning initial repo inspection**
+codex
+I’m going to run the Ralph loop end-to-end: first I’ll read `.specify/memory/constitution.md`, then discover the highest-priority incomplete work item, verify it isn’t already implemented, and proceed through implementation, validation, and repo updates.
+exec
+/bin/zsh -lc 'cat .specify/memory/constitution.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+
+thinking
+**Planning task list creation**
+codex
+I’ve loaded the constitution and will now discover incomplete work in priority order (`specs/`, `IMPLEMENTATION_PLAN.md`, then issue trackers), then I’ll create/update `tasks/todo.md` with an execution plan before making changes.
+exec
+/bin/zsh -lc 'if [ -f IMPLEMENTATION_PLAN.md ]; then echo IMPLEMENTATION_PLAN.md; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'ls -la' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg --files specs || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+IMPLEMENTATION_PLAN.md
+ succeeded in 52ms:
+total 1184
+drwxr-xr-x   46 tolu  staff    1472 Feb 12 02:30 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 03:36 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+-rw-r--r--@   1 tolu  staff    5406 Feb 12 00:45 CONTRIBUTING.md
+ succeeded in 52ms:
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/tasks.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/contracts/bottom-sheet-api.yaml
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+
+thinking
+**Planning status inspection and skill usage**
+codex
+I’m using the `ralph-wiggum` skill because you explicitly requested Ralph Build Mode; I’ll follow its loop while keeping task tracking in `tasks/todo.md` as instructed.
+exec
+/bin/zsh -lc "cat '/Users/tolu/.agents/skills/ralph-wiggum/SKILL.md'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+---
+name: ralph-wiggum
+description: Autonomous AI coding with spec-driven development. Implements Geoffrey Huntley's iterative bash loop methodology where agents work through specs one at a time, outputting a completion signal only when acceptance criteria are 100% met.
+license: MIT
+metadata:
+  author: fstandhartinger
+  version: "1.0"
+  repository: https://github.com/fstandhartinger/ralph-wiggum
+  website: https://ralph-wiggum.ai
+---
+
+# Ralph Wiggum
+
+> Autonomous AI coding with spec-driven development
+
+## What is Ralph Wiggum?
+
+Ralph Wiggum combines **Geoffrey Huntley's iterative bash loop** with **spec-driven development** for fully autonomous AI-assisted software development.
+
+The key insight: **Fresh context each iteration**. Each loop starts a new agent process with a clean context window, preventing context overflow and degradation.
+
+thinking
+**Planning multi-command spec scan**
+codex
+Next I’m checking status markers and unchecked tasks to identify the highest-priority incomplete item, then I’ll verify whether it’s already implemented before touching code.
+exec
+/bin/zsh -lc 'rg -n "''^- '"\\[ \\]\" IMPLEMENTATION_PLAN.md || true" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:|''^##'"\\s+Status:\" specs" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "E2E Gate State:" specs/*/spec.md || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+20:- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+24:- [ ] [HIGH] Implement present() flow with completion callback - from IMPLEMENTATION_PLAN API Design
+25:- [ ] [HIGH] Implement dismiss() flow with reason mapping - from IMPLEMENTATION_PLAN API Design
+26:- [ ] [HIGH] Implement lifecycle event bridge (onWillPresent, onDidPresent, onWillDismiss, onDidDismiss) - from IMPLEMENTATION_PLAN API Design
+27:- [ ] [HIGH] Implement dismissal reason detection (swipe, backdrop, programmatic, system) - from IMPLEMENTATION_PLAN API Design
+28:- [ ] [MEDIUM] Implement grabberVisible prop mapping to prefersGrabberVisible - from IMPLEMENTATION_PLAN API Design
+29:- [ ] [MEDIUM] Implement allowSwipeToDismiss behavior - from IMPLEMENTATION_PLAN API Design
+30:- [ ] [MEDIUM] Implement expandsWhenScrolledToEdge mapping - from IMPLEMENTATION_PLAN API Design
+31:- [ ] [MEDIUM] Implement cornerRadius mapping - from IMPLEMENTATION_PLAN API Design
+32:- [ ] [MEDIUM] Implement largestUndimmedDetent mapping - from IMPLEMENTATION_PLAN API Design
+33:- [ ] [MEDIUM] Implement backgroundInteraction behavior - from IMPLEMENTATION_PLAN API Design
+34:- [ ] [MEDIUM] Implement snapToDetent() with animateChanges batching - from ios-sheet-apis.md
+35:- [ ] [LOW] Implement single active sheet enforcement (manager-level ownership) - from IMPLEMENTATION_PLAN Architecture
+39:- [ ] [HIGH] Create native container view for RN children inside sheet - from ADR-0002
+40:- [ ] [HIGH] Implement RN children mounting into native-hosted container - from ADR-0002
+41:- [ ] [HIGH] Implement attach lifecycle handling - from nitro-view-components.md
+42:- [ ] [HIGH] Implement detach lifecycle handling - from nitro-view-components.md
+43:- [ ] [HIGH] Implement prepareForRecycle() for recycled view cleanup - from nitro-view-components.md
+44:- [ ] [MEDIUM] Handle thread-safety for props arriving from different threads - from nitro-view-components.md
+45:- [ ] [MEDIUM] Implement beforeUpdate()/afterUpdate() for batched prop application - from nitro-view-components.md
+ exited 1 in 51ms:
+
+ succeeded in 52ms:
+
+
+thinking
+**Assessing incomplete spec statuses**
+codex
+I found many unchecked items in `IMPLEMENTATION_PLAN.md`; I’m now enumerating incomplete spec files and checking GitHub issues so we can select the true highest-priority item per your ordering rules.
+exec
+/bin/zsh -lc 'git remote -v' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'for f in $(find specs -name '"'*.md' | sort); do if "'! rg -q '"'"'^## Status: COMPLETE$'"' \""'$f"; then echo "$f"; fi; done' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 50ms:
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (fetch)
+origin	https://github.com/tolulawson/rn-bottom-sheet.git (push)
+ succeeded in 53ms:
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md
+specs/001-native-ios-sheet-bindings/checklists/requirements.md
+specs/001-native-ios-sheet-bindings/data-model.md
+specs/001-native-ios-sheet-bindings/plan.md
+specs/001-native-ios-sheet-bindings/quickstart.md
+specs/001-native-ios-sheet-bindings/research.md
+specs/001-native-ios-sheet-bindings/spec.md
+specs/001-native-ios-sheet-bindings/tasks.md
+exec
+/bin/zsh -lc 'gh issue list --state open --limit 50 2>&1 || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 527ms:
+
+
+thinking
+**Inspecting priorities in spec and tasks**
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [x] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 51ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+
+1. **Given** a screen using the library, **When** the developer triggers open state, **Then** a native iOS sheet appears and displays provided child content.
+ succeeded in 52ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+
+thinking
+**Prioritizing incomplete tasks**
+codex
+I identified the active feature (`001-native-ios-sheet-bindings`) as incomplete and I’m now verifying which unchecked item is genuinely not implemented in code before selecting it as the highest-priority task to execute.
+exec
+/bin/zsh -lc "sed -n '1,260p' src/index.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/components/BottomSheetNativeView.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 53ms:
+sed: src/components/BottomSheetNativeView.tsx: No such file or directory
+ succeeded in 53ms:
+/**
+ * rn-bottom-sheet
+ *
+ * Native iOS sheet bindings for React Native using Nitro Views.
+ */
+
+import { BottomSheet } from './components/BottomSheet';
+import { RnBottomSheetView } from './native/RnBottomSheetView';
+
+// =============================================================================
+// Public Components
+// =============================================================================
+
+/**
+ * Public BottomSheet wrapper component.
+ */
+export { BottomSheet };
+
+/**
+ * Internal native view component export for advanced use-cases.
+ succeeded in 53ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+
+thinking
+**Prioritizing first incomplete task**
+codex
+I confirmed `T028` is the first unchecked spec task and it is genuinely incomplete: `src/index.tsx` does not export the navigation adapter yet. I’ll now create a short plan block in `tasks/todo.md`, check in with you, then implement + verify.
+exec
+/bin/zsh -lc "ls -la src/navigation && sed -n '1,260p' src/navigation/bottom-sheet-adapter.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg -n \"createBottomSheetNavigationAdapter|useBottomSheetNavigation|from './navigation|navigation\" src/__tests__ example/src/__tests__ || true" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+total 8
+drwxr-xr-x@  3 tolu  staff    96 Feb 12 03:34 .
+drwxr-xr-x@ 11 tolu  staff   352 Feb 12 03:34 ..
+-rw-r--r--@  1 tolu  staff  2601 Feb 12 03:34 bottom-sheet-adapter.ts
+import { useMemo, useRef } from 'react';
+import type {
+  BottomSheetChangeReason,
+  OnOpenChangeCallback,
+} from '../types/bottom-sheet';
+
+/**
+ * Configuration for mapping route state to controlled BottomSheet props.
+ */
+export interface BottomSheetNavigationAdapterOptions {
+  /**
+   * Whether the navigation state expects the sheet to be open.
+   */
+  routeIsOpen: boolean;
+  /**
+   * Called when the sheet requests an open transition.
+ succeeded in 52ms:
+src/__tests__/bottom-sheet.navigation.test.ts:45:describe('bottom-sheet navigation sync behavior', () => {
+src/__tests__/bottom-sheet-adapter.test.ts:4:  createBottomSheetNavigationAdapter,
+src/__tests__/bottom-sheet-adapter.test.ts:5:  useBottomSheetNavigation,
+src/__tests__/bottom-sheet-adapter.test.ts:7:} from '../navigation/bottom-sheet-adapter';
+src/__tests__/bottom-sheet-adapter.test.ts:10:describe('createBottomSheetNavigationAdapter', () => {
+src/__tests__/bottom-sheet-adapter.test.ts:12:    const adapter = createBottomSheetNavigationAdapter({
+src/__tests__/bottom-sheet-adapter.test.ts:23:    const adapter = createBottomSheetNavigationAdapter({
+src/__tests__/bottom-sheet-adapter.test.ts:40:    const adapter = createBottomSheetNavigationAdapter({
+src/__tests__/bottom-sheet-adapter.test.ts:66:  const adapter = useBottomSheetNavigation({
+src/__tests__/bottom-sheet-adapter.test.ts:79:describe('useBottomSheetNavigation', () => {
+
+thinking
+**Preparing iteration task list**
+codex
+I’m about to update `tasks/todo.md` with a new Ralph iteration checklist for `T028` (plan-first), then I’ll implement the export change and run verification commands.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -204 +204,9 @@
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 31ms:
+Success. Updated the following files:
+M tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning export implementation check-in**
+exec
+/bin/zsh -lc 'cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.contract.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+ succeeded in 51ms:
+/**
+ * Contract tests for bottom sheet API behavior
+ *
+ * These tests validate the public API contract without requiring
+ * the native implementation. They focus on:
+ * - Type definitions and exports
+ * - Validation logic
+ * - Error handling
+ */
+
+describe('BottomSheet Contract', () => {
+  describe('Type Exports', () => {
+    it.todo('should export BottomSheetDetent type');
+    it.todo('should export BottomSheetProps type');
+    it.todo('should export BottomSheetMethods type');
+    it.todo('should export BottomSheetChangeReason type');
+  });
+
+  describe('Detent Validation', () => {
+    it.todo('should accept valid semantic detents (medium, large)');
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning export and task updates**
+codex
+Plan is in place and verified; I’m now implementing `T028` by exporting the navigation adapter APIs/types from `src/index.tsx`, then I’ll mark task state and run lint/typecheck/test.
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/index.tsx
+@@ -82,2 +82,16 @@
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+apply_patch(auto_approved=true) exited 0 in 23ms:
+Success. Updated the following files:
+M src/index.tsx
+file update:
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating task status and considering export test**
+codex
+The export change is in; next I’m synchronizing task tracking (`specs/.../tasks.md` and `tasks/todo.md`) and then executing verification commands.
+exec
+/bin/zsh -lc "sed -n '110,210p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '260,420p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "T028|US3 Navigation Adapter Entry Export" specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+
+---
+
+## Phase 6: Polish & Cross-Cutting Concerns
+
+**Purpose**: Align docs, verification scripts, and release readiness.
+
+- [ ] T032 [P] Update public usage documentation and API surface in README.md
+- [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
+- [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
+- [ ] T035 Execute validation commands and capture results in tasks/todo.md
+- [ ] T036 [P] Add Maestro example-app E2E flow definitions in example/.maestro/sheet-core-flows.yaml
+- [ ] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
+- [ ] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
+
+---
+
+## Dependencies & Execution Order
+
+### Phase Dependencies
+ succeeded in 50ms:
+
+ succeeded in 50ms:
+tasks/todo.md:206:## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
+tasks/todo.md:208:- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
+tasks/todo.md:210:- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+file update:
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Verifying file content length**
+exec
+/bin/zsh -lc 'tail -n 120 tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+  - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+  - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+- Residual Risks:
+  - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+  - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+- Follow-ups:
+  - Add explicit JS-level validation around `backgroundInteraction` before sending values to native layer.
+  - Add iOS integration coverage for wrapper-driven lifecycle transitions and dismissal reasons.
+
+## Ralph Iteration 2026-02-12 (Phase 1 Verification Blocker)
+
+- [x] Confirm highest-priority unfinished Phase 1 item and verify it is not already complete
+- [x] Regenerate Nitro artifacts for current `src/RnBottomSheet.nitro.ts` contract
+- [x] Fix callback wiring/type mismatches in `example/src/App.tsx` so `yarn typecheck` passes
+- [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Record verification outcomes in Review section and update completed checkboxes
+
+## Ralph Iteration 2026-02-12 (Phase 2 High-Priority Detent Gap)
+file update:
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning patch after tests**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -103,3 +103,3 @@
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+apply_patch(auto_approved=true) exited 0 in 36ms:
+Success. Updated the following files:
+M specs/001-native-ios-sheet-bindings/tasks.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..434b7880df680cc9b15a919adfc4ff821f8759e0
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [ ] Export optional navigation adapter entry points from `src/index.tsx`
++- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Updating todo checklist progress**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -207,5 +207,5 @@
+ 
+-- [ ] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
+-- [ ] Export optional navigation adapter entry points from `src/index.tsx`
+-- [ ] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+apply_patch(auto_approved=true) exited 0 in 56ms:
+Success. Updated the following files:
+M tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Preparing combined verification command**
+codex
+I’ve synced task state; now running verification (`yarn lint`, `yarn typecheck`, `yarn test`) to prove the change is safe before closing this iteration.
+exec
+/bin/zsh -lc 'yarn lint && yarn typecheck && yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 4.89s:
+watchman warning:  Recrawled this watch 1 time, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/tolu/Desktop/dev/rn-bottom-sheet' ; watchman watch-project '/Users/tolu/Desktop/dev/rn-bottom-sheet'`
+
+PASS src/__tests__/bottom-sheet-adapter.test.ts
+PASS src/__tests__/bottom-sheet.reanimated.test.ts
+PASS example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+PASS src/__tests__/bottom-sheet.navigation.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.methods.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+PASS src/__tests__/index.test.tsx
+
+Test Suites: 10 passed, 10 total
+Tests:       19 todo, 32 passed, 51 total
+Snapshots:   0 total
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning task completion and commit**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M src/index.tsx
+ M tasks/todo.md
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Deciding selective commit approach**
+exec
+/bin/zsh -lc 'rg -n "''^## Review|''^- Residual Risks|US3 Navigation Adapter Entry Export T028|Run and pass verification" tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+58:## Review
+97:- Residual Risks:
+136:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+143:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+151:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+159:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+167:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+177:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+185:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+194:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+203:- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+206:## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
+211:- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Assessing insertion point**
+exec
+/bin/zsh -lc "sed -n '58,110p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+## Review
+
+- Date: 2026-02-12
+- Reviewer: Codex (GPT-5)
+- Findings:
+  - Ralph iteration `T027`: added `src/navigation/bottom-sheet-adapter.ts` with optional navigation sync helpers (`createBottomSheetNavigationAdapter` and `useBottomSheetNavigation`) that map route state to controlled sheet props and avoid circular open/close dispatch when state is already aligned.
+  - Added `src/__tests__/bottom-sheet-adapter.test.ts` to verify route-state mapping, open/close callback propagation, and loop-prevention behavior for matching states.
+  - Marked `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Ralph iteration `T026`: added `src/__tests__/bottom-sheet.reanimated.test.ts` to lock the documented Reanimated compatibility contract for `createAnimatedComponent` wrapping of both `BottomSheet` and `BottomSheetView`, including ref-method continuity and animated prop pass-through behavior.
+  - No production-code changes were required for `T026`; the existing wrapper/native export surface already satisfied the contract once coverage was added.
+  - Marked `T026` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Ralph iteration `T025`: added `src/__tests__/bottom-sheet.navigation.test.ts` to verify navigation-style controlled state synchronization, native close-intent callback propagation, and callback-only controlled imperative flow to avoid circular present/dismiss loops.
+  - Marked `T025` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+  - Ralph iteration `T024`: expanded `example/src/App.tsx` with detent snap controls, behavior toggles (`grabberVisible`, `allowSwipeToDismiss`, `expandsWhenScrolledToEdge`, and cycled `backgroundInteraction`), and ref-driven snap usage in the example.
+  - Updated `example/src/__tests__/sheet-open-dismiss.integration.test.tsx` to validate new controls with a ref-capable `BottomSheet` mock and assertions for toggles/detent transitions.
+  - Marked `T024` complete in `specs/001-native-ios-sheet-bindings/tasks.md` and synchronized `IMPLEMENTATION_PLAN.md` completion tracking.
+  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..cc825f684dcb95f60b843cc3def50d1fca1a5d88
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -202,3 +202,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture verification outcomes in the Review section
+
+
+thinking
+**Adding bullet points and checkboxes**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -96,2 +96,5 @@
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+@@ -210,3 +213,3 @@
+ - [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+-- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+-- [ ] Capture verification outcomes in the Review section
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+apply_patch(auto_approved=true) exited 0 in 58ms:
+Success. Updated the following files:
+M tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Preparing targeted commit and push**
+codex
+Verification passed. I’m now preparing a focused commit with only the files changed for `T028` (excluding unrelated pre-existing worktree changes), then I’ll push.
+exec
+/bin/zsh -lc 'git diff -- src/index.tsx specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M src/index.tsx
+ M tasks/todo.md
+?? logs/
+?? yarn.lock
+ succeeded in 54ms:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14..ac7988b 100644
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42..0b1b0f8 100644
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -79,6 +79,20 @@ export {
+   getDetentsWithDefaults,
+ } from './utils/detents';
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Preparing commit and push steps**
+exec
+/bin/zsh -lc 'git add src/index.tsx specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md && git commit -m "feat: export navigation adapter APIs from package root"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.74s:
+┃  lint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 1.37 seconds)       
+✔️ lint (1.37 seconds)
+╭──────────────────────────────────────╮
+│ 🥊 lefthook v2.1.1  hook: commit-msg │
+╰──────────────────────────────────────╯
+┃  commitlint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.34 seconds)       
+✔️ commitlint (0.34 seconds)
+[main a2713ab] feat: export navigation adapter APIs from package root
+ 3 files changed, 26 insertions(+), 1 deletion(-)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Completing local commit**
+exec
+/bin/zsh -lc 'git push' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 863ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   d7b383e..a2713ab  main -> main
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning next task iteration**
+codex
+I committed and pushed the `T028` change. I’m doing a quick hygiene check of `tasks/lessons.md` now to stay aligned with your workflow rules before deciding the next iteration step.
+exec
+/bin/zsh -lc "if [ -f tasks/lessons.md ]; then sed -n '1,220p' tasks/lessons.md; else echo \"<missing>\"; fi" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Lessons
+
+## Template
+
+- Date:
+- Trigger:
+- Mistake Pattern:
+- Prevention Rule:
+- Action Taken:
+
+## Entries
+
+- Date: 2026-02-12
+- Trigger: User clarified "tax" meant "tasks" and requested direct execution.
+- Mistake Pattern: Treating ambiguous phrasing as a blocking clarification point instead of acting on clear intent.
+- Prevention Rule: When user intent is operationally clear, execute directly and interpret minor wording ambiguity in context.
+- Action Taken: Added docs/tasks scaffolding and committed plan artifacts without further gating.
+
+- Date: 2026-02-12
+- Trigger: User redirected scope from Bun migration to fixing a specific CI workflow failure.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning next task implementation**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+ M .specify/templates/plan-template.md
+ M .specify/templates/spec-template.md
+ M PROMPT_build.md
+ M PROMPT_plan.md
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/spec.md
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Preparing commit summary details**
+exec
+/bin/zsh -lc 'git show --stat --oneline -1 a2713ab' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+a2713ab feat: export navigation adapter APIs from package root
+ specs/001-native-ios-sheet-bindings/tasks.md |  2 +-
+ src/index.tsx                                | 14 ++++++++++++++
+ tasks/todo.md                                | 11 +++++++++++
+ 3 files changed, 26 insertions(+), 1 deletion(-)
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Planning precise edit reporting**
+exec
+/bin/zsh -lc "nl -ba specs/001-native-ios-sheet-bindings/tasks.md | sed -n '96,112p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "nl -ba src/index.tsx | sed -n '70,120p'" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "nl -ba tasks/todo.md | sed -n '88,104p;208,220p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+    96	### Tests for User Story 3
+    97	
+    98	- [x] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+    99	- [x] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+   100	
+   101	### Implementation for User Story 3
+   102	
+   103	- [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+   104	- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+   105	- [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+   106	- [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+   107	- [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+   108	
+   109	**Checkpoint**: User Story 3 is independently functional and documented.
+   110	
+   111	---
+   112	
+ succeeded in 52ms:
+    88	  - `yarn nitrogen` initially failed due Nitro parser limitations in `src/RnBottomSheet.nitro.ts` (inline union type and mixed string-literal/number union). Resolved by extracting `NativeDetentType` and widening `NativeBackgroundInteraction` bridge type to `string | number`.
+    89	  - `yarn typecheck` initially failed in `example/src/App.tsx` because Nitro view callbacks were passed as plain functions. Resolved by wrapping callback props with `callback(...)` from `react-native-nitro-modules`.
+    90	  - `yarn lint`, `yarn typecheck`, and `yarn test` now pass.
+    91	  - Added `fit` detent support to public type model and deterministic JS/native detent normalization rules (sorted low-to-high, deduped resolved values, unique custom ids).
+    92	  - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+    93	  - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+    94	  - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+    95	  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+    96	  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+    97	  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
+    98	  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
+    99	  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+   100	- Residual Risks:
+   101	  - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   102	  - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+   103	- Follow-ups:
+   104	  - Add explicit JS-level validation around `backgroundInteraction` before sending values to native layer.
+   208	
+   209	## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
+   210	
+ succeeded in 53ms:
+    70	  // Type guards
+    71	  isSemanticDetent,
+    72	  isFractionDetent,
+    73	  isPointsDetent,
+    74	  // Native mapping
+    75	  detentToNativeIdentifier,
+    76	  detentsToNativeConfig,
+    77	  // Defaults
+    78	  DEFAULT_DETENTS,
+    79	  getDetentsWithDefaults,
+    80	} from './utils/detents';
+    81	
+    82	// =============================================================================
+    83	// Optional Integration Utilities
+    84	// =============================================================================
+    85	
+    86	export {
+    87	  createBottomSheetNavigationAdapter,
+    88	  useBottomSheetNavigation,
+    89	} from './navigation/bottom-sheet-adapter';
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+
+thinking
+**Summarizing final report details**
+codex
+Selected and completed highest-priority truly incomplete spec task: `T028` (US3) from `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+
+Changes made:
+- Exported navigation adapter APIs and types from package root in `src/index.tsx:86`.
+- Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+- Added iteration plan/results tracking in `tasks/todo.md:209` and review notes in `tasks/todo.md:97`.
+
+Validation:
+- Ran `yarn lint && yarn typecheck && yarn test` successfully.
+- Jest result: 10/10 suites passed, 32 tests passed.
+
+Git:
+- Commit: `a2713ab` (`feat: export navigation adapter APIs from package root`)
+- Pushed to `origin/main`.
+
+Ralph gate status:
+- `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is `deferred`, so Maestro MCP is non-blocking and was skipped this iteration.
+- Remaining incomplete tasks exist (`T029+`), so `<promise>DONE</promise>` is not emitted.
+
+Next step:
+1. Continue with `T029` (`src/components/BottomSheetNativeView.tsx`) as the next highest-priority unchecked spec task.
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 44f1a14a92300a3f9733887e6dcd3dbbb2ad53cb..ac7988bf76848eac2420ba0d915b55fdc81e3418
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -101,7 +101,7 @@
+ ### Implementation for User Story 3
+ 
+ - [x] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+-- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
++- [x] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+ - [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+ - [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+ - [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+diff --git a/src/index.tsx b/src/index.tsx
+index ff40a42f1825e85e010101313ab98dab7763f56e..0b1b0f85776c158eaabcbd9af539bdc7afa7f30c
+--- a/src/index.tsx
++++ b/src/index.tsx
+@@ -80,6 +80,20 @@
+ } from './utils/detents';
+ 
+ // =============================================================================
++// Optional Integration Utilities
++// =============================================================================
++
++export {
++  createBottomSheetNavigationAdapter,
++  useBottomSheetNavigation,
++} from './navigation/bottom-sheet-adapter';
++
++export type {
++  BottomSheetNavigationAdapter,
++  BottomSheetNavigationAdapterOptions,
++} from './navigation/bottom-sheet-adapter';
++
++// =============================================================================
+ // Nitro Types (for advanced usage)
+ // =============================================================================
+ 
+diff --git a/tasks/todo.md b/tasks/todo.md
+index cced8412f8c07fcdcc9014bbaad0c940dfca76c0..e0cc135c543c119c28f101a4f0fae36745e1be30
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -94,6 +94,9 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
+   - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
+   - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
++  - Ralph iteration `T028`: exported optional navigation adapter APIs (`createBottomSheetNavigationAdapter`, `useBottomSheetNavigation`) and adapter types from the package root in `src/index.tsx`.
++  - Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -202,3 +205,11 @@
+ - [x] Mark `T027` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+ - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in the Review section
++
++## Ralph Iteration 2026-02-12 (US3 Navigation Adapter Entry Export T028)
++
++- [x] Confirm `T028` is the highest-priority truly incomplete item and verify `src/index.tsx` does not already export navigation adapter utilities
++- [x] Export optional navigation adapter entry points from `src/index.tsx`
++- [x] Mark `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture verification outcomes in the Review section
+
+tokens used
+52,559
+Selected and completed highest-priority truly incomplete spec task: `T028` (US3) from `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+
+Changes made:
+- Exported navigation adapter APIs and types from package root in `src/index.tsx:86`.
+- Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+- Added iteration plan/results tracking in `tasks/todo.md:209` and review notes in `tasks/todo.md:97`.
+
+Validation:
+- Ran `yarn lint && yarn typecheck && yarn test` successfully.
+- Jest result: 10/10 suites passed, 32 tests passed.
+
+Git:
+- Commit: `a2713ab` (`feat: export navigation adapter APIs from package root`)
+- Pushed to `origin/main`.
+
+Ralph gate status:
+- `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is `deferred`, so Maestro MCP is non-blocking and was skipped this iteration.
+- Remaining incomplete tasks exist (`T029+`), so `<promise>DONE</promise>` is not emitted.
+
+Next step:
+1. Continue with `T029` (`src/components/BottomSheetNativeView.tsx`) as the next highest-priority unchecked spec task.

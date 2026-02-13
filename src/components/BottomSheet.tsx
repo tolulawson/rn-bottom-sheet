@@ -182,7 +182,7 @@ export const BottomSheet = forwardRef<BottomSheetMethods, BottomSheetProps>(
     );
 
     if (!supported) {
-      return <View>{children}</View>;
+      return resolvedIsOpen ? <View>{children}</View> : null;
     }
 
     return (

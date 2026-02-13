@@ -1,0 +1,20 @@
+Selected and completed the highest-priority truly incomplete item: `T010` (US1 lifecycle callback unit tests).
+
+Changes made:
+- Added lifecycle unit tests: `src/__tests__/bottom-sheet.lifecycle.test.ts`
+- Added reusable lifecycle handler mapper: `src/components/bottom-sheet-utils.ts`
+- Wired `BottomSheet` to use that mapper: `src/components/BottomSheet.tsx`
+- Marked `T010` complete: `specs/001-native-ios-sheet-bindings/tasks.md`
+- Added iteration plan/results + review notes: `tasks/todo.md`
+
+Verification run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (all 5 suites passing; new lifecycle suite included)
+
+Git:
+- Commit: `fdc6530`
+- Message: `test: add lifecycle callback unit coverage for bottom sheet`
+- Push: `main` -> `origin/main` succeeded
+
+Not outputting `<promise>DONE</promise>` because `001-native-ios-sheet-bindings` still has remaining unchecked tasks (for example `T011+`).

@@ -100,6 +100,12 @@
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
+### Documentation Impact *(mandatory)*
+
+- **README Update Required**: [Yes/No]
+- **Why**: [State whether public API surface area or user-visible behavior changes are introduced]
+- **README Sections to Update**: [List exact README sections/anchors when required]
+
 ## Success Criteria *(mandatory)*
 
 <!--
@@ -107,9 +113,18 @@
   These must be technology-agnostic and measurable.
 -->
 
+### Maestro E2E Coverage *(mandatory)*
+
+- **Required Tooling**: Maestro (via Maestro MCP where available)
+- **Required Flows**: [List primary and critical alternate user flows affected by this feature]
+- **Pass Requirement**: Feature completion requires all defined Maestro scenarios to pass for affected flows
+- **Evidence Location**: [Where results/logs are recorded in repo task/review artifacts]
+
 ### Measurable Outcomes
 
 - **SC-001**: [Measurable metric, e.g., "Users can complete account creation in under 2 minutes"]
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-005**: [Maestro E2E metric, e.g., "Maestro scenarios for all affected primary/critical flows pass 100% before completion"]
+- **SC-006**: [Documentation metric, e.g., "README is updated in the same change set for all public API or user-visible behavior changes"]

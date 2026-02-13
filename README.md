@@ -134,6 +134,8 @@ yarn docs:check
 
 ## Contributing
 
+- If a change modifies public API surface area, usage behavior, or other user-visible library
+  contracts, update this README in the same branch/PR.
 - [Development workflow](CONTRIBUTING.md#development-workflow)
 - [Sending a pull request](CONTRIBUTING.md#sending-a-pull-request)
 - [Code of conduct](CODE_OF_CONDUCT.md)

@@ -1,0 +1,4722 @@
+OpenAI Codex v0.98.0 (research preview)
+--------
+workdir: /Users/tolu/Desktop/dev/rn-bottom-sheet
+model: gpt-5.3-codex
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: auto
+session id: 019c517b-7c24-7862-b7c2-c73b5a458fad
+--------
+user
+# Ralph Build Mode
+
+Based on Geoffrey Huntley's Ralph Wiggum methodology.
+
+---
+
+## Phase 0: Orient
+
+Read `.specify/memory/constitution.md` to understand project principles and constraints.
+
+---
+
+## Phase 1: Discover Work Items
+
+Search for incomplete work from these sources (in order):
+
+1. **specs/ folder** — Look for `.md` files NOT marked `## Status: COMPLETE`
+2. **IMPLEMENTATION_PLAN.md** — If exists, find unchecked `- [ ]` tasks
+3. **GitHub Issues** — Check for open issues (if this is a GitHub repo)
+4. **Any task tracker** — Jira, Linear, etc. if configured
+
+Pick the **HIGHEST PRIORITY** incomplete item:
+- Lower numbers = higher priority (001 before 010)
+- `[HIGH]` before `[MEDIUM]` before `[LOW]`
+- Bugs/blockers before features
+
+Before implementing, search the codebase to verify it's not already done.
+
+---
+
+## Phase 1b: Re-Verification Mode (No Incomplete Work Found)
+
+**If ALL specs appear complete**, don't just exit — do a quality check:
+
+1. **Randomly pick** one completed spec from `specs/`
+2. **Strictly re-verify** ALL its acceptance criteria:
+   - Run the actual tests mentioned in the spec
+   - Manually verify each criterion is truly met
+   - Check edge cases
+   - Look for regressions
+3. **If any criterion fails**: Unmark the spec as complete and fix it
+4. **If all pass**: Output `<promise>DONE</promise>` to confirm quality
+
+This ensures the codebase stays healthy even when "nothing to do."
+
+---
+
+## Phase 2: Implement
+
+Implement the selected spec/task completely:
+- Follow the spec's requirements exactly
+- Write clean, maintainable code
+- Add tests as needed
+
+---
+
+## Phase 3: Validate
+
+Run the project's test suite and verify:
+- All tests pass
+- No lint errors
+- The spec's acceptance criteria are 100% met
+
+---
+
+## Phase 4: Commit & Update
+
+1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
+2. `git add -A`
+3. `git commit` with a descriptive message
+4. `git push`
+
+---
+
+## Completion Signal
+
+**CRITICAL:** Only output the magic phrase when the work is 100% complete.
+
+Check:
+- [ ] Implementation matches all requirements
+- [ ] All tests pass
+- [ ] All acceptance criteria verified
+- [ ] Changes committed and pushed
+- [ ] Spec marked as complete
+
+**If ALL checks pass, output:** `<promise>DONE</promise>`
+
+**If ANY check fails:** Fix the issue and try again. Do NOT output the magic phrase.
+
+mcp: codex_apps starting
+mcp: context7 starting
+mcp: codex_apps ready
+mcp: context7 ready
+mcp startup: ready: codex_apps, context7
+
+thinking
+**Confirming task approach and next step**
+codex
+I’ll run the Ralph workflow end-to-end: first I’m reading the constitution and scanning `specs/`, `IMPLEMENTATION_PLAN.md`, and other trackers to identify the highest-priority unfinished item before making any changes.
+
+thinking
+**Preparing parallel repo inspection**
+exec
+/bin/zsh -lc "sed -n '1,220p' .specify/memory/constitution.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:" specs/*.md || true' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'pwd; ls -la; rg --files specs || true; test -f IMPLEMENTATION_PLAN.md && echo IMPLEMENTATION_PLAN.md || true; test -f .specify/memory/constitution.md && echo constitution_found || true' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+zsh:1: no matches found: specs/*.md
+ succeeded in 51ms:
+<!--
+Sync Impact Report
+Version change: 1.0.0 -> 1.1.0
+Modified principles:
+- Native Fidelity First -> I. Native Fidelity First
+- Verification Before Completion -> II. Verification Before Completion
+- Simplicity -> III. Minimal, Intentional Scope
+Added principles:
+- IV. Living Knowledge Base
+- V. Deterministic Integration Contracts
+Added sections:
+- Operational Constraints
+- Workflow & Quality Gates
+Removed sections:
+- Ralph-specific loop mechanics as governing principle source
+Templates/runtime sync status:
+- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
+- ✅ .specify/templates/spec-template.md (reviewed, no change required)
+- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
+- ✅ AGENTS.md (already points to constitution)
+ succeeded in 52ms:
+/Users/tolu/desktop/dev/rn-bottom-sheet
+total 1168
+drwxr-xr-x   46 tolu  staff    1472 Feb 12 02:30 .
+drwxr-xr-x@ 108 tolu  staff    3456 Feb 12 02:05 ..
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .claude
+drwxr-xr-x    3 tolu  staff      96 Feb 12 02:11 .codex
+drwxr-xr-x@   3 tolu  staff      96 Feb 12 01:44 .cursor
+-rw-r--r--@   1 tolu  staff     283 Feb 12 00:45 .editorconfig
+drwxr-xr-x@  14 tolu  staff     448 Feb 12 02:52 .git
+-rw-r--r--@   1 tolu  staff      72 Feb 12 00:45 .gitattributes
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 00:45 .github
+-rw-r--r--@   1 tolu  staff     866 Feb 12 01:45 .gitignore
+-rw-r--r--@   1 tolu  staff       9 Feb 12 00:45 .nvmrc
+drwxr-xr-x@   5 tolu  staff     160 Feb 12 02:02 .specify
+-rw-r--r--@   1 tolu  staff       2 Feb 12 00:45 .watchmanconfig
+drwxr-xr-x@   4 tolu  staff     128 Feb 12 02:26 .yarn
+-rw-r--r--@   1 tolu  staff      96 Feb 12 00:45 .yarnrc.yml
+-rw-------@   1 tolu  staff     756 Feb 12 02:13 AGENTS.md
+-rw-r--r--@   1 tolu  staff     119 Feb 12 01:44 CLAUDE.md
+-rw-r--r--@   1 tolu  staff    5489 Feb 12 00:45 CODE_OF_CONDUCT.md
+
+thinking
+**Planning recursive status scan**
+codex
+I’ve loaded the constitution and workspace layout; next I’m identifying unfinished items in `specs/` and `IMPLEMENTATION_PLAN.md`, then I’ll pick the top-priority task and verify it isn’t already implemented.
+
+thinking
+**Checking incomplete tasks markers**
+exec
+/bin/zsh -lc "sed -n '1,260p' IMPLEMENTATION_PLAN.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "rg -n \"## Status:|\\- \\[ \\]\" specs --glob \"*.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Implementation Plan
+
+> Auto-generated breakdown of specs into tasks.
+> Delete this file to return to working directly from specs.
+
+## Priority Tasks
+
+### Phase 1: API and Nitro Contract
+
+- [x] [HIGH] Define complete TypeScript type model (BottomSheetDetent, BottomSheetChangeReason) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with full public props interface - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Update RnBottomSheet.nitro.ts with public methods (present, dismiss, snapToDetent, getCurrentDetentIndex) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Define callback prop types (onOpenChange, onDetentChange, lifecycle callbacks) - from IMPLEMENTATION_PLAN API Design
+- [x] [HIGH] Regenerate Nitrogen artifacts after contract changes - from tasks/todo.md Phase 1
+- [x] [HIGH] Validate typings compile and exports work correctly - from tasks/todo.md Phase 1
+- [x] [HIGH] Update src/index.tsx to export all public types - from IMPLEMENTATION_PLAN API Design
+
+### Phase 2: iOS Sheet Engine
+
+- [ ] [HIGH] Create SheetPresenterViewController using UISheetPresentationController - from ADR-0001
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/tasks.md:20:- [ ] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+specs/001-native-ios-sheet-bindings/tasks.md:21:- [ ] T002 Add feature contract index pointer in docs/knowledge-index.md
+specs/001-native-ios-sheet-bindings/tasks.md:22:- [ ] T003 [P] Add test file scaffold in src/__tests__/bottom-sheet.contract.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:51:- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:52:- [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:76:- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:84:- [ ] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:98:- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:99:- [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:105:- [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:106:- [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+specs/001-native-ios-sheet-bindings/tasks.md:107:- [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:117:- [ ] T032 [P] Update public usage documentation and API surface in README.md
+specs/001-native-ios-sheet-bindings/tasks.md:118:- [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
+specs/001-native-ios-sheet-bindings/tasks.md:119:- [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
+specs/001-native-ios-sheet-bindings/tasks.md:120:- [ ] T035 Execute validation commands and capture results in tasks/todo.md
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:11:- [ ] CHK001 Are requirements defined for both controlled and imperative sheet control modes? [Completeness, Spec §FR-001, FR-002]
+specs/001-native-ios-sheet-bindings/checklists/native-sheet.md:12:- [ ] CHK002 Are requirements defined for rendering arbitrary child content and not only static content? [Completeness, Spec §FR-003]
+exec
+/bin/zsh -lc 'if command -v gh >/dev/null 2>&1; then gh issue list --state open --limit 50; else echo "gh_not_installed"; fi' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 489ms:
+
+
+thinking
+**Inspecting specs and task statuses**
+codex
+I found multiple unchecked items, and `IMPLEMENTATION_PLAN.md` has several `[HIGH]` open tasks in Phase 2/3/5. I’m now confirming spec completion markers and selecting the single highest-priority item by the rules before I plan in `tasks/todo.md`.
+
+thinking
+**Inspecting specs and tasks**
+exec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/spec.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "''^## Status:|'"\\[HIGH\\]|\\[MEDIUM\\]|\\[LOW\\]|"'^- '"\\[ \\]\" specs/001-native-ios-sheet-bindings/*.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' specs/001-native-ios-sheet-bindings/tasks.md" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+# Feature Specification: Native iOS Sheet Bindings
+
+**Feature Branch**: `001-native-ios-sheet-bindings`  
+**Created**: 2026-02-12  
+**Status**: Draft  
+**Input**: User description: "Build a React Native library that provides native iOS sheet bindings using Nitro Views with React Native children, dynamic detents, React Navigation integration, in-sheet navigation, and Reanimated-compatible APIs."
+
+## User Scenarios & Testing *(mandatory)*
+
+### User Story 1 - Present Native Sheet Content (Priority: P1)
+
+As a React Native developer, I can present and dismiss a native-feeling iOS sheet that renders arbitrary React Native child content so that product experiences match Apple sheet behavior.
+
+**Why this priority**: This is the core product value and the minimum viable capability for the package.
+
+**Independent Test**: In an example app, the developer can open/close a sheet and see custom React Native children rendered correctly without writing custom native code.
+
+**Acceptance Scenarios**:
+
+1. **Given** a screen using the library, **When** the developer triggers open state, **Then** a native iOS sheet appears and displays provided child content.
+ succeeded in 51ms:
+specs/001-native-ios-sheet-bindings/tasks.md:20:- [ ] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+specs/001-native-ios-sheet-bindings/tasks.md:21:- [ ] T002 Add feature contract index pointer in docs/knowledge-index.md
+specs/001-native-ios-sheet-bindings/tasks.md:22:- [ ] T003 [P] Add test file scaffold in src/__tests__/bottom-sheet.contract.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:51:- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:52:- [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:76:- [ ] T019 [P] [US2] Add imperative snap and detent callback tests in src/__tests__/bottom-sheet.methods.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:84:- [ ] T024 [US2] Add example app detent controls and behavior toggles in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:98:- [ ] T025 [P] [US3] Add navigation-sync behavior tests in src/__tests__/bottom-sheet.navigation.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:99:- [ ] T026 [P] [US3] Add reanimated compatibility contract tests in src/__tests__/bottom-sheet.reanimated.test.ts
+specs/001-native-ios-sheet-bindings/tasks.md:103:- [ ] T027 [P] [US3] Create optional navigation adapter helpers in src/navigation/bottom-sheet-adapter.ts
+specs/001-native-ios-sheet-bindings/tasks.md:104:- [ ] T028 [US3] Export optional navigation adapter entry in src/index.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:105:- [ ] T029 [US3] Add documented animated wrapper compatibility surface in src/components/BottomSheetNativeView.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:106:- [ ] T030 [US3] Implement explicit non-iOS fallback behavior and warnings in src/platform/fallback.ts
+specs/001-native-ios-sheet-bindings/tasks.md:107:- [ ] T031 [US3] Add example navigation + animation scenarios in example/src/App.tsx
+specs/001-native-ios-sheet-bindings/tasks.md:117:- [ ] T032 [P] Update public usage documentation and API surface in README.md
+specs/001-native-ios-sheet-bindings/tasks.md:118:- [ ] T033 [P] Record architecture decisions and constraints updates in docs/adr/ADR-0001-ios-sheet-engine.md
+specs/001-native-ios-sheet-bindings/tasks.md:119:- [ ] T034 Add verification and runbook notes for this feature in docs/implementation-plan-v1.md
+specs/001-native-ios-sheet-bindings/tasks.md:120:- [ ] T035 Execute validation commands and capture results in tasks/todo.md
+ succeeded in 51ms:
+# Tasks: Native iOS Sheet Bindings
+
+**Input**: Design documents from `/Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/`  
+**Prerequisites**: plan.md (required), spec.md (required), research.md, data-model.md, contracts/, quickstart.md
+
+**Tests**: Include tests because the specification requires automated verification coverage for API and integration behavior.
+
+**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+
+## Format: `[ID] [P?] [Story] Description`
+
+- **[P]**: Can run in parallel (different files, no dependencies)
+- **[Story]**: Which user story this task belongs to (`[US1]`, `[US2]`, `[US3]`)
+- Include exact file paths in descriptions
+
+## Phase 1: Setup (Shared Infrastructure)
+
+**Purpose**: Prepare feature scaffolding, generated bindings workflow, and test harness entry points.
+
+- [ ] T001 Create feature README entry and scope note in docs/changelog-notes/README.md
+ succeeded in 51ms:
+# Implementation Todo
+
+## Phase 0: Project Memory Bootstrap
+
+- [x] Create `docs/` knowledge base structure
+- [x] Add decision-complete implementation plan
+- [x] Add reference summaries and source index
+- [x] Add ADRs for primary architecture decisions
+- [x] Add sync/check scripts for docs integrity
+
+## Phase 1: API and Nitro Contract
+
+- [x] Finalize public TypeScript API and Nitro view contract
+- [x] Regenerate Nitrogen artifacts
+- [x] Validate typings and exports
+
+## Phase 2: iOS Sheet Engine
+
+- [ ] Implement presenter/controller architecture
+- [ ] Map detent model and lifecycle events
+
+thinking
+**Selecting highest priority incomplete task**
+codex
+I’ve identified the candidate top items; I’m now verifying which highest-priority one is truly not implemented so we can avoid duplicate work before writing the concrete plan into `tasks/todo.md`.
+exec
+/bin/zsh -lc "sed -n '1,320p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' docs/knowledge-index.md 2>/dev/null || echo \"missing docs/knowledge-index.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,220p' docs/changelog-notes/README.md 2>/dev/null || echo \"missing docs/changelog-notes/README.md\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+# Changelog Notes
+
+Use this folder to capture short implementation learnings that are too granular for ADRs but valuable for future work.
+
+Each note should include:
+
+- Date
+- Area touched
+- What changed
+- Why
+- Follow-up risk or TODO
+
+---
+
+## Feature: Native iOS Sheet Bindings (001)
+
+**Branch**: `001-native-ios-sheet-bindings`
+**Started**: 2026-02-12
+**Scope**: iOS-first native sheet bindings via Nitro Views with React Native children, detent support, navigation integration, and Reanimated compatibility.
+
+ succeeded in 51ms:
+# Knowledge Index
+
+Generated from `docs/sources.yaml`.
+
+| ID | Name | Version Pin | Retrieved | Why It Matters | Local Doc | Source |
+| --- | --- | --- | --- | --- | --- | --- |
+| nitro-view-components | Nitro View Components | nitro docs current (retrieved 2026-02-12) | 2026-02-12 | Nitro lifecycle, threading, callback and recycle behavior for host views. | `docs/references/nitro-view-components.md` | [link](https://nitro.margelo.com/docs/view-components) |
+| apple-uikit-sheet | UIKit UISheetPresentationController | Apple docs current (retrieved 2026-02-12) | 2026-02-12 | Primary native engine API semantics for detents, dimming, and transitions. | `docs/references/ios-sheet-apis.md` | [link](https://developer.apple.com/documentation/uikit/uisheetpresentationcontroller) |
+| apple-swiftui-sheet-item | SwiftUI View.sheet(item:onDismiss:content:) | Apple docs current (retrieved 2026-02-12) | 2026-02-12 | SwiftUI sheet semantics relevant to API naming and behavior expectations. | `docs/references/swiftui-sheet-apis.md` | [link](https://developer.apple.com/documentation/swiftui/view/sheet(item:ondismiss:content:)) |
+| apple-swiftui-presentation-detents | SwiftUI presentationDetents(_:) | Apple docs current (retrieved 2026-02-12) | 2026-02-12 | Detent behavior and selection semantics at SwiftUI layer. | `docs/references/swiftui-sheet-apis.md` | [link](https://developer.apple.com/documentation/swiftui/view/presentationdetents(_:)) |
+| react-navigation-native-stack | React Navigation Native Stack Navigator | v7 docs (retrieved 2026-02-12) | 2026-02-12 | Form sheet options and caveats used for adapter design. | `docs/references/react-navigation-form-sheet.md` | [link](https://reactnavigation.org/docs/native-stack-navigator/) |
+| react-navigation-nesting | React Navigation Nesting Navigators | v7 docs (retrieved 2026-02-12) | 2026-02-12 | Action bubbling behavior for in-sheet nested navigation. | `docs/references/react-navigation-form-sheet.md` | [link](https://reactnavigation.org/docs/nesting-navigators/) |
+| reanimated-create-animated-component | Reanimated createAnimatedComponent | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated wrapper contract for custom host components. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/createAnimatedComponent/) |
+| reanimated-use-animated-props | Reanimated useAnimatedProps | Reanimated docs current (retrieved 2026-02-12) | 2026-02-12 | Animated prop and adapter constraints for interop. | `docs/references/reanimated-interop.md` | [link](https://docs.swmansion.com/react-native-reanimated/docs/core/useAnimatedProps/) |
+
+## Feature Contracts
+
+| Feature | Spec | Plan | Tasks | Status |
+| --- | --- | --- | --- | --- |
+| 001-native-ios-sheet-bindings | `specs/001-native-ios-sheet-bindings/spec.md` | `specs/001-native-ios-sheet-bindings/plan.md` | `specs/001-native-ios-sheet-bindings/tasks.md` | In Progress |
+ succeeded in 52ms:
+import UIKit
+
+/**
+ * HybridRnBottomSheet
+ *
+ * Native iOS implementation of the bottom sheet using UISheetPresentationController.
+ * This class conforms to the generated HybridRnBottomSheetSpec protocol from Nitrogen.
+ *
+ * Key responsibilities:
+ * - Present/dismiss native iOS sheets with React Native content
+ * - Map detent configurations to UISheetPresentationController.Detent
+ * - Handle lifecycle callbacks and state changes
+ * - Bridge interaction events back to JavaScript
+ */
+class HybridRnBottomSheet: HybridRnBottomSheetSpec {
+
+    // =========================================================================
+    // MARK: - UIView (required by HybridViewSpec)
+    // =========================================================================
+
+
+thinking
+**Verifying task completion before implementation**
+codex
+Verification found that some earliest unchecked tasks are already implemented (for example `docs/changelog-notes/README.md` and `docs/knowledge-index.md` already include the feature entries). I’m now walking down the task list to find the first genuinely missing highest-priority item and then I’ll lock a plan in `tasks/todo.md`.
+
+thinking
+**Checking file existence for tasks**
+exec
+/bin/zsh -lc "set -e
+printf \"File existence checks for unchecked tasks:\\n\"
+for f in \\
+  src/__tests__/bottom-sheet.contract.test.ts \\
+  src/__tests__/bottom-sheet.lifecycle.test.ts \\
+  example/src/__tests__/sheet-open-dismiss.integration.test.tsx \\
+  src/__tests__/bottom-sheet.methods.test.ts \\
+  src/__tests__/bottom-sheet.navigation.test.ts \\
+  src/__tests__/bottom-sheet.reanimated.test.ts \\
+  src/navigation/bottom-sheet-adapter.ts \\
+  src/components/BottomSheetNativeView.tsx \\
+  src/platform/fallback.ts \\
+  docs/implementation-plan-v1.md
+ do
+  if [ -e \""'$f" ]; then echo "exists: $f"; else echo "missing: $f"; fi
+ done
+
+printf "'"\\nTask marker quick grep:\\n\"
+rg -n \"detent controls|behavior toggles|navigation|Reanimated|fallback|BottomSheetNativeView|snapToDetent|onWillPresent|onDidPresent|onWillDismiss|onDidDismiss\" src example README.md docs/adr/ADR-0001-ios-sheet-engine.md 2>/dev/null | head -n 200" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+File existence checks for unchecked tasks:
+exists: src/__tests__/bottom-sheet.contract.test.ts
+missing: src/__tests__/bottom-sheet.lifecycle.test.ts
+missing: example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+missing: src/__tests__/bottom-sheet.methods.test.ts
+missing: src/__tests__/bottom-sheet.navigation.test.ts
+missing: src/__tests__/bottom-sheet.reanimated.test.ts
+missing: src/navigation/bottom-sheet-adapter.ts
+missing: src/components/BottomSheetNativeView.tsx
+exists: src/platform/fallback.ts
+exists: docs/implementation-plan-v1.md
+
+Task marker quick grep:
+example/src/App.tsx:50:        onWillPresent={() => console.log('Will present')}
+example/src/App.tsx:51:        onDidPresent={() => console.log('Did present')}
+example/src/App.tsx:52:        onWillDismiss={() => console.log('Will dismiss')}
+example/src/App.tsx:53:        onDidDismiss={() => console.log('Did dismiss')}
+src/components/BottomSheet.tsx:21:} from '../platform/fallback';
+src/components/BottomSheet.tsx:47:      onWillPresent,
+src/components/BottomSheet.tsx:48:      onDidPresent,
+
+thinking
+**Verifying top-priority tasks**
+🌐 Searching the web...
+🌐 Searched the web
+
+thinking
+**Correcting execution method**
+codex
+I confirmed several unchecked tasks are stale and already present in code. I’m now validating the remaining top candidates (starting from the smallest task ID still missing) and then I’ll write a concrete execution plan to `tasks/todo.md` before editing code.
+
+thinking
+**Inspecting iOS candidate file**
+exec
+/bin/zsh -lc "sed -n '1,220p' src/__tests__/bottom-sheet.contract.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '320,720p' ios/RnBottomSheet.swift" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'rg -n "class SheetPresenterViewController|onWillPresent|onDidPresent|onWillDismiss|onDidDismiss|dismiss reason|presentationControllerDidDismiss|presentationControllerWillDismiss" ios/RnBottomSheet.swift' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+/**
+ * Contract tests for bottom sheet API behavior
+ *
+ * These tests validate the public API contract without requiring
+ * the native implementation. They focus on:
+ * - Type definitions and exports
+ * - Validation logic
+ * - Error handling
+ */
+
+describe('BottomSheet Contract', () => {
+  describe('Type Exports', () => {
+    it.todo('should export BottomSheetDetent type');
+    it.todo('should export BottomSheetProps type');
+    it.todo('should export BottomSheetMethods type');
+    it.todo('should export BottomSheetChangeReason type');
+  });
+
+  describe('Detent Validation', () => {
+    it.todo('should accept valid semantic detents (medium, large)');
+ succeeded in 51ms:
+              let sheet = contentVC.sheetPresentationController else {
+            return
+        }
+
+        sheet.animateChanges {
+            sheet.detents = buildNativeDetents()
+        }
+    }
+
+    private func updateGrabberVisibility() {
+        guard isCurrentlyPresented,
+              let contentVC = sheetViewController?.contentViewController,
+              let sheet = contentVC.sheetPresentationController else {
+            return
+        }
+
+        sheet.animateChanges {
+            sheet.prefersGrabberVisible = grabberVisible
+        }
+    }
+ succeeded in 51ms:
+107:    var onWillPresent: (() -> Void)?
+108:    var onDidPresent: (() -> Void)?
+109:    var onWillDismiss: (() -> Void)?
+110:    var onDidDismiss: (() -> Void)?
+166:        onWillPresent?()
+172:            self?.onDidPresent?()
+180:        onWillDismiss?()
+185:            self?.onDidDismiss?()
+586:        onWillDismiss?()
+592:        onDidDismiss?()
+622:class SheetPresenterViewController {
+
+thinking
+**Announcing use of Ralph-Wiggum skill**
+codex
+I’m selecting `T010` as the first genuinely incomplete highest-priority task (earlier unchecked items are already done/stale). I’m now applying the `ralph-wiggum` skill workflow and writing a checkable execution plan into `tasks/todo.md` before touching implementation files.
+
+thinking
+**Accessing skill file**
+exec
+/bin/zsh -lc "sed -n '1,260p' '/Users/tolu/.agents/skills/ralph-wiggum/SKILL.md'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+---
+name: ralph-wiggum
+description: Autonomous AI coding with spec-driven development. Implements Geoffrey Huntley's iterative bash loop methodology where agents work through specs one at a time, outputting a completion signal only when acceptance criteria are 100% met.
+license: MIT
+metadata:
+  author: fstandhartinger
+  version: "1.0"
+  repository: https://github.com/fstandhartinger/ralph-wiggum
+  website: https://ralph-wiggum.ai
+---
+
+# Ralph Wiggum
+
+> Autonomous AI coding with spec-driven development
+
+## What is Ralph Wiggum?
+
+Ralph Wiggum combines **Geoffrey Huntley's iterative bash loop** with **spec-driven development** for fully autonomous AI-assisted software development.
+
+The key insight: **Fresh context each iteration**. Each loop starts a new agent process with a clean context window, preventing context overflow and degradation.
+
+thinking
+**Inspecting existing test coverage**
+exec
+/bin/zsh -lc "ls -la src/__tests__; rg -n \"describe\\(|onWillPresent|onDidPresent|snapToDetent|getCurrentDetentIndex|BottomSheet\" src/__tests__/*.ts src/__tests__/*.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+total 32
+drwxr-xr-x@  6 tolu  staff   192 Feb 12 02:48 .
+drwxr-xr-x@ 10 tolu  staff   320 Feb 12 02:47 ..
+-rw-r--r--@  1 tolu  staff  1567 Feb 12 02:22 bottom-sheet.contract.test.ts
+-rw-r--r--@  1 tolu  staff  2931 Feb 12 02:41 bottom-sheet.detents.test.ts
+-rw-r--r--@  1 tolu  staff  2453 Feb 12 02:50 bottom-sheet.wrapper.test.ts
+-rw-r--r--@  1 tolu  staff    25 Feb 12 00:45 index.test.tsx
+src/__tests__/bottom-sheet.contract.test.ts:11:describe('BottomSheet Contract', () => {
+src/__tests__/bottom-sheet.contract.test.ts:12:  describe('Type Exports', () => {
+src/__tests__/bottom-sheet.contract.test.ts:13:    it.todo('should export BottomSheetDetent type');
+src/__tests__/bottom-sheet.contract.test.ts:14:    it.todo('should export BottomSheetProps type');
+src/__tests__/bottom-sheet.contract.test.ts:15:    it.todo('should export BottomSheetMethods type');
+src/__tests__/bottom-sheet.contract.test.ts:16:    it.todo('should export BottomSheetChangeReason type');
+src/__tests__/bottom-sheet.contract.test.ts:19:  describe('Detent Validation', () => {
+src/__tests__/bottom-sheet.contract.test.ts:30:  describe('Configuration Validation', () => {
+src/__tests__/bottom-sheet.contract.test.ts:37:  describe('Component Exports', () => {
+src/__tests__/bottom-sheet.contract.test.ts:38:    it.todo('should export BottomSheet component');
+src/__tests__/bottom-sheet.contract.test.ts:39:    it.todo('should export BottomSheetView native component');
+src/__tests__/bottom-sheet.detents.test.ts:1:import type { BottomSheetDetent } from '../types/bottom-sheet';
+src/__tests__/bottom-sheet.detents.test.ts:11:describe('detent utilities', () => {
+
+thinking
+**Reviewing wrapper test for duplication**
+codex
+I confirmed `T010` is the first real gap: `src/__tests__/bottom-sheet.lifecycle.test.ts` is missing while earlier unchecked items already exist. Next I’ll add a plan section in `tasks/todo.md`, then implement lifecycle callback tests and verify with lint/typecheck/tests.
+
+thinking
+**Updating tasks/todo with plan**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -101 +101,9 @@
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+apply_patch(auto_approved=true) exited 0 in 12ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Updating plan step statuses**
+Plan update
+Selected T010 (first truly incomplete highest-priority task after verifying stale unchecked items). Executing plan from tasks/todo.md.
+  ✓ Confirm T010 is highest-priority incomplete and not already implemented
+  → Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+  • Mark T010 complete in specs/001-native-ios-sheet-bindings/tasks.md
+  • Run verification commands (lint, typecheck, test)
+  • Record outcomes in tasks/todo.md review section
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Inspecting test environment**
+exec
+/bin/zsh -lc "sed -n '1,320p' src/components/BottomSheet.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc "sed -n '1,260p' src/__tests__/bottom-sheet.wrapper.test.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'cat package.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+import {
+  isControlledProps,
+  resolveInitialDetentIndex,
+  resolveSelectedDetentIndex,
+  toNativeBackgroundInteraction,
+  toNativeDetentConfig,
+} from '../components/bottom-sheet-utils';
+import type { BottomSheetProps } from '../types/bottom-sheet';
+
+describe('bottom-sheet wrapper utilities', () => {
+  it('detects controlled props', () => {
+    const controlledProps: BottomSheetProps = {
+      isOpen: false,
+      onOpenChange: jest.fn(),
+    };
+
+    expect(isControlledProps(controlledProps)).toBe(true);
+  });
+
+  it('detects uncontrolled props', () => {
+ succeeded in 53ms:
+import { callback, type HybridRef } from 'react-native-nitro-modules';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { View } from 'react-native';
+import type {
+  NativeChangeReason,
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+import { RnBottomSheetView } from '../native/RnBottomSheetView';
+import {
+  isNativeSheetSupported,
+  warnUnsupportedPlatform,
+ succeeded in 50ms:
+{
+  "name": "rn-bottom-sheet",
+  "version": "0.1.0",
+  "description": "Native bindings to SwiftUI sheet",
+  "main": "./lib/module/index.js",
+  "types": "./lib/typescript/src/index.d.ts",
+  "exports": {
+    ".": {
+      "source": "./src/index.tsx",
+      "types": "./lib/typescript/src/index.d.ts",
+      "default": "./lib/module/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Planning React Native unit tests**
+exec
+/bin/zsh -lc "rg -n \"react-test-renderer|@testing-library|jest\\.mock\\('..\\/native|callback\\(\" src/__tests__ example/src/__tests__ -g \"*.test.ts*\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 2 in 52ms:
+rg: example/src/__tests__: No such file or directory (os error 2)
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Handling missing test directory**
+exec
+/bin/zsh -lc "rg -n \"react-test-renderer|@testing-library|jest\\.mock|render\\(\" src/__tests__ -g \"*.test.ts*\"" in /Users/tolu/Desktop/dev/rn-bottom-sheet exited 1 in 52ms:
+
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Planning lifecycle callback tests**
+codex
+Plan is in `tasks/todo.md`; implementation starts now. I’m adding focused unit tests that assert lifecycle callbacks (`onWillPresent`, `onDidPresent`, `onWillDismiss`, `onDidDismiss`) are forwarded correctly from native events through `BottomSheet`.
+
+thinking
+**Inspecting TypeScript config**
+exec
+/bin/zsh -lc 'cat tsconfig.json' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+{
+  "compilerOptions": {
+    "rootDir": ".",
+    "paths": {
+      "rn-bottom-sheet": ["./src/index"]
+    },
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false,
+    "customConditions": ["react-native-strict-api"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "lib": ["ESNext"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noImplicitUseStrict": false,
+    "noStrictGenericChecks": false,
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Preparing to inspect native view file**
+exec
+/bin/zsh -lc "sed -n '1,240p' src/native/RnBottomSheetView.tsx" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 52ms:
+import { getHostComponent } from 'react-native-nitro-modules';
+import type {
+  RnBottomSheetMethods,
+  RnBottomSheetProps,
+} from '../RnBottomSheet.nitro';
+
+const RnBottomSheetConfig = require('../../nitrogen/generated/shared/json/RnBottomSheetConfig.json');
+
+/**
+ * Internal native view component.
+ * Use BottomSheet for the public API.
+ */
+export const RnBottomSheetView = getHostComponent<
+  RnBottomSheetProps,
+  RnBottomSheetMethods
+>('RnBottomSheet', () => RnBottomSheetConfig);
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Checking for react-test-renderer presence**
+exec
+/bin/zsh -lc 'test -d node_modules/react-test-renderer && echo yes || echo no' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+no
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Assessing React Native testing libraries**
+exec
+/bin/zsh -lc 'test -d node_modules/@testing-library/react-native && echo yes || echo no' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+no
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Evaluating test strategy**
+exec
+/bin/zsh -lc "sed -n '1,320p' src/components/bottom-sheet-utils.ts" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+import type {
+  NativeBackgroundInteraction,
+  NativeDetentConfig,
+} from '../RnBottomSheet.nitro';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetDetent,
+  BottomSheetProps,
+  ControlledProps,
+} from '../types/bottom-sheet';
+import {
+  DEFAULT_DETENTS,
+  detentsToNativeConfig,
+  validateDetents,
+} from '../utils/detents';
+
+const ERROR_PREFIX = '[rn-bottom-sheet]';
+
+export function isControlledProps(
+  props: BottomSheetProps
+file update:
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Designing lifecycle handler helpers**
+codex
+I’m implementing this as a testable lifecycle helper in `bottom-sheet-utils` and wiring `BottomSheet` to use it, so `T010` gets meaningful unit coverage without adding new test libraries.
+
+thinking
+**Creating lifecycle handler types**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/components/bottom-sheet-utils.ts
+@@ -91,2 +91,36 @@
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+apply_patch(auto_approved=true) exited 0 in 28ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/components/bottom-sheet-utils.ts
+file update:
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+file update:
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Refactoring lifecycle handler imports and usage**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/components/BottomSheet.tsx
+@@ -26,2 +26,3 @@
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+@@ -106,14 +107,12 @@
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+@@ -202,6 +201,6 @@
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+apply_patch(auto_approved=true) exited 0 in 27ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/src/components/BottomSheet.tsx
+file update:
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+file update:
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Adding unit tests for lifecycle handler creation**
+file update
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.lifecycle.test.ts
+import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
+
+describe('bottom-sheet lifecycle handlers', () => {
+  it('maps native lifecycle events to user callbacks', () => {
+    const onWillPresent = jest.fn();
+    const onDidPresent = jest.fn();
+    const onWillDismiss = jest.fn();
+    const onDidDismiss = jest.fn();
+
+    const handlers = createLifecycleHandlers({
+      onWillPresent,
+      onDidPresent,
+      onWillDismiss,
+      onDidDismiss,
+    });
+
+    handlers.onNativeWillPresent();
+    handlers.onNativeDidPresent();
+    handlers.onNativeWillDismiss();
+    handlers.onNativeDidDismiss();
+
+    expect(onWillPresent).toHaveBeenCalledTimes(1);
+    expect(onDidPresent).toHaveBeenCalledTimes(1);
+    expect(onWillDismiss).toHaveBeenCalledTimes(1);
+    expect(onDidDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('supports missing lifecycle callbacks without throwing', () => {
+    const handlers = createLifecycleHandlers({});
+
+    expect(() => handlers.onNativeWillPresent()).not.toThrow();
+    expect(() => handlers.onNativeDidPresent()).not.toThrow();
+    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
+    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
+  });
+});
+apply_patch(auto_approved=true) exited 0 in 50ms:
+Success. Updated the following files:
+A /Users/tolu/Desktop/dev/rn-bottom-sheet/src/__tests__/bottom-sheet.lifecycle.test.ts
+file update:
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Planning targeted tests**
+codex
+Lifecycle test file is added and `BottomSheet` now uses the same helper path the tests exercise. I’m running targeted tests first, then full lint/typecheck/test validation.
+
+thinking
+**Running targeted Jest test**
+exec
+/bin/zsh -lc 'yarn test src/__tests__/bottom-sheet.lifecycle.test.ts' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 875ms:
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+  bottom-sheet lifecycle handlers
+    ✓ maps native lifecycle events to user callbacks (2 ms)
+    ✓ supports missing lifecycle callbacks without throwing
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.33 s
+Ran all test suites matching /src\/__tests__\/bottom-sheet.lifecycle.test.ts/i.
+file update:
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Planning full verification run**
+exec
+/bin/zsh -lc 'yarn lint' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn typecheck' in /Users/tolu/Desktop/dev/rn-bottom-sheetexec
+/bin/zsh -lc 'yarn test' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 769ms:
+PASS src/__tests__/bottom-sheet.lifecycle.test.ts
+PASS src/__tests__/bottom-sheet.wrapper.test.ts
+PASS src/__tests__/bottom-sheet.detents.test.ts
+PASS src/__tests__/bottom-sheet.contract.test.ts
+PASS src/__tests__/index.test.tsx
+
+Test Suites: 5 passed, 5 total
+Tests:       19 todo, 19 passed, 38 total
+Snapshots:   0 total
+Time:        0.211 s, estimated 1 s
+Ran all test suites.
+ succeeded in 895ms:
+
+ succeeded in 1.75s:
+
+file update:
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Confirming success and planning updates**
+codex
+Validation passed (`lint`, `typecheck`, and full `test`). I’m now updating tracking files: marking `T010` complete in spec tasks and recording this iteration’s results in `tasks/todo.md`.
+
+thinking
+**Planning sequential patching**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -50,3 +50,3 @@
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+apply_patch(auto_approved=true) exited 0 in 57ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/specs/001-native-ios-sheet-bindings/tasks.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Updating task checkboxes and review snippet**
+exec
+/bin/zsh -lc "rg -n \"## Review|Ralph Iteration 2026-02-12 \\(US1 Lifecycle Test Coverage T010\\)\" tasks/todo.md; sed -n '35,220p' tasks/todo.md" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 51ms:
+57:## Review
+103:## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
+
+- [x] Add unit tests for API normalization and behavior
+- [ ] Add iOS integration tests for presenter/detents/lifecycle
+- [ ] Add Maestro happy-path E2E flows in example app
+- [ ] Update CI gates as needed
+
+## Verification Checklist
+
+- [x] `yarn docs:check`
+- [x] `yarn lint`
+- [x] `yarn typecheck`
+- [x] `yarn test`
+
+## Ralph Setup
+
+- [x] Create Ralph scaffolding directories (`.specify`, `specs`, `logs`, `history`, command folders)
+- [x] Install Ralph loop scripts for Claude and Codex
+- [x] Install optional RLM/helper scripts and `scripts/lib` utilities
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..a027087f45911099c69432f0e5ea0b4824b96554
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -99,3 +99,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [ ] Capture results in the Review section
+
+
+thinking
+**Planning section update**
+file update
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+@@ -68,2 +68,4 @@
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+@@ -104,6 +106,6 @@
+ 
+-- [ ] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
+-- [ ] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
+-- [ ] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
+-- [ ] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
+-- [ ] Capture results in the Review section
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+apply_patch(auto_approved=true) exited 0 in 58ms:
+Success. Updated the following files:
+M /Users/tolu/Desktop/dev/rn-bottom-sheet/tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Updating plan statuses**
+Plan update
+  ✓ Confirm T010 is highest-priority incomplete and not already implemented
+  ✓ Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+  ✓ Mark T010 complete in specs/001-native-ios-sheet-bindings/tasks.md
+  ✓ Run verification commands (lint, typecheck, test)
+  ✓ Record outcomes in tasks/todo.md review section
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Inspecting git status before commit**
+codex
+Implementation and verification are complete for `T010`; I’m now preparing the required Phase 4 steps (status checks, commit, and push) and will report exact results.
+
+thinking
+**Checking repository state**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+ M specs/001-native-ios-sheet-bindings/tasks.md
+ M src/components/BottomSheet.tsx
+ M src/components/bottom-sheet-utils.ts
+ M tasks/todo.md
+?? logs/
+?? src/__tests__/bottom-sheet.lifecycle.test.ts
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Pausing due to unexpected changes**
+exec
+/bin/zsh -lc "git diff -- src/components/bottom-sheet-utils.ts src/components/BottomSheet.tsx src/__tests__/bottom-sheet.lifecycle.test.ts specs/001-native-ios-sheet-bindings/tasks.md tasks/todo.md | sed -n '1,260p'" in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3ab..b315959 100644
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662..15f1538 100644
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@ import type {
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Resolving dirty git worktree by staging only intended files**
+exec
+/bin/zsh -lc 'git add specs/001-native-ios-sheet-bindings/tasks.md src/components/BottomSheet.tsx src/components/bottom-sheet-utils.ts src/__tests__/bottom-sheet.lifecycle.test.ts tasks/todo.md && git commit -m "test: add lifecycle callback unit coverage for bottom sheet"' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 1.87s:
+┃  types ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+┃  lint ❯ 
+
+[1G[0K⠙[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 1.49 seconds)       
+✔️ types (1.02 seconds)
+✔️ lint (1.49 seconds)
+╭──────────────────────────────────────╮
+│ 🥊 lefthook v2.1.1  hook: commit-msg │
+╰──────────────────────────────────────╯
+┃  commitlint ❯ 
+
+[1G[0K[1G[0K⠙[1G[0K
+                                      
+  ────────────────────────────────────
+summary: (done in 0.34 seconds)       
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Verifying committed file inclusion**
+codex
+Commit is created with the lifecycle test coverage and hook checks passed during commit (`types`, `lint`, `commitlint`). I’m pushing this commit now and then I’ll confirm remaining open work status.
+
+thinking
+**Preparing code push**
+exec
+/bin/zsh -lc 'git push' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 642ms:
+To https://github.com/tolulawson/rn-bottom-sheet.git
+   b3d62d5..fdc6530  main -> main
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Verifying uncommitted changes**
+exec
+/bin/zsh -lc 'git status --short' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+ M scripts/ralph-loop-codex.sh
+ M scripts/ralph-loop.sh
+?? logs/
+?? yarn.lock
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Inspecting recent commit contents**
+exec
+/bin/zsh -lc 'git show --name-only --oneline --pretty=format:"%h %s" fdc6530' in /Users/tolu/Desktop/dev/rn-bottom-sheet succeeded in 53ms:
+fdc6530 test: add lifecycle callback unit coverage for bottom sheet
+specs/001-native-ios-sheet-bindings/tasks.md
+src/__tests__/bottom-sheet.lifecycle.test.ts
+src/components/BottomSheet.tsx
+src/components/bottom-sheet-utils.ts
+tasks/todo.md
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+
+thinking
+**Summarizing completed task with pending work**
+codex
+Selected and completed the highest-priority truly incomplete item: `T010` (US1 lifecycle callback unit tests).
+
+Changes made:
+- Added lifecycle unit tests: `src/__tests__/bottom-sheet.lifecycle.test.ts`
+- Added reusable lifecycle handler mapper: `src/components/bottom-sheet-utils.ts`
+- Wired `BottomSheet` to use that mapper: `src/components/BottomSheet.tsx`
+- Marked `T010` complete: `specs/001-native-ios-sheet-bindings/tasks.md`
+- Added iteration plan/results + review notes: `tasks/todo.md`
+
+Verification run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (all 5 suites passing; new lifecycle suite included)
+
+Git:
+- Commit: `fdc6530`
+- Message: `test: add lifecycle callback unit coverage for bottom sheet`
+- Push: `main` -> `origin/main` succeeded
+
+Not outputting `<promise>DONE</promise>` because `001-native-ios-sheet-bindings` still has remaining unchecked tasks (for example `T011+`).
+file update:
+diff --git a/specs/001-native-ios-sheet-bindings/tasks.md b/specs/001-native-ios-sheet-bindings/tasks.md
+index 930b3abf6f5f46dc31932938afc4bd3fb550ecce..b315959737fd64dc784ad37f068f8642d3ac71b9
+--- a/specs/001-native-ios-sheet-bindings/tasks.md
++++ b/specs/001-native-ios-sheet-bindings/tasks.md
+@@ -48,7 +48,7 @@
+ 
+ ### Tests for User Story 1
+ 
+-- [ ] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
++- [x] T010 [P] [US1] Add lifecycle callback unit tests in src/__tests__/bottom-sheet.lifecycle.test.ts
+ - [ ] T011 [P] [US1] Add iOS integration flow assertions in example/src/__tests__/sheet-open-dismiss.integration.test.tsx
+ 
+ ### Implementation for User Story 1
+diff --git a/src/__tests__/bottom-sheet.lifecycle.test.ts b/src/__tests__/bottom-sheet.lifecycle.test.ts
+new file mode 100644
+index 0000000000000000000000000000000000000000..258e9dc4e8f6ac82ebdd046c02744f10c7e11d26
+--- /dev/null
++++ b/src/__tests__/bottom-sheet.lifecycle.test.ts
+@@ -0,0 +1,36 @@
++import { createLifecycleHandlers } from '../components/bottom-sheet-utils';
++
++describe('bottom-sheet lifecycle handlers', () => {
++  it('maps native lifecycle events to user callbacks', () => {
++    const onWillPresent = jest.fn();
++    const onDidPresent = jest.fn();
++    const onWillDismiss = jest.fn();
++    const onDidDismiss = jest.fn();
++
++    const handlers = createLifecycleHandlers({
++      onWillPresent,
++      onDidPresent,
++      onWillDismiss,
++      onDidDismiss,
++    });
++
++    handlers.onNativeWillPresent();
++    handlers.onNativeDidPresent();
++    handlers.onNativeWillDismiss();
++    handlers.onNativeDidDismiss();
++
++    expect(onWillPresent).toHaveBeenCalledTimes(1);
++    expect(onDidPresent).toHaveBeenCalledTimes(1);
++    expect(onWillDismiss).toHaveBeenCalledTimes(1);
++    expect(onDidDismiss).toHaveBeenCalledTimes(1);
++  });
++
++  it('supports missing lifecycle callbacks without throwing', () => {
++    const handlers = createLifecycleHandlers({});
++
++    expect(() => handlers.onNativeWillPresent()).not.toThrow();
++    expect(() => handlers.onNativeDidPresent()).not.toThrow();
++    expect(() => handlers.onNativeWillDismiss()).not.toThrow();
++    expect(() => handlers.onNativeDidDismiss()).not.toThrow();
++  });
++});
+diff --git a/src/components/BottomSheet.tsx b/src/components/BottomSheet.tsx
+index 77bf662b120eeb2b01c7a78692c6b353e72fb965..15f15384501b68ff80edbded59f8b8c13354f081
+--- a/src/components/BottomSheet.tsx
++++ b/src/components/BottomSheet.tsx
+@@ -24,6 +24,7 @@
+   BottomSheetProps,
+ } from '../types/bottom-sheet';
+ import {
++  createLifecycleHandlers,
+   isControlledProps,
+   resolveInitialDetentIndex,
+   resolveSelectedDetentIndex,
+@@ -104,18 +105,16 @@
+       },
+       [onDetentChange]
+     );
+-    const handleNativeWillPresent = useCallback(() => {
+-      onWillPresent?.();
+-    }, [onWillPresent]);
+-    const handleNativeDidPresent = useCallback(() => {
+-      onDidPresent?.();
+-    }, [onDidPresent]);
+-    const handleNativeWillDismiss = useCallback(() => {
+-      onWillDismiss?.();
+-    }, [onWillDismiss]);
+-    const handleNativeDidDismiss = useCallback(() => {
+-      onDidDismiss?.();
+-    }, [onDidDismiss]);
++    const lifecycleHandlers = useMemo(
++      () =>
++        createLifecycleHandlers({
++          onWillPresent,
++          onDidPresent,
++          onWillDismiss,
++          onDidDismiss,
++        }),
++      [onDidDismiss, onDidPresent, onWillDismiss, onWillPresent]
++    );
+ 
+     useEffect(() => {
+       if (!supported) {
+@@ -200,10 +199,10 @@
+         expandsWhenScrolledToEdge={expandsWhenScrolledToEdge}
+         onOpenChange={callback(handleNativeOpenChange)}
+         onDetentChange={callback(handleNativeDetentChange)}
+-        onWillPresent={callback(handleNativeWillPresent)}
+-        onDidPresent={callback(handleNativeDidPresent)}
+-        onWillDismiss={callback(handleNativeWillDismiss)}
+-        onDidDismiss={callback(handleNativeDidDismiss)}
++        onWillPresent={callback(lifecycleHandlers.onNativeWillPresent)}
++        onDidPresent={callback(lifecycleHandlers.onNativeDidPresent)}
++        onWillDismiss={callback(lifecycleHandlers.onNativeWillDismiss)}
++        onDidDismiss={callback(lifecycleHandlers.onNativeDidDismiss)}
+       >
+         {children}
+       </RnBottomSheetView>
+diff --git a/src/components/bottom-sheet-utils.ts b/src/components/bottom-sheet-utils.ts
+index 281d07fc5e1723356234cf33696799f63966443c..084d72d85f4094980523013f9b16a54654791b98
+--- a/src/components/bottom-sheet-utils.ts
++++ b/src/components/bottom-sheet-utils.ts
+@@ -89,6 +89,40 @@
+   return selectedDetent;
+ }
+ 
++type BottomSheetLifecycleCallbacks = Pick<
++  BottomSheetProps,
++  'onWillPresent' | 'onDidPresent' | 'onWillDismiss' | 'onDidDismiss'
++>;
++
++export interface BottomSheetLifecycleHandlers {
++  onNativeWillPresent: () => void;
++  onNativeDidPresent: () => void;
++  onNativeWillDismiss: () => void;
++  onNativeDidDismiss: () => void;
++}
++
++export function createLifecycleHandlers(
++  callbacks: BottomSheetLifecycleCallbacks
++): BottomSheetLifecycleHandlers {
++  const { onWillPresent, onDidPresent, onWillDismiss, onDidDismiss } =
++    callbacks;
++
++  return {
++    onNativeWillPresent() {
++      onWillPresent?.();
++    },
++    onNativeDidPresent() {
++      onDidPresent?.();
++    },
++    onNativeWillDismiss() {
++      onWillDismiss?.();
++    },
++    onNativeDidDismiss() {
++      onDidDismiss?.();
++    },
++  };
++}
++
+ function assertDetentIndex(
+   index: number,
+   detentCount: number,
+diff --git a/tasks/todo.md b/tasks/todo.md
+index 48b6019830b588e40f8fb7461252d83d4b651bb6..8dc158b50baf469a5238f21111f81f77cd0a299b
+--- a/tasks/todo.md
++++ b/tasks/todo.md
+@@ -66,6 +66,8 @@
+   - Added detent validation coverage and native mapping tests in `src/__tests__/bottom-sheet.detents.test.ts`.
+   - Added `BottomSheet` public wrapper in `src/components/BottomSheet.tsx` with controlled/uncontrolled support, imperative refs, fallback-safe behavior, and native callback wiring.
+   - Added wrapper validation + mapping tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and switched the example app to the wrapper API.
++  - Added lifecycle callback unit coverage in `src/__tests__/bottom-sheet.lifecycle.test.ts` and refactored lifecycle event mapping into `createLifecycleHandlers` in `src/components/bottom-sheet-utils.ts`, now used by `src/components/BottomSheet.tsx`.
++  - Re-verified this iteration with passing `yarn lint`, `yarn typecheck`, and `yarn test`.
+ - Residual Risks:
+   - `NativeBackgroundInteraction` bridge typing is wider (`string | number`) than intended semantic domain and depends on JS-side validation/documentation for stricter correctness.
+   - Swift detent validation currently logs invalid configuration and falls back/defaults instead of surfacing explicit JS exceptions through the bridge.
+@@ -99,3 +101,11 @@
+ - [x] Export wrapper in `src/index.tsx` and add/adjust wrapper tests
+ - [x] Run and pass: `yarn lint`, `yarn typecheck`, `yarn test`
+ - [x] Capture verification outcomes in `tasks/todo.md` Review section
++
++## Ralph Iteration 2026-02-12 (US1 Lifecycle Test Coverage T010)
++
++- [x] Confirm `T010` is the highest-priority truly incomplete task and not already implemented
++- [x] Add lifecycle callback unit tests in `src/__tests__/bottom-sheet.lifecycle.test.ts`
++- [x] Mark `T010` complete in `specs/001-native-ios-sheet-bindings/tasks.md`
++- [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
++- [x] Capture results in the Review section
+
+tokens used
+80,117
+Selected and completed the highest-priority truly incomplete item: `T010` (US1 lifecycle callback unit tests).
+
+Changes made:
+- Added lifecycle unit tests: `src/__tests__/bottom-sheet.lifecycle.test.ts`
+- Added reusable lifecycle handler mapper: `src/components/bottom-sheet-utils.ts`
+- Wired `BottomSheet` to use that mapper: `src/components/BottomSheet.tsx`
+- Marked `T010` complete: `specs/001-native-ios-sheet-bindings/tasks.md`
+- Added iteration plan/results + review notes: `tasks/todo.md`
+
+Verification run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (all 5 suites passing; new lifecycle suite included)
+
+Git:
+- Commit: `fdc6530`
+- Message: `test: add lifecycle callback unit coverage for bottom sheet`
+- Push: `main` -> `origin/main` succeeded
+
+Not outputting `<promise>DONE</promise>` because `001-native-ios-sheet-bindings` still has remaining unchecked tasks (for example `T011+`).

@@ -30,6 +30,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     // =========================================================================
 
     let view: SheetHostContainerView
+    private let contentContainer = SheetContentContainerView()
 
     // =========================================================================
     // MARK: - Sheet State
@@ -475,7 +476,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
         // Create sheet content view controller
         let contentVC = SheetContentViewController()
-        contentVC.contentView = view
+        contentVC.contentView = contentContainer
         contentVC.isModalInPresentation = !allowSwipeToDismiss
         contentVC.shouldTrackBackdropTapDismissal = { [weak self] in
             guard let self else { return false }
@@ -496,11 +497,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
         // Present the sheet
         presentingVC.present(contentVC, animated: true) { [weak self] in
-            self?.isCurrentlyPresented = true
-            self?.shouldPresentWhenHostAttaches = false
-            self?.currentDetentIndex = Int(self?.initialDetentIndexStorage ?? 0)
-            self?.onDidPresent()
-            self?.onOpenChange(true, .programmatic)
+            guard let self else { return }
+            self.isCurrentlyPresented = true
+            self.shouldPresentWhenHostAttaches = false
+            self.currentDetentIndex = Int(self.initialDetentIndexStorage)
+            self.onDidPresent()
+            self.onOpenChange(true, .programmatic)
         }
     }
 
@@ -983,6 +985,27 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
             finishSessionOwnershipAndResumeNextIfNeeded()
         }
     }
+
+    @objc
+    func routeChildView(_ childView: UIView, atIndex index: Int) {
+        runOnMainSync {
+            if childView.superview !== contentContainer {
+                childView.removeFromSuperview()
+            }
+            let clampedIndex = min(max(index, 0), contentContainer.subviews.count)
+            contentContainer.insertSubview(childView, at: clampedIndex)
+        }
+    }
+
+    @objc
+    func unrouteChildView(_ childView: UIView) {
+        runOnMainSync {
+            if childView.superview === contentContainer {
+                childView.removeFromSuperview()
+            }
+        }
+    }
+
 }
 
 // =============================================================================
@@ -1135,7 +1158,10 @@ private final class SheetPresentationDelegateProxy: NSObject, UISheetPresentatio
     }
 }
 
-/// Nitro host view used as the content root and attach/detach lifecycle source.
+/// Nitro host view used as the staging area and attach/detach lifecycle source.
+/// This view stays in the React tree permanently. When the sheet is not presented,
+/// React children are held here (invisible, zero layout size). When the sheet
+/// presents, children are moved to the `SheetContentContainerView`.
 final class SheetHostContainerView: UIView {
     weak var lifecycleOwner: HybridRnBottomSheet?
     private var isCurrentlyAttached: Bool = false
@@ -1153,7 +1179,30 @@ final class SheetHostContainerView: UIView {
             lifecycleOwner?.hostViewDidDetach()
         }
     }
+
+    @objc
+    func routeChild(_ childView: UIView, atIndex index: Int) {
+        lifecycleOwner?.routeChildView(childView, atIndex: index)
+    }
+
+    @objc
+    func unrouteChild(_ childView: UIView) {
+        lifecycleOwner?.unrouteChildView(childView)
+    }
 }
+
+final class SheetContentContainerView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        backgroundColor = .clear
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        backgroundColor = .clear
+    }
+}
+
 
 /// View controller that hosts the React Native content inside the sheet
 class SheetContentViewController: UIViewController {
@@ -1188,16 +1237,11 @@ class SheetContentViewController: UIViewController {
         // Remove old content
         view.subviews.forEach { $0.removeFromSuperview() }
 
-        // Add new content
+        // Add new content.
         if let content = contentView {
+            content.frame = view.bounds
+            content.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             view.addSubview(content)
-            content.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                content.topAnchor.constraint(equalTo: view.topAnchor),
-                content.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-                content.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-                content.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-            ])
         }
     }
 

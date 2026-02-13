@@ -1,0 +1,20 @@
+Implemented the highest-priority unchecked task (`dismissal reason detection`) and verified it.
+
+- Native reason classification added in `ios/RnBottomSheet.swift:161`, `ios/RnBottomSheet.swift:583`, `ios/RnBottomSheet.swift:664`, `ios/RnBottomSheet.swift:673`, `ios/RnBottomSheet.swift:715`, `ios/RnBottomSheet.swift:773`.
+- Added callback pass-through coverage for `backdrop` and `system` in `src/__tests__/bottom-sheet.navigation.test.ts:112`.
+- Marked task complete in `IMPLEMENTATION_PLAN.md:27`.
+- Updated iteration tracking and review notes in `tasks/todo.md:63` and `tasks/todo.md:348`.
+
+Validation run:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed
+- `xcodebuild -workspace example/ios/rnBottomSheetExample.xcworkspace -scheme RnBottomSheetExample -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' build -quiet` passed
+
+Commit and push:
+- `48dc329 feat(ios): classify sheet dismissal reasons`
+- Pushed to `origin/main`
+
+Maestro gate status remains non-blocking (`E2E Gate State: deferred` in the active spec), so completion is valid for this iteration.
+
+<promise>DONE</promise>

@@ -120,7 +120,7 @@
 - [x] T035 Execute validation commands and capture results in tasks/todo.md
 - [x] T036 [P] Add Maestro example-app E2E flow definitions in example/.maestro/sheet-core-flows.yaml
 - [x] T037 [P] Add Maestro MCP runbook notes and invocation expectations in docs/implementation-plan-v1.md
-- [x] T038 Execute conditional Maestro MCP gate and update `E2E Gate State` in specs/001-native-ios-sheet-bindings/spec.md (`deferred` -> `required` only when stability criteria are met)
+- [x] T038 Execute Maestro MCP completion gate for example-app flows and record pass evidence in feature review notes
 
 ---
 
@@ -132,7 +132,7 @@
 - **Phase 2 (Foundational)**: depends on Phase 1 and blocks story phases.
 - **Phases 3-5 (User Stories)**: depend on Phase 2; then can be worked in priority order (US1 -> US2 -> US3).
 - **Phase 6 (Polish)**: depends on completion of intended story scope.
-- **Maestro MCP Gate**: runs in Phase 6 as non-blocking while `E2E Gate State` is `deferred`, and becomes blocking only after it is switched to `required`.
+- **Maestro MCP Gate**: runs in Phase 6 as a mandatory completion gate for affected feature flows.
 
 ### User Story Dependencies
 

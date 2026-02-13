@@ -8,8 +8,16 @@ appId: rnbottomsheet.example
 
 - tapOn:
     id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
 - assertVisible:
     text: "Sheet: Open"
+- assertVisible:
+    id: "sheet-title"
+- assertVisible:
+    id: "route-toggle-button"
 
 - tapOn:
     id: "snap-large-button"

@@ -1,0 +1,47 @@
+appId: rnbottomsheet.example
+---
+# US3: Verify interactive children inside sheet (buttons respond to taps)
+
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "main-title"
+    timeout: 30000
+
+# Open the sheet
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+# Verify initial route state
+- assertVisible:
+    text: "In-Sheet Route: Summary"
+
+# Tap route toggle button inside the sheet -- verifies button interactivity
+- tapOn:
+    id: "route-toggle-button"
+
+# Verify the route changed (confirms onPress callback fired)
+- assertVisible:
+    text: "In-Sheet Route: Details"
+
+# Tap again to toggle back
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: "In-Sheet Route: Summary"
+
+# Verify the main screen summary also reflects the route change
+- assertVisible:
+    text: "Route: Summary"
+
+# Close the sheet
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000

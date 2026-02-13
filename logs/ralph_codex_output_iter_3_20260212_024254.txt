@@ -1,0 +1,21 @@
+Selected and completed the highest-priority verified gap in this pass: the missing P1 public wrapper API (`BottomSheet`) for controlled/uncontrolled usage and imperative control.
+
+Changes made:
+- Added wrapper component with controlled/uncontrolled open state, imperative methods, callback wiring, and fallback-safe behavior in `src/components/BottomSheet.tsx`.
+- Added deterministic wrapper validation/mapping utilities in `src/components/bottom-sheet-utils.ts`.
+- Moved native host component export to `src/native/RnBottomSheetView.tsx`.
+- Updated public exports in `src/index.tsx` (`BottomSheet`, `BottomSheetView`, `RnBottomSheetView`).
+- Added wrapper utility tests in `src/__tests__/bottom-sheet.wrapper.test.ts`.
+- Updated example usage to public API in `example/src/App.tsx`.
+- Updated tracking/progress in `tasks/todo.md`, `specs/001-native-ios-sheet-bindings/tasks.md`, and `IMPLEMENTATION_PLAN.md`.
+
+Validation:
+- `yarn lint` passed
+- `yarn typecheck` passed
+- `yarn test` passed (4 suites, 17 passed, 19 todo)
+
+Git:
+- Committed: `b3d62d5` (`feat: add public BottomSheet wrapper API`)
+- Pushed to `origin/main`
+
+This spec is still not fully complete (remaining unchecked items still exist), so I did not mark the spec complete and I am not outputting `<promise>DONE</promise>`.

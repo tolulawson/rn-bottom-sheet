@@ -33,6 +33,9 @@ describe('example single-open contract', () => {
     expect(harness.getTextByTestId(TEST_IDS.mainSummary)).toContain(
       'Sheet: Open'
     );
+    expect(harness.getTextByTestId(TEST_IDS.mainSheetPhase)).toContain(
+      'Phase: open'
+    );
 
     const totalWillPresentCount = consoleLogSpy.mock.calls.filter(
       (call) => call[0] === 'Will present'

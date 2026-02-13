@@ -1,27 +1,30 @@
 <!--
 Sync Impact Report
-Version change: 1.0.0 -> 1.1.0
+Version change: 2.0.0 -> 2.1.0
 Modified principles:
-- Native Fidelity First -> I. Native Fidelity First
-- Verification Before Completion -> II. Verification Before Completion
-- Simplicity -> III. Minimal, Intentional Scope
-Added principles:
-- IV. Living Knowledge Base
-- V. Deterministic Integration Contracts
+- IV. Living Knowledge Base -> IV. Living Knowledge Base (README synchronization now mandatory for API/user-visible behavior changes)
+- V. Deterministic Integration Contracts -> V. Deterministic Integration Contracts (public-surface changes require README updates)
 Added sections:
-- Operational Constraints
-- Workflow & Quality Gates
+- Documentation Synchronization Rules
 Removed sections:
-- Ralph-specific loop mechanics as governing principle source
+- None
 Templates/runtime sync status:
-- ✅ .specify/templates/plan-template.md (Constitution Check gates aligned)
-- ✅ .specify/templates/spec-template.md (reviewed, no change required)
-- ✅ .specify/templates/tasks-template.md (reviewed, no change required)
-- ✅ AGENTS.md (already points to constitution)
-- ✅ CLAUDE.md (already points to constitution)
-- ✅ .claude/commands/speckit.specify.md (reviewed, no change required)
-- ✅ .cursor/commands/speckit.specify.md (reviewed, no change required)
-- ✅ .codex/skills/speckit-*/SKILL.md (reviewed, no change required)
+- ✅ .specify/templates/spec-template.md (Maestro E2E coverage now mandatory)
+- ✅ .specify/templates/plan-template.md (Maestro E2E strategy + gate checks)
+- ✅ .specify/templates/tasks-template.md (test tasks mandatory; Maestro + README tasks required)
+- ✅ PROMPT_build.md (completion now requires Maestro MCP pass for affected flows)
+- ✅ PROMPT_plan.md (planning requires Maestro E2E tasks)
+- ✅ scripts/ralph-loop.sh (generated prompt policy aligned)
+- ✅ scripts/ralph-loop-codex.sh (generated prompt policy aligned)
+- ✅ .codex/prompts/speckit.specify.md (spec generation includes mandatory Maestro E2E coverage)
+- ✅ .codex/prompts/speckit.tasks.md (task generation enforces required tests + Maestro + README updates)
+- ✅ .codex/prompts/speckit.plan.md (planning requires README impact handling)
+- ✅ .claude/commands/speckit.specify.md (quick command includes Maestro acceptance criteria)
+- ✅ .cursor/commands/speckit.specify.md (quick command includes Maestro acceptance criteria)
+- ✅ README.md (documents README update policy for contributors)
+- ℹ️ .gemini/commands/speckit.*.toml (not present in repository)
+- ℹ️ .github/prompts/speckit.*.prompt.md (not present in repository)
+- ℹ️ .github/agents/speckit.*.agent.md (not present in repository)
 Deferred follow-ups:
 - None
 -->
@@ -36,23 +39,34 @@ API or implementation decision that degrades native sheet semantics MUST be reje
 explicitly documented as a temporary limitation with an exit plan.
 
 ### II. Verification Before Completion
-No task, story, or release artifact MAY be marked complete without objective verification.
-Verification MUST include reproducible checks (tests, build checks, or explicit runtime validation)
-that demonstrate the intended behavior.
+No task, story, feature, or release artifact MAY be marked complete without objective verification.
+Verification MUST include reproducible automated tests and explicit runtime validation. For every
+feature addition or update, verification MUST include comprehensive Maestro end-to-end coverage
+for affected user flows before completion is declared.
 
 ### III. Minimal, Intentional Scope
 Changes MUST solve the stated feature goal with minimal surface area and clear boundaries.
 Features outside accepted scope MUST be deferred and documented, not silently introduced.
+Required verification obligations (including Maestro E2E coverage) are in scope by default and
+MUST NOT be omitted as scope reduction.
 
 ### IV. Living Knowledge Base
 Architecture decisions, external references, and implementation learnings MUST be persisted in-repo
 under `docs/` and kept synchronized with delivered behavior. Decision records MUST be updated when
-public API or architectural constraints materially change.
+public API or architectural constraints materially change. Any change to public API surface area or
+externally observable library behavior MUST include corresponding README updates in the same change
+set.
 
 ### V. Deterministic Integration Contracts
 Public interfaces for sheet state, detents, navigation integration, and animation compatibility MUST
 be explicit, deterministic, and testable. Unsupported behavior MUST be documented as explicit
-non-goals rather than implied capability.
+non-goals rather than implied capability. If public interfaces or externally observable behavior
+change, README contract documentation MUST be updated.
+
+### VI. Comprehensive Maestro End-to-End Assurance
+Every implemented or updated feature MUST include comprehensive Maestro end-to-end test scenarios
+covering primary and critical alternate paths. A feature cannot be marked complete until applicable
+Maestro scenarios pass and results are recorded in project tracking artifacts.
 
 ## Operational Constraints
 
@@ -62,13 +76,32 @@ non-goals rather than implied capability.
 - One active sheet session at a time is the default product constraint unless superseded by a
   ratified amendment.
 
+## Maestro E2E Compliance Rules
+
+- Each feature spec MUST define Maestro E2E expectations for affected flows.
+- Each implementation plan MUST define where Maestro scenarios live, how they run, and pass criteria.
+- Each tasks list MUST include explicit Maestro authoring and execution tasks.
+- Completion status (`DONE`, `COMPLETE`, merge-ready, release-ready) MUST be blocked on failing or
+  missing required Maestro scenarios for the changed feature.
+- Maestro evidence MUST be recorded in feature/task review notes.
+
+## Documentation Synchronization Rules
+
+- README updates are REQUIRED when public API signatures, exported symbols, behavior contracts,
+  supported integrations, platform behavior, or user-visible usage expectations change.
+- README updates MUST be part of the same branch/PR that introduces those changes.
+- Plans and task lists MUST explicitly track README update tasks when this rule is triggered.
+- Completion status MUST be blocked when required README updates are missing.
+
 ## Workflow & Quality Gates
 
 1. Specification artifacts (`spec.md`, `plan.md`, `tasks.md`) MUST be produced for non-trivial work.
 2. Clarifications SHOULD be resolved before planning unless explicitly waived.
 3. Cross-artifact consistency analysis SHOULD run before implementation starts.
-4. All code changes MUST pass applicable lint/type/test/build checks before merge.
+4. All code changes MUST pass applicable lint/type/unit/integration checks and required Maestro E2E
+   scenarios before completion.
 5. Documentation and task tracking MUST be updated with behavior changes in the same change set.
+6. Required README updates for API/user-visible behavior changes MUST be completed before merge.
 
 ## Governance
 
@@ -83,4 +116,4 @@ non-goals rather than implied capability.
   - PATCH: clarifications or wording-only improvements
 - Compliance reviews MUST confirm constitution alignment during planning and prior to merge.
 
-**Version**: 1.1.0 | **Ratified**: 2026-02-12 | **Last Amended**: 2026-02-12
+**Version**: 2.1.0 | **Ratified**: 2026-02-12 | **Last Amended**: 2026-02-12

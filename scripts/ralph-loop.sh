@@ -392,12 +392,25 @@ Run the project's test suite and verify:
 
 ---
 
+## Phase 3b: Maestro MCP E2E Validation (Mandatory)
+
+Run Maestro MCP for all affected feature flows before completion. At minimum validate:
+- open sheet
+- dismiss sheet
+- detent interaction
+- primary in-sheet navigation flow
+
+Add additional scenarios required by the active spec. If any required Maestro MCP flow fails or is missing, do NOT output `<promise>DONE</promise>`.
+
+---
+
 ## Phase 4: Commit & Update
 
 1. Mark the spec/task as complete (add `## Status: COMPLETE` to spec file)
-2. `git add -A`
-3. `git commit` with a descriptive message
-4. `git push`
+2. If public API/user-visible behavior changed, update README in the same change set
+3. `git add -A`
+4. `git commit` with a descriptive message
+5. `git push`
 
 ---
 
@@ -409,6 +422,8 @@ Check:
 - [ ] Implementation matches all requirements
 - [ ] All tests pass
 - [ ] All acceptance criteria verified
+- [ ] Maestro MCP E2E scenarios pass for all affected flows
+- [ ] README updated when public API or user-visible behavior changed
 - [ ] Changes committed and pushed
 - [ ] Spec marked as complete
 
@@ -525,13 +540,13 @@ fi
 # Get current branch
 CURRENT_BRANCH=$(git branch --show-current 2>/dev/null || echo "main")
 
-# Check for work sources - count .md files in specs/
+# Check for work sources - count markdown files recursively in specs/
 HAS_PLAN=false
 HAS_SPECS=false
 SPEC_COUNT=0
 [ -f "IMPLEMENTATION_PLAN.md" ] && HAS_PLAN=true
 if [ -d "specs" ]; then
-    SPEC_COUNT=$(find specs -maxdepth 1 -name "*.md" -type f 2>/dev/null | wc -l)
+    SPEC_COUNT=$(find specs -type f -name "*.md" 2>/dev/null | wc -l | tr -d ' ')
     [ "$SPEC_COUNT" -gt 0 ] && HAS_SPECS=true
 fi
 
@@ -557,7 +572,7 @@ fi
 if [ "$HAS_SPECS" = true ]; then
     echo -e "  ${GREEN}✓${NC} specs/ folder ($SPEC_COUNT specs)"
 else
-    echo -e "  ${RED}✗${NC} specs/ folder (no .md files found)"
+    echo -e "  ${RED}✗${NC} specs/ folder (no .md files found recursively)"
 fi
 echo ""
 echo -e "${CYAN}The loop checks for <promise>DONE</promise> in each iteration.${NC}"

@@ -1,0 +1,21 @@
+Selected and completed highest-priority truly incomplete spec task: `T028` (US3) from `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+
+Changes made:
+- Exported navigation adapter APIs and types from package root in `src/index.tsx:86`.
+- Marked `T028` complete in `specs/001-native-ios-sheet-bindings/tasks.md:104`.
+- Added iteration plan/results tracking in `tasks/todo.md:209` and review notes in `tasks/todo.md:97`.
+
+Validation:
+- Ran `yarn lint && yarn typecheck && yarn test` successfully.
+- Jest result: 10/10 suites passed, 32 tests passed.
+
+Git:
+- Commit: `a2713ab` (`feat: export navigation adapter APIs from package root`)
+- Pushed to `origin/main`.
+
+Ralph gate status:
+- `E2E Gate State` in `specs/001-native-ios-sheet-bindings/spec.md` is `deferred`, so Maestro MCP is non-blocking and was skipped this iteration.
+- Remaining incomplete tasks exist (`T029+`), so `<promise>DONE</promise>` is not emitted.
+
+Next step:
+1. Continue with `T029` (`src/components/BottomSheetNativeView.tsx`) as the next highest-priority unchecked spec task.

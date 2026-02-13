@@ -88,6 +88,8 @@ Given that feature description, do this:
        If no clear user flow: ERROR "Cannot determine user scenarios"
     5. Generate Functional Requirements
        Each requirement must be testable
+       Include explicit requirements for comprehensive Maestro E2E coverage of affected flows
+       Include explicit README-impact requirements when public API or user-visible behavior changes
        Use reasonable defaults for unspecified details (document assumptions in Assumptions section)
     6. Define Success Criteria
        Create measurable, technology-agnostic outcomes
@@ -126,6 +128,8 @@ Given that feature description, do this:
       - [ ] Edge cases are identified
       - [ ] Scope is clearly bounded
       - [ ] Dependencies and assumptions identified
+      - [ ] Maestro E2E coverage requirements are explicitly defined for affected flows
+      - [ ] README impact is explicitly stated (required updates if public API/user-visible behavior changes)
       
       ## Feature Readiness
       
@@ -133,6 +137,8 @@ Given that feature description, do this:
       - [ ] User scenarios cover primary flows
       - [ ] Feature meets measurable outcomes defined in Success Criteria
       - [ ] No implementation details leak into specification
+      - [ ] Success criteria include Maestro E2E pass expectations
+      - [ ] Success criteria include README synchronization when required
       
       ## Notes
       
