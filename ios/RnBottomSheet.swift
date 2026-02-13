@@ -23,6 +23,9 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         case backgroundInteraction
         case cornerRadius
         case expandsWhenScrolledToEdge
+        case preferredColorScheme
+        case contentBackgroundStyle
+        case contentBackgroundBlurStyle
     }
 
     // =========================================================================
@@ -215,6 +218,54 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         }
     }
 
+    /// Preferred color scheme override for sheet content.
+    private var preferredColorSchemeStorage: String = "system"
+    var preferredColorScheme: String {
+        get {
+            runOnMainSync {
+                preferredColorSchemeStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                preferredColorSchemeStorage = newValue
+                queuePropUpdate(.preferredColorScheme)
+            }
+        }
+    }
+
+    /// Background style for sheet content.
+    private var contentBackgroundStyleStorage: String = "system"
+    var contentBackgroundStyle: String {
+        get {
+            runOnMainSync {
+                contentBackgroundStyleStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                contentBackgroundStyleStorage = newValue
+                queuePropUpdate(.contentBackgroundStyle)
+            }
+        }
+    }
+
+    /// Blur style used when background style is set to blur.
+    private var contentBackgroundBlurStyleStorage: String = "regular"
+    var contentBackgroundBlurStyle: String {
+        get {
+            runOnMainSync {
+                contentBackgroundBlurStyleStorage
+            }
+        }
+        set {
+            runOnMainSync {
+                contentBackgroundBlurStyleStorage = newValue
+                queuePropUpdate(.contentBackgroundBlurStyle)
+            }
+        }
+    }
+
     // =========================================================================
     // MARK: - Callbacks (conforming to HybridRnBottomSheetSpec)
     // =========================================================================
@@ -398,6 +449,12 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         if updates.contains(.expandsWhenScrolledToEdge) {
             updateExpandsWhenScrolledToEdge()
         }
+        if updates.contains(.preferredColorScheme) {
+            updatePreferredColorScheme()
+        }
+        if updates.contains(.contentBackgroundStyle) || updates.contains(.contentBackgroundBlurStyle) {
+            updateContentBackgroundStyle()
+        }
         if updates.contains(.selectedDetent), selectedDetentIndexStorage >= 0 {
             snapToDetentInternal(Int(selectedDetentIndexStorage), animated: true)
         }
@@ -476,12 +533,18 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
 
         // Create sheet content view controller
         let contentVC = SheetContentViewController()
+        moveChildrenFromStagingToContent()
         contentVC.contentView = contentContainer
         contentVC.isModalInPresentation = !allowSwipeToDismiss
         contentVC.shouldTrackBackdropTapDismissal = { [weak self] in
             guard let self else { return false }
             return self.allowSwipeToDismiss
         }
+        contentVC.applyPreferredColorScheme(preferredColorSchemeStorage)
+        contentVC.applyContentBackground(
+            style: contentBackgroundStyleStorage,
+            blurStyle: contentBackgroundBlurStyleStorage
+        )
 
         // Configure sheet presentation
         if let sheet = contentVC.sheetPresentationController {
@@ -515,6 +578,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
             contentVC.dismiss(animated: true)
         } else {
             // If UIKit already detached the presenter, reset state immediately.
+            moveChildrenFromContentToStaging()
             isCurrentlyPresented = false
             sheetViewController = nil
             finishSessionOwnershipAndResumeNextIfNeeded()
@@ -717,6 +781,25 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
         sheet.animateChanges {
             sheet.prefersScrollingExpandsWhenScrolledToEdge = expandsWhenScrolledToEdge
         }
+    }
+
+    private func updatePreferredColorScheme() {
+        guard let contentVC = sheetViewController?.contentViewController else {
+            return
+        }
+
+        contentVC.applyPreferredColorScheme(preferredColorSchemeStorage)
+    }
+
+    private func updateContentBackgroundStyle() {
+        guard let contentVC = sheetViewController?.contentViewController else {
+            return
+        }
+
+        contentVC.applyContentBackground(
+            style: contentBackgroundStyleStorage,
+            blurStyle: contentBackgroundBlurStyleStorage
+        )
     }
 
     // =========================================================================
@@ -966,6 +1049,7 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
                 }
             }
 
+            moveChildrenFromContentToStaging()
             isCurrentlyPresented = false
             sheetViewController = nil
             currentDetentIndex = 0
@@ -981,6 +1065,9 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
             backgroundInteractionStorage = .first("modal")
             cornerRadiusStorage = -1
             expandsWhenScrolledToEdgeStorage = true
+            preferredColorSchemeStorage = "system"
+            contentBackgroundStyleStorage = "system"
+            contentBackgroundBlurStyleStorage = "regular"
             SingleActiveSheetSessionCoordinator.shared.cancelPendingPresentation(for: self)
             finishSessionOwnershipAndResumeNextIfNeeded()
         }
@@ -989,20 +1076,41 @@ class HybridRnBottomSheet: HybridRnBottomSheetSpec, RecyclableView {
     @objc
     func routeChildView(_ childView: UIView, atIndex index: Int) {
         runOnMainSync {
-            if childView.superview !== contentContainer {
+            let targetContainer = hasActivePresentationSession ? contentContainer : view
+            if childView.superview !== targetContainer {
                 childView.removeFromSuperview()
             }
-            let clampedIndex = min(max(index, 0), contentContainer.subviews.count)
-            contentContainer.insertSubview(childView, at: clampedIndex)
+            let clampedIndex = min(max(index, 0), targetContainer.subviews.count)
+            targetContainer.insertSubview(childView, at: clampedIndex)
         }
     }
 
     @objc
     func unrouteChildView(_ childView: UIView) {
         runOnMainSync {
-            if childView.superview === contentContainer {
+            if childView.superview === contentContainer || childView.superview === view {
                 childView.removeFromSuperview()
             }
+        }
+    }
+
+    private func moveChildrenFromStagingToContent() {
+        moveChildren(from: view, to: contentContainer)
+    }
+
+    private func moveChildrenFromContentToStaging() {
+        moveChildren(from: contentContainer, to: view)
+    }
+
+    private func moveChildren(from source: UIView, to destination: UIView) {
+        guard source !== destination else { return }
+
+        let children = source.subviews
+        guard !children.isEmpty else { return }
+
+        for childView in children {
+            childView.removeFromSuperview()
+            destination.addSubview(childView)
         }
     }
 
@@ -1021,6 +1129,7 @@ extension HybridRnBottomSheet: SheetPresenterDelegate {
 
     func sheetDidDismiss(reason: NativeChangeReason) {
         runOnMainSync {
+            moveChildrenFromContentToStaging()
             isCurrentlyPresented = false
             sheetViewController = nil
             onDidDismiss()
@@ -1166,6 +1275,20 @@ final class SheetHostContainerView: UIView {
     weak var lifecycleOwner: HybridRnBottomSheet?
     private var isCurrentlyAttached: Bool = false
 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        isHidden = true
+        isUserInteractionEnabled = false
+        clipsToBounds = true
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        isHidden = true
+        isUserInteractionEnabled = false
+        clipsToBounds = true
+    }
+
     override func didMoveToWindow() {
         super.didMoveToWindow()
 
@@ -1213,6 +1336,10 @@ class SheetContentViewController: UIViewController {
     private var lastBackdropTapTimestamp: TimeInterval?
     private var backdropTapGestureRecognizer: UITapGestureRecognizer?
     private let backdropDismissalInferenceWindow: TimeInterval = 0.5
+    private var touchHandler: NSObject?
+    private var backgroundStyleMode: String = "system"
+    private var backgroundBlurStyle: String = "regular"
+    private var backgroundEffectView: UIVisualEffectView?
     var shouldTrackBackdropTapDismissal: () -> Bool = { true }
     var contentView: UIView? {
         didSet {
@@ -1224,6 +1351,7 @@ class SheetContentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        attachTouchHandlerIfNeeded()
         view.backgroundColor = .systemBackground
         setupContentView()
     }
@@ -1234,14 +1362,92 @@ class SheetContentViewController: UIViewController {
     }
 
     private func setupContentView() {
-        // Remove old content
+        // Rebuild hierarchy to keep content full-width while applying background mode.
         view.subviews.forEach { $0.removeFromSuperview() }
+        backgroundEffectView = nil
 
-        // Add new content.
+        applyBackgroundMode()
+
         if let content = contentView {
-            content.frame = view.bounds
-            content.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            content.translatesAutoresizingMaskIntoConstraints = false
             view.addSubview(content)
+            NSLayoutConstraint.activate([
+                content.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                content.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                content.topAnchor.constraint(equalTo: view.topAnchor),
+                content.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+        }
+    }
+
+    func applyPreferredColorScheme(_ scheme: String) {
+        switch scheme {
+        case "light":
+            overrideUserInterfaceStyle = .light
+        case "dark":
+            overrideUserInterfaceStyle = .dark
+        default:
+            overrideUserInterfaceStyle = .unspecified
+        }
+    }
+
+    func applyContentBackground(style: String, blurStyle: String) {
+        let normalizedStyle: String
+        switch style {
+        case "system", "blur", "clear":
+            normalizedStyle = style
+        default:
+            normalizedStyle = "system"
+        }
+
+        let normalizedBlurStyle: String
+        switch blurStyle {
+        case "regular", "prominent", "light", "dark":
+            normalizedBlurStyle = blurStyle
+        default:
+            normalizedBlurStyle = "regular"
+        }
+
+        backgroundStyleMode = normalizedStyle
+        backgroundBlurStyle = normalizedBlurStyle
+
+        if isViewLoaded {
+            setupContentView()
+        }
+    }
+
+    private func applyBackgroundMode() {
+        switch backgroundStyleMode {
+        case "clear":
+            view.backgroundColor = .clear
+        case "blur":
+            view.backgroundColor = .clear
+            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: resolveBlurEffectStyle()))
+            blurView.isUserInteractionEnabled = false
+            blurView.translatesAutoresizingMaskIntoConstraints = false
+            view.addSubview(blurView)
+            NSLayoutConstraint.activate([
+                blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                blurView.topAnchor.constraint(equalTo: view.topAnchor),
+                blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ])
+            backgroundEffectView = blurView
+        default:
+            view.backgroundColor = .systemBackground
+        }
+    }
+
+    private func resolveBlurEffectStyle() -> UIBlurEffect.Style {
+        switch backgroundBlurStyle {
+        case "prominent":
+            return .prominent
+        case "light":
+            return .light
+        case "dark":
+            return .dark
+        default:
+            return .regular
         }
     }
 
@@ -1337,6 +1543,45 @@ class SheetContentViewController: UIViewController {
         isSystemDismissalCandidate = false
         wasInteractiveDismissal = nil
         lastBackdropTapTimestamp = nil
+    }
+
+    deinit {
+        detachTouchHandler()
+    }
+
+    private func attachTouchHandlerIfNeeded() {
+        if touchHandler == nil {
+            touchHandler = makeTouchHandler()
+        }
+
+        guard let touchHandler else { return }
+        let selector = NSSelectorFromString("attachToView:")
+        if touchHandler.responds(to: selector) {
+            _ = touchHandler.perform(selector, with: view)
+        }
+    }
+
+    private func detachTouchHandler() {
+        guard let touchHandler else { return }
+        let selector = NSSelectorFromString("detachFromCurrentView")
+        if touchHandler.responds(to: selector) {
+            _ = touchHandler.perform(selector)
+        }
+    }
+
+    private func makeTouchHandler() -> NSObject? {
+        let candidateNames = [
+            "SheetSurfaceTouchHandler",
+            "RnBottomSheet.SheetSurfaceTouchHandler",
+        ]
+
+        for className in candidateNames {
+            if let touchHandlerClass = NSClassFromString(className) as? NSObject.Type {
+                return touchHandlerClass.init()
+            }
+        }
+
+        return nil
     }
 }
 

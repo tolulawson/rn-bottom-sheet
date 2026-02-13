@@ -16,9 +16,21 @@ describe('example control-surface contract', () => {
     expect(harness.getTextByTestId(TEST_IDS.sheetRouteSummary)).toContain(
       'In-Sheet Route: Summary'
     );
+    expect(
+      harness.getTextByTestId(TEST_IDS.sheetDetentPresetSummary)
+    ).toContain('Detent preset: All detents');
     expect(harness.hasButtonWithTestId(TEST_IDS.snapLargeButton)).toBe(true);
+    expect(harness.hasButtonWithTestId(TEST_IDS.cycleDetentPresetButton)).toBe(
+      true
+    );
+    expect(
+      harness.hasButtonWithTestId(TEST_IDS.cyclePreferredColorSchemeButton)
+    ).toBe(true);
     expect(harness.hasButtonWithTestId(TEST_IDS.closeSheetButton)).toBe(true);
     expect(harness.hasButtonWithTestId(TEST_IDS.openSheetButton)).toBe(true);
+    expect(harness.getViewStyleByTestId(TEST_IDS.sheetContent).width).toBe(
+      '100%'
+    );
 
     harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
     expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
@@ -28,6 +40,16 @@ describe('example control-surface contract', () => {
     harness.pressButtonByTestId(TEST_IDS.routeToggleButton);
     expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
       'Route: Summary'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.cycleDetentPresetButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainRouteSummary)).toContain(
+      'Detents: Fit only'
+    );
+
+    harness.pressButtonByTestId(TEST_IDS.cyclePreferredColorSchemeButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSheetStyleSummary)).toContain(
+      'Sheet style: light / system / regular'
     );
 
     harness.pressButtonByTestId(TEST_IDS.closeSheetButton);

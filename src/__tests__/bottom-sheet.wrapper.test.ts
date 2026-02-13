@@ -1,9 +1,12 @@
 import {
   isControlledProps,
+  toNativeContentBackgroundBlurStyle,
+  toNativeContentBackgroundStyle,
   resolveInitialDetentIndex,
   resolveSelectedDetentIndex,
   toNativeBackgroundInteraction,
   toNativeDetentConfig,
+  toNativePreferredColorScheme,
 } from '../components/bottom-sheet-utils';
 import type { BottomSheetProps } from '../types/bottom-sheet';
 
@@ -29,6 +32,27 @@ describe('bottom-sheet wrapper utilities', () => {
     expect(toNativeBackgroundInteraction(undefined)).toBe('modal');
     expect(toNativeBackgroundInteraction('nonModal')).toBe('nonModal');
     expect(toNativeBackgroundInteraction({ upThrough: 2 })).toBe(2);
+  });
+
+  it('maps styling props to native defaults and supported values', () => {
+    expect(toNativePreferredColorScheme(undefined)).toBe('system');
+    expect(toNativePreferredColorScheme('dark')).toBe('dark');
+    expect(toNativeContentBackgroundStyle(undefined)).toBe('system');
+    expect(toNativeContentBackgroundStyle('blur')).toBe('blur');
+    expect(toNativeContentBackgroundBlurStyle(undefined)).toBe('regular');
+    expect(toNativeContentBackgroundBlurStyle('prominent')).toBe('prominent');
+  });
+
+  it('rejects invalid styling values', () => {
+    expect(() => toNativePreferredColorScheme('sepia' as never)).toThrow(
+      'Invalid preferredColorScheme value'
+    );
+    expect(() => toNativeContentBackgroundStyle('glass' as never)).toThrow(
+      'Invalid contentBackgroundStyle value'
+    );
+    expect(() => toNativeContentBackgroundBlurStyle('extra' as never)).toThrow(
+      'Invalid contentBackgroundBlurStyle value'
+    );
   });
 
   it('rejects invalid background interaction values', () => {

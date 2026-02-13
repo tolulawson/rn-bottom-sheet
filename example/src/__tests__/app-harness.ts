@@ -19,7 +19,13 @@ jest.mock('react-native', () => {
   const Button = (props: any) =>
     ReactNativeMockRuntime.createElement('Button', {
       accessibilityLabel: props.accessibilityLabel,
-      onPress: props.onPress,
+      disabled: props.disabled,
+      onPress: () => {
+        if (props.disabled) {
+          return;
+        }
+        props.onPress?.();
+      },
       testID: props.testID,
       title: props.title,
     });

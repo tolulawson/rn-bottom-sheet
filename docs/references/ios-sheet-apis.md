@@ -83,6 +83,21 @@ Detents are applied in sorted order internally. The first detent in the array is
 | `prefersScrollingExpandsWhenScrolledToEdge` | `Bool` | `true` | When `true`, scrolling a scroll view at the top edge expands the sheet to the next detent instead of scrolling content. |
 | `preferredCornerRadius` | `CGFloat` | system default | Corner radius of the sheet. Negative values use the system default. |
 
+### Content Styling + Color Scheme (Hosted Content VC)
+
+UIKit sheet APIs style the presented container indirectly through the presented view controller:
+
+- `overrideUserInterfaceStyle` on the presented content VC controls `system`/`light`/`dark` appearance.
+- Content background can be rendered as:
+  - `system`: `view.backgroundColor = .systemBackground`
+  - `clear`: `view.backgroundColor = .clear`
+  - `blur`: background `UIVisualEffectView` using `UIBlurEffect.Style` (`regular`/`prominent`/`light`/`dark`)
+
+Limitations:
+
+- Standard `UISheetPresentationController` does not expose first-class API for configurable backdrop blur opacity/strength.
+- Custom dimming/backdrop material tuning is outside common iPhone scope for this library iteration.
+
 ### animateChanges(_:)
 
 Batched property mutations should be wrapped in `animateChanges` for smooth, coordinated transitions:
@@ -175,6 +190,21 @@ SwiftUI detent types:
 4. **Background interaction defaults to modal.** Non-modal requires explicit `largestUndimmedDetentIdentifier` configuration.
 5. **`animateChanges` should batch property updates.** The library's `beforeUpdate`/`afterUpdate` pattern maps to this.
 6. **Reparenting views into the modal conflicts with the standard UIKit pattern.** See ADR-0002 for the architectural implications.
+
+## Common iPhone Option Parity Matrix
+
+| Option | rn-bottom-sheet status | Scope note |
+|---|---|---|
+| Detents (`fit`/`medium`/`large`/custom fraction/custom points) | Implemented | Deterministic normalization and identifier mapping. |
+| Initial/selected detent | Implemented | Controlled + uncontrolled detent flows. |
+| Grabber visibility | Implemented | Maps to `prefersGrabberVisible`. |
+| Swipe dismiss | Implemented | Mapped via modal-in-presentation control. |
+| Scroll expansion behavior | Implemented | Maps to `prefersScrollingExpandsWhenScrolledToEdge`. |
+| Background interaction | Implemented | Uses `largestUndimmedDetentIdentifier`. |
+| Corner radius | Implemented | Uses `preferredCornerRadius`. |
+| Preferred color scheme | Implemented | `system` / `light` / `dark` on hosted VC. |
+| Content background style + blur style | Implemented | `system` / `blur` / `clear` + supported blur presets. |
+| iPad/compact-height edge-attached width-following options | Deferred | Explicit non-goal for current feature scope. |
 
 ## Sources
 

@@ -1,0 +1,69 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "main-container"
+    timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          point: "177,316"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+# Width contract proxy assertions: controls remain visible across detent transitions.
+- assertVisible:
+    id: "sheet-content"
+- assertVisible:
+    id: "snap-fit-button"
+- assertVisible:
+    id: "snap-medium-button"
+- assertVisible:
+    id: "snap-large-button"
+
+- tapOn:
+    id: "snap-medium-button"
+- assertVisible:
+    text: ".*Detent: 1.*"
+- assertVisible:
+    id: "sheet-content"
+
+- tapOn:
+    id: "snap-large-button"
+- assertVisible:
+    text: ".*Detent: 2.*"
+- assertVisible:
+    id: "sheet-content"
+
+- tapOn:
+    id: "snap-fit-button"
+- assertVisible:
+    text: ".*Detent: 0.*"
+- assertVisible:
+    id: "sheet-content"
+
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000

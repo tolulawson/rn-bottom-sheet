@@ -26,6 +26,13 @@ describe('example theme contract', () => {
     const darkSheetStyle = harness.getViewStyleByTestId(TEST_IDS.sheetContent);
     expect(darkSheetStyle.backgroundColor).toBe(THEME_TOKENS.dark.surface);
 
+    harness.pressButtonByTestId(TEST_IDS.cyclePreferredColorSchemeButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleContentBackgroundStyleButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleContentBackgroundBlurStyleButton);
+    expect(harness.getTextByTestId(TEST_IDS.mainSheetStyleSummary)).toContain(
+      'Sheet style: light / blur / prominent'
+    );
+
     harness.pressButtonByTestId(TEST_IDS.toggleThemeButton);
 
     expect(harness.getTextByTestId(TEST_IDS.mainThemeSummary)).toContain(

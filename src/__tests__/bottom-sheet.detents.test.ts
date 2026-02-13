@@ -78,6 +78,19 @@ describe('detent utilities', () => {
     ]);
   });
 
+  it('supports single semantic detent restriction patterns', () => {
+    const fitOnly = validateDetents(['fit']);
+    const mediumOnly = validateDetents(['medium']);
+    const largeOnly = validateDetents(['large']);
+
+    expect(fitOnly.valid).toBe(true);
+    expect(fitOnly.normalizedDetents).toEqual(['fit']);
+    expect(mediumOnly.valid).toBe(true);
+    expect(mediumOnly.normalizedDetents).toEqual(['medium']);
+    expect(largeOnly.valid).toBe(true);
+    expect(largeOnly.normalizedDetents).toEqual(['large']);
+  });
+
   it('maps detents to native config with deterministic identifiers', () => {
     const config = detentsToNativeConfig([
       { type: 'fraction', value: 0.6, id: 'hero detent' },

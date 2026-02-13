@@ -1,0 +1,59 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "main-container"
+    timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          point: "177,316"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+- assertVisible:
+    id: "sheet-title"
+- assertVisible:
+    id: "route-toggle-button"
+
+# Validate at least 3 interactive in-sheet controls mutate state.
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: ".*In-Sheet Route: Details.*"
+
+- tapOn:
+    id: "toggle-grabber-button"
+- assertVisible:
+    text: ".*Grabber: Off.*"
+
+- tapOn:
+    id: "cycle-background-interaction-button"
+- assertVisible:
+    text: ".*Background: nonModal.*"
+
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000

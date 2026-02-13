@@ -160,4 +160,21 @@ describe('bottom-sheet presenter lifecycle integration', () => {
     expect(onOpenChange).toHaveBeenCalledWith(false, 'programmatic');
     expect(mockLatestProps?.isOpen).toBe(false);
   });
+
+  it('forwards styling props to native presenter host with defaults', () => {
+    TestRenderer.act(() => {
+      TestRenderer.create(
+        React.createElement(BottomSheet, {
+          defaultOpen: false,
+          preferredColorScheme: 'dark',
+          contentBackgroundStyle: 'blur',
+          contentBackgroundBlurStyle: 'prominent',
+        })
+      );
+    });
+
+    expect(mockLatestProps?.preferredColorScheme).toBe('dark');
+    expect(mockLatestProps?.contentBackgroundStyle).toBe('blur');
+    expect(mockLatestProps?.contentBackgroundBlurStyle).toBe('prominent');
+  });
 });

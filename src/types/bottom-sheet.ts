@@ -73,6 +73,25 @@ export type BackgroundInteractionMode =
   | 'nonModal'
   | { upThrough: number };
 
+/**
+ * Preferred color scheme override for sheet content.
+ */
+export type BottomSheetPreferredColorScheme = 'system' | 'light' | 'dark';
+
+/**
+ * Sheet content background styling mode.
+ */
+export type BottomSheetContentBackgroundStyle = 'system' | 'blur' | 'clear';
+
+/**
+ * Blur style used when `contentBackgroundStyle` is `blur`.
+ */
+export type BottomSheetContentBackgroundBlurStyle =
+  | 'regular'
+  | 'prominent'
+  | 'light'
+  | 'dark';
+
 // =============================================================================
 // Callback Types
 // =============================================================================
@@ -152,6 +171,15 @@ export interface BottomSheetBaseProps {
 
   /** Allow sheet to expand when scrolled content reaches edge. Defaults to true */
   expandsWhenScrolledToEdge?: boolean;
+
+  /** Preferred color scheme override for sheet content. Defaults to 'system' */
+  preferredColorScheme?: BottomSheetPreferredColorScheme;
+
+  /** Background style for sheet content host. Defaults to 'system' */
+  contentBackgroundStyle?: BottomSheetContentBackgroundStyle;
+
+  /** Blur style used when contentBackgroundStyle is 'blur'. Defaults to 'regular' */
+  contentBackgroundBlurStyle?: BottomSheetContentBackgroundBlurStyle;
 
   // Lifecycle callbacks
   onWillPresent?: LifecycleCallback;

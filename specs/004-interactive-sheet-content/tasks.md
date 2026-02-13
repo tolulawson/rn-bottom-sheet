@@ -10,9 +10,9 @@
 
 **Purpose**: Align test/documentation scaffolding and ensure scenario paths exist.
 
-- [ ] T001 Confirm branch/tooling alignment to `004-interactive-sheet-content` and record preflight in `specs/004-interactive-sheet-content/maestro-evidence/preflight.md`
-- [ ] T002 [P] Create Maestro evidence directory at `specs/004-interactive-sheet-content/maestro-evidence/.gitkeep`
-- [ ] T003 [P] Add/refresh test IDs needed for new style controls and assertions in `example/src/testids.ts`
+- [x] T001 Confirm branch/tooling alignment to `004-interactive-sheet-content` and record preflight in `specs/004-interactive-sheet-content/maestro-evidence/preflight.md`
+- [x] T002 [P] Create Maestro evidence directory at `specs/004-interactive-sheet-content/maestro-evidence/.gitkeep`
+- [x] T003 [P] Add/refresh test IDs needed for new style controls and assertions in `example/src/testids.ts`
 
 ---
 
@@ -22,14 +22,14 @@
 
 **⚠️ CRITICAL**: No user story work begins before this phase is complete.
 
-- [ ] T004 Build explicit common-iPhone option parity matrix (implemented/pre-existing/deferred) in `docs/references/ios-sheet-apis.md`
-- [ ] T005 Extend Nitro prop contract for styling options and missing common iPhone options in `src/RnBottomSheet.nitro.ts`
-- [ ] T006 [P] Extend public TypeScript API types for common iPhone options and styling in `src/types/bottom-sheet.ts`
-- [ ] T007 [P] Add prop normalization/validation helpers for styling and common option mappings in `src/components/bottom-sheet-utils.ts`
-- [ ] T008 Wire new/confirmed props through wrapper component into native host in `src/components/BottomSheet.tsx`
-- [ ] T009 Add native Swift prop storage + queued update handling for styling/config parity in `ios/RnBottomSheet.swift`
-- [ ] T010 Add API-surface guard tests to prevent package-owned navigation API expansion in `src/__tests__/bottom-sheet.contract.test.ts`
-- [ ] T011 [P] Add non-iOS fallback safety tests for new styling/config props in `src/__tests__/bottom-sheet.fallback.test.ts`
+- [x] T004 Build explicit common-iPhone option parity matrix (implemented/pre-existing/deferred) in `docs/references/ios-sheet-apis.md`
+- [x] T005 Extend Nitro prop contract for styling options and missing common iPhone options in `src/RnBottomSheet.nitro.ts`
+- [x] T006 [P] Extend public TypeScript API types for common iPhone options and styling in `src/types/bottom-sheet.ts`
+- [x] T007 [P] Add prop normalization/validation helpers for styling and common option mappings in `src/components/bottom-sheet-utils.ts`
+- [x] T008 Wire new/confirmed props through wrapper component into native host in `src/components/BottomSheet.tsx`
+- [x] T009 Add native Swift prop storage + queued update handling for styling/config parity in `ios/RnBottomSheet.swift`
+- [x] T010 Add API-surface guard tests to prevent package-owned navigation API expansion in `src/__tests__/bottom-sheet.contract.test.ts`
+- [x] T011 [P] Add non-iOS fallback safety tests for new styling/config props in `src/__tests__/bottom-sheet.fallback.test.ts`
 
 **Checkpoint**: Core configuration and bridge layer are ready for story-level behavior work.
 
@@ -43,16 +43,16 @@
 
 ### Tests for User Story 1 (REQUIRED)
 
-- [ ] T012 [P] [US1] Add interaction behavior integration tests in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`
-- [ ] T013 [P] [US1] Add example contract coverage for in-sheet controls interaction in `example/src/__tests__/sheet-control-surface.contract.test.tsx`
-- [ ] T014 [P] [US1] Author Maestro flow for interactive in-sheet controls in `example/maestro/sheet-interactive-controls.yaml`
+- [x] T012 [P] [US1] Add interaction behavior integration tests in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`
+- [x] T013 [P] [US1] Add example contract coverage for in-sheet controls interaction in `example/src/__tests__/sheet-control-surface.contract.test.tsx`
+- [x] T014 [P] [US1] Author Maestro flow for interactive in-sheet controls in `example/maestro/sheet-interactive-controls.yaml`
 
 ### Implementation for User Story 1
 
-- [ ] T015 [US1] Update native content-host interaction routing behavior in `ios/RnBottomSheet.swift`
-- [ ] T016 [US1] Ensure wrapper lifecycle callbacks remain deterministic under interactive child updates in `src/components/BottomSheet.tsx`
-- [ ] T017 [US1] Update example control surface to exercise touch/scroll/input behavior in `example/src/components/InSheetControls.tsx`
-- [ ] T018 [US1] Align example app state assertions/logging for interaction outcomes in `example/src/App.tsx`
+- [x] T015 [US1] Update native content-host interaction routing behavior in `ios/RnBottomSheet.swift`
+- [x] T016 [US1] Ensure wrapper lifecycle callbacks remain deterministic under interactive child updates in `src/components/BottomSheet.tsx`
+- [x] T017 [US1] Update example control surface to exercise touch/scroll/input behavior in `example/src/components/InSheetControls.tsx`
+- [x] T018 [US1] Align example app state assertions/logging for interaction outcomes in `example/src/App.tsx`
 
 **Checkpoint**: US1 is independently functional and testable.
 
@@ -66,15 +66,15 @@
 
 ### Tests for User Story 2 (REQUIRED)
 
-- [ ] T019 [P] [US2] Add width-contract integration assertions in `src/__tests__/bottom-sheet.detent.integration.test.tsx`
-- [ ] T020 [P] [US2] Add detent restriction validation coverage (`fit`/`medium`/`large` single-detent patterns) in `src/__tests__/bottom-sheet.detents.test.ts`
-- [ ] T021 [P] [US2] Author Maestro width-contract flow in `example/maestro/sheet-width-contract.yaml`
+- [x] T019 [P] [US2] Add width-contract integration assertions in `src/__tests__/bottom-sheet.detent.integration.test.tsx`
+- [x] T020 [P] [US2] Add detent restriction validation coverage (`fit`/`medium`/`large` single-detent patterns) in `src/__tests__/bottom-sheet.detents.test.ts`
+- [x] T021 [P] [US2] Author Maestro width-contract flow in `example/maestro/sheet-width-contract.yaml`
 
 ### Implementation for User Story 2
 
-- [ ] T022 [US2] Implement/adjust native width-hosting contract for sheet child root in `ios/RnBottomSheet.swift`
-- [ ] T023 [US2] Remove conflicting fixed-width assumptions in example content styles in `example/src/components/InSheetControls.tsx`
-- [ ] T024 [US2] Add example detent restriction controls and assertions in `example/src/App.tsx`
+- [x] T022 [US2] Implement/adjust native width-hosting contract for sheet child root in `ios/RnBottomSheet.swift`
+- [x] T023 [US2] Remove conflicting fixed-width assumptions in example content styles in `example/src/components/InSheetControls.tsx`
+- [x] T024 [US2] Add example detent restriction controls and assertions in `example/src/App.tsx`
 
 **Checkpoint**: US2 is independently functional and testable.
 
@@ -88,20 +88,20 @@
 
 ### Tests for User Story 3 (REQUIRED)
 
-- [ ] T025 [P] [US3] Add wrapper behavior tests for styling props and lifecycle stability in `src/__tests__/bottom-sheet.wrapper.test.ts`
-- [ ] T026 [P] [US3] Add presenter integration tests for preferred color scheme and background style updates in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`
-- [ ] T027 [P] [US3] Add example flow compatibility contract tests in `example/src/__tests__/sheet-single-open.contract.test.tsx`
-- [ ] T028 [P] [US3] Add example styling contract tests in `example/src/__tests__/sheet-theme.contract.test.tsx`
-- [ ] T029 [P] [US3] Author Maestro flow for consumer-managed flow compatibility in `example/maestro/sheet-consumer-flow-compat.yaml`
-- [ ] T030 [P] [US3] Add runtime open-sheet theme/style toggle edge-case test in `example/src/__tests__/sheet-theme.contract.test.tsx`
+- [x] T025 [P] [US3] Add wrapper behavior tests for styling props and lifecycle stability in `src/__tests__/bottom-sheet.wrapper.test.ts`
+- [x] T026 [P] [US3] Add presenter integration tests for preferred color scheme and background style updates in `src/__tests__/bottom-sheet.presenter.integration.test.tsx`
+- [x] T027 [P] [US3] Add example flow compatibility contract tests in `example/src/__tests__/sheet-single-open.contract.test.tsx`
+- [x] T028 [P] [US3] Add example styling contract tests in `example/src/__tests__/sheet-theme.contract.test.tsx`
+- [x] T029 [P] [US3] Author Maestro flow for consumer-managed flow compatibility in `example/maestro/sheet-consumer-flow-compat.yaml`
+- [x] T030 [P] [US3] Add runtime open-sheet theme/style toggle edge-case test in `example/src/__tests__/sheet-theme.contract.test.tsx`
 
 ### Implementation for User Story 3
 
-- [ ] T031 [US3] Implement native styling application (`system`/`blur`/`clear`, blur style, color scheme override) in `ios/RnBottomSheet.swift`
-- [ ] T032 [US3] Wire styling props through TS wrapper and fallback-safe behavior in `src/components/BottomSheet.tsx`
-- [ ] T033 [US3] Update public type exports and docs comments for styling + common iPhone option scope in `src/types/bottom-sheet.ts`
-- [ ] T034 [US3] Update example controls for style toggles and consumer-managed flow demo in `example/src/components/InSheetControls.tsx`
-- [ ] T035 [US3] Update example app state wiring for style and flow compatibility scenarios in `example/src/App.tsx`
+- [x] T031 [US3] Implement native styling application (`system`/`blur`/`clear`, blur style, color scheme override) in `ios/RnBottomSheet.swift`
+- [x] T032 [US3] Wire styling props through TS wrapper and fallback-safe behavior in `src/components/BottomSheet.tsx`
+- [x] T033 [US3] Update public type exports and docs comments for styling + common iPhone option scope in `src/types/bottom-sheet.ts`
+- [x] T034 [US3] Update example controls for style toggles and consumer-managed flow demo in `example/src/components/InSheetControls.tsx`
+- [x] T035 [US3] Update example app state wiring for style and flow compatibility scenarios in `example/src/App.tsx`
 
 **Checkpoint**: US3 is independently functional and testable.
 
@@ -111,13 +111,13 @@
 
 **Purpose**: Finalize docs, validate support matrix/non-goals, and run full verification.
 
-- [ ] T036 [P] Update README API support matrix and non-goals in `README.md`
-- [ ] T037 [P] Update iOS sheet reference docs for styling limits and common iPhone scope in `docs/references/ios-sheet-apis.md`
-- [ ] T038 [P] Update ADR/architecture notes to reflect consumer-managed navigation non-goal and styling scope in `docs/adr/ADR-0002-content-hosting-model.md`
-- [ ] T039 Add measurable performance validation notes for SC-006 (95% within 700ms) in `specs/004-interactive-sheet-content/maestro-evidence/performance-summary.md`
-- [ ] T040 Run full validation commands and capture outputs (`yarn lint`, `yarn typecheck`, `yarn test`) with notes in `specs/004-interactive-sheet-content/maestro-evidence/validation-summary.md`
-- [ ] T041 [P] Execute all required Maestro flows and store evidence in `specs/004-interactive-sheet-content/maestro-evidence/`
-- [ ] T042 Run quickstart validation checklist from `specs/004-interactive-sheet-content/quickstart.md` and record completion in `specs/004-interactive-sheet-content/maestro-evidence/quickstart-validation.md`
+- [x] T036 [P] Update README API support matrix and non-goals in `README.md`
+- [x] T037 [P] Update iOS sheet reference docs for styling limits and common iPhone scope in `docs/references/ios-sheet-apis.md`
+- [x] T038 [P] Update ADR/architecture notes to reflect consumer-managed navigation non-goal and styling scope in `docs/adr/ADR-0002-content-hosting-model.md`
+- [x] T039 Add measurable performance validation notes for SC-006 (95% within 700ms) in `specs/004-interactive-sheet-content/maestro-evidence/performance-summary.md`
+- [x] T040 Run full validation commands and capture outputs (`yarn lint`, `yarn typecheck`, `yarn test`) with notes in `specs/004-interactive-sheet-content/maestro-evidence/validation-summary.md`
+- [x] T041 [P] Execute all required Maestro flows and store evidence in `specs/004-interactive-sheet-content/maestro-evidence/`
+- [x] T042 Run quickstart validation checklist from `specs/004-interactive-sheet-content/quickstart.md` and record completion in `specs/004-interactive-sheet-content/maestro-evidence/quickstart-validation.md`
 
 ---
 

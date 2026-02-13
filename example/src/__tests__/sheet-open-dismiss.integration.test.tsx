@@ -29,12 +29,21 @@ describe('example iOS open/dismiss integration flow', () => {
     harness.pressButtonByTestId(TEST_IDS.toggleSwipeDismissButton);
     harness.pressButtonByTestId(TEST_IDS.toggleExpandOnScrollButton);
     harness.pressButtonByTestId(TEST_IDS.cycleBackgroundInteractionButton);
+    harness.pressButtonByTestId(TEST_IDS.cyclePreferredColorSchemeButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleContentBackgroundStyleButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleContentBackgroundBlurStyleButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleDetentPresetButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleDetentPresetButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleDetentPresetButton);
+    harness.pressButtonByTestId(TEST_IDS.cycleDetentPresetButton);
 
     const allStatusLines = harness.getAllTextContent();
     expect(allStatusLines).toEqual(
       expect.arrayContaining([
         expect.stringContaining('Grabber: Off | Swipe dismiss: Off'),
         expect.stringContaining('Expand on scroll: Off | Background: nonModal'),
+        expect.stringContaining('Detent preset: All detents'),
+        expect.stringContaining('Sheet style: light / blur / prominent'),
       ])
     );
 

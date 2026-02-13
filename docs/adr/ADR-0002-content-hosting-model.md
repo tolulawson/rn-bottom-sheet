@@ -2,7 +2,7 @@
 
 - Status: Accepted (child routing implemented, reparenting replaced)
 - Date: 2026-02-12
-- Updated: 2026-02-12
+- Updated: 2026-02-13
 
 ## Context
 
@@ -20,15 +20,26 @@ Nitro's `HybridRnBottomSheetComponent` (an `RCTViewComponentView` subclass) crea
 
 Implement a native-presented sheet container that hosts RN children through the Nitro host boundary using a **child routing** pattern. React children are routed to the correct native container based on presentation state, rather than moving the host view itself.
 
+### Scope guardrails (2026-02-13 update)
+
+- Navigation remains consumer-managed inside sheet children; package-owned in-sheet stack APIs are intentionally out of scope.
+- iOS-first styling controls are part of the hosted content contract:
+  - `preferredColorScheme` (`system`/`light`/`dark`)
+  - `contentBackgroundStyle` (`system`/`blur`/`clear`)
+  - `contentBackgroundBlurStyle` (`regular`/`prominent`/`light`/`dark`, when background style is `blur`)
+- iPad/compact-height niche options (for example edge-attached width-following behavior) remain deferred.
+
 ## Implementation: Child Routing (Current)
 
 The implementation uses three key components:
 
-1. **`SheetHostContainerView`** (staging area): Stays in the React tree permanently. When the sheet is not presented, React children are held here. Has zero layout size, so children are invisible.
+1. **`SheetHostContainerView`** (staging area): Stays in the React tree permanently. When the sheet is not presented, React children are held here. The host is hidden and non-interactive so staged children are never visible on the main screen.
 
 2. **`SheetContentContainerView`** (modal content): Lives inside the `SheetContentViewController`. Receives React children when the sheet is presented. Not part of the React tree.
 
 3. **`mountChildComponentView:index:` override** in `HybridRnBottomSheetComponent.mm`: Intercepts Fabric's child mount calls and routes them to the correct container.
+
+4. **`SheetSurfaceTouchHandler`**: Wraps `RCTSurfaceTouchHandler` and attaches it to the presented content view so touch/press events continue to flow through Fabric while children are hosted in the modal view controller.
 
 ### Child routing flow
 
@@ -58,9 +69,12 @@ The implementation uses three key components:
 
 3. **No post-dismiss orphaning.** The host view never changes superview, so `didMoveToWindow` only fires for genuine window lifecycle events (app background, component unmount). The "stuck in opening" reopen bug is eliminated.
 
+4. **Interactive children remain interactive when presented.** The modal content view has a Fabric surface touch handler attached, preserving press/gesture delivery for hosted React Native descendants.
+
 ### Key files
 
 - `ios/RnBottomSheet.swift`: `routeChildView`, `unrouteChildView`, `moveChildrenFromStagingToContent`, `moveChildrenFromContentToStaging`
+- `ios/SheetSurfaceTouchHandler.mm`: Fabric `RCTSurfaceTouchHandler` bridge used by the sheet content controller
 - `nitrogen/generated/ios/c++/views/HybridRnBottomSheetComponent.mm`: `mountChildComponentView:index:` and `unmountChildComponentView:index:` overrides (manual addition, must survive nitrogen regeneration)
 - `src/components/BottomSheet.tsx`: Simplified -- no `HOST_HIDDEN_STYLE` wrapper needed
 
@@ -71,7 +85,7 @@ The original implementation reparented the `SheetHostContainerView` from the Rea
 ## Consequences
 
 1. High flexibility for consumer content and composition -- any React Native view tree can be rendered inside the sheet.
-2. Additional lifecycle complexity for attach/detach/recycle handling due to the reparenting approach.
-3. Requires the `HOST_HIDDEN_STYLE` workaround to prevent content leaking onto the main screen.
-4. Requires robust cleanup in `prepareForRecycle` to avoid stale view reuse artifacts.
-5. The post-dismiss orphan window creates a timing vulnerability for rapid open/close cycles.
+2. Lifecycle complexity is concentrated in explicit routing/attach/detach/recycle boundaries rather than host-view reparenting.
+3. Width behavior is owned by the content host contract (content VC fills sheet container; consumer root can use `width: '100%'` by default).
+4. Styling controls are deterministic and iOS-scoped through content-VC configuration, with explicit native limitations documented.
+5. Robust cleanup in `prepareForRecycle` remains required to avoid stale callbacks/session reuse artifacts.

@@ -130,6 +130,9 @@ export const PLATFORM_CONFIG = {
       grabber: true,
       backgroundInteraction: true,
       cornerRadius: true,
+      preferredColorScheme: true,
+      contentBackgroundStyle: true,
+      contentBackgroundBlurStyle: true,
     },
   },
   android: {
@@ -139,6 +142,9 @@ export const PLATFORM_CONFIG = {
       grabber: false,
       backgroundInteraction: false,
       cornerRadius: false,
+      preferredColorScheme: false,
+      contentBackgroundStyle: false,
+      contentBackgroundBlurStyle: false,
     },
   },
   web: {
@@ -148,6 +154,9 @@ export const PLATFORM_CONFIG = {
       grabber: false,
       backgroundInteraction: false,
       cornerRadius: false,
+      preferredColorScheme: false,
+      contentBackgroundStyle: false,
+      contentBackgroundBlurStyle: false,
     },
   },
 } as const;

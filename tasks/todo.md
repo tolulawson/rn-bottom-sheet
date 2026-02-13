@@ -252,6 +252,14 @@
 - [x] Run and pass verification: `yarn lint`, `yarn typecheck`, `yarn test`
 - [x] Capture verification outcomes in the Review section
 
+## Ralph Iteration 2026-02-13 (Spec 004 Touch Routing Stabilization)
+
+- [x] Reconcile native child-routing implementation with ADR-0002 staging model (host staging while closed, content routing while presented)
+- [x] Implement deterministic stage/content transfer on present and dismiss in `ios/RnBottomSheet.swift`
+- [x] Rebuild iOS app and verify in-sheet controls mutate state via Maestro MCP (route toggle, close, detent)
+- [x] Re-run required spec-004 Maestro flows and capture evidence artifacts under `specs/004-interactive-sheet-content/maestro-evidence/`
+- [x] Re-run full validation gates (`yarn lint`, `yarn typecheck`, `yarn test`) and update spec/task completion markers
+
 ## Ralph Iteration 2026-02-12 (US2 Example Detent Controls T024)
 
 - [x] Confirm `T024` is the highest-priority truly incomplete item and verify `example/src/App.tsx` does not already provide detent controls + behavior toggles
@@ -984,3 +992,64 @@
   - `sheet-theme-toggle.yaml`: theme toggle with active sheet
   - Maestro execution encountered Expo dev client UI overlays; screenshots confirm correct app behavior
 - Spec marked `## Status: COMPLETE`
+
+## Ralph Iteration 2026-02-13 (Spec 003 Native Sheet Content Routing Completion)
+
+- [x] Confirm `specs/003-native-sheet-content-routing` is the highest-priority incomplete spec and re-verify no higher-priority tracker item is pending
+- [x] Re-verify Spec 003 acceptance criteria against current implementation and identify any missing behavior or missing evidence artifacts
+- [x] Create missing Maestro evidence directory/files for Spec 003 and capture deterministic execution notes
+- [x] Run validation gates for this iteration: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Execute required Maestro flows for Spec 003 (`sheet-open-content-visible.yaml`, `sheet-reopen-cycle.yaml`, `sheet-interactive-children.yaml`) with MCP evidence
+- [x] Update completion bookkeeping (`specs/003-native-sheet-content-routing/tasks.md` T021, `specs/003-native-sheet-content-routing/spec.md` status, `tasks/todo.md` review section)
+- [x] Commit and push the complete Spec 003 completion change set
+- Spec marked `## Status: COMPLETE`
+
+## Ralph Iteration 2026-02-13 (Spec 003 Completion Hardening Pass)
+
+- [x] Confirm discovery order inputs and lock `specs/003-native-sheet-content-routing` as highest-priority incomplete work item
+- [x] Re-verify Spec 003 implementation against all acceptance criteria and edge cases; capture any deltas
+- [x] Run verification gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Run Maestro MCP E2E flows covering open, dismiss, detent interaction, and primary in-sheet navigation for affected paths
+- [x] Create/update `specs/003-native-sheet-content-routing/maestro-evidence/` with run results and pass/fail outcomes
+- [x] Mark Spec 003 tracking artifacts complete (`spec.md` status + tasks/todo review notes)
+- [x] Commit and push the completion-hardening changeset
+
+## Ralph Iteration 2026-02-13 (Spec 004 Interactive Sheet Content and Core Configuration)
+
+- [x] Confirm `specs/004-interactive-sheet-content/spec.md` remains the highest-priority incomplete work item and verify no higher-priority tracker item is pending
+- [x] Re-verify existing implementation coverage for Spec 004 and document concrete gaps before edits
+- [x] Implement missing API/native support for styling + common iPhone configuration parity (`preferredColorScheme`, `contentBackgroundStyle`, `contentBackgroundBlurStyle`) across TypeScript, Nitro, and Swift layers
+- [x] Complete interactive child + width-contract + consumer-managed flow behavior alignment in example app and shared component surfaces
+- [x] Add/extend required test coverage for Spec 004 in `src/__tests__/` and `example/src/__tests__/` (US1/US2/US3 + API non-goal guard + non-iOS fallback safety)
+- [x] Author required Maestro flows for Spec 004 (`sheet-interactive-controls.yaml`, `sheet-width-contract.yaml`, `sheet-consumer-flow-compat.yaml`)
+- [x] Update required docs (`README.md`, `docs/references/ios-sheet-apis.md`, `docs/adr/ADR-0002-content-hosting-model.md`) for API scope, support matrix, and native limitations
+- [x] Run verification gates (`yarn lint`, `yarn typecheck`, `yarn test`) and capture evidence under `specs/004-interactive-sheet-content/maestro-evidence/`
+- [x] Run Maestro MCP E2E validation for required open/dismiss/detent/primary navigation scenarios plus Spec 004 flows; capture outcomes in evidence artifacts
+- [x] Mark Spec 004 tasks/spec completion state, add `tasks/todo.md` review addendum, then `git add -A`, `git commit`, and `git push`
+
+## Review Addendum (2026-02-13, Spec 004 Interactive Sheet Content and Core Configuration)
+
+- Implemented iOS child-routing stabilization with staging/content transfer and presenter lifecycle alignment:
+  - `routeChildView` now routes to host staging while closed and to content container while presented.
+  - `presentSheet` / `sheetDidDismiss` / teardown paths now move children between staging and modal content deterministically.
+  - Added `ios/SheetSurfaceTouchHandler.mm` bridge to attach Fabric `RCTSurfaceTouchHandler` to presented content.
+- Added spec-004 Maestro flows and stabilized assertions with deterministic IDs/regex checks:
+  - `example/maestro/sheet-interactive-controls.yaml`
+  - `example/maestro/sheet-width-contract.yaml`
+  - `example/maestro/sheet-consumer-flow-compat.yaml`
+- Validation gates:
+  - `yarn lint`: pass (coverage-file warnings only).
+  - `yarn typecheck`: pass.
+  - `yarn test`: pass (16/16 suites).
+- Required Maestro MCP flows:
+  - `sheet-interactive-controls`: pass.
+  - `sheet-width-contract`: pass.
+  - `sheet-consumer-flow-compat`: pass.
+- Added evidence artifacts:
+  - `specs/004-interactive-sheet-content/maestro-evidence/preflight.md`
+  - `specs/004-interactive-sheet-content/maestro-evidence/validation-summary.md`
+  - `specs/004-interactive-sheet-content/maestro-evidence/performance-summary.md`
+  - `specs/004-interactive-sheet-content/maestro-evidence/quickstart-validation.md`
+- Updated completion markers:
+  - `specs/004-interactive-sheet-content/tasks.md` all tasks checked complete.
+  - `specs/004-interactive-sheet-content/spec.md` marked `## Status: COMPLETE`.

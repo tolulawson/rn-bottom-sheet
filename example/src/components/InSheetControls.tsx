@@ -1,23 +1,37 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import type { BackgroundInteractionMode } from 'rn-bottom-sheet';
+import type {
+  BackgroundInteractionMode,
+  BottomSheetContentBackgroundBlurStyle,
+  BottomSheetContentBackgroundStyle,
+  BottomSheetPreferredColorScheme,
+} from 'rn-bottom-sheet';
 
 import type { InSheetRoute } from '../example-state';
 import { TEST_IDS } from '../testids';
 import type { ThemeTokens } from '../theme';
 
 type InSheetControlsProps = {
+  availableDetentCount: number;
   allowSwipeToDismiss: boolean;
   backgroundInteraction: BackgroundInteractionMode;
+  contentBackgroundBlurStyle: BottomSheetContentBackgroundBlurStyle;
+  contentBackgroundStyle: BottomSheetContentBackgroundStyle;
   currentDetent: number;
+  detentPresetLabel: string;
   expandsWhenScrolledToEdge: boolean;
   grabberVisible: boolean;
+  onCycleContentBackgroundBlurStyle: () => void;
+  onCycleContentBackgroundStyle: () => void;
+  onCycleDetentPreset: () => void;
   onClose: () => void;
   onCycleBackgroundInteraction: () => void;
+  onCyclePreferredColorScheme: () => void;
   onSnapToDetent: (index: number) => void;
   onToggleExpandOnScroll: () => void;
   onToggleGrabber: () => void;
   onToggleRoute: () => void;
   onToggleSwipeDismiss: () => void;
+  preferredColorScheme: BottomSheetPreferredColorScheme;
   route: InSheetRoute;
   theme: ThemeTokens;
 };
@@ -33,18 +47,27 @@ function renderBackgroundInteractionLabel(
 }
 
 export function InSheetControls({
+  availableDetentCount,
   allowSwipeToDismiss,
   backgroundInteraction,
+  contentBackgroundBlurStyle,
+  contentBackgroundStyle,
   currentDetent,
+  detentPresetLabel,
   expandsWhenScrolledToEdge,
   grabberVisible,
+  onCycleContentBackgroundBlurStyle,
+  onCycleContentBackgroundStyle,
+  onCycleDetentPreset,
   onClose,
   onCycleBackgroundInteraction,
+  onCyclePreferredColorScheme,
   onSnapToDetent,
   onToggleExpandOnScroll,
   onToggleGrabber,
   onToggleRoute,
   onToggleSwipeDismiss,
+  preferredColorScheme,
   route,
   theme,
 }: InSheetControlsProps) {
@@ -69,6 +92,11 @@ export function InSheetControls({
       </Text>
       <Text
         accessibilityLabel={TEST_IDS.sheetRouteSummary}
+        accessibilityValue={{
+          text: `In-Sheet Route: ${
+            route === 'summary' ? 'Summary' : 'Details'
+          } | Detent: ${currentDetent}`,
+        }}
         style={[styles.status, { color: theme.mutedText }]}
         testID={TEST_IDS.sheetRouteSummary}
       >
@@ -83,6 +111,25 @@ export function InSheetControls({
         Expand on scroll: {expandsWhenScrolledToEdge ? 'On' : 'Off'} |{' '}
         Background: {renderBackgroundInteractionLabel(backgroundInteraction)}
       </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.sheetDetentPresetSummary}
+        accessibilityValue={{ text: `Detent preset: ${detentPresetLabel}` }}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.sheetDetentPresetSummary}
+      >
+        Detent preset: {detentPresetLabel}
+      </Text>
+      <Text
+        accessibilityLabel={TEST_IDS.sheetStyleSummary}
+        accessibilityValue={{
+          text: `Sheet style: ${preferredColorScheme} / ${contentBackgroundStyle} / ${contentBackgroundBlurStyle}`,
+        }}
+        style={[styles.status, { color: theme.mutedText }]}
+        testID={TEST_IDS.sheetStyleSummary}
+      >
+        Sheet style: {preferredColorScheme} / {contentBackgroundStyle} /{' '}
+        {contentBackgroundBlurStyle}
+      </Text>
 
       <View style={styles.buttonSpacer} />
       <Button
@@ -90,6 +137,13 @@ export function InSheetControls({
         onPress={onToggleRoute}
         testID={TEST_IDS.routeToggleButton}
         title={route === 'summary' ? 'Go to Details' : 'Back to Summary'}
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.closeSheetButton}
+        onPress={onClose}
+        testID={TEST_IDS.closeSheetButton}
+        title="Close Sheet"
       />
       <View style={styles.buttonSpacer} />
       <Button
@@ -101,6 +155,7 @@ export function InSheetControls({
       <View style={styles.buttonSpacer} />
       <Button
         accessibilityLabel={TEST_IDS.snapMediumButton}
+        disabled={availableDetentCount < 2}
         onPress={() => onSnapToDetent(1)}
         testID={TEST_IDS.snapMediumButton}
         title="Snap to Medium"
@@ -108,9 +163,17 @@ export function InSheetControls({
       <View style={styles.buttonSpacer} />
       <Button
         accessibilityLabel={TEST_IDS.snapLargeButton}
+        disabled={availableDetentCount < 3}
         onPress={() => onSnapToDetent(2)}
         testID={TEST_IDS.snapLargeButton}
         title="Snap to Large"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.cycleDetentPresetButton}
+        onPress={onCycleDetentPreset}
+        testID={TEST_IDS.cycleDetentPresetButton}
+        title="Cycle Detent Preset"
       />
       <View style={styles.buttonSpacer} />
       <Button
@@ -142,26 +205,37 @@ export function InSheetControls({
       />
       <View style={styles.buttonSpacer} />
       <Button
-        accessibilityLabel={TEST_IDS.closeSheetButton}
-        onPress={onClose}
-        testID={TEST_IDS.closeSheetButton}
-        title="Close Sheet"
+        accessibilityLabel={TEST_IDS.cyclePreferredColorSchemeButton}
+        onPress={onCyclePreferredColorScheme}
+        testID={TEST_IDS.cyclePreferredColorSchemeButton}
+        title="Cycle Preferred Color Scheme"
       />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.cycleContentBackgroundStyleButton}
+        onPress={onCycleContentBackgroundStyle}
+        testID={TEST_IDS.cycleContentBackgroundStyleButton}
+        title="Cycle Content Background Style"
+      />
+      <View style={styles.buttonSpacer} />
+      <Button
+        accessibilityLabel={TEST_IDS.cycleContentBackgroundBlurStyleButton}
+        onPress={onCycleContentBackgroundBlurStyle}
+        testID={TEST_IDS.cycleContentBackgroundBlurStyleButton}
+        title="Cycle Content Background Blur Style"
+      />
+      <View style={styles.buttonSpacer} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   content: {
-    alignItems: 'center',
+    alignSelf: 'stretch',
     backgroundColor: 'red',
-    // borderRadius: 16,
     borderWidth: 1,
+    width: '100%',
     padding: 20,
-    // width: 380,
-    // flex: 1,
-    // height: 200,
-    // justifyContent: 'center',
   },
   title: {
     fontSize: 20,

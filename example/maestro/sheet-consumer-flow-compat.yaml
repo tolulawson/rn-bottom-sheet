@@ -1,0 +1,65 @@
+appId: rnbottomsheet.example
+---
+- launchApp
+- runFlow:
+    when:
+      visible: "DEVELOPMENT SERVERS"
+    commands:
+      - tapOn: "http://localhost:8081"
+- extendedWaitUntil:
+    visible:
+      id: "main-container"
+    timeout: 30000
+
+- runFlow:
+    when:
+      visible:
+        id: "close-sheet-button"
+    commands:
+      - tapOn:
+          point: "177,316"
+      - extendedWaitUntil:
+          notVisible:
+            id: "sheet-content"
+          timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+
+# Consumer-managed route transitions inside sheet content.
+- assertVisible:
+    text: ".*In-Sheet Route: Summary.*"
+- tapOn:
+    id: "route-toggle-button"
+- assertVisible:
+    text: ".*In-Sheet Route: Details.*"
+
+# Detent interaction should not break consumer-managed flow.
+- tapOn:
+    id: "snap-large-button"
+- assertVisible:
+    text: ".*In-Sheet Route: Details \\| Detent: 2.*"
+
+# Dismiss and reopen follows consumer state policy.
+- tapOn:
+    id: "close-sheet-button"
+- extendedWaitUntil:
+    notVisible:
+      id: "sheet-content"
+    timeout: 5000
+
+- tapOn:
+    id: "open-sheet-button"
+- extendedWaitUntil:
+    visible:
+      id: "sheet-content"
+    timeout: 5000
+- assertVisible:
+    text: ".*In-Sheet Route: Summary.*"
+
+- tapOn:
+    id: "close-sheet-button"

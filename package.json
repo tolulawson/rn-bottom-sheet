@@ -37,7 +37,7 @@
     "example": "yarn workspace rn-bottom-sheet-example",
     "clean": "del-cli lib",
     "prepare": "bob build",
-    "nitrogen": "nitrogen",
+    "nitrogen": "nitrogen && node scripts/patch-ios-child-routing.mjs",
     "typecheck": "tsc",
     "test": "jest",
     "release": "release-it --only-version",
