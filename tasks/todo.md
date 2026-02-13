@@ -1170,3 +1170,57 @@
     - `example/maestro/sheet-interactive-children.yaml`: pass.
 - README impact:
   - No public API or externally observable library contract change; README update not required.
+
+## Ralph Iteration 2026-02-13 (Spec 003 Re-Verification Audit Round 2)
+
+- [ ] Confirm no higher-priority incomplete work exists across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [ ] Build a strict acceptance-criteria matrix for `specs/003-native-sheet-content-routing/spec.md` and map each criterion to executable verification
+- [ ] Re-verify implementation state in code for FR-001..FR-008 (including no public API drift)
+- [ ] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [ ] Run mandatory Maestro baseline flows covering open, dismiss, detent interaction, and primary in-sheet navigation
+- [ ] Run Spec 003 Maestro flows: `example/maestro/sheet-open-content-visible.yaml`, `example/maestro/sheet-reopen-cycle.yaml`, `example/maestro/sheet-interactive-children.yaml`
+- [ ] If any acceptance criterion fails, unmark spec completion and implement a fix with full re-validation
+- [ ] Record review evidence in `tasks/todo.md`, then commit and push only if all checks pass
+
+## Ralph Iteration 2026-02-13 (Spec 001 Random Re-Verification Audit)
+
+- [x] Confirm no higher-priority incomplete work exists across `specs/`, `IMPLEMENTATION_PLAN.md`, GitHub issues, and configured trackers
+- [x] Build a strict acceptance-criteria matrix for `specs/001-native-ios-sheet-bindings/spec.md` and map each criterion to executable verification
+- [x] Re-verify implementation state and test evidence for Spec 001 functional requirements and success criteria
+- [x] Run validation gates: `yarn lint`, `yarn typecheck`, `yarn test`
+- [x] Run mandatory Maestro baseline flow coverage: open sheet, dismiss sheet, detent interaction, primary in-sheet navigation
+- [x] If any acceptance criterion fails, unmark Spec 001 completion state and implement a fix with full re-validation
+- [x] Record review evidence in `tasks/todo.md`, then commit and push only if all checks pass
+
+## Review Addendum (2026-02-13, Spec 001 Random Re-Verification Audit)
+
+- Discovery and prioritization:
+  - All feature specs in `specs/` are marked `## Status: COMPLETE`.
+  - `IMPLEMENTATION_PLAN.md` has no unchecked tasks.
+  - `gh issue list --state open --limit 50` returned no open issues.
+  - `list_mcp_resources` and `list_mcp_resource_templates` returned no configured external trackers.
+  - Random completed-spec selection resolved to `specs/001-native-ios-sheet-bindings/spec.md`.
+- Acceptance matrix (Spec 001):
+  - US1 scenarios + FR-001/FR-003/FR-006: covered by `src/__tests__/bottom-sheet.presenter.integration.test.tsx`, `src/__tests__/bottom-sheet.lifecycle.test.ts`, `example/src/__tests__/sheet-open-dismiss.integration.test.tsx`, and Maestro `example/maestro/sheet-single-open.yaml`.
+  - US2 scenarios + FR-002/FR-004/FR-005/FR-007/FR-008: covered by `src/__tests__/bottom-sheet.methods.test.ts`, `src/__tests__/bottom-sheet.detents.test.ts`, `src/__tests__/bottom-sheet.detent.integration.test.tsx`, `src/__tests__/bottom-sheet.wrapper.test.ts`, and Maestro `example/maestro/sheet-internal-controls.yaml`.
+  - US3 scenarios + FR-010/FR-011/FR-012/FR-013: covered by `src/__tests__/bottom-sheet-adapter.test.ts`, `src/__tests__/bottom-sheet.navigation.test.ts`, `src/__tests__/bottom-sheet.reanimated.test.ts`, `src/__tests__/bottom-sheet.fallback.test.ts`, and Maestro `example/maestro/sheet-interactive-children.yaml`.
+  - FR-009 one-active-session behavior: exercised by `example/src/__tests__/sheet-single-open.contract.test.tsx` and native coordinator implementation in `ios/RnBottomSheet.swift`.
+  - FR-014 example app coverage: present in `example/src/App.tsx` and validated by the executed example test/flow suite.
+  - FR-015 documentation artifacts: present in `docs/` and previously tracked completion remains valid.
+  - FR-016 Maestro gate evidence: satisfied in this audit via MCP flow runs listed below.
+  - FR-017 diagnosable errors/warnings: covered by deterministic validation tests in `src/__tests__/bottom-sheet.wrapper.test.ts` and fallback warning tests in `src/__tests__/bottom-sheet.fallback.test.ts`.
+  - FR-018 content/keyboard stability expectations: no regressions detected in automated integration coverage; native implementation remains in `ios/RnBottomSheet.swift`.
+- Defect found and fixed during validation:
+  - `yarn test` initially failed in `example/src/__tests__/sheet-theme.contract.test.tsx` because `example/src/components/InSheetControls.tsx` no longer applied `theme.surface` to `sheet-content`.
+  - Fix: restored `backgroundColor: theme.surface` on the in-sheet root style and re-ran all gates.
+- Validation gates after fix:
+  - `yarn lint`: pass (0 errors, 3 warnings in generated `coverage/lcov-report/*` files).
+  - `yarn typecheck`: pass.
+  - `yarn test`: pass (`16/16` suites, `56` passed tests, `1` todo).
+- Maestro MCP evidence (mandatory baseline):
+  - `example/maestro/sheet-internal-controls.yaml`: pass (18 commands).
+  - `example/maestro/sheet-single-open.yaml`: pass (16 commands).
+  - `example/maestro/sheet-interactive-children.yaml`: pass (13 commands).
+  - These runs cover required baseline flows: open sheet, dismiss sheet, detent interaction, and primary in-sheet navigation.
+- README impact:
+  - No public API or externally observable behavior contract changed in this audit/fix; README update not required.

@@ -231,8 +231,6 @@ export function InSheetControls({
 
 const styles = StyleSheet.create({
   content: {
-    alignSelf: 'stretch',
-    backgroundColor: 'red',
     borderWidth: 1,
     width: '100%',
     padding: 20,
